@@ -22,7 +22,13 @@ module.exports = {
 			loader: "awesome-typescript-loader"
 		}, {
 			test: /\.less$/,
-			loader: "less-loader"
+			use: [{
+				loader: "style-loader"
+			}, {
+				loader: "css-loader"
+			}, {
+				loader: "less-loader"
+			}]
 		}]
 	},
 	devtool: "source-map",
