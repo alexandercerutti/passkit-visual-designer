@@ -1,0 +1,34 @@
+body {
+	background-color: #414141;
+	margin: 0;
+	padding: 0;
+}
+
+#app {
+	display: flex;
+}
+
+.selector {
+	justify-content: space-evenly;
+	display: flex;
+	flex-grow: 1;
+	align-items: center;
+	margin: 0 1%;
+
+	& .pass {
+		height: 100px;
+		background-color: #FFF;
+		width: 100%;
+
+		&:not(:last-child) {
+			margin-right: 10px;
+		}
+	}
+}
+
+#configurator {
+	background-color: #EAEAEA;
+	box-shadow: -8px 0 30px rgba(0,0,0,0.42);
+	height: 100vh;
+	overflow: hidden;
+}
