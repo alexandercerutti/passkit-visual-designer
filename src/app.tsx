@@ -53,29 +53,3 @@ export default class App extends React.Component<{}, AppState> {
 		);
 	}
 }
-
-class PassArea extends React.Component {
-	passTypes = ["boardingPass", "eventTicket", "coupon", "generic", "storeCard"];
-
-	constructor(props: any) {
-		super(props);
-
-		this.onPassClick = this.onPassClick.bind(this);
-	}
-
-	onPassClick() {
-		console.log("PASS CLICKED")
-	}
-
-	render() {
-		const passes = this.passTypes.map((pass) => (
-			<Pass key={pass} /*type={pass}*/ /*onClick={this.onPassClick}*/ />
-		));
-
-		return (
-			<div className="selector">
-				{passes}
-			</div>
-		);
-	}
-}
