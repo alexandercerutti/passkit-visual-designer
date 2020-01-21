@@ -1,8 +1,24 @@
-#selector > h2 {
-	color: #FFF;
-	font-family: Helvetiva, sans-serif;
-	font-size: 1.5em;
-	font-weight: 300;
-	text-align: center;
-	margin-top: 50px;
+#selector {
+	justify-content: space-evenly;
+	display: flex;
+	flex-grow: 1;
+	align-items: center;
+	margin: 0 1%;
+
+	& .pass {
+		width: 100%;
+
+		&:not(:last-child) {
+			margin-right: 10px;
+		}
+	}
+
+	& > h2 {
+		color: #FFF;
+		font-family: Helvetiva, sans-serif;
+		font-size: 1.5em;
+		font-weight: 300;
+		text-align: center;
+		margin-top: 50px;
+	}
 }
