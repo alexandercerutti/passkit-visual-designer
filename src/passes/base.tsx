@@ -2,7 +2,7 @@ import * as React from "react";
 import "./base.less";
 
 interface BasePassProps {
-
+	onClick(evt: React.MouseEvent): void;
 }
 
 export default class Pass extends React.Component<BasePassProps> {
@@ -12,7 +12,7 @@ export default class Pass extends React.Component<BasePassProps> {
 
 	render(): JSX.Element {
 		return (
-			<div className="base-pass">
+			<div className="base-pass" onClick={this.props.onClick}>
 				<div className="base-content">
 					Test
 				</div>
