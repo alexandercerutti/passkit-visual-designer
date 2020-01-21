@@ -1,5 +1,5 @@
 import * as React from "react";
-import "base.less";
+import "./base.less";
 
 interface BasePassProps {
 
@@ -12,7 +12,11 @@ export default class Pass extends React.Component<BasePassProps> {
 
 	render(): JSX.Element {
 		return (
-			<div></div>
-		)
+			<div className="base-pass">
+				<div className="base-content">
+					Test
+				</div>
+			</div>
+		);
 	}
 }

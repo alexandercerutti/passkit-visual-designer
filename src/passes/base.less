@@ -1,4 +1,29 @@
-.basePass {
+.base-pass {
 	background-color: white;
 	border-radius: 10px;
+	width: 100%;
+	height: 0;
+	padding-top: 180pt / 220pt * 100%;
+	position: relative;
+}
+
+.base-pass:not(:last-child) {
+	margin-right: 30px;
+}
+
+.base-pass > .base-content {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	padding: 5px;
+	box-sizing: border-box;
+}
+
+.content-test {
+	width: 50px;
+	height: 100px;
+	background-color: red;
+	color: #FFF;
 }
