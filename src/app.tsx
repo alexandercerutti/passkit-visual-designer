@@ -1,5 +1,6 @@
 import * as React from "react";
-import Pass from "./pass";
+import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
+import Pass from "./passes/base";
 
 interface AppState {
 	phase: number;
@@ -15,29 +16,30 @@ export default class App extends React.Component<{}, AppState> {
 	}
 
 	render() {
-		// if (this.state.phase === 0) {
-		// 	return
-		// }
-
 		return (
-			<div id="app">
-				<PassArea />
-				<Configurator />
-			</div>
-		);
-	}
-}
-
-interface ConfiguratorProps {
-	visible?: boolean
-}
-
-class Configurator extends React.Component<ConfiguratorProps, {}> {
-	render(): JSX.Element {
-		return (
-			<div id="configurator" style={{ width: this.props.visible ? "300px" : "0"}}>
-				<h1>Configurator</h1>
-			</div>
+			<Router>
+				<div style={{ margin: 0, padding: 0, backgroundColor: "#333" }}>
+					<Switch>
+						<Route path="/" exact>
+							{null}
+						</Route>
+						<Route path="/select">
+							{null}
+						</Route>
+						<Route path="/create">
+							{null}
+						</Route>
+						<Route component={null} />
+					</Switch>
+				</div>
+			</Router>
+			/* 			<div id="app">
+							<div id="right">
+								<h2>{this.state.phaseText}</h2>
+								<PassArea />
+							</div>
+							<Configurator />
+						</div> */
 		);
 	}
 }
@@ -45,7 +47,7 @@ class Configurator extends React.Component<ConfiguratorProps, {}> {
 class PassArea extends React.Component {
 	passTypes = ["boardingPass", "eventTicket", "coupon", "generic", "storeCard"];
 
-	constructor(props: {}) {
+	constructor(props: any) {
 		super(props);
 
 		this.onPassClick = this.onPassClick.bind(this);
@@ -57,7 +59,7 @@ class PassArea extends React.Component {
 
 	render() {
 		const passes = this.passTypes.map((pass) => (
-			<Pass key={pass} type={pass} onClick={this.onPassClick} />
+			<Pass key={pass} /*type={pass}*/ /*onClick={this.onPassClick}*/ />
 		));
 
 		return (
