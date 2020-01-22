@@ -33,22 +33,20 @@ export default class App extends React.Component<{}, AppState> {
 	render() {
 		return (
 			<Router>
-				<div style={{ margin: 0, padding: 0, backgroundColor: "#333" }}>
-					<Switch>
-						<Route path="/" exact>
-							{null}
-						</Route>
-						<Route path="/select">
-							<PassSelector
-								onPassKindSelection={this.onPassKindSelection}
-							/>
-						</Route>
-						<Route path="/create">
-							{null}
-						</Route>
-						<Route component={null} />
-					</Switch>
-				</div>
+				<Switch>
+					<Route path="/" exact>
+						{null}
+					</Route>
+					<Route path="/select">
+						<PassSelector
+							onPassKindSelection={this.onPassKindSelection}
+						/>
+					</Route>
+					<Route path="/create">
+						{null}
+					</Route>
+					<Route component={null} />
+				</Switch>
 			</Router>
 		);
 	}

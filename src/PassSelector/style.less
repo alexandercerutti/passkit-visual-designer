@@ -1,17 +1,9 @@
-#selector {
+#selectorApp {
 	justify-content: space-evenly;
 	display: flex;
 	flex-grow: 1;
 	align-items: center;
-	margin: 0 1%;
-
-	& .pass {
-		width: 100%;
-
-		&:not(:last-child) {
-			margin-right: 10px;
-		}
-	}
+	flex-direction: column;
 
 	& > h2 {
 		color: #FFF;
@@ -19,6 +11,21 @@
 		font-size: 1.5em;
 		font-weight: 300;
 		text-align: center;
-		margin-top: 50px;
+	}
+}
+
+#passSelection {
+	display: flex;
+	width: 100%;
+	margin: 35px 0;
+    padding: 10px 5%;
+    box-sizing: border-box;
+
+	& .pass {
+		width: 100%;
+
+		&:not(:last-child) {
+			margin-right: 3%;
+		}
 	}
 }
