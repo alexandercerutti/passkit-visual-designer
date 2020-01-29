@@ -3,6 +3,7 @@ import "./style.less";
 import App from "../app";
 import { PassKind } from "../model";
 import Pass from "../passes/base";
+import withClickEvent from "./withClickEvent";
 
 interface SelectorProps {
 	onPassKindSelection: App["onPassKindSelection"];
@@ -18,9 +19,16 @@ export class PassSelector extends React.PureComponent<SelectorProps> {
 	}
 
 	render() {
-		const passes = Object.keys(PassKind).map((pass) => (
-			<Pass key={PassKind[pass]} onClick={(e) => this.props.onPassKindSelection(PassKind[pass])} />
-		));
+		const passes = Object.keys(PassKind).map((pass) => {
+			const ClickablePass = withClickEvent(Pass, () => this.props.onPassKindSelection(PassKind[pass]));
+			return (
+				<ClickablePass
+					key={PassKind[pass]}
+					onClick={() => this.props.onPassKindSelection(PassKind[pass])}
+					kind={PassKind[pass]}
+				/>
+			);
+		});
 
 		return (
 			<div id="selectorApp">
