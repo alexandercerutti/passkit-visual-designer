@@ -4,8 +4,8 @@
   "description": "A visual tool to design passes",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --config webpack.config.js",
-    "start": "webpack-dev-server"
+    "build": "npx --no-install webpack --config webpack.config.js",
+    "start": "npx --no-install webpack-dev-server --config webpack.config.js"
   },
   "keywords": [
     "apple",
