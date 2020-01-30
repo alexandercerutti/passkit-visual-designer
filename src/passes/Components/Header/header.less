@@ -1,0 +1,20 @@
+@fieldsSpacing: 5px;
+
+.header-container {
+	display: flex;
+	flex-direction: row;
+	min-height: 25px;
+	width: 100%;
+
+	& > *:not(:last-child) {
+		margin-right: @fieldsSpacing;
+	}
+
+	& > *:first-child {
+		border-top-left-radius: 10px;
+	}
+
+	& > *:last-child {
+		border-top-right-radius: 10px;
+	}
+}
