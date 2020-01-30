@@ -1,5 +1,6 @@
 import * as React from "react";
 import { PassProps } from "./base";
+import { PassHeader } from "./Components/Header";
 
 interface BoardingPassProps extends PassProps {
 	subKind: "PKTransitTypeAir" | "PKTransitTypeBoat" | "PKTransitTypeBus" | "PKTransitTypeGeneric" | "PKTransitTypeTrain";
@@ -13,6 +14,7 @@ export default class BoardingPass extends React.Component<BoardingPassProps> {
 	renderPKTransitTypeAir() {
 		return (
 			<>
+				<PassHeader />
 			</>
 		);
 	}
@@ -20,6 +22,7 @@ export default class BoardingPass extends React.Component<BoardingPassProps> {
 	renderPKTransitTypeBoat() {
 		return (
 			<>
+				<PassHeader />
 			</>
 		);
 	}
@@ -27,6 +30,7 @@ export default class BoardingPass extends React.Component<BoardingPassProps> {
 	renderPKTransitTypeBus() {
 		return (
 			<>
+				<PassHeader />
 			</>
 		);
 	}
@@ -34,6 +38,7 @@ export default class BoardingPass extends React.Component<BoardingPassProps> {
 	renderPKTransitTypeGeneric() {
 		return (
 			<>
+				<PassHeader />
 				{"BoardingPass"}
 			</>
 		);
@@ -42,6 +47,7 @@ export default class BoardingPass extends React.Component<BoardingPassProps> {
 	renderPKTransitTypeTrain() {
 		return (
 			<>
+				<PassHeader />
 			</>
 		);
 	}
