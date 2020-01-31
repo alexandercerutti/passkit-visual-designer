@@ -1,6 +1,8 @@
 import * as React from "react";
-import { RegisterPassEditableField, FieldKind } from "../../../model";
+import { FieldKind } from "../../../model";
 import { FillableComponent } from "../FillableComponent";
+
+export type RegisterPassEditableField = (kind: FieldKind, id: string) => boolean;
 
 /**
  * Provides a HOC that waits until fields
