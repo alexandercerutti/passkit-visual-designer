@@ -1,12 +1,9 @@
 import * as React from "react";
 import "./textField.less";
+import { FillableComponent } from "../FillableComponent";
 
-interface TextProps {
-	id: string;
-	content?: string;
+interface TextProps extends FillableComponent<string> {
 	className?: string;
-
-	onSelect?(id: string): void;
 }
 
 export default function TextField(props: TextProps) {
