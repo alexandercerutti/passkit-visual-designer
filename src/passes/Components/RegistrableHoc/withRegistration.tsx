@@ -19,12 +19,16 @@ export type RegisterPassEditableField = (kind: FieldKind, id: string) => boolean
  * @param registerFunction
  */
 
-export default function withRegistration<P extends FillableComponent>(WrappedField: React.ComponentType<P>, fieldKind: FieldKind, registerFunction: RegisterPassEditableField) {
+export default function withRegistration<P extends FillableComponent>(WrappedField: React.ComponentType<P>, fieldKind: FieldKind, registerFunction?: RegisterPassEditableField) {
 	return (props: P) => {
 		const [approved, setApproved] = React.useState(false);
 
 		React.useEffect(() => {
-			if (registerFunction(fieldKind, props.id)) {
+			/**
+			 * If no registration function is provided, we
+			 * act like it was approved
+			 */
+			if (!registerFunction || registerFunction(fieldKind, props.id)) {
 				return setApproved(true);
 			}
 		}, []);
