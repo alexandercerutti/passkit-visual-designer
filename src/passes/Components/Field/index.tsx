@@ -1,12 +1,11 @@
 import * as React from "react";
-import { FillableComponent } from "../FillableComponent";
-import withRegistration from "../withRegistration";
+import withRegistration, { RegistrableComponent } from "../withRegistration";
 import withFallback from "../EmptyField/withFallback";
 import { FieldKind } from "../../../model";
 import "./fields.less";
 import { PKTextAlignment, PKDataDetectorType, PKDateStyle } from "../../constants";
 
-export interface FieldSetProps extends FillableComponent {
+export interface FieldSetProps extends RegistrableComponent {
 	className?: string;
 	labelColor?: string;
 	textColor?: string;
@@ -15,8 +14,8 @@ export interface FieldSetProps extends FillableComponent {
 	value: string;
 
 	// to be implemented
-	textAlignment: PKTextAlignment;
-	dataDetectorTypes: PKDataDetectorType;
+	textAlignment?: PKTextAlignment;
+	dataDetectorTypes?: PKDataDetectorType;
 	changeMessage?: string; // check for @s
 	dateStyle?: PKDateStyle;
 	timeStyle?: PKDateStyle;

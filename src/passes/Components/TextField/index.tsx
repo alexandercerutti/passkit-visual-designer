@@ -1,11 +1,11 @@
 import * as React from "react";
 import "./textField.less";
-import { FillableComponent } from "../FillableComponent";
-import withRegistration from "../withRegistration";
+import withRegistration, { RegistrableComponent } from "../withRegistration";
 import { FieldKind } from "../../../model";
 import withFallback from "../EmptyField/withFallback";
 
-export interface TextFieldProps extends FillableComponent<string> {
+export interface TextFieldProps extends RegistrableComponent {
+	content?: string;
 	className?: string;
 }
 

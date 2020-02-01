@@ -1,9 +1,14 @@
 import * as React from "react";
 import { FieldKind } from "../../../model";
-import { FillableComponent } from "../FillableComponent";
 
 export type onRegister = (kind: FieldKind, id: string) => boolean;
 export type onSelect = (id: string) => void;
+
+export interface RegistrableComponent {
+	id: string;
+	onSelect?: onSelect;
+	register?: onRegister;
+}
 
 function onSafeSelect(id: string, onSelectFn?: onSelect) {
 	return onSelectFn && onSelectFn(id);
@@ -28,7 +33,7 @@ function onSafeSelect(id: string, onSelectFn?: onSelect) {
  * @param registerFunction
  */
 
-export default function withRegistration<P extends FillableComponent>(WrappedField: React.ComponentType<P>, fieldKind: FieldKind) {
+export default function withRegistration<P extends RegistrableComponent>(WrappedField: React.ComponentType<P>, fieldKind: FieldKind) {
 	return (props: P) => {
 		const [approved, setApproved] = React.useState(false);
 

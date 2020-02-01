@@ -1,10 +1,9 @@
 import * as React from "react";
-import { FillableComponent } from "../FillableComponent";
-import withRegistration from "../withRegistration";
+import withRegistration, { RegistrableComponent } from "../withRegistration";
 import { FieldKind } from "../../../model";
 import withFallback from "../EmptyField/withFallback";
 
-export interface ImageFieldProps extends FillableComponent {
+export interface ImageFieldProps extends RegistrableComponent {
 	className?: string;
 	width?: string;
 	height?: string;
