@@ -10,7 +10,7 @@ export interface FieldSetProps extends FillableComponent {
 	className?: string;
 	labelColor?: string;
 	textColor?: string;
-	key: string;
+	fieldKey: string;
 	label?: string;
 	value: string;
 
@@ -24,7 +24,7 @@ export interface FieldSetProps extends FillableComponent {
 
 function PureFieldSet(props: FieldSetProps) {
 	return (
-		<div className={`${props.className || ""} field field-${props.key}`.trim()}>
+		<div className={`${props.className || ""} field field-${props.fieldKey}`.trim()}>
 			{
 				props.label &&
 				<span style={{ color: props.labelColor || "#000" }}>
@@ -38,4 +38,4 @@ function PureFieldSet(props: FieldSetProps) {
 	);
 }
 
-export default withRegistration(withFallback(PureFieldSet, ["value", "key"]), FieldKind.FIELDS);
+export default withRegistration(withFallback(PureFieldSet, ["value", "fieldKey"]), FieldKind.FIELDS);
