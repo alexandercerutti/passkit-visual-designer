@@ -1,12 +1,14 @@
 import * as React from "react";
 import "./textField.less";
 import { FillableComponent } from "../FillableComponent";
+import withRegistration from "../RegistrableHoc/withRegistration";
+import { FieldKind } from "../../../model";
 
 interface TextProps extends FillableComponent<string> {
 	className?: string;
 }
 
-export default function TextField(props: TextProps) {
+function PureTextField(props: TextProps) {
 	return (
 		<div
 			className={`${props.className || ""} text-field`.trim()}
@@ -16,3 +18,5 @@ export default function TextField(props: TextProps) {
 		</div>
 	);
 }
+
+export default withRegistration(PureTextField, FieldKind.TEXT);
