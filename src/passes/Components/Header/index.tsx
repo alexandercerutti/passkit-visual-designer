@@ -1,6 +1,7 @@
 import * as React from "react";
 import "./header.less";
 import TextField from "../TextField";
+import { onRegister } from "../withRegistration";
 
 interface HeaderProps {
 	logoText?: string;

@@ -1,7 +1,7 @@
 import * as React from "react";
 import "./textField.less";
 import { FillableComponent } from "../FillableComponent";
-import withRegistration from "../RegistrableHoc/withRegistration";
+import withRegistration from "../withRegistration";
 import { FieldKind } from "../../../model";
 
 interface TextProps extends FillableComponent<string> {

@@ -1,4 +1,4 @@
-import { RegisterPassEditableField } from "./RegistrableHoc/withRegistration";
+import { RegisterPassEditableField } from "./withRegistration";
 
 export interface FillableComponent<T = any> {
 	id: string;
