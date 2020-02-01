@@ -19,4 +19,4 @@ function PureImageField(props: ImageFieldProps) {
 	);
 }
 
-export default withRegistration(withFallback(PureImageField, "src"), FieldKind.IMAGE);
+export default withRegistration(withFallback(PureImageField, ["src"]), FieldKind.IMAGE);

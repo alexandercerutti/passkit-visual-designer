@@ -17,4 +17,4 @@ function PureTextField(props: TextFieldProps) {
 	);
 }
 
-export default withRegistration(withFallback(PureTextField, "content"), FieldKind.TEXT);
+export default withRegistration(withFallback(PureTextField, ["content"]), FieldKind.TEXT);
