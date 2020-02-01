@@ -1,11 +1,12 @@
 import * as React from "react";
 import "./header.less";
-import TextField from "../TextField";
+import TextField, { TextFieldProps } from "../TextField";
 import { onRegister } from "../withRegistration";
-import ImageField from "../ImageField";
+import ImageField, { ImageFieldProps } from "../ImageField";
 
-interface HeaderProps extends {
-	logoText?: string;
+type FieldsProps = ImageFieldProps & TextFieldProps;
+
+interface HeaderProps extends Partial<FieldsProps> {
 	register?: onRegister
 }
 
@@ -15,11 +16,12 @@ export function PassHeader(props: HeaderProps) {
 			<ImageField
 				id="header.logo"
 				register={props.register}
+				src={props.src}
 			/>
 			<TextField
 				id="header.textField"
 				className="logo-text"
-				content={props.logoText || ""}
+				content={props.content || ""}
 				register={props.register}
 			/>
 			<TextField
