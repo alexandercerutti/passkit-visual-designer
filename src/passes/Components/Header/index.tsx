@@ -2,8 +2,9 @@ import * as React from "react";
 import "./header.less";
 import TextField from "../TextField";
 import { onRegister } from "../withRegistration";
+import ImageField from "../ImageField";
 
-interface HeaderProps {
+interface HeaderProps extends {
 	logoText?: string;
 	register?: onRegister
 }
@@ -11,8 +12,8 @@ interface HeaderProps {
 export function PassHeader(props: HeaderProps) {
 	return (
 		<div className="header-container">
-			<TextField
-				id="header.test1"
+			<ImageField
+				id="header.logo"
 				register={props.register}
 			/>
 			<TextField

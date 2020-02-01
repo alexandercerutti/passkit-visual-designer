@@ -5,11 +5,11 @@ import withRegistration from "../withRegistration";
 import { FieldKind } from "../../../model";
 import withFallback from "../EmptyField/withFallback";
 
-interface TextProps extends FillableComponent<string> {
+export interface TextFieldProps extends FillableComponent<string> {
 	className?: string;
 }
 
-function PureTextField(props: TextProps) {
+function PureTextField(props: TextFieldProps) {
 	return (
 		<div className={`${props.className || ""} text-field`.trim()}>
 			{props.content}

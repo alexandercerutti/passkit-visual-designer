@@ -4,14 +4,14 @@ import withRegistration from "../withRegistration";
 import { FieldKind } from "../../../model";
 import withFallback from "../EmptyField/withFallback";
 
-interface ImageField extends FillableComponent {
+export interface ImageFieldProps extends FillableComponent {
 	className?: string;
 	width?: string;
 	height?: string;
 	src?: string;
 }
 
-function PureImageField(props: ImageField) {
+function PureImageField(props: ImageFieldProps) {
 	return (
 		<div className={`${props.className} image-field`.trim()} >
 			<img {...{ src: props.src, width: props.width, height: props.height }} />
