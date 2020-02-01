@@ -19,7 +19,7 @@ export function PassHeader(props: HeaderProps) {
 				src={props.src}
 			/>
 			<TextField
-				id="header.textField"
+				id="header.logoText"
 				className="logo-text"
 				content={props.content || ""}
 				register={props.register}
