@@ -13,7 +13,7 @@ export interface ImageFieldProps extends FillableComponent {
 
 function PureImageField(props: ImageFieldProps) {
 	return (
-		<div className={`${props.className} image-field`.trim()} >
+		<div className={`${props.className || ""} image-field`.trim()} >
 			<img {...{ src: props.src, width: props.width, height: props.height }} />
 		</div>
 	);
