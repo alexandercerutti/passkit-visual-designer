@@ -5,6 +5,7 @@ import { onRegister } from "../withRegistration";
 
 interface HeaderProps {
 	logoText?: string;
+	register?: onRegister
 }
 
 export function PassHeader(props: HeaderProps) {
@@ -12,14 +13,17 @@ export function PassHeader(props: HeaderProps) {
 		<div className="header-container">
 			<TextField
 				id="header.test1"
+				register={props.register}
 			/>
 			<TextField
 				id="header.textField"
 				className="logo-text"
 				content={props.logoText || ""}
+				register={props.register}
 			/>
 			<TextField
 				id="header.test2"
+				register={props.register}
 			/>
 		</div>
 	);

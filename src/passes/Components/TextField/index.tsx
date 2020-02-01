@@ -10,10 +10,7 @@ interface TextProps extends FillableComponent<string> {
 
 function PureTextField(props: TextProps) {
 	return (
-		<div
-			className={`${props.className || ""} text-field`.trim()}
-			onClick={(e) => this.props.onSelect && this.props.onSelect(this.props.id)}
-		>
+		<div className={`${props.className || ""} text-field`.trim()}>
 			{props.content || ""}
 		</div>
 	);
