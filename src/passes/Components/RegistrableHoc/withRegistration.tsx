@@ -2,7 +2,12 @@ import * as React from "react";
 import { FieldKind } from "../../../model";
 import { FillableComponent } from "../FillableComponent";
 
-export type RegisterPassEditableField = (kind: FieldKind, id: string) => boolean;
+export type onRegister = (kind: FieldKind, id: string) => boolean;
+export type onSelect = (id: string) => void;
+
+function onSafeSelect(id: string, onSelectFn?: onSelect) {
+	return onSelectFn && onSelectFn(id);
+}
 
 /**
  * Provides a HOC that waits until fields
@@ -13,6 +18,10 @@ export type RegisterPassEditableField = (kind: FieldKind, id: string) => boolean
  *
  * In our case registration is needed to create a
  * new field in the configurator.
+ *
+ * Also adds to a component a common logic of selection
+ * that is activated only if the register function
+ * and selection function are passed.
  *
  * @param WrappedField
  * @param fieldKind
@@ -37,6 +46,9 @@ export default function withRegistration<P extends FillableComponent>(WrappedFie
 			return null;
 		}
 
-		return <WrappedField {...props} />
+		const withoutOnSelect = Object.assign({}, props);
+		delete withoutOnSelect["onSelect"];
+
+		return <WrappedField {...withoutOnSelect} onClick={() => props.register && onSafeSelect(props.id, props.onSelect)} />
 	}
 }
