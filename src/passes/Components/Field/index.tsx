@@ -26,11 +26,11 @@ function PureFieldSet(props: FieldSetProps) {
 		<div className={`${props.className || ""} field field-${props.fieldKey}`.trim()}>
 			{
 				props.label &&
-				<span style={{ color: props.labelColor || "#000" }}>
+				<span className="label" style={{ color: props.labelColor || "#000" }}>
 					{props.label}
 				</span>
 			}
-			<span style={{ color: props.textColor || "#000" }}>
+			<span className="value" style={{ color: props.textColor || "#000" }}>
 				{props.value}
 			</span>
 		</div>
