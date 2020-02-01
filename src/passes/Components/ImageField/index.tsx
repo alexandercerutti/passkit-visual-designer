@@ -2,6 +2,7 @@ import * as React from "react";
 import { FillableComponent } from "../FillableComponent";
 import withRegistration from "../withRegistration";
 import { FieldKind } from "../../../model";
+import withFallback from "../EmptyField/withFallback";
 
 interface ImageField extends FillableComponent {
 	className?: string;
@@ -10,22 +11,12 @@ interface ImageField extends FillableComponent {
 	src?: string;
 }
 
-function renderOnSrc(props: Pick<ImageField, "src" | "width" | "height">) {
-	if (!props.src) {
-		return null;
-	}
-
-	return (
-		<img {...props} />
-	)
-}
-
 function PureImageField(props: ImageField) {
 	return (
 		<div className={`${props.className} image-field`.trim()} >
-			{renderOnSrc({ src: props.src, width: props.width, height: props.height })}
+			<img {...{ src: props.src, width: props.width, height: props.height }} />
 		</div>
 	);
 }
 
-export default withRegistration(PureImageField, FieldKind.IMAGE);
+export default withRegistration(withFallback(PureImageField, "src"), FieldKind.IMAGE);

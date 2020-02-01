@@ -3,6 +3,7 @@ import "./textField.less";
 import { FillableComponent } from "../FillableComponent";
 import withRegistration from "../withRegistration";
 import { FieldKind } from "../../../model";
+import withFallback from "../EmptyField/withFallback";
 
 interface TextProps extends FillableComponent<string> {
 	className?: string;
@@ -11,9 +12,9 @@ interface TextProps extends FillableComponent<string> {
 function PureTextField(props: TextProps) {
 	return (
 		<div className={`${props.className || ""} text-field`.trim()}>
-			{props.content || ""}
+			{props.content}
 		</div>
 	);
 }
 
-export default withRegistration(PureTextField, FieldKind.TEXT);
+export default withRegistration(withFallback(PureTextField, "content"), FieldKind.TEXT);
