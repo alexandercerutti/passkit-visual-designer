@@ -1,7 +1,13 @@
 export enum PassKind {
-	BOARDING_PASS = "boardingPass",
-	STORE = "storeCard",
-	COUPON = "coupon",
-	GENERIC = "generic",
-	EVENT = "eventTicket"
+	BOARDING_PASS = "BoardingPass",
+	STORE = "StoreCard",
+	COUPON = "Coupon",
+	GENERIC = "Generic",
+	EVENT = "EventTicket"
+}
+
+export enum FieldKind {
+	TEXT,
+	IMAGE,
+	FIELDS
 }
