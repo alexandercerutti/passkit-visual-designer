@@ -9,7 +9,7 @@ type FieldsProps = ImageFieldProps & TextFieldProps;
 
 interface HeaderProps extends Partial<FieldsProps> {
 	register?: onRegister;
-	headerFieldsData?: FieldSetProps[];
+	headerFieldsData?: Omit<FieldSetProps, "id">[];
 }
 
 export function PassHeader(props: HeaderProps) {
