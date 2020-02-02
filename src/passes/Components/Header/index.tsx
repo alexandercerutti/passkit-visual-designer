@@ -13,16 +13,24 @@ interface HeaderProps extends Partial<FieldsProps> {
 }
 
 export function PassHeader(props: HeaderProps) {
+	/**
+	 * Taking only the first three headers
+	 * as per Apple maximum number of header fields
+	 */
 	const headerFields = (
 		props.headerFieldsData &&
 		props.headerFieldsData.length &&
-		props.headerFieldsData.map((fieldProps, index) => (
-			<Field
-				{...fieldProps}
-				id={`header.headerFields.${index}`}
-				register={props.register}
-			/>
-		))
+		props.headerFieldsData.slice(0, 3).map((fieldProps, index) => {
+			const id = `header.headerFields.${index}`;
+			return (
+				<Field
+					key={id}
+					id={id}
+					{...fieldProps}
+					register={props.register}
+				/>
+			)
+		})
 	) || null;
 
 	return (
@@ -30,7 +38,8 @@ export function PassHeader(props: HeaderProps) {
 			<ImageField
 				id="header.logo"
 				register={props.register}
-				src={props.src}
+				src={props.src || "https://cdn.freebiesupply.com/logos/large/2x/trenitalia-logo-png-transparent.png"}
+				width={"30px"}
 			/>
 			<TextField
 				id="header.logoText"
