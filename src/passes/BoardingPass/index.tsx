@@ -1,6 +1,6 @@
 import * as React from "react";
-import { PassProps } from "./base";
-import { PassHeader } from "./Components/Header";
+import { PassProps } from "../base";
+import { PassHeader } from "../Components/Header";
 
 interface BoardingPassProps extends PassProps {
 	subKind: "PKTransitTypeAir" | "PKTransitTypeBoat" | "PKTransitTypeBus" | "PKTransitTypeGeneric" | "PKTransitTypeTrain";
@@ -38,7 +38,21 @@ export default class BoardingPass extends React.Component<BoardingPassProps> {
 	renderPKTransitTypeGeneric() {
 		return (
 			<>
-				<PassHeader />
+				<PassHeader
+					headerFieldsData={[{
+						label: "Data",
+						fieldKey: "departing_date",
+						value: "10/04/1996",
+					}, {
+						label: "Ora",
+						fieldKey: "departing_time",
+						value: "10:30",
+					}, {
+						label: "test",
+						fieldKey: "departing_time",
+						value: "10:30",
+					}]}
+				/>
 				{"BoardingPass"}
 			</>
 		);
