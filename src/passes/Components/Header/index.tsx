@@ -3,7 +3,7 @@ import "./header.less";
 import TextField, { TextFieldProps } from "../TextField";
 import { onRegister } from "../withRegistration";
 import ImageField, { ImageFieldProps } from "../ImageField";
-import Field, { FieldSetProps } from "../Field";
+import ColumnField, { FieldSetProps } from "../ColumnField";
 
 type FieldsProps = ImageFieldProps & TextFieldProps;
 
@@ -23,7 +23,7 @@ export function PassHeader(props: HeaderProps) {
 		props.headerFieldsData.slice(0, 3).map((fieldProps, index) => {
 			const id = `header.headerFields.${index}`;
 			return (
-				<Field
+				<ColumnField
 					key={id}
 					id={id}
 					{...fieldProps}

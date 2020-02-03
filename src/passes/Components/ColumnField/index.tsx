@@ -7,11 +7,12 @@ import { PKTextAlignment, PKDataDetectorType, PKDateStyle } from "../../constant
 
 export interface FieldSetProps extends RegistrableComponent {
 	className?: string;
+	style?: React.CSSProperties;
 	labelColor?: string;
 	textColor?: string;
 	fieldKey: string;
 	label?: string;
-	value: string;
+	value: any;
 
 	// to be implemented
 	textAlignment?: PKTextAlignment;
@@ -21,16 +22,13 @@ export interface FieldSetProps extends RegistrableComponent {
 	timeStyle?: PKDateStyle;
 }
 
-function PureFieldSet(props: FieldSetProps) {
+export function PureFieldSet(props: FieldSetProps) {
 	return (
-		<div className={`${props.className || ""} field field-${props.fieldKey}`.trim()}>
-			{
-				props.label &&
-				<span className="label" style={{ color: props.labelColor || "#000" }}>
-					{props.label}
-				</span>
-			}
-			<span className="value" style={{ color: props.textColor || "#000" }}>
+		<div style={props.style || {}} className={`${props.className || ""} field field${props.fieldKey && `-${props.fieldKey}`}`.trim()}>
+			<span className="label" style={{ color: props.labelColor || "#000" }}>
+				{props.label || ""}
+			</span>
+			<span className="value" style={{ color: props.textColor || "#000", overflow: "hidden", textOverflow: "ellipsis" }}>
 				{props.value}
 			</span>
 		</div>
