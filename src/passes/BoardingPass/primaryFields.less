@@ -1,12 +1,24 @@
 .primary-container {
 	display: flex;
-	flex-direction: row;
-	align-items: center;
+	flex-direction: column;
 	width: 100%;
-	justify-content: space-around;
+	justify-content: space-between;
 	margin-top: 15px;
 
-	& > .field > .value {
-		font-size: 20pt;
+	.label-row {
+		display: flex;
+		justify-content: space-between;
+	}
+
+	.value-row {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-top: 4px;
+
+		& > .value {
+			line-height: 22pt;
+			font-size: 23pt;
+		}
 	}
 }

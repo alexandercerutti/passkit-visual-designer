@@ -1,13 +1,13 @@
 import * as React from "react";
-import Field, { FieldSetProps } from "../Components/Field";
+import { FieldSet, FieldLabel, FieldValue } from "../Components/ColumnField";
 import { PKTransitType } from "../constants";
 import "./primaryFields.less";
 import { RegistrableComponent } from "../Components/withRegistration";
-import PKAirIcon from "./icons/plane";
+import { PKTransitIcon } from "./icons";
 
 export interface PrimaryFieldsProps extends Omit<RegistrableComponent, "id"> {
 	className?: string;
-	primaryFieldsData: Omit<FieldSetProps, "id">[];
+	primaryFieldsData: Omit<Parameters<typeof FieldSet>[0], "id">[];
 	subkind: PKTransitType;
 }
 
@@ -16,17 +16,76 @@ export default function PrimaryFields(props: PrimaryFieldsProps) {
 
 	return (
 		<PrimaryFieldsWrapper {...props}>
-			<Field id="primaryFields.1" {...from} />
-			{from && to &&
-				<PKAirIcon
-					width={30}
-					height={30}
-					fill="#000"
-				/>
-			}
-			<Field id="primaryFields.2" {...to} />
+			<LabelsRow {...props} />
+			<ValuesRow {...props} />
 		</PrimaryFieldsWrapper>
 	)
+}
+
+function LabelsRow(props: PrimaryFieldsProps) {
+	const labels = (
+		props.primaryFieldsData &&
+		props.primaryFieldsData.map((fieldData, index) => {
+			if (!fieldData.label) {
+				return null;
+			}
+
+			const id = `primaryFields.${index}.label`;
+
+			return (
+				<FieldLabel
+					label={fieldData.label}
+					labelColor={fieldData.labelColor}
+					textAlignment={fieldData.textAlignment}
+					fieldKey={fieldData.fieldKey}
+					key={id}
+					id={id}
+				/>
+			)
+		})
+	) || null;
+
+	return (
+		<div className="label-row">
+			{labels}
+		</div>
+	);
+}
+
+function ValuesRow(props: PrimaryFieldsProps) {
+	const [from, to] = (
+		props.primaryFieldsData &&
+		props.primaryFieldsData.map((fieldData, index) => {
+			if (!fieldData.label) {
+				return null;
+			}
+
+			return (
+				<FieldValue
+					value={fieldData.value}
+					textColor={fieldData.textColor}
+					textAlignment={fieldData.textAlignment}
+					fieldKey={fieldData.fieldKey}
+					key={`primaryFields.${index}.value`}
+					id={`primaryFields.${index}.value`}
+				/>
+			)
+		})
+	) || null;
+
+	const TransitIcon = PKTransitIcon(PKTransitType.Air);
+
+	return (
+		<div className="value-row">
+			{from}
+			<TransitIcon
+				width={30}
+				height={30}
+				fill="#000"
+			/>
+			{to}
+		</div>
+	);
 }
 
 function PrimaryFieldsWrapper(props: PrimaryFieldsProps & { children?: React.ReactNode[] }) {
