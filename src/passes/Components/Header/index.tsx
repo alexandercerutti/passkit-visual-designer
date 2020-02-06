@@ -3,13 +3,13 @@ import "./header.less";
 import TextField, { TextFieldProps } from "../TextField";
 import { onRegister } from "../withRegistration";
 import ImageField, { ImageFieldProps } from "../ImageField";
-import ColumnField, { FieldSetProps } from "../ColumnField";
+import { FieldSet } from "../ColumnField";
 
 type FieldsProps = ImageFieldProps & TextFieldProps;
 
 interface HeaderProps extends Partial<FieldsProps> {
 	register?: onRegister;
-	headerFieldsData?: Omit<FieldSetProps, "id">[];
+	headerFieldsData?: Omit<Parameters<typeof FieldSet>[0], "id">[];
 }
 
 export function PassHeader(props: HeaderProps) {
@@ -21,9 +21,9 @@ export function PassHeader(props: HeaderProps) {
 		props.headerFieldsData &&
 		props.headerFieldsData.length &&
 		props.headerFieldsData.slice(0, 3).map((fieldProps, index) => {
-			const id = `header.headerFields.${index}`;
+			const id = `headerFields.${index}`;
 			return (
-				<ColumnField
+				<FieldSet
 					key={id}
 					id={id}
 					{...fieldProps}
