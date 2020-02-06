@@ -4,4 +4,10 @@ export type PKDataDetectorType = "PKDataDetectorTypePhoneNumber" | "PKDataDetect
 
 export type PKDateStyle = "PKDateStyleNone" | "PKDateStyleShort" | "PKDateStyleMedium" | "PKDateStyleLong" | "PKDateStyleFull";
 
-export type PKTransitType = "PKTransitTypeAir" | "PKTransitTypeBoat" | "PKTransitTypeBus" | "PKTransitTypeGeneric" | "PKTransitTypeTrain";
+export enum PKTransitType {
+	"Air",
+	"Boat",
+	"Bus",
+	"Generic",
+	"Train"
+}
