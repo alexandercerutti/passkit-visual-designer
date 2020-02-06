@@ -8,11 +8,7 @@ import { PKTextAlignment, PKDataDetectorType, PKDateStyle } from "../../constant
 export interface FieldSetProps extends RegistrableComponent {
 	className?: string;
 	style?: React.CSSProperties;
-	labelColor?: string;
-	textColor?: string;
 	fieldKey: string;
-	label?: string;
-	value: any;
 
 	// to be implemented
 	textAlignment?: PKTextAlignment;
@@ -22,17 +18,41 @@ export interface FieldSetProps extends RegistrableComponent {
 	timeStyle?: PKDateStyle;
 }
 
-export function PureFieldSet(props: FieldSetProps) {
+export interface LabelProps extends FieldSetProps {
+	labelColor?: string;
+	label?: string;
+}
+
+export interface ValueProps extends FieldSetProps {
+	value: any;
+	textColor?: string;
+}
+
+export function PureFieldSet(props: LabelProps & ValueProps) {
 	return (
 		<div style={props.style || {}} className={`${props.className || ""} field field${props.fieldKey && `-${props.fieldKey}`}`.trim()}>
-			<span className="label" style={{ color: props.labelColor || "#000" }}>
-				{props.label || ""}
-			</span>
-			<span className="value" style={{ color: props.textColor || "#000", overflow: "hidden", textOverflow: "ellipsis" }}>
-				{props.value}
-			</span>
+			<PureFieldLabel {...props} />
+			<PureFieldValue {...props} />
 		</div>
 	);
 }
 
-export default withRegistration(withFallback(PureFieldSet, ["value", "fieldKey"]), FieldKind.FIELDS);
+export function PureFieldLabel(props: LabelProps) {
+	return (
+		<span className="label" style={{ color: props.labelColor || "#000" }}>
+			{props.label || ""}
+		</span>
+	);
+}
+
+export function PureFieldValue(props: ValueProps) {
+	return (
+		<span className="value" style={{ color: props.textColor || "#000", overflow: "hidden", textOverflow: "ellipsis" }}>
+			{props.value}
+		</span>
+	);
+}
+
+export const FieldSet = withRegistration(withFallback(PureFieldSet, ["value", "fieldKey"]), FieldKind.FIELDS);
+export const FieldLabel = withRegistration(withFallback(PureFieldLabel, ["label", "fieldKey"]), FieldKind.FIELDS);
+export const FieldLValue = withRegistration(withFallback(PureFieldValue, ["value", "fieldKey"]), FieldKind.FIELDS);
