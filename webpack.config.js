@@ -29,6 +29,9 @@ module.exports = {
 			}, {
 				loader: "less-loader"
 			}]
+		}, {
+			test: /\.otf$/,
+			loader: "file-loader"
 		}]
 	},
 	devtool: "source-map",
