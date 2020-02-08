@@ -11,14 +11,27 @@
 	}
 
 	.value-row {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
+		display: grid;
+		grid-template-columns: [full-start] minmax(0, 1fr) [main-start] minmax(0, 25px) [main-end] minmax(0, 1fr) [full-end];
 		margin-top: 4px;
 
 		& > .value {
 			line-height: 22pt;
 			font-size: 23pt;
+			flex: 0 0 100px;
+
+			&:first-child {
+				margin-right: 10px;
+			}
+
+			&:last-child {
+				margin-left: 10px;
+				text-align: end !important;
+			}
+		}
+
+		& > .icon {
+			flex: 1 1 auto;
 		}
 	}
 }

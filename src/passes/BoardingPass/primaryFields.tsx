@@ -1,6 +1,6 @@
 import * as React from "react";
 import { FieldSet, FieldLabel, FieldValue } from "../Components/ColumnField";
-import { PKTransitType } from "../constants";
+import { PKTransitType, PKTextAlignment } from "../constants";
 import "./primaryFields.less";
 import { RegistrableComponent } from "../Components/withRegistration";
 import { PKTransitIcon } from "./icons";
@@ -64,7 +64,7 @@ function ValuesRow(props: PrimaryFieldsProps) {
 				<FieldValue
 					value={fieldData.value}
 					textColor={fieldData.textColor}
-					textAlignment={fieldData.textAlignment}
+					textAlignment={fieldData.textAlignment || PKTextAlignment.Natural}
 					fieldKey={fieldData.fieldKey}
 					key={`primaryFields.${index}.value`}
 					id={`primaryFields.${index}.value`}
