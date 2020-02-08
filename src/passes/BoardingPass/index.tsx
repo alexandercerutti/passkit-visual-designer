@@ -1,6 +1,8 @@
 import * as React from "react";
 import { PassProps } from "../base";
 import { PassHeader } from "../Components/Header";
+import { PKTransitType } from "../constants";
+import PrimaryFields from "./primaryFields";
 
 interface BoardingPassProps extends PassProps {
 	subKind: "PKTransitTypeAir" | "PKTransitTypeBoat" | "PKTransitTypeBus" | "PKTransitTypeGeneric" | "PKTransitTypeTrain";

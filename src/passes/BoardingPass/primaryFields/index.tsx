@@ -1,8 +1,8 @@
 import * as React from "react";
-import { FieldSet, FieldLabel, FieldValue } from "../Components/ColumnField";
-import { PKTransitType, PKTextAlignment } from "../constants";
+import { FieldSet, FieldLabel, FieldValue } from "../../Components/ColumnField";
+import { PKTransitType } from "../../constants";
 import "./primaryFields.less";
-import { RegistrableComponent } from "../Components/withRegistration";
+import { RegistrableComponent } from "../../Components/withRegistration";
 import { PKTransitIcon } from "./icons";
 
 export interface PrimaryFieldsProps extends Omit<RegistrableComponent, "id"> {
@@ -40,6 +40,7 @@ function LabelsRow(props: PrimaryFieldsProps) {
 					fieldKey={fieldData.fieldKey}
 					key={id}
 					id={id}
+					onSelect={fieldData.onSelect}
 				/>
 			)
 		})
@@ -68,6 +69,7 @@ function ValuesRow(props: PrimaryFieldsProps) {
 					fieldKey={fieldData.fieldKey}
 					key={`primaryFields.${index}.value`}
 					id={`primaryFields.${index}.value`}
+					onSelect={fieldData.onSelect}
 				/>
 			)
 		})
