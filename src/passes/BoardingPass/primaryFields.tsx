@@ -64,7 +64,7 @@ function ValuesRow(props: PrimaryFieldsProps) {
 				<FieldValue
 					value={fieldData.value}
 					textColor={fieldData.textColor}
-					textAlignment={fieldData.textAlignment || PKTextAlignment.Natural}
+					textAlignment={fieldData.textAlignment}
 					fieldKey={fieldData.fieldKey}
 					key={`primaryFields.${index}.value`}
 					id={`primaryFields.${index}.value`}
