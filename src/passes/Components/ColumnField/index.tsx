@@ -57,9 +57,11 @@ function PureFieldLabel(props: LabelProps) {
 function PureFieldValue(props: ValueProps) {
 	const style = composeLabelValueStylesFromProps(props, "label");
 
+	const parsedValue = getValueFromProps(props);
+
 	return (
 		<span className="value" style={style}>
-			{props.value}
+			{parsedValue}
 		</span>
 	);
 }
@@ -72,6 +74,79 @@ function composeLabelValueStylesFromProps(props: Partial<LabelProps & ValueProps
 		color: String(origin === "value" && props.textColor || props.labelColor) || "#000",
 		overflow: "hidden",
 		textOverflow: "ellipsis",
+	}
+}
+
+function getValueFromProps(props: ValueProps) {
+	const valueAsDate = new Date(props.value);
+
+	const shouldShowDate = (
+		props.dateStyle !== undefined &&
+		props.dateStyle !== PKDateStyle.None
+	);
+	const shouldShowTime = (
+		props.timeStyle !== undefined &&
+		props.timeStyle !== PKDateStyle.None
+	);
+
+	if (isNaN(valueAsDate.getTime()) || !(shouldShowTime && shouldShowDate)) {
+		/**
+		 * Date parsing failed ("Invalid date").
+		 * Or it doesn't have to be parsed as date
+		 * We are returning directly the value
+		 * without performing any kind of parsing.
+		 */
+		return props.value;
+	}
+
+	const timeValues = [];
+
+	if (shouldShowDate) {
+		timeValues.push(getDateValueFromDateStyle(props.dateStyle, props.value));
+	}
+
+	if (shouldShowTime) {
+		timeValues.push(getTimeValueFromTimeStyle(props.timeStyle, props.value));
+	}
+
+	return timeValues.join(" ");
+}
+
+function getDateValueFromDateStyle(dateStyle: PKDateStyle, value: Date) {
+	switch (dateStyle) {
+		case PKDateStyle.Short:
+			// @TODO: Parse Date as short
+			return value;
+		case PKDateStyle.Medium:
+			// @TODO: Parse Date as medium
+			return value;
+		case PKDateStyle.Long:
+			// @TODO: Parse Date as long
+			return value;
+		case PKDateStyle.Full:
+			// @TODO: Parse Date as full
+			return value;
+		default:
+			return value;
+	}
+}
+
+function getTimeValueFromTimeStyle(timeStyle: PKDateStyle, value: Date) {
+	switch (timeStyle) {
+		case PKDateStyle.Short:
+			// @TODO: Parse Date as short
+			return value;
+		case PKDateStyle.Medium:
+			// @TODO: Parse Date as medium
+			return value;
+		case PKDateStyle.Long:
+			// @TODO: Parse Date as long
+			return value;
+		case PKDateStyle.Full:
+			// @TODO: Parse Date as full
+			return value;
+		default:
+			return value;
 	}
 }
 
