@@ -15,10 +15,14 @@ interface RowProps extends Omit<RegistrableComponent, "id"> {
  * elements that are already
  * flex.
  *
+ * Well, actually you are not a
+ * row but who am I to judge you?
+ * ¯\_(ツ)_/¯
+ *
  * @param props
  */
 
-export function InlineFieldSetRow(props: RowProps) {
+export function InlineFieldsRow(props: RowProps) {
 	const elements = (
 		props.elements &&
 		props.elements.length &&
@@ -50,10 +54,10 @@ export function InlineFieldSetRow(props: RowProps) {
  * @param props
  */
 
-export default function FieldSetRow(props: RowProps) {
+export default function FieldsRow(props: RowProps) {
 	return (
 		<div className="text-fields-row">
-			<InlineFieldSetRow {...props} />
+			<InlineFieldsRow {...props} />
 		</div>
 	);
 }
