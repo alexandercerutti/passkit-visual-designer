@@ -4,6 +4,7 @@ import TextField, { TextFieldProps } from "../TextField";
 import { onRegister } from "../withRegistration";
 import ImageField, { ImageFieldProps } from "../ImageField";
 import { Field } from "../Field";
+import { InlineFieldSetRow } from "../FieldRow";
 
 type FieldsProps = ImageFieldProps & TextFieldProps;
 
@@ -18,20 +19,15 @@ export function PassHeader(props: HeaderProps) {
 	 * as per Apple maximum number of header fields
 	 */
 	const headerFields = (
-		props.headerFieldsData &&
-		props.headerFieldsData.length &&
-		props.headerFieldsData.slice(0, 3).map((fieldProps, index) => {
-			const id = `headerFields.${index}`;
-			return (
-				<FieldSet
-					key={id}
-					id={id}
-					{...fieldProps}
-					register={props.register}
-				/>
-			)
-		})
-	) || null;
+		<InlineFieldSetRow
+			elements={props.headerFieldsData}
+			maximumElementsAmounts={3}
+			areaIdentifier="headerFields"
+			register={props.register}
+			onSelect={props.onSelect}
+			onClick={props.onClick}
+		/>
+	);
 
 	return (
 		<div className="header-container">
