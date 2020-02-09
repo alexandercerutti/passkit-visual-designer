@@ -2,7 +2,7 @@ import * as React from "react";
 import withRegistration, { RegistrableComponent, onSelect } from "../withRegistration";
 import withFallback from "../EmptyField/withFallback";
 import { FieldKind } from "../../../model";
-import "./fields.less";
+import "./style.less";
 import { PKTextAlignment, PKDataDetectorType, PKDateStyle } from "../../constants";
 
 export interface FieldProps extends RegistrableComponent {

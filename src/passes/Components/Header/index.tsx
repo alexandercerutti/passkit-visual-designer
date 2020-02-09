@@ -1,5 +1,5 @@
 import * as React from "react";
-import "./header.less";
+import "./style.less";
 import TextField, { TextFieldProps } from "../TextField";
 import { onRegister } from "../withRegistration";
 import ImageField, { ImageFieldProps } from "../ImageField";

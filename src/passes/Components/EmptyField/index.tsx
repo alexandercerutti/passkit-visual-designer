@@ -1,5 +1,5 @@
 import * as React from "react";
-import "./empty.less";
+import "./style.less";
 
 export default function EmptyField(props: any) {
 	return (
