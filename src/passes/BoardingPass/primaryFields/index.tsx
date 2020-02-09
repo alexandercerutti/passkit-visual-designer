@@ -1,5 +1,5 @@
 import * as React from "react";
-import { FieldSet, FieldLabel, FieldValue } from "../../Components/ColumnField";
+import { Field, FieldLabel, FieldValue } from "../../Components/Field";
 import { PKTransitType } from "../../constants";
 import "./primaryFields.less";
 import { RegistrableComponent } from "../../Components/withRegistration";
@@ -7,7 +7,7 @@ import { PKTransitIcon } from "./icons";
 
 export interface PrimaryFieldsProps extends Omit<RegistrableComponent, "id"> {
 	className?: string;
-	primaryFieldsData: Omit<Parameters<typeof FieldSet>[0], "id">[];
+	primaryFieldsData: Omit<Parameters<typeof Field>[0], "id">[];
 	subkind: PKTransitType;
 }
 

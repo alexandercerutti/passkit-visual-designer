@@ -5,7 +5,7 @@ import { FieldKind } from "../../../model";
 import "./fields.less";
 import { PKTextAlignment, PKDataDetectorType, PKDateStyle } from "../../constants";
 
-export interface FieldSetProps extends RegistrableComponent {
+export interface FieldProps extends RegistrableComponent {
 	className?: string;
 	style?: React.CSSProperties;
 	fieldKey: string;
@@ -18,17 +18,17 @@ export interface FieldSetProps extends RegistrableComponent {
 	timeStyle?: PKDateStyle;
 }
 
-export interface LabelProps extends FieldSetProps {
+export interface LabelProps extends FieldProps {
 	labelColor?: string;
 	label?: string;
 }
 
-export interface ValueProps extends FieldSetProps {
+export interface ValueProps extends FieldProps {
 	value: any;
 	textColor?: string;
 }
 
-export function PureFieldSet(props: LabelProps & ValueProps) {
+export function PureField(props: LabelProps & ValueProps) {
 	return (
 		<div
 			style={props.style || {}}
@@ -150,6 +150,6 @@ function getTimeValueFromTimeStyle(timeStyle: PKDateStyle, value: Date) {
 	}
 }
 
-export const FieldSet = withRegistration(withFallback(PureFieldSet, ["value", "fieldKey"]), FieldKind.FIELDS);
+export const Field = withRegistration(withFallback(PureField, ["value", "fieldKey"]), FieldKind.FIELDS);
 export const FieldLabel = withRegistration(withFallback(PureFieldLabel, ["label", "fieldKey"]), FieldKind.FIELDS);
 export const FieldValue = withRegistration(withFallback(PureFieldValue, ["value", "fieldKey"]), FieldKind.FIELDS);
