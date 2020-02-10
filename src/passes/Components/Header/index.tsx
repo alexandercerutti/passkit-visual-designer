@@ -21,7 +21,7 @@ export function PassHeader(props: HeaderProps) {
 	const headerFields = (
 		<InlineFieldsRow
 			elements={props.headerFieldsData}
-			maximumElementsAmounts={3}
+			maximumElementsAmount={3}
 			areaIdentifier="headerFields"
 			register={props.register}
 			onSelect={props.onSelect}

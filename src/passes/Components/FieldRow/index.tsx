@@ -5,7 +5,7 @@ import { RegistrableComponent } from "../withRegistration";
 
 interface RowProps extends Omit<RegistrableComponent, "id"> {
 	areaIdentifier: string;
-	maximumElementsAmounts: number;
+	maximumElementsAmount: number;
 	elements: Omit<Parameters<typeof Field>[0], "id">[];
 }
 
@@ -27,9 +27,9 @@ export function InlineFieldsRow(props: RowProps) {
 		props.elements &&
 		props.elements.length &&
 		(
-			props.maximumElementsAmounts &&
-				props.maximumElementsAmounts > 0
-				? props.elements.slice(0, props.maximumElementsAmounts)
+			props.maximumElementsAmount &&
+				props.maximumElementsAmount > 0
+				? props.elements.slice(0, props.maximumElementsAmount)
 				: props.elements
 		).map((data, index) => (
 			<Field
