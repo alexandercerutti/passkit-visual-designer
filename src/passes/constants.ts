@@ -1,6 +1,12 @@
 export type PKDataDetectorType = "PKDataDetectorTypePhoneNumber" | "PKDataDetectorTypeLink" | "PKDataDetectorTypeAddress" | "PKDataDetectorTypeCalendarEvent";
 
-export type PKDateStyle = "PKDateStyleNone" | "PKDateStyleShort" | "PKDateStyleMedium" | "PKDateStyleLong" | "PKDateStyleFull";
+export enum PKDateStyle {
+	"None", /** ??? */
+	"Short", /** “11/23/37” or “3:30 PM”. */
+	"Medium", /** “Nov 23, 1937” or “3:30:32 PM” */
+	"Long", /** “November 23, 1937” or “3:30:32 PM PST” */
+	"Full" 	/** “Tuesday, April 12, 1952 AD” or “3:30:42 PM Pacific Standard Time” */
+}
 
 export enum PKTransitType {
 	"Air",
