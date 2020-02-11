@@ -13,7 +13,13 @@
 	.value-row {
 		display: grid;
 		grid-template-columns: [full-start] minmax(0, 1fr) [main-start] minmax(0, 25px) [main-end] minmax(0, 1fr) [full-end];
+		grid-column-gap: 15px;
+		align-items: center;
 		margin-top: 4px;
+
+		& > .empty {
+			height: 50px;
+		}
 
 		& > .value {
 			line-height: 22pt;

@@ -54,13 +54,17 @@ function LabelsRow(props: PrimaryFieldsProps) {
 }
 
 function ValuesRow(props: PrimaryFieldsProps) {
-	const [from, to] = (
+	const primaryFieldsData = (
 		props.primaryFieldsData &&
-		props.primaryFieldsData.map((fieldData, index) => {
-			if (!fieldData.label) {
-				return null;
-			}
+		props.primaryFieldsData.length &&
+		props.primaryFieldsData
+	) || undefined;
 
+	const [from, to] = (
+		(
+			primaryFieldsData ||
+			[{}, {}] as typeof props.primaryFieldsData
+		).map((fieldData, index) => {
 			return (
 				<FieldValue
 					value={fieldData.value}
@@ -73,9 +77,11 @@ function ValuesRow(props: PrimaryFieldsProps) {
 				/>
 			)
 		})
-	) || null;
+	);
 
-	const TransitIcon = PKTransitIcon(PKTransitType.Air);
+	const TransitIcon = PKTransitIcon(
+		primaryFieldsData && props.subkind || PKTransitType.Generic
+	);
 
 	return (
 		<div className="value-row">
@@ -83,7 +89,7 @@ function ValuesRow(props: PrimaryFieldsProps) {
 			<TransitIcon
 				width={30}
 				height={30}
-				fill="#000"
+				fill="#000" // @TODO set label color
 			/>
 			{to}
 		</div>
