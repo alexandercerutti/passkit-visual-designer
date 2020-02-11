@@ -89,7 +89,7 @@ function ValuesRow(props: PrimaryFieldsProps) {
 			<TransitIcon
 				width={30}
 				height={30}
-				fill="#000" // @TODO set label color
+				fill={"#d2d2d2"} // @TODO set label color
 			/>
 			{to}
 		</div>
