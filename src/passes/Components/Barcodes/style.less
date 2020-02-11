@@ -1,7 +1,21 @@
 .barcode {
 	display: flex;
-    align-items: flex-end;
     flex-grow: 1;
     align-self: center;
-    padding-bottom: 15px;
+	padding-bottom: 15px;
+
+	& > .fallback {
+		background-color: #d2d2d2;
+		align-self: flex-end;
+
+		&.squarecode {
+			width: 100px;
+			height: 100px;
+		}
+
+		&.barcode {
+			width: 208px;
+			height: 35px;
+		}
+	}
 }

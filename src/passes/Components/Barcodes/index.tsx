@@ -4,10 +4,16 @@ import QRCode from "./qr-code";
 import Code128 from "./code128";
 import PDF417 from "./pdf417";
 import Aztec from "./aztec";
+import { EmptyBarcode, EmptySquareCode } from "./empty";
 import "./style.less";
 
-export default (props: { format: PKBarcodeFormat }) => {
-	let component: JSX.Element = selectComponentFromFormat(props.format);
+interface BarcodeProps {
+	format: PKBarcodeFormat;
+	fallbackKind: "square" | "rect";
+}
+
+export default (props: BarcodeProps) => {
+	const component: JSX.Element = selectComponentFromFormat(props.format, props.fallbackKind);
 
 	if (!component) {
 		return null;
@@ -20,7 +26,7 @@ export default (props: { format: PKBarcodeFormat }) => {
 	);
 };
 
-function selectComponentFromFormat(format: PKBarcodeFormat) {
+function selectComponentFromFormat(format: PKBarcodeFormat, fallbackFormat: "square" | "rect") {
 	switch (format) {
 		case PKBarcodeFormat.Aztec:
 			return <Aztec />;
@@ -31,6 +37,10 @@ function selectComponentFromFormat(format: PKBarcodeFormat) {
 		case PKBarcodeFormat.QR:
 			return <QRCode />;
 		default:
-			return null;
+			if (fallbackFormat === "square") {
+				return <EmptySquareCode />
+			}
+
+			return <EmptyBarcode />
 	}
 }
