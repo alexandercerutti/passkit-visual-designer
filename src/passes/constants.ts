@@ -22,3 +22,11 @@ export enum PKTextAlignment {
 	"Right" = "right",
 	"Natural" = "start",
 }
+
+export enum PKBarcodeFormat {
+	"Code128" = "code128",
+	"PDF417" = "pdf417",
+	"QR" = "qrcode",
+	"Aztec" = "actec",
+	"None" = "none",
+}
