@@ -2,6 +2,7 @@ import * as React from "react";
 import { Field } from "../Field";
 import "./style.less";
 import { RegistrableComponent } from "../withRegistration";
+import withFallback from "../EmptyField/withFallback";
 
 interface RowProps extends Omit<RegistrableComponent, "id"> {
 	areaIdentifier: string;
@@ -22,7 +23,7 @@ interface RowProps extends Omit<RegistrableComponent, "id"> {
  * @param props
  */
 
-export function InlineFieldsRow(props: RowProps) {
+export function PureInlineFieldsRow(props: RowProps) {
 	const elements = (
 		props.elements &&
 		props.elements.length &&
@@ -61,3 +62,5 @@ export default function FieldsRow(props: RowProps) {
 		</div>
 	);
 }
+
+export const InlineFieldsRow = withFallback<RowProps>(PureInlineFieldsRow, ["elements", "areaIdentifier"]);
