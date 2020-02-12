@@ -4,20 +4,17 @@
 	display: flex;
 	flex-direction: row;
 	align-items: center;
-	min-height: 25px;
+	min-height: 20px;
 	width: 100%;
 	flex-wrap: wrap;
 	overflow: hidden;
 
+	& > .empty:first-child, & > .empty:last-child {
+		width: 40px;
+		flex-grow: 0;
+	}
+
 	& > *:not(:last-child) {
 		margin-right: @fieldsSpacing;
-	}
-
-	& > *:first-child {
-		border-top-left-radius: 10px;
-	}
-
-	& > *:last-child {
-		border-top-right-radius: 10px;
 	}
 }
