@@ -105,7 +105,7 @@ export default class BoardingPass extends React.Component<BoardingPassProps> {
 					}
 				 */
 				/>
-				<Footer footerImage={{}} barcodeProps={{ format: PKBarcodeFormat.QR, fallbackKind: "square" }} />
+				<Footer footerImage={{}} barcodeProps={{ format: PKBarcodeFormat.None, fallbackKind: "square" }} />
 			</>
 		);
 	}

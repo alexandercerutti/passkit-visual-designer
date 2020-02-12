@@ -12,8 +12,10 @@ interface FooterProps {
 export default (props: FooterProps) => {
 	return (
 		<div className="footer">
-			<ImageField {...props.footerImage} id="footer.image" />
-			<Barcode {...props.barcodeProps} fallbackKind="square" />
+			<div>
+				<ImageField {...props.footerImage} id="footer.image" />
+				<Barcode {...props.barcodeProps} fallbackKind="square" />
+			</div>
 		</div>
 	);
 }
