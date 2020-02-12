@@ -7,7 +7,7 @@ import Aztec from "./aztec";
 import { EmptyBarcode, EmptySquareCode } from "./empty";
 import "./style.less";
 
-interface BarcodeProps {
+export interface BarcodeProps {
 	format: PKBarcodeFormat;
 	fallbackKind: "square" | "rect";
 }
