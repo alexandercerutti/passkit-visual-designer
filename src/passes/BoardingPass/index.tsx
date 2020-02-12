@@ -4,7 +4,7 @@ import { PassHeader } from "../Components/Header";
 import { PKTransitType, PKBarcodeFormat } from "../constants";
 import PrimaryFields from "./primaryFields";
 import FieldsRow from "../Components/FieldRow";
-import Barcode from "../Components/Barcodes";
+import Footer from "./footerRow";
 
 interface BoardingPassProps extends PassProps {
 	subKind: PKTransitType;
@@ -105,7 +105,7 @@ export default class BoardingPass extends React.Component<BoardingPassProps> {
 					}
 				 */
 				/>
-				<Barcode format={PKBarcodeFormat.None} fallbackKind="square" />
+				<Footer footerImage={{}} barcodeProps={{ format: PKBarcodeFormat.QR, fallbackKind: "square" }} />
 			</>
 		);
 	}
