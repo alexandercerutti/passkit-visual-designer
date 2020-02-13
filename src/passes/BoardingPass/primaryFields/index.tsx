@@ -12,8 +12,6 @@ export interface PrimaryFieldsProps extends Omit<RegistrableComponent, "id"> {
 }
 
 export default function PrimaryFields(props: PrimaryFieldsProps) {
-	const [from, to] = props.primaryFieldsData || [null, null];
-
 	return (
 		<PrimaryFieldsWrapper {...props}>
 			<LabelsRow {...props} />
