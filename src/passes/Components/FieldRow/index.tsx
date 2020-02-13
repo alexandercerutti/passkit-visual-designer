@@ -23,15 +23,15 @@ interface RowProps extends Omit<RegistrableComponent, "id"> {
  * @param props
  */
 
-export function PureInlineFieldsRow(props: RowProps) {
+export function InlineFieldsRow(props: RowProps) {
 	const elements = (
-		props.elements &&
-		props.elements.length &&
 		(
-			props.maximumElementsAmount &&
-				props.maximumElementsAmount > 0
-				? props.elements.slice(0, props.maximumElementsAmount)
-				: props.elements
+			props.elements &&
+			props.elements.length && (
+				(props.maximumElementsAmount || 0) > 0
+					? props.elements.slice(0, props.maximumElementsAmount)
+					: props.elements
+			) || [{}] as RowProps["elements"]
 		).map((data, index) => (
 			<Field
 				key={`${props.areaIdentifier}.${index}`}
@@ -39,7 +39,7 @@ export function PureInlineFieldsRow(props: RowProps) {
 				{...data}
 			/>
 		))
-	) || null;
+	);
 
 	return (
 		<>
@@ -62,5 +62,3 @@ export default function FieldsRow(props: RowProps) {
 		</div>
 	);
 }
-
-export const InlineFieldsRow = withFallback<RowProps>(PureInlineFieldsRow, ["elements", "areaIdentifier"]);
