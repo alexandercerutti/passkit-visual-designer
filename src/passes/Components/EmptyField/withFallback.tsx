@@ -1,10 +1,12 @@
 import * as React from "react";
 import EmptyField from ".";
+import { RegistrableComponent, onSelect } from "../withRegistration";
 
-export default function withFallback<P = any>(WrappedComponent: React.ComponentType<P>, requiredValues: (keyof P)[]) {
+export default function withFallback<P extends RegistrableComponent>(WrappedComponent: React.ComponentType<P>, requiredValues: (keyof P)[]) {
 	return (props: P) => {
 		if (shouldFallbackRender(props, requiredValues)) {
-			return <EmptyField {...props} />;
+			const select = props.onClick || (() => { }) as onSelect;
+			return <EmptyField onClick={select} />;
 		}
 
 		return <WrappedComponent {...props} />;

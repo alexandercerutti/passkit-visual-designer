@@ -7,7 +7,7 @@ import { PKTransitIcon } from "./icons";
 
 export interface PrimaryFieldsProps extends Omit<RegistrableComponent, "id"> {
 	className?: string;
-	primaryFieldsData: Omit<Parameters<typeof Field>[0], "id">[];
+	primaryFieldsData: Omit<Parameters<typeof Field>[0], keyof RegistrableComponent>[];
 	subkind: PKTransitType;
 }
 
@@ -22,12 +22,10 @@ export default function PrimaryFields(props: PrimaryFieldsProps) {
 
 function LabelsRow(props: PrimaryFieldsProps) {
 	const labels = (
-		props.primaryFieldsData &&
-		props.primaryFieldsData.map((fieldData, index) => {
-			if (!fieldData.label) {
-				return null;
-			}
-
+		(
+			props.primaryFieldsData &&
+			props.primaryFieldsData || [{}, {}] as PrimaryFieldsProps["primaryFieldsData"]
+		).map((fieldData, index) => {
 			const id = `primaryFields.${index}.label`;
 
 			return (
@@ -38,11 +36,12 @@ function LabelsRow(props: PrimaryFieldsProps) {
 					fieldKey={fieldData.fieldKey}
 					key={id}
 					id={id}
-					onSelect={fieldData.onSelect}
+					onClick={props.onClick}
+					register={props.register}
 				/>
 			)
 		})
-	) || null;
+	);
 
 	return (
 		<div className="label-row">
@@ -71,7 +70,8 @@ function ValuesRow(props: PrimaryFieldsProps) {
 					fieldKey={fieldData.fieldKey}
 					key={`primaryFields.${index}.value`}
 					id={`primaryFields.${index}.value`}
-					onSelect={fieldData.onSelect}
+					onClick={props.onClick}
+					register={props.register}
 				/>
 			)
 		})

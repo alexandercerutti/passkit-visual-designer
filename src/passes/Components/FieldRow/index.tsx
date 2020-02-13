@@ -2,7 +2,6 @@ import * as React from "react";
 import { Field } from "../Field";
 import "./style.less";
 import { RegistrableComponent } from "../withRegistration";
-import withFallback from "../EmptyField/withFallback";
 
 interface RowProps extends Omit<RegistrableComponent, "id"> {
 	areaIdentifier: string;
@@ -36,6 +35,8 @@ export function InlineFieldsRow(props: RowProps) {
 			<Field
 				key={`${props.areaIdentifier}.${index}`}
 				id={`${props.areaIdentifier}.${index}`}
+				onClick={props.onClick}
+				register={props.register}
 				{...data}
 			/>
 		))

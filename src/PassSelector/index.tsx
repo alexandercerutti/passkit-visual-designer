@@ -24,7 +24,10 @@ export class PassSelector extends React.PureComponent<SelectorProps> {
 			return (
 				<ClickablePass
 					key={PassKind[pass]}
-					onClick={() => this.props.onPassKindSelection(PassKind[pass])}
+					onClick={(e) => {
+						e.stopPropagation();
+						this.props.onPassKindSelection(PassKind[pass])
+					}}
 					kind={PassKind[pass]}
 				/>
 			);

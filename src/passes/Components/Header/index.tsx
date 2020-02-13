@@ -24,7 +24,6 @@ export function PassHeader(props: HeaderProps) {
 			maximumElementsAmount={3}
 			areaIdentifier="headerFields"
 			register={props.register}
-			onSelect={props.onSelect}
 			onClick={props.onClick}
 		/>
 	);
@@ -36,13 +35,15 @@ export function PassHeader(props: HeaderProps) {
 				register={props.register}
 				// src={props.src || "https://cdn.freebiesupply.com/logos/large/2x/trenitalia-logo-png-transparent.png"}
 				src={props.src}
-			// width={"30px"}
+				// width={"30px"}
+				onClick={props.onClick}
 			/>
 			<TextField
 				id="header.logoText"
 				className="logo-text"
 				content={props.content || ""}
 				register={props.register}
+				onClick={props.onClick}
 			/>
 			{headerFields}
 		</div>

@@ -29,13 +29,23 @@ export interface ValueProps extends FieldProps {
 }
 
 export function PureField(props: LabelProps & ValueProps) {
+	/**
+	 * We don't want to pass the click event to children.
+	 * They will still accept it but only if used separately.
+	 */
+	const propsWithoutClickEvent = Object.assign({}, props);
+	delete propsWithoutClickEvent["onClick"];
+
+	const className = `${props.className || ""} field field${props.fieldKey && `-${props.fieldKey}`}`.trim();
+
 	return (
 		<div
 			style={props.style || {}}
-			className={`${props.className || ""} field field${props.fieldKey && `-${props.fieldKey}`}`.trim()}
+			className={className}
+			onClick={() => props.onClick && props.onClick(props.id)}
 		>
-			<PureFieldLabel {...props} />
-			<PureFieldValue {...props} />
+			<PureFieldLabel {...propsWithoutClickEvent} />
+			<PureFieldValue {...propsWithoutClickEvent} />
 		</div>
 	);
 }
@@ -47,7 +57,7 @@ function PureFieldLabel(props: LabelProps) {
 		<span
 			className="label"
 			style={style}
-			onClick={() => props.onClick(props.id)}
+			onClick={() => props.onClick && props.onClick(props.id)}
 		>
 			{props.label || ""}
 		</span>
@@ -60,7 +70,11 @@ function PureFieldValue(props: ValueProps) {
 	const parsedValue = getValueFromProps(props);
 
 	return (
-		<span className="value" style={style}>
+		<span
+			className="value"
+			style={style}
+			onClick={() => props.onClick && props.onClick(props.id)}
+		>
 			{parsedValue}
 		</span>
 	);

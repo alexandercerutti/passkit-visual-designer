@@ -6,8 +6,12 @@ export type onSelect = (id: string) => void;
 
 export interface RegistrableComponent {
 	id: string;
-	onSelect?: onSelect;
 	register?: onRegister;
+
+	// This will be returned to the component
+	// and will be a function that will call onSelect.
+	// This can be used in the "pure functional components"
+	onClick?: onSelect;
 }
 
 function onSafeSelect(id: string, onSelectFn?: onSelect) {
@@ -54,6 +58,6 @@ export default function withRegistration<P extends RegistrableComponent>(Wrapped
 		const withoutOnSelect = Object.assign({}, props);
 		delete withoutOnSelect["onSelect"];
 
-		return <WrappedField {...withoutOnSelect} onClick={() => props.register && onSafeSelect(props.id, props.onSelect)} />
+		return <WrappedField {...withoutOnSelect} onClick={() => props.register && onSafeSelect(props.id, props.onClick)} />
 	}
 }
