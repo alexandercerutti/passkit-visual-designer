@@ -4,6 +4,7 @@ import { PKTransitType } from "../../constants";
 import "./primaryFields.less";
 import { RegistrableComponent } from "../../Components/withRegistration";
 import { PKTransitIcon } from "./icons";
+import { getSafeFieldData } from "../../utils";
 
 export interface PrimaryFieldsProps extends Omit<RegistrableComponent, "id"> {
 	className?: string;
@@ -21,11 +22,9 @@ export default function PrimaryFields(props: PrimaryFieldsProps) {
 }
 
 function LabelsRow(props: PrimaryFieldsProps) {
-	const labels = (
-		(
-			props.primaryFieldsData &&
-			props.primaryFieldsData || [{}, {}] as PrimaryFieldsProps["primaryFieldsData"]
-		).map((fieldData, index) => {
+	const labels = getSafeFieldData(props.primaryFieldsData, 2)
+		.slice(0, 2)
+		.map((fieldData, index) => {
 			const id = `primaryFields.${index}.label`;
 
 			return (
@@ -40,8 +39,7 @@ function LabelsRow(props: PrimaryFieldsProps) {
 					register={props.register}
 				/>
 			)
-		})
-	);
+		});
 
 	return (
 		<div className="label-row">
@@ -51,17 +49,9 @@ function LabelsRow(props: PrimaryFieldsProps) {
 }
 
 function ValuesRow(props: PrimaryFieldsProps) {
-	const primaryFieldsData = (
-		props.primaryFieldsData &&
-		props.primaryFieldsData.length &&
-		props.primaryFieldsData
-	) || undefined;
-
-	const [from, to] = (
-		(
-			primaryFieldsData ||
-			[{}, {}] as typeof props.primaryFieldsData
-		).map((fieldData, index) => {
+	const [from, to] = getSafeFieldData(props.primaryFieldsData, 2)
+		.slice(0, 2)
+		.map((fieldData, index) => {
 			return (
 				<FieldValue
 					value={fieldData.value}
@@ -74,11 +64,10 @@ function ValuesRow(props: PrimaryFieldsProps) {
 					register={props.register}
 				/>
 			)
-		})
-	);
+		});
 
 	const TransitIcon = PKTransitIcon(
-		primaryFieldsData && props.subkind || PKTransitType.Generic
+		props.primaryFieldsData && props.subkind || PKTransitType.Generic
 	);
 
 	return (
