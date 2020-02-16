@@ -3,6 +3,7 @@ import "./style.less";
 import withRegistration, { RegistrableComponent } from "../withRegistration";
 import { FieldKind } from "../../../model";
 import withFallback from "../EmptyField/withFallback";
+import { concatClassNames } from "../../utils";
 
 export interface TextFieldProps extends RegistrableComponent {
 	content?: string;
@@ -10,8 +11,10 @@ export interface TextFieldProps extends RegistrableComponent {
 }
 
 function PureTextField(props: TextFieldProps) {
+	const className = concatClassNames("text-field", props.className);
+
 	return (
-		<div className={`${props.className || ""} text-field`.trim()}>
+		<div className={className}>
 			{props.content}
 		</div>
 	);

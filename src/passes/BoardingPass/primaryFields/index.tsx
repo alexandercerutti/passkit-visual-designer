@@ -4,7 +4,7 @@ import { PKTransitType } from "../../constants";
 import "./primaryFields.less";
 import { RegistrableComponent } from "../../Components/withRegistration";
 import { PKTransitIcon } from "./icons";
-import { getSafeFieldData } from "../../utils";
+import { getSafeFieldData, concatClassNames } from "../../utils";
 
 export interface PrimaryFieldsProps extends Omit<RegistrableComponent, "id"> {
 	className?: string;
@@ -85,7 +85,7 @@ function ValuesRow(props: PrimaryFieldsProps) {
 
 function PrimaryFieldsWrapper(props: PrimaryFieldsProps & { children?: React.ReactNode[] }) {
 	return (
-		<div className={`${props.className || ""} primary-container`.trim()}>
+		<div className={concatClassNames("primary-container", props.className)}>
 			{props.children}
 		</div>
 	);

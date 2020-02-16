@@ -36,7 +36,7 @@ export function PureField(props: LabelProps & ValueProps) {
 	const propsWithoutClickEvent = Object.assign({}, props);
 	delete propsWithoutClickEvent["onClick"];
 
-	const className = `${props.className || ""} field field${props.fieldKey && `-${props.fieldKey}`}`.trim();
+	const className = concatClassNames("field", props.className, props.fieldKey && `field-${props.fieldKey}`);
 
 	return (
 		<div
