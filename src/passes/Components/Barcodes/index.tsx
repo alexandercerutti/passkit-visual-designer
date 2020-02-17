@@ -10,6 +10,10 @@ import "./style.less";
 export interface BarcodeProps {
 	format: PKBarcodeFormat;
 	fallbackKind: "square" | "rect";
+
+	// @TODO
+	QRMessage?: string;
+	expiredOrVoid?: boolean;
 }
 
 export default (props: BarcodeProps) => {
