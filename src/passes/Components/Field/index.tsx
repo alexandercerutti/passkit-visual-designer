@@ -4,6 +4,7 @@ import withFallback from "../EmptyField/withFallback";
 import { FieldKind } from "../../../model";
 import "./style.less";
 import { PKTextAlignment, PKDataDetectorType, PKDateStyle } from "../../constants";
+import { concatClassNames } from "../../utils";
 
 export interface FieldProps extends RegistrableComponent {
 	className?: string;
