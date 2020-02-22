@@ -1,0 +1,30 @@
+.coupon .primaryFields {
+	position: relative;
+	/** Primary Fields overflow the padding */
+    width: calc(100% + 20px);
+    height: 90px;
+    margin-top: 10px;
+    left: -10px;
+
+	& > .row {
+		position: absolute;
+		display: flex;
+		flex-direction: column;
+		height: 100%;
+		justify-content: flex-start;
+		padding-left: 10px;
+		padding-top: 15px;
+		box-sizing: border-box;
+
+		& > .value {
+			text-transform: none;
+			font-size: 30pt;
+			line-height: 30pt;
+		}
+
+		& > .label {
+			text-transform: none;
+			font-size: 8pt;
+		}
+	}
+}
