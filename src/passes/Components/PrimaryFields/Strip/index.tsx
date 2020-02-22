@@ -37,7 +37,7 @@ export default function StripPrimaryFields(props: PrimaryFieldsProps): JSX.Eleme
 		})
 
 	return (
-		<div className="primaryFields">
+		<div className="strip-primaryFields">
 			<div className="row">
 				{data}
 			</div>
