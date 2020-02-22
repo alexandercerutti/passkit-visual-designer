@@ -4,10 +4,18 @@ import { PassHeader } from "../Components/Header";
 import { PKTransitType, PKBarcodeFormat } from "../constants";
 import PrimaryFields from "./primaryFields";
 import FieldsRow from "../Components/FieldRow";
-import Footer from "./footerRow";
+import Footer from "../Components/Footer";
+import { FieldKind } from "../../model";
+import ImageField from "../Components/ImageField";
+import Barcode from "../Components/Barcodes";
 
-interface BoardingPassProps extends PassProps {
+interface BoardingPassProps extends Omit<PassProps, "onClick"> {
 	subKind: PKTransitType;
+}
+
+function fakeRegister(kind: FieldKind, id: string) {
+	console.log("registering", kind, id);
+	return true;
 }
 
 export default class BoardingPass extends React.Component<BoardingPassProps> {
@@ -21,33 +29,33 @@ export default class BoardingPass extends React.Component<BoardingPassProps> {
 				<PassHeader
 					withSeparator
 					headerFieldsData={[]}
-					onSelect={(id: string) => console.log("Selected", id)}
-					register={(kind, id) => true}
+					onClick={(id: string) => console.log("Selected", id)}
+					register={fakeRegister}
 
 				/**
-				{
-					label: "Data",
-					fieldKey: "departing_date",
-					value: "10/04/1996",
-				}, {
-					label: "Ora",
-					fieldKey: "departing_time",
-					value: "10:30",
-				}, {
-					label: "test",
-					fieldKey: "departing_time",
-					value: "10:30",
-				}
+{
+						label: "Data",
+						fieldKey: "departing_date",
+						value: "10/04/1996",
+					}, {
+						label: "Ora",
+						fieldKey: "departing_time",
+						value: "10:30",
+					}, {
+						label: "test",
+						fieldKey: "departing_time",
+						value: "10:30",
+					}
 				 */
 				/>
 				<PrimaryFields
 					subkind={this.props.subKind || PKTransitType.Generic}
 					primaryFieldsData={[]}
-					onSelect={(id: string) => console.log("Selected", id)}
-					register={(kind, id) => true}
+					onClick={(id: string) => console.log("Selected", id)}
+					register={fakeRegister}
 
 				/**
-				 * {
+				{
 					fieldKey: "starting_point",
 					value: "ARN",
 					label: "stockholm-arlanda"
@@ -63,6 +71,8 @@ export default class BoardingPass extends React.Component<BoardingPassProps> {
 					areaIdentifier="auxiliaryFields"
 					maximumElementsAmount={-1}
 					elements={[]}
+					onClick={(id: string) => console.log("Selected", id)}
+					register={fakeRegister}
 
 				/**
 				 * 	{
@@ -86,8 +96,10 @@ export default class BoardingPass extends React.Component<BoardingPassProps> {
 					areaIdentifier="secondaryFields"
 					maximumElementsAmount={-1}
 					elements={[]}
+					onClick={(id: string) => console.log("Selected", id)}
+					register={fakeRegister}
 				/**
-				 * 	{
+				  	{
 						"fieldKey": "gateClose",
 						"label": "Il Gate Chiude",
 						"dateStyle": PKDateStyle.None,
@@ -106,7 +118,14 @@ export default class BoardingPass extends React.Component<BoardingPassProps> {
 					}
 				 */
 				/>
-				<Footer footerImage={{}} barcodeProps={{ format: PKBarcodeFormat.None, fallbackKind: "square" }} />
+				<Footer>
+					<ImageField
+						onClick={(id: string) => console.log("Selected", id)}
+						register={fakeRegister}
+						id="footer.image"
+					/>
+					<Barcode format={PKBarcodeFormat.None} fallbackKind="rect" />
+				</Footer>
 			</>
 		);
 	}
