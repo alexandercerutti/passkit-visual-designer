@@ -31,7 +31,7 @@ export default class Pass extends React.Component<PassProps> {
 		console.log(this.props, PassComponent);
 
 		return (
-			<div className="pass select" onClick={this.props.onClick}>
+			<div className={`pass select ${this.props.kind.toLowerCase()}`} onClick={this.props.onClick}>
 				<div className="content">
 					<PassComponent {...PassProps(this.props)} />
 				</div>
