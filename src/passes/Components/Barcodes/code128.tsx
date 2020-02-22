@@ -1,7 +1,7 @@
 import * as React from "react";
 
 export default () => (
-	<svg x="0" y="0" width="100%" height="30" viewBox="0.0000 0.0000 117 20" xmlns="http://www.w3.org/2000/svg">
+	<svg x="0" y="0" width="100%" height="100%" viewBox="0.0000 0.0000 117 20" xmlns="http://www.w3.org/2000/svg">
 		<rect x="0.0000" width="1.0583" height="20.1864" />
 		<rect x="1.5875" width="0.5292" height="20.1864" />
 		<rect x="3.1750" width="0.5292" height="20.1864" />
