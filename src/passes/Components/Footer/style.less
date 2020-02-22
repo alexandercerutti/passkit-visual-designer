@@ -1,12 +1,14 @@
 .footer {
 	display: flex;
-	align-items: center;
+/* 	align-items: center;*/
 	width: 100%;
 	flex-grow: 1;
-	justify-content: center;
 
 	& > div {
 		align-self: flex-end;
+		width: 100%;
+		display: flex;
+		flex-direction: column;
 	}
 
 	& .empty {
@@ -14,9 +16,5 @@
 		height: 18px;
 		flex-grow: 0;
 		margin: 10px 0 5px 0;
-	}
-
-	& .barcode {
-		flex-grow: 0;
 	}
 }

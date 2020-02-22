@@ -1,9 +1,9 @@
 import * as React from "react";
 
 export const EmptySquareCode = () => (
-	<div className="fallback squarecode" />
+	<div className="fallback square" />
 );
 
 export const EmptyBarcode = () => (
-	<div className="fallback barcode" />
+	<div className="fallback bar" />
 )

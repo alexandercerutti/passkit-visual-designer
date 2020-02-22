@@ -1,24 +1,30 @@
 .barcode {
 	display: flex;
-    flex-grow: 1;
-    align-self: center;
 	box-sizing: border-box;
-    background: #FFF;
-    border-radius: 5px;
-    padding: 7px;
+	justify-content: center;
+	width: 100%;
 
-	& > .fallback {
-		background-color: #d2d2d2;
-		align-self: flex-end;
+	/* Using another div to contain fallback barcodes */
+	&.none.rect > div {
+		width: 100%;
+	}
 
-		&.squarecode {
-			width: 100px;
-			height: 100px;
-		}
+	& > div {
+		border-radius: 5px;
+		background-color: #FFF;
+		padding: 7px;
 
-		&.barcode {
-			width: 208px;
-			height: 35px;
+		& > .fallback {
+			background-color: #d2d2d2;
+
+			&.square {
+				width: 100px;
+				height: 100px;
+			}
+
+			&.bar {
+				height: 35px;
+			}
 		}
 	}
 }
