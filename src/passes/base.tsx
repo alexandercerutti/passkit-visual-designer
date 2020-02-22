@@ -2,6 +2,10 @@ import * as React from "react";
 import "./base.less";
 import { PassKind } from "../model";
 import BoardingPass from "./BoardingPass";
+import { Coupon } from "./Coupon";
+import { EventTicket } from "./EventTicket";
+import { Generic } from "./Generic";
+import { StoreCard } from "./StoreCard";
 
 export interface PassProps {
 	kind: PassKind;
@@ -18,9 +22,14 @@ export default class Pass extends React.Component<PassProps> {
 		switch (kind) {
 			case PassKind.BOARDING_PASS:
 				return BoardingPass
-
-			default:
-				return BoardingPass;
+			case PassKind.COUPON:
+				return Coupon;
+			case PassKind.EVENT:
+				return EventTicket;
+			case PassKind.GENERIC:
+				return Generic;
+			case PassKind.STORE:
+				return StoreCard;
 		}
 	}
 
