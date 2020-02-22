@@ -1,5 +1,6 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const forkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 
 module.exports = {
 	mode: "development",
@@ -12,14 +13,25 @@ module.exports = {
 	module: {
 		rules: [{
 			test: /\.jsx?$/,
-			loader: "babel-loader",
+			use: [{
+				loader: "thread-loader",
+			}, {
+				loader: "babel-loader",
+				options: {
+					presets: ["@babel/preset-react"]
+				}
+			}],
 			exclude: /(node_modules)/,
-			options: {
-				presets: ["@babel/preset-react"]
-			}
 		}, {
 			test: /\.tsx?$/,
-			loader: "ts-loader"
+			use: [{
+				loader: "thread-loader",
+			}, {
+				loader: "ts-loader",
+				options: {
+					happyPackMode: true
+				}
+			}]
 		}, {
 			test: /\.less$/,
 			use: [{
@@ -48,6 +60,7 @@ module.exports = {
 			title: "Passkit Visual Designer",
 			template: "./src/public/index.html",
 			filename: "./index.html"
-		})
+		}),
+		new forkTsCheckerWebpackPlugin({ checkSyntacticErrors: true })
 	]
 };
