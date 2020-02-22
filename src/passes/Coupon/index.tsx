@@ -1,7 +1,7 @@
 import * as React from "react";
 import { PassProps } from "../base";
 import { PassHeader } from "../Components/Header";
-import PrimaryFields from "./primaryFields";
+import StripPrimaryFields from "../Components/PrimaryFields/Strip";
 import FieldsRow from "../Components/FieldRow";
 import Barcode from "../Components/Barcodes";
 import { PKBarcodeFormat } from "../constants";
@@ -15,7 +15,7 @@ export function Coupon(props: CouponProps): JSX.Element {
 	return (
 		<>
 			<PassHeader />
-			<PrimaryFields
+			<StripPrimaryFields
 				primaryFieldsData={[]}
 			/>
 			{/* 			{

@@ -1,8 +1,8 @@
 import * as React from "react";
-import { RegistrableComponent } from "../../Components/withRegistration";
-import { Field, FieldValue, FieldLabel } from "../../Components/Field";
-import { getSafeFieldData } from "../../utils";
-import ImageField from "../../Components/ImageField";
+import { RegistrableComponent } from "../../withRegistration";
+import { Field, FieldValue, FieldLabel } from "../../Field";
+import { getSafeFieldData } from "../../../utils";
+import ImageField from "../../ImageField";
 import "./style.less";
 
 export interface PrimaryFieldsProps extends Omit<RegistrableComponent, "id"> {
@@ -11,7 +11,7 @@ export interface PrimaryFieldsProps extends Omit<RegistrableComponent, "id"> {
 	stripSrc?: string;
 }
 
-export default function PrimaryFields(props: PrimaryFieldsProps): JSX.Element {
+export default function StripPrimaryFields(props: PrimaryFieldsProps): JSX.Element {
 	const data = getSafeFieldData(props.primaryFieldsData, 1)
 		.slice(0, 1)
 		.map((fieldData, index) => {
