@@ -19,6 +19,7 @@ export default class BoardingPass extends React.Component<BoardingPassProps> {
 		return (
 			<>
 				<PassHeader
+					withSeparator
 					headerFieldsData={[]}
 					onSelect={(id: string) => console.log("Selected", id)}
 					register={(kind, id) => true}

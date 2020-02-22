@@ -5,12 +5,14 @@ import { onRegister } from "../withRegistration";
 import ImageField, { ImageFieldProps } from "../ImageField";
 import { Field } from "../Field";
 import { InlineFieldsRow } from "../FieldRow";
+import { concatClassNames } from "../../utils";
 
 type FieldsProps = ImageFieldProps & TextFieldProps;
 
 interface HeaderProps extends Partial<FieldsProps> {
 	register?: onRegister;
 	headerFieldsData?: Omit<Parameters<typeof Field>[0], "id">[];
+	withSeparator?: boolean;
 }
 
 export function PassHeader(props: HeaderProps) {
@@ -28,8 +30,10 @@ export function PassHeader(props: HeaderProps) {
 		/>
 	);
 
+	const className = concatClassNames("header-container", props.withSeparator && "separator" || "");
+
 	return (
-		<div className="header-container">
+		<div className={className}>
 			<ImageField
 				id="header.logo"
 				register={props.register}
