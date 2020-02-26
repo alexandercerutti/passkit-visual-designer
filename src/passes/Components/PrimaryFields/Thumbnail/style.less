@@ -1,0 +1,49 @@
+@maxHeight: 100px;
+
+.thumbnail-primaryFields {
+	display: flex;
+	width: 100%;
+	min-height: 80px;
+	max-height: @maxHeight;
+
+	& .left-column {
+		display: flex;
+		flex-direction: column;
+		flex-grow: 1;
+		flex-shrink: 1;
+
+		& > *:first-child {
+			flex-grow: 2;
+		}
+
+		& > *:not(:first-child) {
+			margin-top: 10px;
+			flex-shrink: 2;
+			flex-wrap: wrap;
+			overflow-y: hidden;
+		}
+
+		& > .text-fields-row {
+			& > .field {
+				margin-right: 10px;
+				margin-bottom: 1px;
+			}
+		}
+
+		& > .field {
+			& > .label {
+				font-weight: 500;
+			}
+
+			& > .value {
+				font-size: 10pt;
+			}
+		}
+	}
+
+	& > *:not(.left-column) {
+		flex-grow: 0;
+		flex-shrink: 0;
+		width: 65px;
+	}
+}
