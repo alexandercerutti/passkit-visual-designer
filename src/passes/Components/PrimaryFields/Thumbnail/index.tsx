@@ -5,7 +5,7 @@ import { RegistrableComponent } from "../../withRegistration";
 import { Field } from "../../Field";
 import ImageField from "../../ImageField";
 
-interface TPFProps extends Omit<RegistrableComponent, "id">, React.PropsWithChildren<any> {
+export interface TPFProps extends Omit<RegistrableComponent, "id">, React.PropsWithChildren<any> {
 	className?: string;
 	primaryFieldsData: Omit<Parameters<typeof Field>[0], keyof RegistrableComponent>[];
 	thumbnailSrc?: string;
@@ -15,8 +15,9 @@ export default function ThumbnailPrimaryField(props: TPFProps) {
 	const data = getSafeFieldData(props.primaryFieldsData, 1)
 		.slice(0, 1)
 		.map((fieldData, index) => {
+			const key = `primaryFields.${index}`;
 			return (
-				<Field {...fieldData} id={`primaryFields.${index}`} />
+				<Field {...fieldData} id={key} key={key} />
 			);
 		})
 
