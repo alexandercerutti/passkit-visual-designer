@@ -5,7 +5,7 @@ import { getSafeFieldData } from "../../../utils";
 import ImageField from "../../ImageField";
 import "./style.less";
 
-export interface PrimaryFieldsProps extends Omit<RegistrableComponent, "id"> {
+export interface PrimaryFieldsProps extends Omit<RegistrableComponent, "id">, React.PropsWithChildren<any> {
 	className?: string;
 	primaryFieldsData: Omit<Parameters<typeof Field>[0], keyof RegistrableComponent>[];
 	stripSrc?: string;
@@ -19,7 +19,7 @@ export default function StripPrimaryFields(props: PrimaryFieldsProps): JSX.Eleme
 			const valueId = `primaryFields.${index}.value`;
 
 			return (
-				<>
+				<React.Fragment key="primaryField">
 					<FieldValue
 						{...fieldData}
 						id={valueId}
@@ -32,7 +32,7 @@ export default function StripPrimaryFields(props: PrimaryFieldsProps): JSX.Eleme
 						onClick={props.onClick}
 						register={props.register}
 					/>
-				</>
+				</React.Fragment>
 			);
 		})
 
