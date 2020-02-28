@@ -41,7 +41,7 @@ export default function StripPrimaryFields(props: PrimaryFieldsProps): JSX.Eleme
 			<div className="row">
 				{data}
 			</div>
-			<ImageField src={props.stripSrc} width="100%" id="primaryFields.stripImage" />
+			<ImageField src={props.stripSrc} id="primaryFields.stripImage" />
 		</div>
 	);
 }
