@@ -8,6 +8,7 @@ import ImageField from "../../ImageField";
 interface TPFProps extends Omit<RegistrableComponent, "id">, React.PropsWithChildren<any> {
 	className?: string;
 	primaryFieldsData: Omit<Parameters<typeof Field>[0], keyof RegistrableComponent>[];
+	thumbnailSrc?: string;
 }
 
 export default function ThumbnailPrimaryField(props: TPFProps) {
@@ -29,6 +30,7 @@ export default function ThumbnailPrimaryField(props: TPFProps) {
 				id="primaryField.thumbnail"
 				height="100%"
 				className="thumbnail"
+				src={props.thumbnailSrc}
 			/>
 		</div>
 	)
