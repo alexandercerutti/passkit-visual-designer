@@ -8,7 +8,7 @@ import { PKBarcodeFormat } from "../constants";
 import Footer from "../Components/Footer";
 
 interface CouponProps extends PassProps {
-
+	src?: string
 }
 
 export function Coupon(props: CouponProps): JSX.Element {
@@ -16,6 +16,7 @@ export function Coupon(props: CouponProps): JSX.Element {
 		<>
 			<PassHeader />
 			<StripPrimaryFields
+				stripSrc={props.src}
 				primaryFieldsData={[]}
 			/>
 			{/* 			{
