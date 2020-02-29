@@ -65,6 +65,10 @@ function PureFieldLabel(props: LabelProps) {
 	);
 }
 
+/**
+ * @TODO use svg text to allow it to resize manually
+ */
+
 function PureFieldValue(props: ValueProps) {
 	const style = composeLabelValueStylesFromProps(props, "label");
 
