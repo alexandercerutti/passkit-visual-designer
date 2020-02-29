@@ -35,6 +35,14 @@ export default (props: BarcodeProps) => {
 	);
 };
 
+export function isSquareBarcode(kind: PKBarcodeFormat) {
+	return kind === PKBarcodeFormat.QR || kind === PKBarcodeFormat.Aztec;
+}
+
+export function isRectangularBarcode(kind: PKBarcodeFormat) {
+	return kind === PKBarcodeFormat.Code128 || kind === PKBarcodeFormat.PDF417;
+}
+
 function selectComponentFromFormat(format: PKBarcodeFormat, fallbackFormat: "square" | "rect") {
 	switch (format) {
 		case PKBarcodeFormat.Aztec:
