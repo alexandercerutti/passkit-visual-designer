@@ -18,115 +18,109 @@ function fakeRegister(kind: FieldKind, id: string) {
 	return true;
 }
 
-export default class BoardingPass extends React.Component<BoardingPassProps> {
-	constructor(props: BoardingPassProps) {
-		super(props);
-	}
+export default function BoardingPass(props: BoardingPassProps) {
+	return (
+		<>
+			<PassHeader
+				withSeparator
+				headerFieldsData={[]}
+				onClick={(id: string) => console.log("Selected", id)}
+				register={fakeRegister}
 
-	render(): JSX.Element {
-		return (
-			<>
-				<PassHeader
-					withSeparator
-					headerFieldsData={[]}
-					onClick={(id: string) => console.log("Selected", id)}
-					register={fakeRegister}
-
-				/**
+			/**
 {
-						label: "Data",
-						fieldKey: "departing_date",
-						value: "10/04/1996",
-					}, {
-						label: "Ora",
-						fieldKey: "departing_time",
-						value: "10:30",
-					}, {
-						label: "test",
-						fieldKey: "departing_time",
-						value: "10:30",
-					}
-				 */
-				/>
-				<PrimaryFields
-					subkind={this.props.subKind || PKTransitType.Generic}
-					primaryFieldsData={[]}
-					onClick={(id: string) => console.log("Selected", id)}
-					register={fakeRegister}
-
-				/**
-				{
-					fieldKey: "starting_point",
-					value: "ARN",
-					label: "stockholm-arlanda"
+					label: "Data",
+					fieldKey: "departing_date",
+					value: "10/04/1996",
 				}, {
-					fieldKey: "finish_point",
-					value: "CPH",
-					label: "copenhagen t2"
+					label: "Ora",
+					fieldKey: "departing_time",
+					value: "10:30",
+				}, {
+					label: "test",
+					fieldKey: "departing_time",
+					value: "10:30",
 				}
-				 */
+				*/
+			/>
+			<PrimaryFields
+				subkind={props.subKind || PKTransitType.Generic}
+				primaryFieldsData={[]}
+				onClick={(id: string) => console.log("Selected", id)}
+				register={fakeRegister}
 
-				/>
-				<FieldsRow
-					areaIdentifier="auxiliaryFields"
-					maximumElementsAmount={-1}
-					elements={[]}
+			/**
+			{
+				fieldKey: "starting_point",
+				value: "ARN",
+				label: "stockholm-arlanda"
+			}, {
+				fieldKey: "finish_point",
+				value: "CPH",
+				label: "copenhagen t2"
+			}
+				*/
+
+			/>
+			<FieldsRow
+				areaIdentifier="auxiliaryFields"
+				maximumElementsAmount={-1}
+				elements={[]}
+				onClick={(id: string) => console.log("Selected", id)}
+				register={fakeRegister}
+
+			/**
+			 * 	{
+					fieldKey: "passenger",
+					label: "passeggero",
+					value: "Alexander Patrick Cerutti"
+				},
+				{
+					fieldKey: "flight",
+					label: "n. volo",
+					value: "FR1328"
+				},
+				{
+					fieldKey: "seq",
+					label: "sequenza",
+					value: "8"
+				}
+				*/
+			/>
+			<FieldsRow
+				areaIdentifier="secondaryFields"
+				maximumElementsAmount={-1}
+				elements={[]}
+				onClick={(id: string) => console.log("Selected", id)}
+				register={fakeRegister}
+			/**
+				{
+					"fieldKey": "gateClose",
+					"label": "Il Gate Chiude",
+					"dateStyle": PKDateStyle.None,
+					"timeStyle": PKDateStyle.Short,
+					"value": "09:20"
+				},
+				{
+					"fieldKey": "queue",
+					"label": "Fila",
+					"value": "Priorità"
+				},
+				{
+					"fieldKey": "seat",
+					"label": "Posto*",
+					"value": "16C"
+				}
+				*/
+			/>
+			<Footer>
+				<ImageField
 					onClick={(id: string) => console.log("Selected", id)}
 					register={fakeRegister}
-
-				/**
-				 * 	{
-						fieldKey: "passenger",
-						label: "passeggero",
-						value: "Alexander Patrick Cerutti"
-					},
-					{
-						fieldKey: "flight",
-						label: "n. volo",
-						value: "FR1328"
-					},
-					{
-						fieldKey: "seq",
-						label: "sequenza",
-						value: "8"
-					}
-				 */
+					id="footer.image"
 				/>
-				<FieldsRow
-					areaIdentifier="secondaryFields"
-					maximumElementsAmount={-1}
-					elements={[]}
-					onClick={(id: string) => console.log("Selected", id)}
-					register={fakeRegister}
-				/**
-				  	{
-						"fieldKey": "gateClose",
-						"label": "Il Gate Chiude",
-						"dateStyle": PKDateStyle.None,
-						"timeStyle": PKDateStyle.Short,
-						"value": "09:20"
-					},
-					{
-						"fieldKey": "queue",
-						"label": "Fila",
-						"value": "Priorità"
-					},
-					{
-						"fieldKey": "seat",
-						"label": "Posto*",
-						"value": "16C"
-					}
-				 */
-				/>
-				<Footer>
-					<ImageField
-						onClick={(id: string) => console.log("Selected", id)}
-						register={fakeRegister}
-						id="footer.image"
-					/>
-					<Barcode format={PKBarcodeFormat.None} fallbackKind="rect" />
-				</Footer>
-			</>
-		);
-	}
+				<Barcode format={PKBarcodeFormat.None} fallbackKind="rect" />
+			</Footer>
+		</>
+	);
 }
