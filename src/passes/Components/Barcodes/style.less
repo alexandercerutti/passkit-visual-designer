@@ -3,16 +3,25 @@
 	box-sizing: border-box;
 	justify-content: center;
 	width: 100%;
+	/**
+	 * If barcode has no content
+	 * (and, therefore, no border) only
+	 * bottom padding is setted
+	 */
+	padding-bottom: 7px;
 
 	/* Using another div to contain fallback barcodes */
 	&.none.rect > div {
 		width: 100%;
 	}
 
-	& > div {
-		border-radius: 5px;
+	&.content > div {
 		background-color: #FFF;
 		padding: 7px;
+	}
+
+	& > div {
+		border-radius: 5px;
 
 		& > .fallback {
 			background-color: #d2d2d2;

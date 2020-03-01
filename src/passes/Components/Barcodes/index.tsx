@@ -24,7 +24,7 @@ export default (props: BarcodeProps) => {
 		return null;
 	}
 
-	const className = concatClassNames("barcode", props.format, props.fallbackKind);
+	const className = concatClassNames("barcode", props.format, props.fallbackKind, props.format !== PKBarcodeFormat.None && "content" || "");
 
 	return (
 		<div className={className}>
