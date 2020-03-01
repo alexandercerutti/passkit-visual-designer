@@ -6,11 +6,13 @@ import { Coupon } from "./Coupon";
 import { EventTicket } from "./EventTicket";
 import { Generic } from "./Generic";
 import { StoreCard } from "./StoreCard";
+import { PassAlternative } from "../PassSelector";
 
 export interface PassProps {
 	kind: PassKind;
-	subKind?: any;
 	onClick?(evt: React.MouseEvent): void;
+
+	registerAlternatives?(...alternatives: PassAlternative[]): void;
 }
 
 export default class Pass extends React.Component<PassProps> {
@@ -35,7 +37,7 @@ export default class Pass extends React.Component<PassProps> {
 
 	render(): JSX.Element {
 		const PassComponent = this.deriveComponentFromKind(this.props.kind);
-		const PassProps = ({ kind, subKind }: PassProps) => ({ kind, subKind });
+		const PassProps = ({ kind, registerAlternatives }: PassProps) => ({ kind, registerAlternatives });
 
 		console.log(this.props, PassComponent);
 

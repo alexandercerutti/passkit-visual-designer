@@ -9,13 +9,35 @@ import Barcodes from "../Components/Barcodes";
 import { PKBarcodeFormat } from "../constants";
 
 interface EventTicketProps extends PassProps {
+	subkind: EventTicketKind;
 	imagePosition: "strip" | "background";
 	src?: string;
+}
+
+export enum EventTicketKind {
+	BACKGROUND,
+	STRIP
 }
 
 type PrimaryFieldPropsKind = Parameters<(typeof StripPrimaryFields | typeof ThumbnailPrimaryField)>[0]
 
 export function EventTicket(props: EventTicketProps): JSX.Element {
+	React.useEffect(() => {
+		if (props.registerAlternatives) {
+			props.registerAlternatives({
+				name: "With background image",
+				specificProps: {
+					subkind: EventTicketKind.BACKGROUND
+				}
+			}, {
+				name: "With strip image",
+				specificProps: {
+					subkind: EventTicketKind.STRIP
+				}
+			});
+		}
+	}, []);
+
 	let FieldsFragment: React.ReactElement<PrimaryFieldPropsKind>;
 
 	const SecondaryFieldRow = (

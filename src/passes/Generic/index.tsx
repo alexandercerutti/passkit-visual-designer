@@ -15,8 +15,29 @@ interface GenericProps extends PassProps {
 	auxiliaryFieldsElements?: Omit<Parameters<typeof Field>[0], "id">[];
 }
 
+enum GenericKind {
+	RECTANGULAR_BARCODE,
+	SQUARE_BARCODE
+}
+
 export function Generic(props: GenericProps): JSX.Element {
-	let MiddleFragment = isSquareBarcode(props.barcodeFormat) &&
+	React.useEffect(() => {
+		if (props.registerAlternatives) {
+			props.registerAlternatives({
+				name: "With rectangular barcode",
+				specificProps: {
+					subkind: GenericKind.RECTANGULAR_BARCODE
+				}
+			}, {
+				name: "With square barcode",
+				specificProps: {
+					subkind: GenericKind.SQUARE_BARCODE
+				}
+			});
+		}
+	}, []);
+
+	const MiddleFragment = isSquareBarcode(props.barcodeFormat) &&
 		(
 			<FieldsRow
 				areaIdentifier="secondary-auxiliary"
