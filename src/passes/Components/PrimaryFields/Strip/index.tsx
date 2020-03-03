@@ -5,13 +5,13 @@ import { getSafeFieldData } from "../../../utils";
 import ImageField from "../../ImageField";
 import "./style.less";
 
-export interface PrimaryFieldsProps extends Omit<RegistrableComponent, "id">, React.PropsWithChildren<any> {
+export interface PrimaryFieldsProps extends Omit<RegistrableComponent, "id"> {
 	className?: string;
 	primaryFieldsData: Omit<Parameters<typeof Field>[0], keyof RegistrableComponent>[];
 	stripSrc?: string;
 }
 
-export default function StripPrimaryFields(props: PrimaryFieldsProps): JSX.Element {
+export default function StripPrimaryFields(props: React.PropsWithChildren<PrimaryFieldsProps>): JSX.Element {
 	const data = getSafeFieldData(props.primaryFieldsData, 1)
 		.slice(0, 1)
 		.map((fieldData, index) => {

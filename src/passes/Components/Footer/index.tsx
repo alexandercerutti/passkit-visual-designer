@@ -1,7 +1,7 @@
 import * as React from "react";
 import "./style.less";
 
-export default (props: React.PropsWithChildren<any>) => {
+export default <T extends Object>(props: React.PropsWithChildren<T>) => {
 	return (
 		<div className="footer">
 			{
