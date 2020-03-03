@@ -58,7 +58,7 @@ export class PassSelector extends React.PureComponent<SelectorProps> {
 		});
 
 		return (
-			<div id="selectorApp">
+			<div id="selector-app">
 				<h2>{this.config.introText}</h2>
 				<div id="passSelection">
 					{passes}
