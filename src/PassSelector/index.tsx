@@ -4,6 +4,7 @@ import App from "../app";
 import { PassKind } from "../model";
 import Pass from "../passes/base";
 import withClickEvent from "./withClickEvent";
+import PassList from "./PassList";
 
 interface SelectorProps {
 	onPassKindSelection: App["onPassKindSelection"];
@@ -58,11 +59,14 @@ export class PassSelector extends React.PureComponent<SelectorProps> {
 		});
 
 		return (
-			<div id="selector-app">
+			<div id="selector-app" >
+				<header>
 				<h2>{this.config.introText}</h2>
-				<div id="passSelection">
+				</header>
+				<PassList onPassSelect={this.onPassSelect}>
 					{passes}
-				</div>
+				</PassList>
+				{/* {AlternativesListComponent} */}
 			</div>
 		);
 	}
