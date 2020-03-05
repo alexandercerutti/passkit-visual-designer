@@ -8,22 +8,30 @@ import { PKBarcodeFormat } from "../constants";
 import Footer from "../Components/Footer";
 
 interface CouponProps extends PassProps {
-	src?: string
+	stripSrc?: string;
 }
 
 export function Coupon(props: CouponProps): JSX.Element {
+	const { secondaryFields, primaryFields, headerData, auxiliaryFields, barcode, stripSrc } = props;
+
 	return (
 		<>
-			<PassHeader />
-			<StripPrimaryFields
-				stripSrc={props.src}
-				primaryFieldsData={[]}
+			<PassHeader
+				headerFieldsData={headerData && headerData.fields}
+				src={headerData && headerData.logoSrc}
+				content={headerData && headerData.logoText}
 			/>
-			{/* 			{
+			<StripPrimaryFields
+				stripSrc={stripSrc}
+				primaryFieldsData={primaryFields}
+			/>
+			{/*
+				{
 					fieldKey: "starting_point",
 					value: "21,75 USD",
 					label: "remaining balance"
-				} */}
+				}
+			*/}
 			<FieldsRow
 				areaIdentifier="secondary-auxiliary"
 				// @TODO: this component, as is,
@@ -31,7 +39,7 @@ export function Coupon(props: CouponProps): JSX.Element {
 				// get rendered in two columns. We don't have
 				// an example of a coupon / store card with
 				// more than two fields.
-				elements={[]}
+				elements={[...(secondaryFields || []), ...(auxiliaryFields || [])]}
 				// @TODO - Coupons can have up to 4 fields if
 				// barcode is a square barcode
 				maximumElementsAmount={-1}
@@ -54,7 +62,10 @@ export function Coupon(props: CouponProps): JSX.Element {
 					"value": "Lemons"
 				} */}
 			<Footer>
-				<Barcode format={PKBarcodeFormat.None} fallbackKind="square" />
+				<Barcode
+					format={barcode && barcode.format || PKBarcodeFormat.None}
+					fallbackKind="square"
+				/>
 			</Footer>
 		</>
 	);

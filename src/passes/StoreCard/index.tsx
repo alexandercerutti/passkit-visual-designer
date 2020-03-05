@@ -8,20 +8,22 @@ import Barcodes from "../Components/Barcodes";
 import { PKBarcodeFormat } from "../constants";
 
 interface StoreCardProps extends PassProps {
-	headerSrc?: string;
 	stripSrc?: string;
 	barcodeFormat?: PKBarcodeFormat;
 }
 
 export function StoreCard(props: StoreCardProps): JSX.Element {
+	const { secondaryFields, primaryFields, headerData, auxiliaryFields, barcode } = props;
+
 	return (
 		<>
 			<PassHeader
-				src={props.headerSrc}
+				src={headerData && props.headerData.logoSrc}
+				headerFieldsData={headerData && headerData.fields}
 			/>
 			<StripPrimaryFields
 				stripSrc={props.stripSrc}
-				primaryFieldsData={[]}
+				primaryFieldsData={primaryFields}
 			/>
 			{/*
 				{
@@ -37,7 +39,7 @@ export function StoreCard(props: StoreCardProps): JSX.Element {
 				// get rendered in two columns. We don't have
 				// an example of a coupon / store card with
 				// more than two fields.
-				elements={[]}
+				elements={[...(secondaryFields || []), ...(auxiliaryFields || [])]}
 				// @TODO - Coupons can have up to 4 fields if
 				// barcode is a square barcode
 				maximumElementsAmount={-1}
@@ -60,7 +62,7 @@ export function StoreCard(props: StoreCardProps): JSX.Element {
 					"value": "Lemons"
 				} */}
 			<Footer>
-				<Barcodes format={props.barcodeFormat || PKBarcodeFormat.None} fallbackKind="rect" />
+				<Barcodes format={(barcode && barcode.format) || PKBarcodeFormat.None} fallbackKind="rect" />
 			</Footer>
 		</>
 	);

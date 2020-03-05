@@ -38,12 +38,14 @@ export function EventTicket(props: EventTicketProps): JSX.Element {
 		}
 	}, []);
 
+	const { secondaryFields, primaryFields, headerData, auxiliaryFields, barcode } = props;
+
 	let FieldsFragment: React.ReactElement<PrimaryFieldPropsKind>;
 
 	const SecondaryFieldRow = (
 		<FieldsRow
 			areaIdentifier="secondaryFields"
-			elements={[]}
+			elements={secondaryFields}
 			maximumElementsAmount={4}
 		/>
 	);
@@ -83,7 +85,7 @@ export function EventTicket(props: EventTicketProps): JSX.Element {
 			<>
 				<StripPrimaryFields
 					stripSrc={props.src}
-					primaryFieldsData={[]}
+					primaryFieldsData={primaryFields}
 				/>
 				{SecondaryFieldRow}
 			</>
@@ -101,7 +103,7 @@ export function EventTicket(props: EventTicketProps): JSX.Element {
 		FieldsFragment = (
 			<ThumbnailPrimaryField
 				thumbnailSrc={props.src}
-				primaryFieldsData={[]}
+				primaryFieldsData={primaryFields}
 			>
 				{SecondaryFieldRow}
 			</ThumbnailPrimaryField>
@@ -119,7 +121,9 @@ export function EventTicket(props: EventTicketProps): JSX.Element {
 	return (
 		<>
 			<PassHeader
-				headerFieldsData={[]}
+				headerFieldsData={headerData && headerData.fields}
+				content={headerData && headerData.logoText}
+				src={headerData && headerData.logoSrc}
 				onClick={(id: string) => console.log("Selected", id)}
 				register={(kind, id) => true}
 			/>
@@ -127,11 +131,11 @@ export function EventTicket(props: EventTicketProps): JSX.Element {
 			<FieldsRow
 				areaIdentifier="auxiliaryFields"
 				maximumElementsAmount={4}
-				elements={[]}
+				elements={auxiliaryFields}
 			/>
 			<Footer>
 				<Barcodes
-					format={PKBarcodeFormat.None}
+					format={barcode && barcode.format || PKBarcodeFormat.None}
 					fallbackKind="square"
 				/>
 			</Footer>

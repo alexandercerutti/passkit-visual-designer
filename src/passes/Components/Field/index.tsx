@@ -6,7 +6,7 @@ import "./style.less";
 import { PKTextAlignment, PKDataDetectorType, PKDateStyle } from "../../constants";
 import { concatClassNames } from "../../utils";
 
-export interface FieldProps extends RegistrableComponent {
+interface FieldProperties extends RegistrableComponent {
 	className?: string;
 	style?: React.CSSProperties;
 	fieldKey: string;
@@ -19,17 +19,19 @@ export interface FieldProps extends RegistrableComponent {
 	timeStyle?: PKDateStyle;
 }
 
-export interface LabelProps extends FieldProps {
+export interface LabelProps extends FieldProperties {
 	labelColor?: string;
 	label?: string;
 }
 
-export interface ValueProps extends FieldProps {
+export interface ValueProps extends FieldProperties {
 	value: any;
 	textColor?: string;
 }
 
-export function PureField(props: LabelProps & ValueProps) {
+export type FieldProps = ValueProps & LabelProps;
+
+export function PureField(props: FieldProps) {
 	/**
 	 * We don't want to pass the click event to children.
 	 * They will still accept it but only if used separately.
@@ -85,7 +87,7 @@ function PureFieldValue(props: ValueProps) {
 	);
 }
 
-function composeLabelValueStylesFromProps(props: Partial<LabelProps & ValueProps>, origin: "label" | "value"): React.CSSProperties {
+function composeLabelValueStylesFromProps(props: Partial<FieldProps>, origin: "label" | "value"): React.CSSProperties {
 	const textAlignment = props.textAlignment || PKTextAlignment.Natural;
 
 	return {

@@ -3,15 +3,15 @@ import "./style.less";
 import TextField, { TextFieldProps } from "../TextField";
 import { onRegister } from "../withRegistration";
 import ImageField, { ImageFieldProps } from "../ImageField";
-import { Field } from "../Field";
+import { FieldProps } from "../Field";
 import { InlineFieldsRow } from "../FieldRow";
 import { concatClassNames } from "../../utils";
 
-type FieldsProps = ImageFieldProps & TextFieldProps;
+type HeaderFieldsProps = ImageFieldProps & TextFieldProps;
 
-interface HeaderProps extends Partial<FieldsProps> {
+interface HeaderProps extends Partial<HeaderFieldsProps> {
 	register?: onRegister;
-	headerFieldsData?: Omit<Parameters<typeof Field>[0], "id">[];
+	headerFieldsData?: Omit<FieldProps, "id">[];
 	withSeparator?: boolean;
 }
 

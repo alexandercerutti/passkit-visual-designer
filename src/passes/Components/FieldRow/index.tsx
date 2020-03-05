@@ -1,12 +1,12 @@
 import * as React from "react";
-import { Field } from "../Field";
+import { Field, FieldProps } from "../Field";
 import "./style.less";
 import { RegistrableComponent } from "../withRegistration";
 
 interface RowProps extends Omit<RegistrableComponent, "id"> {
 	areaIdentifier: string;
 	maximumElementsAmount: number;
-	elements: Omit<Parameters<typeof Field>[0], "id">[];
+	elements: Omit<FieldProps, "id">[];
 }
 
 /**

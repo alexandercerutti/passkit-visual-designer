@@ -9,7 +9,7 @@ import { FieldKind } from "../../model";
 import ImageField from "../Components/ImageField";
 import Barcode from "../Components/Barcodes";
 
-interface BoardingPassProps extends Omit<PassProps, "onClick"> {
+interface BoardingPassProps extends PassProps {
 	subKind: PKTransitType;
 }
 
@@ -19,16 +19,51 @@ function fakeRegister(kind: FieldKind, id: string) {
 }
 
 export default function BoardingPass(props: BoardingPassProps) {
+	React.useEffect(() => {
+		if (props.registerAlternatives) {
+			props.registerAlternatives({
+				name: "Generic Boarding Pass",
+				specificProps: {
+					subkind: PKTransitType.Generic
+				}
+			}, {
+				name: "Air Boarding Pass",
+				specificProps: {
+					subkind: PKTransitType.Air
+				}
+			}, {
+				name: "Boat Boarding Pass",
+				specificProps: {
+					subkind: PKTransitType.Boat
+				}
+			}, {
+				name: "Bus Boarding Pass",
+				specificProps: {
+					subkind: PKTransitType.Bus
+				}
+			}, {
+				name: "Train Boarding Pass",
+				specificProps: {
+					subkind: PKTransitType.Train
+				}
+			});
+		}
+	}, []);
+
+	const { secondaryFields, primaryFields, headerData, auxiliaryFields, barcode, subKind } = props;
+
 	return (
 		<>
 			<PassHeader
 				withSeparator
-				headerFieldsData={[]}
+				src={headerData && headerData.logoSrc}
+				content={headerData && headerData.logoText || undefined}
+				headerFieldsData={headerData && headerData.fields}
 				onClick={(id: string) => console.log("Selected", id)}
 				register={fakeRegister}
 
 			/**
-{
+				{
 					label: "Data",
 					fieldKey: "departing_date",
 					value: "10/04/1996",
@@ -44,8 +79,8 @@ export default function BoardingPass(props: BoardingPassProps) {
 				*/
 			/>
 			<PrimaryFields
-				subkind={props.subKind || PKTransitType.Generic}
-				primaryFieldsData={[]}
+				subkind={subKind || PKTransitType.Generic}
+				primaryFieldsData={primaryFields}
 				onClick={(id: string) => console.log("Selected", id)}
 				register={fakeRegister}
 
@@ -65,7 +100,7 @@ export default function BoardingPass(props: BoardingPassProps) {
 			<FieldsRow
 				areaIdentifier="auxiliaryFields"
 				maximumElementsAmount={-1}
-				elements={[]}
+				elements={auxiliaryFields}
 				onClick={(id: string) => console.log("Selected", id)}
 				register={fakeRegister}
 
@@ -90,7 +125,7 @@ export default function BoardingPass(props: BoardingPassProps) {
 			<FieldsRow
 				areaIdentifier="secondaryFields"
 				maximumElementsAmount={-1}
-				elements={[]}
+				elements={secondaryFields}
 				onClick={(id: string) => console.log("Selected", id)}
 				register={fakeRegister}
 			/**
@@ -119,7 +154,10 @@ export default function BoardingPass(props: BoardingPassProps) {
 					register={fakeRegister}
 					id="footer.image"
 				/>
-				<Barcode format={PKBarcodeFormat.None} fallbackKind="rect" />
+				<Barcode
+					format={barcode && barcode.format || PKBarcodeFormat.None}
+					fallbackKind="rect"
+				/>
 			</Footer>
 		</>
 	);
