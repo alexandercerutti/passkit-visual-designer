@@ -1,20 +1,17 @@
 import * as React from "react";
-import "./base.less";
-import { PassKind } from "../model";
-import BoardingPass from "./BoardingPass";
-import { Coupon } from "./Coupon";
-import { EventTicket } from "./EventTicket";
-import { Generic } from "./Generic";
-import { StoreCard } from "./StoreCard";
-import { PassAlternative } from "../PassSelector";
-import { FieldProps } from "./Components/Field";
-import { PKBarcodeFormat } from "./constants";
-import { onRegister, onSelect } from "./Components/withRegistration";
+import "./style.less";
+import { PassKind } from "../../model";
+import BoardingPass from "../BoardingPass";
+import { Coupon } from "../Coupon";
+import { EventTicket } from "../EventTicket";
+import { Generic } from "../Generic";
+import { StoreCard } from "../StoreCard";
+import { PassAlternative } from "../../PassSelector";
+import { FieldProps } from "../Components/Field";
+import { PKBarcodeFormat } from "../constants";
 
 export interface PassProps {
 	kind: PassKind;
-	onFieldSelect?: onSelect;
-	registerField?: onRegister;
 	registerAlternatives?(...alternatives: PassAlternative[]): void;
 
 	secondaryFields?: FieldProps[];

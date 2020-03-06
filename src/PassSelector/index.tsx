@@ -2,7 +2,7 @@ import * as React from "react";
 import "./style.less";
 import App from "../app";
 import { PassKind } from "../model";
-import Pass from "../passes/base";
+import Pass from "../passes/PassCore";
 import withClickEvent from "./withClickEvent";
 import PassList from "./PassList";
 

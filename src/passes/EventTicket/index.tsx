@@ -1,5 +1,5 @@
 import * as React from "react";
-import { PassProps } from "../base";
+import { PassProps } from "../PassCore";
 import { PassHeader } from "../Components/Header";
 import ThumbnailPrimaryField from "../Components/PrimaryFields/Thumbnail";
 import FieldsRow from "../Components/FieldRow";

@@ -1,7 +1,7 @@
 import * as React from "react";
 import "./style.less";
 import { PassKind } from "../model";
-import { PassProps } from "../passes/base";
+import { PassProps } from "../passes/PassCore";
 
 interface PassListProps {
 	onPassSelect: (kind: PassKind) => void;

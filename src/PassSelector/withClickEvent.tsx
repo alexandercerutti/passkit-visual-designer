@@ -1,5 +1,5 @@
 import * as React from "react"
-import Pass from "../passes/base"
+import Pass from "../passes/PassCore"
 
 interface ClickableProps {
 	onClick(e: React.MouseEvent | Event): void;

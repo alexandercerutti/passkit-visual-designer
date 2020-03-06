@@ -1,6 +1,6 @@
 import * as React from "react";
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
-import Pass from "./passes/base";
+import Pass from "./passes/PassCore";
 import { PassSelector } from "./PassSelector";
 import { PassKind } from "./model";
 

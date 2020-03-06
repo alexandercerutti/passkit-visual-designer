@@ -1,5 +1,5 @@
 import * as React from "react";
-import Pass, { PassProps } from "../base";
+import { PassProps } from "../PassCore";
 import { PassHeader } from "../Components/Header";
 import StripPrimaryFields from "../Components/PrimaryFields/Strip";
 import FieldsRow from "../Components/FieldRow";
