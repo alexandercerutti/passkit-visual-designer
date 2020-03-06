@@ -10,6 +10,8 @@ import { PassAlternative } from "../../PassSelector";
 import { FieldProps } from "../Components/Field";
 import { PKBarcodeFormat } from "../constants";
 
+export { Provider as interactionProvider, Consumer as InteractionConsumer } from "./interactionContext";
+
 export interface PassProps {
 	kind: PassKind;
 	registerAlternatives?(...alternatives: PassAlternative[]): void;

@@ -1,11 +1,12 @@
 import * as React from "react";
-import { PassProps } from "../PassCore";
+import { PassProps, InteractionConsumer } from "../PassCore";
 import { PassHeader } from "../Components/Header";
 import ThumbnailPrimaryField from "../Components/PrimaryFields/Thumbnail";
 import { PKBarcodeFormat } from "../constants";
 import Barcodes, { isSquareBarcode } from "../Components/Barcodes";
 import FieldsRow from "../Components/FieldRow";
 import Footer from "../Components/Footer";
+import { InteractionContext } from "../PassCore/interactionContext";
 
 interface GenericProps extends PassProps {
 	thumbnailSrc?: string;
@@ -35,12 +36,14 @@ export function Generic(props: GenericProps): JSX.Element {
 
 	const { secondaryFields, primaryFields, headerData, auxiliaryFields, barcode } = props;
 
-	const MiddleFragment = isSquareBarcode(barcode && barcode.format) &&
+	const MiddleFragment = ({ onFieldSelect, registerField }: InteractionContext) => isSquareBarcode(barcode && barcode.format) &&
 		(
 			<FieldsRow
 				areaIdentifier="secondary-auxiliary"
 				elements={[...(secondaryFields || []), ...(auxiliaryFields || [])]}
 				maximumElementsAmount={4}
+				onClick={onFieldSelect}
+				register={registerField}
 			/>
 		) || (
 			<>
@@ -48,34 +51,46 @@ export function Generic(props: GenericProps): JSX.Element {
 					areaIdentifier="secondaryFields"
 					elements={secondaryFields}
 					maximumElementsAmount={4}
+					onClick={onFieldSelect}
+					register={registerField}
 				/>
 				<FieldsRow
 					areaIdentifier="auxiliaryFields"
 					elements={auxiliaryFields}
 					maximumElementsAmount={4}
+					onClick={onFieldSelect}
+					register={registerField}
 				/>
 			</>
 		);
 
 	return (
-		<>
-			<PassHeader
-				withSeparator
-				headerFieldsData={headerData && headerData.fields}
-				src={headerData && headerData.logoSrc}
-				content={headerData && headerData.logoText}
-			/>
-			<ThumbnailPrimaryField
-				primaryFieldsData={primaryFields}
-				thumbnailSrc={props.thumbnailSrc}
-			/>
-			{MiddleFragment}
-			<Footer>
-				<Barcodes
-					fallbackKind="rect"
-					format={barcode && barcode.format || PKBarcodeFormat.None}
-				/>
-			</Footer>
-		</>
+		<InteractionConsumer>
+			{({ onFieldSelect, registerField }) => (
+				<>
+					<PassHeader
+						withSeparator
+						headerFieldsData={headerData && headerData.fields}
+						src={headerData && headerData.logoSrc}
+						content={headerData && headerData.logoText}
+						onClick={onFieldSelect}
+						register={registerField}
+					/>
+					<ThumbnailPrimaryField
+						primaryFieldsData={primaryFields}
+						thumbnailSrc={props.thumbnailSrc}
+						onClick={onFieldSelect}
+						register={registerField}
+					/>
+					{MiddleFragment({ onFieldSelect, registerField })}
+					<Footer>
+						<Barcodes
+							fallbackKind="rect"
+							format={barcode && barcode.format || PKBarcodeFormat.None}
+						/>
+					</Footer>
+				</>
+			)}
+		</InteractionConsumer>
 	);
 }

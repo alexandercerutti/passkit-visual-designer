@@ -1,5 +1,5 @@
 import * as React from "react";
-import { PassProps } from "../PassCore";
+import { PassProps, InteractionConsumer } from "../PassCore";
 import { PassHeader } from "../Components/Header";
 import ThumbnailPrimaryField from "../Components/PrimaryFields/Thumbnail";
 import FieldsRow from "../Components/FieldRow";
@@ -7,6 +7,7 @@ import StripPrimaryFields from "../Components/PrimaryFields/Strip";
 import Footer from "../Components/Footer";
 import Barcodes from "../Components/Barcodes";
 import { PKBarcodeFormat } from "../constants";
+import { InteractionContext } from "../PassCore/interactionContext";
 
 interface EventTicketProps extends PassProps {
 	subkind: EventTicketKind;
@@ -40,13 +41,15 @@ export function EventTicket(props: EventTicketProps): JSX.Element {
 
 	const { secondaryFields, primaryFields, headerData, auxiliaryFields, barcode } = props;
 
-	let FieldsFragment: React.ReactElement<PrimaryFieldPropsKind>;
+	let FieldsFragment: (interaction: InteractionContext) => React.ReactElement<PrimaryFieldPropsKind>;
 
-	const SecondaryFieldRow = (
+	const SecondaryFieldRow = ({ onFieldSelect, registerField }: InteractionContext) => (
 		<FieldsRow
 			areaIdentifier="secondaryFields"
 			elements={secondaryFields}
 			maximumElementsAmount={4}
+			onClick={onFieldSelect}
+			register={registerField}
 		/>
 	);
 
@@ -81,13 +84,15 @@ export function EventTicket(props: EventTicketProps): JSX.Element {
 	// const imagePosition = "thumbnail";
 
 	if (props.imagePosition === "strip") {
-		FieldsFragment = (
+		FieldsFragment = ({ onFieldSelect, registerField }) => (
 			<>
 				<StripPrimaryFields
 					stripSrc={props.src}
 					primaryFieldsData={primaryFields}
+					onClick={onFieldSelect}
+					register={registerField}
 				/>
-				{SecondaryFieldRow}
+				{SecondaryFieldRow({ onFieldSelect, registerField })}
 			</>
 		);
 
@@ -100,12 +105,14 @@ export function EventTicket(props: EventTicketProps): JSX.Element {
 		 */
 
 	} else {
-		FieldsFragment = (
+		FieldsFragment = ({ onFieldSelect, registerField }) => (
 			<ThumbnailPrimaryField
 				thumbnailSrc={props.src}
 				primaryFieldsData={primaryFields}
+				onClick={onFieldSelect}
+				register={registerField}
 			>
-				{SecondaryFieldRow}
+				{SecondaryFieldRow({ onFieldSelect, registerField })}
 			</ThumbnailPrimaryField>
 		);
 
@@ -119,26 +126,32 @@ export function EventTicket(props: EventTicketProps): JSX.Element {
 	}
 
 	return (
-		<>
-			<PassHeader
-				headerFieldsData={headerData && headerData.fields}
-				content={headerData && headerData.logoText}
-				src={headerData && headerData.logoSrc}
-				onClick={(id: string) => console.log("Selected", id)}
-				register={(kind, id) => true}
-			/>
-			{FieldsFragment}
-			<FieldsRow
-				areaIdentifier="auxiliaryFields"
-				maximumElementsAmount={4}
-				elements={auxiliaryFields}
-			/>
-			<Footer>
-				<Barcodes
-					format={barcode && barcode.format || PKBarcodeFormat.None}
-					fallbackKind="square"
-				/>
-			</Footer>
-		</>
+		<InteractionConsumer>
+			{({ onFieldSelect, registerField }) => (
+				<>
+					<PassHeader
+						headerFieldsData={headerData && headerData.fields}
+						content={headerData && headerData.logoText}
+						src={headerData && headerData.logoSrc}
+						onClick={onFieldSelect}
+						register={registerField}
+					/>
+					{FieldsFragment({ onFieldSelect, registerField })}
+					<FieldsRow
+						areaIdentifier="auxiliaryFields"
+						maximumElementsAmount={4}
+						elements={auxiliaryFields}
+						onClick={onFieldSelect}
+						register={registerField}
+					/>
+					<Footer>
+						<Barcodes
+							format={barcode && barcode.format || PKBarcodeFormat.None}
+							fallbackKind="square"
+						/>
+					</Footer>
+				</>
+			)}
+		</InteractionConsumer>
 	);
 }
