@@ -26,7 +26,7 @@ const BoatIcon = (props: BoardingIconProps) =>
 const RailIcon = (props: BoardingIconProps) =>
 	<svg x="0px" y="0px" width={`${props.width}px`} height={`${props.height}px`} viewBox="0 0 36 36" className={props.className || ""}>
 		<path fill={props.fill} d="M29.768,4.419v17.125c0,2.439-2.758,4.419-6.153,4.419H12.386c-3.396,0-6.148-1.979-6.148-4.419V4.419 C6.238,1.979,8.99,0,12.386,0h11.228C27.01,0,29.768,1.979,29.768,4.419z M27.338,20.972c0-1.305-1.06-2.363-2.368-2.363 c-1.305,0-2.363,1.059-2.363,2.363c0,1.31,1.059,2.368,2.363,2.368C26.278,23.34,27.338,22.281,27.338,20.972z M26.698,14.9 V9.273c0-1.094-0.716-1.979-1.596-1.979H10.898c-0.88,0-1.591,0.885-1.591,1.979V14.9c0,1.094,0.711,1.979,1.591,1.979h14.205 C25.982,16.88,26.698,15.995,26.698,14.9z M23.757,4.062V3.105c0-0.798-0.69-1.438-1.534-1.438h-8.44 c-0.849,0-1.535,0.639-1.535,1.438v0.957c0,0.798,0.686,1.442,1.535,1.442h8.44C23.066,5.504,23.757,4.859,23.757,4.062z M13.399,20.972c0-1.305-1.059-2.363-2.368-2.363c-1.304,0-2.363,1.059-2.363,2.363c0,1.31,1.059,2.368,2.363,2.368C12.34,23.34,13.399,22.281,13.399,20.972z" />
-		<line stroke={props.fill} stroke-width="3" stroke-miterlimit="10" x1="10.172" y1="31.014" x2="25.39" y2="31.014" />
+		<line stroke={props.fill} strokeWidth="3" strokeMiterlimit="10" x1="10.172" y1="31.014" x2="25.39" y2="31.014" />
 		<g>
 			<defs>
 				<rect id="railscliprect" x="5.596" y="26.793" width="24.809" height="9.207" />
@@ -34,9 +34,9 @@ const RailIcon = (props: BoardingIconProps) =>
 			<clipPath id="railsarea">
 				<use href="#railscliprect" overflow="visible" />
 			</clipPath>
-			<g clip-path="url(#railsarea)">
-				<line stroke={props.fill} stroke-width="3" stroke-miterlimit="10" x1="14.091" y1="25.643" x2="7.259" y2="36.768" />
-				<line stroke={props.fill} stroke-width="3" stroke-miterlimit="10" x1="21.581" y1="25.643" x2="28.413" y2="36.768" />
+			<g clipPath="url(#railsarea)">
+				<line stroke={props.fill} strokeWidth="3" strokeMiterlimit="10" x1="14.091" y1="25.643" x2="7.259" y2="36.768" />
+				<line stroke={props.fill} strokeWidth="3" strokeMiterlimit="10" x1="21.581" y1="25.643" x2="28.413" y2="36.768" />
 			</g>
 		</g>
 	</svg>;
