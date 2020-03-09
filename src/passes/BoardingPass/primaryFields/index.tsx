@@ -66,9 +66,7 @@ function ValuesRow(props: PrimaryFieldsProps) {
 			)
 		});
 
-	const TransitIcon = PKTransitIcon(
-		props.primaryFieldsData && props.subkind || PKTransitType.Generic
-	);
+	const TransitIcon = PKTransitIcon(props.subkind === undefined && PKTransitType.Generic || props.subkind);
 
 	return (
 		<div className="value-row">
