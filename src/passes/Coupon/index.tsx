@@ -12,6 +12,16 @@ interface CouponProps extends PassProps {
 }
 
 export function Coupon(props: CouponProps): JSX.Element {
+	React.useEffect(() => {
+		if (props.registerAlternatives) {
+			props.registerAlternatives({
+				name: "Coupon Pass",
+				specificProps: {},
+				default: true,
+			});
+		}
+	}, []);
+
 	const { secondaryFields, primaryFields, headerData, auxiliaryFields, barcode, stripSrc } = props;
 
 	return (

@@ -2,9 +2,8 @@ import * as React from "react";
 import "./style.less";
 import App from "../app";
 import { PassKind } from "../model";
-import Pass from "../passes/PassCore";
-import withClickEvent from "./withClickEvent";
 import PassList from "./PassList";
+import NamedPass from "./NamedPass";
 
 interface SelectorProps {
 	onPassKindSelection: App["onPassKindSelection"];
@@ -13,11 +12,12 @@ interface SelectorProps {
 export interface PassAlternative {
 	name: string;
 	specificProps: Object;
+	default?: boolean;
 }
 
 type PassAlternativesIndex = { [key in PassKind]: PassAlternative[] };
 
-export class PassSelector extends React.PureComponent<SelectorProps> {
+class PassSelector extends React.PureComponent<SelectorProps> {
 	private alternatives: PassAlternativesIndex = {} as PassAlternativesIndex;
 
 	private config = {
@@ -26,6 +26,10 @@ export class PassSelector extends React.PureComponent<SelectorProps> {
 
 	constructor(props: SelectorProps) {
 		super(props);
+
+		this.registerAlternatives = this.registerAlternatives.bind(this);
+		this.onPassSelect = this.onPassSelect.bind(this);
+
 	}
 
 	/**
@@ -43,30 +47,50 @@ export class PassSelector extends React.PureComponent<SelectorProps> {
 	}
 
 	render() {
-		const passes = Object.keys(PassKind).map((pass) => {
-			const ClickablePass = withClickEvent(Pass, () => this.props.onPassKindSelection(PassKind[pass]));
+		const { selectedPasses: [firstPassKind] } = this.props;
+		const availableAlternatives = firstPassKind && this.alternatives[firstPassKind] || [];
+
+		const passes = Object.keys(PassKind).map((pass: keyof typeof PassKind) => {
 			return (
-				<ClickablePass
-					key={PassKind[pass]}
-					onClick={(e) => {
-						e.stopPropagation();
-						this.props.onPassKindSelection(PassKind[pass])
-					}}
+				<NamedPass
+					name={PassKind[pass]}
 					kind={PassKind[pass]}
 					registerAlternatives={this.registerAlternatives.bind(this, PassKind[pass])}
 				/>
 			);
 		});
 
+		const alternativesList = availableAlternatives.length && (
+			availableAlternatives.map((alternative: PassAlternative) => {
+				return (
+					<NamedPass
+						name={alternative.name}
+						kind={firstPassKind}
+						registerAlternatives={this.registerAlternatives.bind(this, firstPassKind)}
+					/>
+				);
+			})
+		) || null;
+
+		const AlternativesListComponent = (
+			<PassList row={2} onPassSelect={this.onPassSelect}>
+				{alternativesList}
+			</PassList>
+		);
+
 		return (
 			<div id="selector-app" >
 				<header>
-				<h2>{this.config.introText}</h2>
+					<h2>{this.config.introText}</h2>
 				</header>
-				<PassList onPassSelect={this.onPassSelect}>
-					{passes}
-				</PassList>
-				{/* {AlternativesListComponent} */}
+				<div className="selection-window">
+					<div className="slidable-area" style={{ transform: `translateY(${availableAlternatives.length ? "-45%" : "0%"})` }}>
+						<PassList row={1} onPassSelect={this.onPassSelect}>
+							{passes}
+						</PassList>
+						{AlternativesListComponent}
+					</div>
+				</div>
 			</div>
 		);
 	}

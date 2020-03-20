@@ -29,7 +29,8 @@ export function EventTicket(props: EventTicketProps): JSX.Element {
 				name: "With background image",
 				specificProps: {
 					subkind: EventTicketKind.BACKGROUND
-				}
+				},
+				default: true,
 			}, {
 				name: "With strip image",
 				specificProps: {

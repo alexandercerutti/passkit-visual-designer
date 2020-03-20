@@ -1,7 +1,7 @@
 import * as React from "react";
 import "./style.less";
 import { PassKind } from "../model";
-import { PassProps } from "../passes/PassCore";
+import { PassCoreProps } from "../passes/PassCore";
 
 interface PassListProps {
 	onPassSelect: (kind: PassKind) => void;
@@ -10,19 +10,23 @@ interface PassListProps {
 type PassListPropsWithChildren = React.PropsWithChildren<PassListProps>;
 
 export default function PassList(props: PassListPropsWithChildren): JSX.Element {
-	const children = React.Children.map(props.children, (node: React.ReactElement<PassProps>) => {
+	const [selected, setSelected] = React.useState(false);
+
+	const onNodeSelection = (kind: PassKind) => {
+		setSelected(true);
+		props.onPassSelect(kind);
+	}
+
+	const children = React.Children.map(props.children, (node: React.ReactElement<PassCoreProps>) => {
 		return (
-			<div className="select" onClick={(e: React.MouseEvent) => {
-				e.stopPropagation();
-				props.onPassSelect(node.props.kind)
-			}}>
+			<div className="select" onClick={(e) => { e.stopPropagation(); onNodeSelection(node.props.kind) }}>
 				{node}
 			</div>
 		)
-	})
+	});
 
 	return (
-		<div id="pass-selection" className="first-step">
+		<div id="pass-selection" className={selected && "selected" || ""}>
 			{children}
 		</div>
 	);

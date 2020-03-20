@@ -13,6 +13,16 @@ interface StoreCardProps extends PassProps {
 }
 
 export function StoreCard(props: StoreCardProps): JSX.Element {
+	React.useEffect(() => {
+		if (props.registerAlternatives) {
+			props.registerAlternatives({
+				name: "Store Card",
+				specificProps: {},
+				default: true,
+			});
+		}
+	}, []);
+
 	const { secondaryFields, primaryFields, headerData, auxiliaryFields, barcode } = props;
 
 	return (

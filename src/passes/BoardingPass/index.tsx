@@ -5,7 +5,6 @@ import { PKTransitType, PKBarcodeFormat } from "../constants";
 import PrimaryFields from "./primaryFields";
 import FieldsRow from "../Components/FieldRow";
 import Footer from "../Components/Footer";
-import { FieldKind } from "../../model";
 import ImageField from "../Components/ImageField";
 import Barcode from "../Components/Barcodes";
 
@@ -20,7 +19,8 @@ export default function BoardingPass(props: BoardingPassProps) {
 				name: "Generic Boarding Pass",
 				specificProps: {
 					subkind: PKTransitType.Generic
-				}
+				},
+				default: true,
 			}, {
 				name: "Air Boarding Pass",
 				specificProps: {
