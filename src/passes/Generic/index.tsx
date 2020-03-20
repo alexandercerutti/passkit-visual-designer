@@ -8,8 +8,9 @@ import FieldsRow from "../Components/FieldRow";
 import Footer from "../Components/Footer";
 import { InteractionContext } from "../PassCore/interactionContext";
 
-interface GenericProps extends PassProps {
+export interface GenericProps extends PassProps {
 	thumbnailSrc?: string;
+	subkind?: GenericKind;
 }
 
 enum GenericKind {

@@ -1,7 +1,7 @@
 import * as React from "react";
 import "./style.less";
 import { PassKind } from "../../model";
-import BoardingPass from "../BoardingPass";
+import { BoardingPass } from "../BoardingPass";
 import { Coupon } from "../Coupon";
 import { EventTicket } from "../EventTicket";
 import { Generic } from "../Generic";
@@ -13,7 +13,6 @@ import { PKBarcodeFormat } from "../constants";
 export { Provider as interactionProvider, Consumer as InteractionConsumer } from "./interactionContext";
 
 export interface PassProps {
-	kind: PassKind;
 	registerAlternatives?(...alternatives: PassAlternative[]): void;
 
 	secondaryFields?: FieldProps[];
@@ -33,12 +32,18 @@ export interface PassProps {
 	}
 }
 
-export default class Pass extends React.Component<PassProps> {
-	constructor(props: any) {
+export interface PassCoreProps extends PassProps {
+	kind: PassKind;
+}
+
+type AllPassesTypes = typeof BoardingPass | typeof StoreCard | typeof Coupon | typeof EventTicket | typeof Generic;
+
+export default class Pass extends React.Component<PassCoreProps> {
+	constructor(props: PassCoreProps) {
 		super(props);
 	}
 
-	deriveComponentFromKind(kind: PassKind): React.ComponentType<PassProps> {
+	deriveComponentFromKind(kind: PassKind): AllPassesTypes {
 		switch (kind) {
 			case PassKind.BOARDING_PASS:
 				return BoardingPass
@@ -55,14 +60,14 @@ export default class Pass extends React.Component<PassProps> {
 
 	render(): JSX.Element {
 		const PassComponent = this.deriveComponentFromKind(this.props.kind);
-		const PassProps = ({ kind, registerAlternatives }: PassProps) => ({ kind, registerAlternatives });
+		const newProps = (({ kind, ...otherProps }: PassCoreProps) => ({ ...otherProps }))(this.props);
 
 		console.log(this.props, PassComponent);
 
 		return (
 			<div className={`pass ${this.props.kind.toLowerCase()}`}>
 				<div className="content">
-					<PassComponent {...PassProps(this.props)} />
+					<PassComponent {...newProps} />
 				</div>
 			</div>
 		);

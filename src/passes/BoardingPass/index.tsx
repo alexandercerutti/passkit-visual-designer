@@ -8,11 +8,11 @@ import Footer from "../Components/Footer";
 import ImageField from "../Components/ImageField";
 import Barcode from "../Components/Barcodes";
 
-interface BoardingPassProps extends PassProps {
-	subKind: PKTransitType;
+export interface BoardingPassProps extends PassProps {
+	subkind?: PKTransitType;
 }
 
-export default function BoardingPass(props: BoardingPassProps) {
+export function BoardingPass(props: BoardingPassProps) {
 	React.useEffect(() => {
 		if (props.registerAlternatives) {
 			props.registerAlternatives({
@@ -45,7 +45,7 @@ export default function BoardingPass(props: BoardingPassProps) {
 		}
 	}, []);
 
-	const { secondaryFields, primaryFields, headerData, auxiliaryFields, barcode, subKind } = props;
+	const { secondaryFields, primaryFields, headerData, auxiliaryFields, barcode, subkind } = props;
 
 	return (
 		<InteractionConsumer>
@@ -76,7 +76,7 @@ export default function BoardingPass(props: BoardingPassProps) {
 						*/
 					/>
 					<PrimaryFields
-						subkind={subKind || PKTransitType.Generic}
+						subkind={subkind}
 						primaryFieldsData={primaryFields}
 						onClick={onFieldSelect}
 						register={registerField}

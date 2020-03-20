@@ -7,7 +7,7 @@ import Barcode from "../Components/Barcodes";
 import { PKBarcodeFormat } from "../constants";
 import Footer from "../Components/Footer";
 
-interface CouponProps extends PassProps {
+export interface CouponProps extends PassProps {
 	stripSrc?: string;
 }
 

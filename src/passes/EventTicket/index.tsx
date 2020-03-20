@@ -9,9 +9,8 @@ import Barcodes from "../Components/Barcodes";
 import { PKBarcodeFormat } from "../constants";
 import { InteractionContext } from "../PassCore/interactionContext";
 
-interface EventTicketProps extends PassProps {
-	subkind: EventTicketKind;
-	imagePosition: "strip" | "background";
+export interface EventTicketProps extends PassProps {
+	subkind?: EventTicketKind;
 	src?: string;
 }
 
@@ -82,9 +81,7 @@ export function EventTicket(props: EventTicketProps): JSX.Element {
 		}
 	 */
 
-	// const imagePosition = "thumbnail";
-
-	if (props.imagePosition === "strip") {
+	if (props.subkind === EventTicketKind.STRIP) {
 		FieldsFragment = ({ onFieldSelect, registerField }) => (
 			<>
 				<StripPrimaryFields
