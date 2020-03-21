@@ -7,11 +7,6 @@ import Pass, { PassCoreProps } from "../passes/PassCore";
  * Component we are going to render without getting it dirty
  * and keeping it reusable.
  *
- * It will be removed by PassList on rendering with a map.
- * The goal that I was trying to accomplish was to render
- * under the alternatives and the pass, a different kind
- * of name
- *
  * @param props
  */
 
