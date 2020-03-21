@@ -16,6 +16,11 @@
 
 		& > *:first-child {
 			flex-grow: 2;
+
+			&.empty {
+				border-top-left-radius: 2px;
+				border-bottom-left-radius: 2px;
+			}
 		}
 
 		& > *:not(:first-child) {
@@ -47,6 +52,11 @@
 		flex-grow: 0;
 		flex-shrink: 0;
 		width: 65px;
+
+		&.empty {
+			border-top-right-radius: 2px;
+			border-bottom-right-radius: 2px;
+		}
 	}
 
 	& > .image-field {
