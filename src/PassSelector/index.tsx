@@ -68,6 +68,7 @@ class PassSelector extends React.PureComponent<SelectorProps> {
 						kind={firstPassKind}
 						registerAlternatives={this.registerAlternatives.bind(this, firstPassKind)}
 						isDefault={alternative.default || false}
+						{...alternative.specificProps}
 					/>
 				);
 			})
