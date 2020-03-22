@@ -75,10 +75,10 @@ class PassSelector extends React.PureComponent<SelectorProps> {
 		) || null;
 
 		const AlternativesListComponent = (
-			<PassList row={2} onPassSelect={this.onPassSelect}>
+			<PassList requiresAttention row={2} onPassSelect={this.onPassSelect}>
 				{alternativesList}
 			</PassList>
-		);
+		) || null;
 
 		return (
 			<div id="selector-app" >
@@ -86,12 +86,10 @@ class PassSelector extends React.PureComponent<SelectorProps> {
 					<h2>{this.config.introText}</h2>
 				</header>
 				<div className="selection-window">
-					<div className="slidable-area" style={{ transform: `translateY(${availableAlternatives.length ? "-45%" : "0%"})` }}>
-						<PassList row={1} onPassSelect={this.onPassSelect}>
-							{passes}
-						</PassList>
-						{AlternativesListComponent}
-					</div>
+					<PassList row={1} onPassSelect={this.onPassSelect}>
+						{passes}
+					</PassList>
+					{AlternativesListComponent}
 				</div>
 			</div>
 		);

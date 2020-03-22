@@ -5,12 +5,21 @@ import { PassCoreProps } from "../passes/PassCore";
 
 interface PassListProps {
 	onPassSelect: (kind: PassKind) => void;
+	requiresAttention?: boolean;
 }
 
 type PassListPropsWithChildren = React.PropsWithChildren<PassListProps>;
 
 export default function PassList(props: PassListPropsWithChildren): JSX.Element {
 	const [selected, setSelected] = React.useState(false);
+	const selectionTray = React.useRef<HTMLDivElement>(null);
+
+	if (props.requiresAttention) {
+		React.useEffect(() => {
+			selectionTray.current &&
+				selectionTray.current.scrollIntoView({ behavior: "smooth", block: "end" })
+		}, []);
+	}
 
 	const onNodeSelection = (kind: PassKind) => {
 		setSelected(true);
@@ -26,7 +35,7 @@ export default function PassList(props: PassListPropsWithChildren): JSX.Element 
 	});
 
 	return (
-		<div id="pass-selection" className={selected && "selected" || ""}>
+		<div id="pass-selection" className={selected && "selected" || ""} ref={selectionTray}>
 			{children}
 		</div>
 	);

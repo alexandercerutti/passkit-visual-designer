@@ -24,12 +24,12 @@
 
 	& .selection-window {
 		height: calc(~"100vh -" @headerHeight);
-		overflow: hidden;
+		scroll-behavior: smooth;
+		overflow-y: scroll;
+		scrollbar-width: none; /* Firefox only */
 
-		& .slidable-area {
-			height: 100%;
-			transform: translateY(0%);
-			transition: transform 1s;
+		&::-webkit-scrollbar {
+			width: 0;
 		}
 	}
 }
