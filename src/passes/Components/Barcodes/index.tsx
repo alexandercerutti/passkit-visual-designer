@@ -18,13 +18,14 @@ export interface BarcodeProps {
 }
 
 export default (props: BarcodeProps) => {
-	const component: JSX.Element = selectComponentFromFormat(props.format, props.fallbackKind);
+	const barcodeFormat = props.format || PKBarcodeFormat.None;
+	const component: JSX.Element = selectComponentFromFormat(barcodeFormat, props.fallbackKind);
 
 	if (!component) {
 		return null;
 	}
 
-	const className = concatClassNames("barcode", props.format, props.fallbackKind, props.format !== PKBarcodeFormat.None && "content" || "");
+	const className = concatClassNames("barcode", barcodeFormat, props.fallbackKind, barcodeFormat !== PKBarcodeFormat.None && "content" || "");
 
 	return (
 		<div className={className}>

@@ -87,7 +87,7 @@ export function Generic(props: GenericProps): JSX.Element {
 					<Footer>
 						<Barcodes
 							fallbackKind="rect"
-							format={barcode && barcode.format || PKBarcodeFormat.None}
+							format={barcode && barcode.format}
 						/>
 					</Footer>
 				</>

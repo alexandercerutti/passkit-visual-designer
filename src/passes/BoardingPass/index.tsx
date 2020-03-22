@@ -152,7 +152,7 @@ export function BoardingPass(props: BoardingPassProps) {
 							id="footer.image"
 						/>
 						<Barcode
-							format={barcode && barcode.format || PKBarcodeFormat.None}
+							format={barcode && barcode.format}
 							fallbackKind="rect"
 						/>
 					</Footer>

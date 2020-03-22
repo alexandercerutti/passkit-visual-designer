@@ -81,7 +81,7 @@ export function Coupon(props: CouponProps): JSX.Element {
 				} */}
 					<Footer>
 						<Barcode
-							format={barcode && barcode.format || PKBarcodeFormat.None}
+							format={barcode && barcode.format}
 							fallbackKind="square"
 						/>
 					</Footer>
