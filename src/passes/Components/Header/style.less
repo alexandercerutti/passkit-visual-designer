@@ -10,19 +10,24 @@
 	overflow: hidden;
 	margin-bottom: 15px;
 
-	& > .empty:first-child, & > .empty:last-child {
-		width: 40px;
-		flex-grow: 0;
-	}
+	& > .empty {
+		height: 22px;
 
-	& > .empty:first-child {
-		border-top-left-radius: 2px;
-		border-bottom-left-radius: 2px;
-	}
+		&:first-child, &:last-child {
+			width: 40px;
+			flex-grow: 0;
+		}
 
-	& > .empty:last-child {
-		border-top-right-radius: 2px;
-		border-bottom-right-radius: 2px;
+		&:first-child {
+			border-top-left-radius: 2px;
+			border-bottom-left-radius: 2px;
+		}
+
+		&:last-child {
+			border-top-right-radius: 2px;
+			border-bottom-right-radius: 2px;
+		}
+
 	}
 
 	& > *:not(:last-child) {
