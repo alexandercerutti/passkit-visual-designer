@@ -1,5 +1,21 @@
 @headerHeight: 200px;
 
+.scrollableWithoutScrollbars(@direction) {
+	& when(@direction = "both") {
+		overflow: scroll;
+	}
+
+	& when(@direction = y), (@direction = x) {
+		overflow-@{direction}: scroll;
+	}
+
+	scrollbar-width: none; /* Firefox only */
+
+	&::-webkit-scrollbar {
+		width: 0;
+	}
+}
+
 #selector-app {
 	flex-grow: 1;
 	height: 100%;
@@ -25,12 +41,7 @@
 	& .selection-window {
 		height: calc(~"100vh -" @headerHeight);
 		scroll-behavior: smooth;
-		overflow-y: scroll;
-		scrollbar-width: none; /* Firefox only */
-
-		&::-webkit-scrollbar {
-			width: 0;
-		}
+		.scrollableWithoutScrollbars(y);
 	}
 }
 
@@ -39,10 +50,10 @@
 	width: 100%;
     padding: 10px 1%;
 	box-sizing: border-box;
-	flex-grow: 1;
 	height: 410px;
 	justify-content: space-evenly;
 	transition: opacity .5s ease-in-out;
+	.scrollableWithoutScrollbars(x);
 
 	&.selected {
 		opacity: .5;
