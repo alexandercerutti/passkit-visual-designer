@@ -23,16 +23,18 @@ export default function ThumbnailPrimaryField(props: React.PropsWithChildren<TPF
 
 	return (
 		<div className="thumbnail-primaryFields">
-			<div className="left-column">
+			<div className="left">
 				{data}
 				{props.children}
 			</div>
-			<ImageField
-				id="primaryField.thumbnail"
-				height="100%"
-				className="thumbnail"
-				src={props.thumbnailSrc}
-			/>
+			<div className="right">
+				<ImageField
+					id="primaryField.thumbnail"
+					height="100%"
+					className="thumbnail"
+					src={props.thumbnailSrc}
+				/>
+			</div>
 		</div>
 	)
 }
