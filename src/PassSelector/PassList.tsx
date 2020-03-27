@@ -36,7 +36,9 @@ export default function PassList(props: PassListPropsWithChildren): JSX.Element 
 
 	return (
 		<div id="pass-selection" className={selected && "selected" || ""} ref={selectionTray}>
+			<div id="slidable">
 			{children}
+		</div>
 		</div>
 	);
 }
