@@ -53,6 +53,7 @@ class PassSelector extends React.PureComponent<SelectorProps> {
 		const passes = Object.keys(PassKind).map((pass: keyof typeof PassKind) => {
 			return (
 				<NamedPass
+					key={PassKind[pass]}
 					name={PassKind[pass]}
 					kind={PassKind[pass]}
 					registerAlternatives={this.registerAlternatives.bind(this, PassKind[pass])}
@@ -64,6 +65,7 @@ class PassSelector extends React.PureComponent<SelectorProps> {
 			availableAlternatives.map((alternative: PassAlternative) => {
 				return (
 					<NamedPass
+						key={alternative.name}
 						name={alternative.name}
 						kind={firstPassKind}
 						registerAlternatives={this.registerAlternatives.bind(this, firstPassKind)}
