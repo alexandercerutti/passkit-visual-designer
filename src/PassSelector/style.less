@@ -60,23 +60,49 @@
 		pointer-events: none;
 	}
 
-	&:first-child #slidable {
-		justify-content: space-between; // but is ugly on big displays. space-evenly cuts left
-	}
-
 	& #slidable {
 		.scrollableWithoutScrollbars(x);
 		display: inline-flex;
 		width: 100%;
-		justify-content: space-between;
-		margin: 0 3%;
+
+		/**
+		 * A class is applied based on the amount of items through
+		 * Javascript. If we have more than 2 element, we apply
+		 * .space-first, otherwise .element-first
+		 *
+		 *	- 2 elements in space-between on 100vw, would result in
+		 *		too much space between them. Space-evenly is okay.
+		 *
+		 *	- More than 2 element (like, 5) in space-evenly on smaller
+		 *		100vw, would result in centered-like behavior for
+		 *		children and cutted-off sides. Space-between is okay.
+		 *
+		 *	- In even smaller 100vw with 2 elements, like mobile
+		 *		displays, space-evenly is not suitable for the same
+		 *		reason above. Space-between is meh, but flex-start is
+		 *		perfect.
+		 */
+
+		@media only screen and (max-width: 500px) {
+			justify-content: flex-start !important;
+			margin: 0 3% !important;
+		}
+
+		&.space-first {
+			justify-content: space-between;
+			margin: 0 3%;
+		}
+
+		&.element-first {
+			justify-content: space-evenly;
+			margin: 0 auto;
+		}
 
 		& div.select {
 			animation: PassFade .2s ease-in;
 			animation-fill-mode: forwards;
 			opacity: 0;
 			width: 230px;
-			/*min-width: 250px; // for mobile??*/
 			display: flex;
 			flex-direction: column;
 
