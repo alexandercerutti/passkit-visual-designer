@@ -55,11 +55,6 @@
 	height: 410px;
 	transition: opacity .5s ease-in-out;
 
-	&.selected {
-		opacity: .5;
-		pointer-events: none;
-	}
-
 	& #slidable {
 		.scrollableWithoutScrollbars(x);
 		display: inline-flex;
@@ -151,19 +146,23 @@
 				color: #FFF;
 				transition: opacity .5s ease-in-out;
 			}
+		}
 
-			&:not(.highlighted) {
-				& > .pass::before {
-					background-color: rgba(0,0,0,0.5);
+		&.selection-active {
+			& div.select {
+				&:not(.highlighted) {
+					& > .pass::before {
+						background-color: rgba(0,0,0,0.5);
+					}
+
+					& > .name {
+						opacity: 0.5;
+					}
 				}
 
-				& > .name {
-					opacity: 0.5;
+				&.highlighted > .pass {
+					box-shadow: 0px 3px 10px #000;
 				}
-			}
-
-			&.highlighted > .pass {
-				box-shadow: 0px 3px 10px #000;
 			}
 		}
 	}
