@@ -121,12 +121,46 @@
 				flex-shrink: 0;
 				flex-grow: 1;
 				width: inherit;
+
+				/**
+				 * This serves to create an overlay
+				 * that will obscure the pass
+				 * when another is selected
+				 */
+
+				&::before {
+					content: "";
+					position: absolute;
+					top: 0;
+					left: 0;
+					right: 0;
+					bottom: 0;
+					background-color: rgba(0,0,0,0);
+					z-index: 2;
+					border-radius: 7px;
+					transition: background-color .3s ease-in-out;
+				}
 			}
 
 			& .name {
 				text-align: center;
 				margin-top: 10px;
 				color: #FFF;
+				transition: opacity .5s ease-in-out;
+			}
+
+			&:not(.highlighted) {
+				& > .pass::before {
+					background-color: rgba(0,0,0,0.5);
+				}
+
+				& > .name {
+					opacity: 0.5;
+				}
+			}
+
+			&.highlighted > .pass {
+				box-shadow: 0px 3px 10px #000;
 			}
 		}
 	}
