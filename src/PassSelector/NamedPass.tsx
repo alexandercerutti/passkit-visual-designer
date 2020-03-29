@@ -12,7 +12,6 @@ import Pass, { PassCoreProps } from "../passes/PassCore";
 
 interface NamedPassProps extends PassCoreProps {
 	name: string;
-	isDefault?: boolean;
 }
 
 export default function NamedPass(props: React.PropsWithChildren<NamedPassProps>): JSX.Element {
@@ -22,8 +21,7 @@ export default function NamedPass(props: React.PropsWithChildren<NamedPassProps>
 		<>
 			<Pass {...passProps} />
 			<div className="name">
-				<div>{props.name}</div>
-				{props.isDefault ? <div><em>(default)</em></div> : null}
+				{props.name}
 			</div>
 		</>
 	);

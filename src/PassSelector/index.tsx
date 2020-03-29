@@ -12,7 +12,6 @@ interface SelectorProps {
 export interface PassAlternative {
 	name: string;
 	specificProps: Object;
-	default?: boolean;
 }
 
 type PassAlternativesIndex = { [key in PassKind]: PassAlternative[] };
@@ -69,7 +68,6 @@ class PassSelector extends React.PureComponent<SelectorProps> {
 						name={alternative.name}
 						kind={firstPassKind}
 						registerAlternatives={this.registerAlternatives.bind(this, firstPassKind)}
-						isDefault={alternative.default || false}
 						{...alternative.specificProps}
 					/>
 				);

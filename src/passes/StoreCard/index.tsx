@@ -16,9 +16,8 @@ export function StoreCard(props: StoreCardProps): JSX.Element {
 	React.useEffect(() => {
 		if (props.registerAlternatives) {
 			props.registerAlternatives({
-				name: "Store Card",
-				specificProps: {},
-				default: true,
+				name: "StoreCard",
+				specificProps: {}
 			});
 		}
 	}, []);

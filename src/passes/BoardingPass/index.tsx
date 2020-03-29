@@ -19,8 +19,7 @@ export function BoardingPass(props: BoardingPassProps) {
 				name: "Generic Boarding Pass",
 				specificProps: {
 					subkind: PKTransitType.Generic
-				},
-				default: true,
+				}
 			}, {
 				name: "Air Boarding Pass",
 				specificProps: {

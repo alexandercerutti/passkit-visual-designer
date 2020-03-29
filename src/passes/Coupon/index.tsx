@@ -16,8 +16,7 @@ export function Coupon(props: CouponProps): JSX.Element {
 		if (props.registerAlternatives) {
 			props.registerAlternatives({
 				name: "Coupon Pass",
-				specificProps: {},
-				default: true,
+				specificProps: {}
 			});
 		}
 	}, []);
