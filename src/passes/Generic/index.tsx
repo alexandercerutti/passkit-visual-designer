@@ -35,9 +35,9 @@ export function Generic(props: GenericProps): JSX.Element {
 		}
 	}, []);
 
-	const { secondaryFields, primaryFields, headerData, auxiliaryFields, barcode } = props;
+	const { secondaryFields, primaryFields, headerData, auxiliaryFields, barcode, subkind } = props;
 
-	const MiddleFragment = ({ onFieldSelect, registerField }: InteractionContext) => isSquareBarcode(barcode && barcode.format) &&
+	const MiddleFragment = ({ onFieldSelect, registerField }: InteractionContext) => subkind && subkind === GenericKind.SQUARE_BARCODE &&
 		(
 			<FieldsRow
 				areaIdentifier="secondary-auxiliary"
@@ -86,7 +86,7 @@ export function Generic(props: GenericProps): JSX.Element {
 					{MiddleFragment({ onFieldSelect, registerField })}
 					<Footer>
 						<Barcodes
-							fallbackKind="rect"
+							fallbackKind={props.subkind === GenericKind.SQUARE_BARCODE ? "square" : "rect"}
 							format={barcode && barcode.format}
 						/>
 					</Footer>
