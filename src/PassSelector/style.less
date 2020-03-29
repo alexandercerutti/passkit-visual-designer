@@ -44,122 +44,122 @@
 		height: calc(~"100vh -" @headerHeight);
 		scroll-behavior: smooth;
 		.scrollableWithoutScrollbars(y);
-	}
-}
 
-#pass-selection {
-	display: flex;
-	width: 100%;
-    padding: 10px 1%;
-	box-sizing: border-box;
-	height: 410px;
-	transition: opacity .5s ease-in-out;
-
-	& #slidable {
-		.scrollableWithoutScrollbars(x);
-		display: inline-flex;
-		width: 100%;
-		margin: 0 15px;
-
-		/**
-		 * A class is applied based on the amount of items through
-		 * Javascript. If we have more than 2 element, we apply
-		 * .space-first, otherwise .element-first
-		 *
-		 *	- 2 elements in "space-between" on width 100vw, would
-		 *		result in too much space between them. "space-evenly"
-		 *		is okay.
-		 *
-		 *	- More than 2 element (like, 5) in "space-evenly" on a
-		 *		"small 100vw", would result in centered-like behavior
-		 *		for children and cutted-off sides. "space-between" is
-		 *		okay.
-		 *
-		 *	- In "even smaller 100vw" (like mobile displays) with 2
-		 *		elements, space-evenly is not suitable for the same
-		 *		reason above. "space-between" is meh, but "flex-start"
-		 *		is perfect. Ahhhhh *touches his face with hands on
-		 *		the cheeks*
-		 */
-
-		@media only screen and (max-width: 500px) {
-			justify-content: flex-start !important;
-		}
-
-		&.space-first {
-			justify-content: space-between;
-		}
-
-		&.element-first {
-			justify-content: space-evenly;
-		}
-
-		& div.select {
-			animation: PassFade .2s ease-in;
-			animation-fill-mode: forwards;
-			opacity: 0;
-			width: 230px;
+		& .pass-list {
 			display: flex;
-			flex-direction: column;
+			width: 100%;
+			padding: 10px 1%;
+			box-sizing: border-box;
+			height: 410px;
+			transition: opacity .5s ease-in-out;
 
-			cursor: pointer;
-			&:nth-child(2) { animation-delay: .1s }
-			&:nth-child(3) { animation-delay: .2s }
-			&:nth-child(4) { animation-delay: .3s }
-			&:nth-child(5) { animation-delay: .4s }
-
-			&:not(:last-child) {
-				margin-right: 3%;
-			}
-
-			& > .pass {
-				padding-bottom: 0;
-				flex-shrink: 0;
-				flex-grow: 1;
-				width: inherit;
+			& #slidable {
+				.scrollableWithoutScrollbars(x);
+				display: inline-flex;
+				width: 100%;
+				margin: 0 15px;
 
 				/**
-				 * This serves to create an overlay
-				 * that will obscure the pass
-				 * when another is selected
-				 */
+				* A class is applied based on the amount of items through
+				* Javascript. If we have more than 2 element, we apply
+				* .space-first, otherwise .element-first
+				*
+				*	- 2 elements in "space-between" on width 100vw, would
+				*		result in too much space between them. "space-evenly"
+				*		is okay.
+				*
+				*	- More than 2 element (like, 5) in "space-evenly" on a
+				*		"small 100vw", would result in centered-like behavior
+				*		for children and cutted-off sides. "space-between" is
+				*		okay.
+				*
+				*	- In "even smaller 100vw" (like mobile displays) with 2
+				*		elements, space-evenly is not suitable for the same
+				*		reason above. "space-between" is meh, but "flex-start"
+				*		is perfect. Ahhhhh *touches his face with hands on
+				*		the cheeks*
+				*/
 
-				&::before {
-					content: "";
-					position: absolute;
-					top: 0;
-					left: 0;
-					right: 0;
-					bottom: 0;
-					background-color: rgba(0,0,0,0);
-					z-index: 2;
-					border-radius: 7px;
-					transition: background-color .3s ease-in-out;
-				}
-			}
-
-			& .name {
-				text-align: center;
-				margin-top: 10px;
-				color: #FFF;
-				transition: opacity .5s ease-in-out;
-			}
-		}
-
-		&.selection-active {
-			& div.select {
-				&:not(.highlighted) {
-					& > .pass::before {
-						background-color: rgba(0,0,0,0.5);
-					}
-
-					& > .name {
-						opacity: 0.5;
-					}
+				@media only screen and (max-width: 500px) {
+					justify-content: flex-start !important;
 				}
 
-				&.highlighted > .pass {
-					box-shadow: 0px 3px 10px #000;
+				&.space-first {
+					justify-content: space-between;
+				}
+
+				&.element-first {
+					justify-content: space-evenly;
+				}
+
+				& div.select {
+					animation: PassFade .2s ease-in;
+					animation-fill-mode: forwards;
+					opacity: 0;
+					width: 230px;
+					display: flex;
+					flex-direction: column;
+
+					cursor: pointer;
+					&:nth-child(2) { animation-delay: .1s }
+					&:nth-child(3) { animation-delay: .2s }
+					&:nth-child(4) { animation-delay: .3s }
+					&:nth-child(5) { animation-delay: .4s }
+
+					&:not(:last-child) {
+						margin-right: 3%;
+					}
+
+					& > .pass {
+						padding-bottom: 0;
+						flex-shrink: 0;
+						flex-grow: 1;
+						width: inherit;
+
+						/**
+						* This serves to create an overlay
+						* that will obscure the pass
+						* when another is selected
+						*/
+
+						&::before {
+							content: "";
+							position: absolute;
+							top: 0;
+							left: 0;
+							right: 0;
+							bottom: 0;
+							background-color: rgba(0,0,0,0);
+							z-index: 2;
+							border-radius: 7px;
+							transition: background-color .3s ease-in-out;
+						}
+					}
+
+					& .name {
+						text-align: center;
+						margin-top: 10px;
+						color: #FFF;
+						transition: opacity .5s ease-in-out;
+					}
+				}
+
+				&.selection-active {
+					& div.select {
+						&:not(.highlighted) {
+							& > .pass::before {
+								background-color: rgba(0,0,0,0.5);
+							}
+
+							& > .name {
+								opacity: 0.5;
+							}
+						}
+
+						&.highlighted > .pass {
+							box-shadow: 0px 3px 10px #000;
+						}
+					}
 				}
 			}
 		}

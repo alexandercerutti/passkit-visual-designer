@@ -42,7 +42,7 @@ export default function PassList(props: PassListPropsWithChildren): JSX.Element 
 	const className = concatClassNames(children.length > 2 ? "space-first" : "element-first", props.selectedKind && "selection-active");
 
 	return (
-		<div id="pass-selection" ref={selectionTray}>
+		<div className="pass-list" ref={selectionTray}>
 			<div id="slidable" className={className}>
 				{children}
 			</div>
