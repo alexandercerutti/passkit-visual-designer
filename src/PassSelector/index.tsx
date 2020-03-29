@@ -83,12 +83,12 @@ class PassSelector extends React.PureComponent<SelectorProps> {
 		) || null;
 
 		return (
-			<div id="selector-app" >
+			<div id="selector-app">
 				<header>
 					<h2>{this.config.introText}</h2>
 				</header>
 				<div className="selection-window">
-					<PassList row={1} onPassSelect={this.onPassSelect}>
+					<PassList row={1} onPassSelect={this.onPassSelect} selectedKind={selectedPassKind}>
 						{passes}
 					</PassList>
 					{AlternativesListComponent}
