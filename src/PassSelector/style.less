@@ -59,6 +59,7 @@
 		.scrollableWithoutScrollbars(x);
 		display: inline-flex;
 		width: 100%;
+		margin: 0 15px;
 
 		/**
 		 * A class is applied based on the amount of items through
@@ -83,17 +84,14 @@
 
 		@media only screen and (max-width: 500px) {
 			justify-content: flex-start !important;
-			margin: 0 3% !important;
 		}
 
 		&.space-first {
 			justify-content: space-between;
-			margin: 0 3%;
 		}
 
 		&.element-first {
 			justify-content: space-evenly;
-			margin: 0 auto;
 		}
 
 		& div.select {
