@@ -20,7 +20,7 @@ export default function PassList(props: PassListPropsWithChildren): JSX.Element 
 		React.useEffect(() => {
 			selectionTray.current &&
 				selectionTray.current.scrollIntoView({ behavior: "smooth", block: "end" })
-		}, []);
+		});
 	}
 
 	const onNodeSelection = (kind: PassKind) => {
