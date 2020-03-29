@@ -13,7 +13,6 @@ interface PassListProps {
 type PassListPropsWithChildren = React.PropsWithChildren<PassListProps>;
 
 export default function PassList(props: PassListPropsWithChildren): JSX.Element {
-	const [selected, setSelected] = React.useState(false);
 	const selectionTray = React.useRef<HTMLDivElement>(null);
 
 	if (props.requiresAttention) {
@@ -23,17 +22,12 @@ export default function PassList(props: PassListPropsWithChildren): JSX.Element 
 		});
 	}
 
-	const onNodeSelection = (kind: PassKind) => {
-		setSelected(true);
-		props.onPassSelect(kind);
-	}
-
 	const children = React.Children.map(props.children, (node: React.ReactElement<PassCoreProps>) => {
 		const isHighlighted = node.props.kind === props.selectedKind;
 		const className = concatClassNames("select", isHighlighted && "highlighted");
 
 		return (
-			<div className={className} onClick={(e) => { e.stopPropagation(); onNodeSelection(node.props.kind) }}>
+			<div className={className} onClick={(e) => { e.stopPropagation(); props.onPassSelect(node.props.kind) }}>
 				{node}
 			</div>
 		)
