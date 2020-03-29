@@ -1,10 +1,10 @@
 import * as React from "react";
-import { Field, FieldLabel, FieldValue } from "../../Components/Field";
-import { PKTransitType } from "../../constants";
+import { Field, FieldLabel, FieldValue } from "../../Field";
+import { PKTransitType } from "../../../constants";
 import "./primaryFields.less";
-import { RegistrableComponent } from "../../Components/withRegistration";
+import { RegistrableComponent } from "../../withRegistration";
 import { PKTransitIcon } from "./icons";
-import { getSafeFieldData, concatClassNames } from "../../utils";
+import { getSafeFieldData, concatClassNames } from "../../../utils";
 
 export interface PrimaryFieldsProps extends Omit<RegistrableComponent, "id"> {
 	className?: string;

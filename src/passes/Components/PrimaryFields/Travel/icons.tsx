@@ -1,5 +1,5 @@
 import * as React from "react";
-import { PKTransitType } from "../../constants";
+import { PKTransitType } from "../../../constants";
 
 interface BoardingIconProps {
 	className?: string;

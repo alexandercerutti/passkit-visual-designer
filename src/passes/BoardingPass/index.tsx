@@ -2,7 +2,7 @@ import * as React from "react";
 import { PassProps, InteractionConsumer } from "../PassCore";
 import { PassHeader } from "../Components/Header";
 import { PKTransitType, PKBarcodeFormat } from "../constants";
-import PrimaryFields from "./primaryFields";
+import PrimaryFields from "../Components/PrimaryFields/Travel";
 import FieldsRow from "../Components/FieldRow";
 import Footer from "../Components/Footer";
 import ImageField from "../Components/ImageField";
