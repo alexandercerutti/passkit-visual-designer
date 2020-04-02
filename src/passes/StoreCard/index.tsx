@@ -5,12 +5,8 @@ import StripPrimaryFields from "../Components/PrimaryFields/Strip";
 import FieldsRow from "../Components/FieldRow";
 import Footer from "../Components/Footer";
 import Barcodes from "../Components/Barcodes";
-import { PKBarcodeFormat } from "../constants";
 
-export interface StoreCardProps extends PassProps {
-	stripSrc?: string;
-	barcodeFormat?: PKBarcodeFormat;
-}
+export interface StoreCardProps extends PassProps { }
 
 export function StoreCard(props: StoreCardProps): JSX.Element {
 	React.useEffect(() => {
@@ -29,13 +25,13 @@ export function StoreCard(props: StoreCardProps): JSX.Element {
 			{({ onFieldSelect, registerField }) => (
 				<>
 					<PassHeader
-						src={headerData && props.headerData.logoSrc}
+						src={headerData && headerData.logoSrc}
 						headerFieldsData={headerData && headerData.fields}
 						onClick={onFieldSelect}
 						register={registerField}
 					/>
 					<StripPrimaryFields
-						stripSrc={props.stripSrc}
+						stripSrc={props.stripImage}
 						primaryFieldsData={primaryFields}
 						onClick={onFieldSelect}
 						register={registerField}

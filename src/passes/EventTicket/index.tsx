@@ -6,7 +6,6 @@ import FieldsRow from "../Components/FieldRow";
 import StripPrimaryFields from "../Components/PrimaryFields/Strip";
 import Footer from "../Components/Footer";
 import Barcodes from "../Components/Barcodes";
-import { PKBarcodeFormat } from "../constants";
 import { InteractionContext } from "../PassCore/interactionContext";
 
 export interface EventTicketProps extends PassProps { }

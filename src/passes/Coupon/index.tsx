@@ -4,12 +4,9 @@ import { PassHeader } from "../Components/Header";
 import StripPrimaryFields from "../Components/PrimaryFields/Strip";
 import FieldsRow from "../Components/FieldRow";
 import Barcode from "../Components/Barcodes";
-import { PKBarcodeFormat } from "../constants";
 import Footer from "../Components/Footer";
 
-export interface CouponProps extends PassProps {
-	stripSrc?: string;
-}
+export interface CouponProps extends PassProps { }
 
 export function Coupon(props: CouponProps): JSX.Element {
 	React.useEffect(() => {
@@ -21,7 +18,7 @@ export function Coupon(props: CouponProps): JSX.Element {
 		}
 	}, []);
 
-	const { secondaryFields, primaryFields, headerData, auxiliaryFields, barcode, stripSrc } = props;
+	const { secondaryFields, primaryFields, headerData, auxiliaryFields, barcode, stripImage } = props;
 
 	return (
 		<InteractionConsumer>
@@ -35,7 +32,7 @@ export function Coupon(props: CouponProps): JSX.Element {
 						register={registerField}
 					/>
 					<StripPrimaryFields
-						stripSrc={stripSrc}
+						stripSrc={stripImage}
 						primaryFieldsData={primaryFields}
 						onClick={onFieldSelect}
 						register={registerField}
