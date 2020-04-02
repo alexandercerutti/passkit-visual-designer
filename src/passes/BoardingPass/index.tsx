@@ -8,9 +8,7 @@ import Footer from "../Components/Footer";
 import ImageField from "../Components/ImageField";
 import Barcode from "../Components/Barcodes";
 
-export interface BoardingPassProps extends PassProps {
-	subkind?: PKTransitType;
-}
+export interface BoardingPassProps extends PassProps { }
 
 export function BoardingPass(props: BoardingPassProps) {
 	React.useEffect(() => {
@@ -18,33 +16,33 @@ export function BoardingPass(props: BoardingPassProps) {
 			props.registerAlternatives({
 				name: "Generic Boarding Pass",
 				specificProps: {
-					subkind: PKTransitType.Generic
+					transitType: PKTransitType.Generic
 				}
 			}, {
 				name: "Air Boarding Pass",
 				specificProps: {
-					subkind: PKTransitType.Air
+					transitType: PKTransitType.Air
 				}
 			}, {
 				name: "Boat Boarding Pass",
 				specificProps: {
-					subkind: PKTransitType.Boat
+					transitType: PKTransitType.Boat
 				}
 			}, {
 				name: "Bus Boarding Pass",
 				specificProps: {
-					subkind: PKTransitType.Bus
+					transitType: PKTransitType.Bus
 				}
 			}, {
 				name: "Train Boarding Pass",
 				specificProps: {
-					subkind: PKTransitType.Train
+					transitType: PKTransitType.Train
 				}
 			});
 		}
 	}, []);
 
-	const { secondaryFields, primaryFields, headerData, auxiliaryFields, barcode, subkind } = props;
+	const { secondaryFields, primaryFields, headerData, auxiliaryFields, barcode, transitType } = props;
 
 	return (
 		<InteractionConsumer>
@@ -75,7 +73,7 @@ export function BoardingPass(props: BoardingPassProps) {
 						*/
 					/>
 					<PrimaryFields
-						subkind={subkind}
+						transitType={transitType}
 						primaryFieldsData={primaryFields}
 						onClick={onFieldSelect}
 						register={registerField}

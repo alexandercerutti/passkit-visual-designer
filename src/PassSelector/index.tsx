@@ -41,7 +41,6 @@ class PassSelector extends React.PureComponent<SelectorProps> {
 		this.registerAlternatives = this.registerAlternatives.bind(this);
 		this.onPassSelect = this.onPassSelect.bind(this);
 		this.onAlternativeSelection = this.onAlternativeSelection.bind(this);
-
 	}
 
 	/**

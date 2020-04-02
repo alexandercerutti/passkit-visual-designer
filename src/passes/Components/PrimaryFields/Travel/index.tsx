@@ -9,7 +9,7 @@ import { getSafeFieldData, concatClassNames } from "../../../utils";
 export interface PrimaryFieldsProps extends Omit<RegistrableComponent, "id"> {
 	className?: string;
 	primaryFieldsData: Omit<Parameters<typeof Field>[0], keyof RegistrableComponent>[];
-	subkind: PKTransitType;
+	transitType: PKTransitType;
 }
 
 export default function PrimaryFields(props: PrimaryFieldsProps) {
@@ -66,7 +66,7 @@ function ValuesRow(props: PrimaryFieldsProps) {
 			)
 		});
 
-	const TransitIcon = PKTransitIcon(props.subkind === undefined && PKTransitType.Generic || props.subkind);
+	const TransitIcon = PKTransitIcon(props.transitType === undefined && PKTransitType.Generic || props.transitType);
 
 	return (
 		<div className="value-row">

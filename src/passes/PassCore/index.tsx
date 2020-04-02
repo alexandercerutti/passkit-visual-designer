@@ -29,7 +29,8 @@ export interface PassProps {
 		format?: PKBarcodeFormat;
 		altText?: string; // @TODO
 		locked?: boolean; // @TODO
-	}
+	};
+	transitType?: PKTransitType;
 }
 
 export interface PassCoreProps extends PassProps {
