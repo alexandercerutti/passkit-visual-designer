@@ -8,15 +8,7 @@ import FieldsRow from "../Components/FieldRow";
 import Footer from "../Components/Footer";
 import { InteractionContext } from "../PassCore/interactionContext";
 
-export interface GenericProps extends PassProps {
-	thumbnailSrc?: string;
-	subkind?: GenericKind;
-}
-
-enum GenericKind {
-	RECTANGULAR_BARCODE,
-	SQUARE_BARCODE
-}
+export interface GenericProps extends PassProps { }
 
 export function Generic(props: GenericProps): JSX.Element {
 	React.useEffect(() => {
@@ -24,20 +16,26 @@ export function Generic(props: GenericProps): JSX.Element {
 			props.registerAlternatives({
 				name: "With rectangular barcode",
 				specificProps: {
-					subkind: GenericKind.RECTANGULAR_BARCODE
+					barcode: {
+						format: PKBarcodeFormat.Rectangle
+					},
 				}
 			}, {
 				name: "With square barcode",
 				specificProps: {
-					subkind: GenericKind.SQUARE_BARCODE
+					barcode: {
+						format: PKBarcodeFormat.Square
+					}
 				}
 			});
 		}
 	}, []);
 
-	const { secondaryFields, primaryFields, headerData, auxiliaryFields, barcode, subkind } = props;
+	const { secondaryFields, primaryFields, headerData, auxiliaryFields, barcode } = props;
 
-	const MiddleFragment = ({ onFieldSelect, registerField }: InteractionContext) => subkind && subkind === GenericKind.SQUARE_BARCODE &&
+	const isSquaredBarcode = isSquareBarcode(barcode && barcode.format);
+
+	const MiddleFragment = ({ onFieldSelect, registerField }: InteractionContext) => isSquaredBarcode &&
 		(
 			<FieldsRow
 				areaIdentifier="secondary-auxiliary"
@@ -79,14 +77,14 @@ export function Generic(props: GenericProps): JSX.Element {
 					/>
 					<ThumbnailPrimaryField
 						primaryFieldsData={primaryFields}
-						thumbnailSrc={props.thumbnailSrc}
+						thumbnailSrc={props.thumbnailImage}
 						onClick={onFieldSelect}
 						register={registerField}
 					/>
 					{MiddleFragment({ onFieldSelect, registerField })}
 					<Footer>
 						<Barcodes
-							fallbackKind={props.subkind === GenericKind.SQUARE_BARCODE ? "square" : "rect"}
+							fallbackKind={isSquaredBarcode ? "square" : "rect"}
 							format={barcode && barcode.format}
 						/>
 					</Footer>
