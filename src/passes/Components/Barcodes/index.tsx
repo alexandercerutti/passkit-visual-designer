@@ -11,9 +11,9 @@ import { concatClassNames } from "../../utils";
 export interface BarcodeProps {
 	format: PKBarcodeFormat;
 	fallbackKind: "square" | "rect";
+	message?: string;
 
 	// @TODO
-	QRMessage?: string;
 	expiredOrVoid?: boolean;
 }
 
