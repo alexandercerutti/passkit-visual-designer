@@ -9,15 +9,7 @@ import Barcodes from "../Components/Barcodes";
 import { PKBarcodeFormat } from "../constants";
 import { InteractionContext } from "../PassCore/interactionContext";
 
-export interface EventTicketProps extends PassProps {
-	subkind?: EventTicketKind;
-	src?: string;
-}
-
-export enum EventTicketKind {
-	BACKGROUND,
-	STRIP
-}
+export interface EventTicketProps extends PassProps { }
 
 type PrimaryFieldPropsKind = Parameters<(typeof StripPrimaryFields | typeof ThumbnailPrimaryField)>[0]
 
@@ -27,13 +19,13 @@ export function EventTicket(props: EventTicketProps): JSX.Element {
 			props.registerAlternatives({
 				name: "With background image",
 				specificProps: {
-					subkind: EventTicketKind.BACKGROUND
-				}
+					backgroundImage: null,
+				},
 			}, {
 				name: "With strip image",
 				specificProps: {
-					subkind: EventTicketKind.STRIP
-				}
+					stripImage: null,
+				},
 			});
 		}
 	}, []);
@@ -80,11 +72,12 @@ export function EventTicket(props: EventTicketProps): JSX.Element {
 		}
 	 */
 
-	if (props.subkind === EventTicketKind.STRIP) {
+	/** We fallback to strip image model if none of the required property is available */
+	if (props.hasOwnProperty("stripImage") || !props.hasOwnProperty("backgroundImage")) {
 		FieldsFragment = ({ onFieldSelect, registerField }) => (
 			<>
 				<StripPrimaryFields
-					stripSrc={props.src}
+					stripSrc={props.stripImage}
 					primaryFieldsData={primaryFields}
 					onClick={onFieldSelect}
 					register={registerField}
@@ -101,10 +94,10 @@ export function EventTicket(props: EventTicketProps): JSX.Element {
 		}
 		 */
 
-	} else {
+	} else if (props.hasOwnProperty("backgroundImage")) {
 		FieldsFragment = ({ onFieldSelect, registerField }) => (
 			<ThumbnailPrimaryField
-				thumbnailSrc={props.src}
+				thumbnailSrc={props.thumbnailImage}
 				primaryFieldsData={primaryFields}
 				onClick={onFieldSelect}
 				register={registerField}

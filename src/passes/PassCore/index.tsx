@@ -8,7 +8,7 @@ import { Generic } from "../Generic";
 import { StoreCard } from "../StoreCard";
 import { PassAlternative } from "../../PassSelector";
 import { FieldProps } from "../Components/Field";
-import { PKBarcodeFormat } from "../constants";
+import { PKBarcodeFormat, PKTransitType } from "../constants";
 
 export { Provider as interactionProvider, Consumer as InteractionConsumer } from "./interactionContext";
 
@@ -31,6 +31,10 @@ export interface PassProps {
 		locked?: boolean; // @TODO
 	};
 	transitType?: PKTransitType;
+	backgroundImage?: string;
+	thumbnailImage?: string;
+	stripImage?: string;
+	appLogo?: string;
 }
 
 export interface PassCoreProps extends PassProps {
