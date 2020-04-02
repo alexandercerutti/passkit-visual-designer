@@ -1,11 +1,23 @@
 import * as React from "react";
+import { connect } from "react-redux";
 import "./style.less";
 import App from "../app";
 import { PassKind } from "../model";
 import PassList from "./PassList";
+import { selectPassKind, selectPassAlternative } from "../store/actions";
+import { State } from "../store/state";
 import NamedPass from "./NamedPass";
 
-interface SelectorProps {
+interface DispatchProps {
+	selectPassKind: typeof selectPassKind,
+	selectPassAlternative: typeof selectPassAlternative,
+}
+
+interface StoreProps {
+	selectedPassKind: PassKind;
+}
+
+interface SelectorProps extends DispatchProps, StoreProps {
 	onPassKindSelection: App["onPassKindSelection"];
 }
 
@@ -28,6 +40,7 @@ class PassSelector extends React.PureComponent<SelectorProps> {
 
 		this.registerAlternatives = this.registerAlternatives.bind(this);
 		this.onPassSelect = this.onPassSelect.bind(this);
+		this.onAlternativeSelection = this.onAlternativeSelection.bind(this);
 
 	}
 
@@ -45,9 +58,25 @@ class PassSelector extends React.PureComponent<SelectorProps> {
 		console.log("Registering alternatives for", kind, alternatives);
 	}
 
+	onPassSelect(kind: PassKind) {
+		console.log("Performed selection of", kind);
+
+		this.props.selectPassKind(kind);
+
+		// @TODO: Select pass and call function
+		// from parent to pass to the next area
+
+		console.log("Performing next action...");
+	}
+
+	onAlternativeSelection() {
+		console.log("Performed second selection of pass");
+		this.props.selectPassAlternative();
+	}
+
 	render() {
-		const { selectedPasses: [firstPassKind] } = this.props;
-		const availableAlternatives = firstPassKind && this.alternatives[firstPassKind] || [];
+		const { selectedPassKind } = this.props;
+		const availableAlternatives = selectedPassKind && this.alternatives[selectedPassKind] || [];
 
 		const passes = Object.keys(PassKind).map((pass: keyof typeof PassKind) => {
 			return (
@@ -66,8 +95,8 @@ class PassSelector extends React.PureComponent<SelectorProps> {
 					<NamedPass
 						key={alternative.name}
 						name={alternative.name}
-						kind={firstPassKind}
-						registerAlternatives={this.registerAlternatives.bind(this, firstPassKind)}
+						kind={selectedPassKind}
+						registerAlternatives={this.registerAlternatives.bind(this, selectedPassKind)}
 						{...alternative.specificProps}
 					/>
 				);
@@ -95,3 +124,10 @@ class PassSelector extends React.PureComponent<SelectorProps> {
 		);
 	}
 }
+
+export default connect(
+	(state: State): StoreProps => ({
+		selectedPassKind: state.selectedPass.selectedKind
+	}),
+	{ selectPassKind, selectPassAlternative }
+)(PassSelector);

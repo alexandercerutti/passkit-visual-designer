@@ -1,8 +1,10 @@
 import * as React from "react";
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
-import Pass from "./passes/PassCore";
-import { PassSelector } from "./PassSelector";
+import PassSelector from "./PassSelector";
 import { PassKind } from "./model";
+import { Provider } from "react-redux";
+import { createStore } from "redux";
+import reducers from "./store/reducers";
 
 interface AppState {
 	phase: number;
@@ -10,6 +12,8 @@ interface AppState {
 }
 
 export default class App extends React.Component<{}, AppState> {
+	store = createStore(reducers);
+
 	constructor(props: {}) {
 		super(props);
 
@@ -32,22 +36,24 @@ export default class App extends React.Component<{}, AppState> {
 
 	render() {
 		return (
-			<Router>
-				<Switch>
-					<Route path="/" exact>
-						{null}
-					</Route>
-					<Route path="/select">
-						<PassSelector
-							onPassKindSelection={this.onPassKindSelection}
-						/>
-					</Route>
-					<Route path="/create">
-						{null}
-					</Route>
-					<Route component={null} />
-				</Switch>
-			</Router>
+			<Provider store={this.store}>
+				<Router>
+					<Switch>
+						<Route path="/" exact>
+							{null}
+						</Route>
+						<Route path="/select">
+							<PassSelector
+								onPassKindSelection={this.onPassKindSelection}
+							/>
+						</Route>
+						<Route path="/create">
+							{null}
+						</Route>
+						<Route component={null} />
+					</Switch>
+				</Router>
+			</Provider>
 		);
 	}
 }
