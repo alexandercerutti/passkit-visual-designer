@@ -9,11 +9,11 @@ export enum PKDateStyle {
 }
 
 export enum PKTransitType {
-	"Air",
-	"Boat",
-	"Bus",
-	"Generic",
-	"Train"
+	Air = "PKTransitTypeAir",
+	Boat = "PKTransitTypeBoat",
+	Bus = "PKTransitTypeBus",
+	Generic = "PKTransitTypeGeneric",
+	Train = "PKTransitTypeTrain"
 }
 
 export enum PKTextAlignment {
