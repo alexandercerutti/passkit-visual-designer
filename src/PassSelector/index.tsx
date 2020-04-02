@@ -7,6 +7,7 @@ import PassList from "./PassList";
 import { selectPassKind, selectPassAlternative } from "../store/actions";
 import { State } from "../store/state";
 import NamedPass from "./NamedPass";
+import { PassProps } from "../passes/PassCore";
 
 interface DispatchProps {
 	selectPassKind: typeof selectPassKind,
@@ -23,7 +24,7 @@ interface SelectorProps extends DispatchProps, StoreProps {
 
 export interface PassAlternative {
 	name: string;
-	specificProps: Object;
+	specificProps: Partial<PassProps>;
 }
 
 type PassAlternativesIndex = { [key in PassKind]: PassAlternative[] };
