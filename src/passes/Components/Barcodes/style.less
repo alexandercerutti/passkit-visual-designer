@@ -11,8 +11,10 @@
 	padding-bottom: 7px;
 
 	/* Using another div to contain fallback barcodes */
-	&.none.rect > div {
-		width: 100%;
+	&.none, &.rectangle {
+		&.rect > div {
+			width: 100%;
+		}
 	}
 
 	&.content > div {
