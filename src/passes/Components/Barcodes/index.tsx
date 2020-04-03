@@ -14,7 +14,7 @@ export interface BarcodeProps {
 	message?: string;
 
 	// @TODO
-	expiredOrVoid?: boolean;
+	voided?: boolean;
 }
 
 export default (props: BarcodeProps) => {
