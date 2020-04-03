@@ -1,1 +1,1 @@
-export { selectPassKind, selectPassAlternative } from "./PassSelector/actions";
+export { setPassKind, setPassProps } from "./PassSelector/actions";

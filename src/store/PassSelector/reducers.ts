@@ -3,16 +3,16 @@ import { PSActionTypes, SelectionAction } from "./actions";
 
 export default function selectedPass(state = initialState.selectedPass, action: SelectionAction): State["selectedPass"] {
 	switch (action.type) {
-		case PSActionTypes.SELECT_KIND: {
+		case PSActionTypes.SET_PASS_KIND: {
 			return {
-				selectedKind: action.pass,
-				selectedAlternative: null,
+				kind: action.kind,
+				props: null,
 			}
 		}
-		case PSActionTypes.SELECT_ALTERNATIVE: {
+		case PSActionTypes.SET_PROPS: {
 			return {
 				...state,
-				selectedAlternative: null
+				props: action.props
 			}
 		}
 

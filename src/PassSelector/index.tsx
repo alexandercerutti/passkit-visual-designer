@@ -4,18 +4,19 @@ import "./style.less";
 import App from "../app";
 import { PassKind } from "../model";
 import PassList from "./PassList";
-import { selectPassKind, selectPassAlternative } from "../store/actions";
+import { setPassKind, setPassProps } from "../store/actions";
 import { State } from "../store/state";
 import NamedPass from "./NamedPass";
 import { PassProps } from "../passes/PassCore";
 
 interface DispatchProps {
-	selectPassKind: typeof selectPassKind,
-	selectPassAlternative: typeof selectPassAlternative,
+	setPassKind: typeof setPassKind,
+	setPassProps: typeof setPassProps,
 }
 
 interface StoreProps {
 	selectedPassKind: PassKind;
+	passProps: PassProps;
 }
 
 interface SelectorProps extends DispatchProps, StoreProps {
@@ -61,7 +62,7 @@ class PassSelector extends React.PureComponent<SelectorProps> {
 	onPassSelect(kind: PassKind) {
 		console.log("Performed selection of", kind);
 
-		this.props.selectPassKind(kind);
+		this.props.setPassKind(kind);
 
 		// @TODO: Select pass and call function
 		// from parent to pass to the next area
@@ -127,7 +128,8 @@ class PassSelector extends React.PureComponent<SelectorProps> {
 
 export default connect(
 	(state: State): StoreProps => ({
-		selectedPassKind: state.selectedPass.selectedKind
+		selectedPassKind: state.selectedPass.kind,
+		passProps: state.selectedPass.props,
 	}),
-	{ selectPassKind, selectPassAlternative }
+	{ setPassKind, setPassProps }
 )(PassSelector);

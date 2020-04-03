@@ -1,16 +1,16 @@
 import { PassKind } from "../model";
-import { PassAlternative } from "../PassSelector";
+import { PassProps } from "../passes/PassCore";
 
 export interface State {
 	selectedPass: {
-		selectedKind: PassKind;
-		selectedAlternative: PassAlternative;
+		kind: PassKind;
+		props: PassProps;
 	}
 }
 
 export const initialState: State = {
 	selectedPass: {
-		selectedKind: null,
-		selectedAlternative: null,
+		kind: null,
+		props: null,
 	}
 }
