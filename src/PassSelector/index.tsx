@@ -7,7 +7,7 @@ import PassList from "./PassList";
 import { setPassKind, setPassProps } from "../store/actions";
 import { State } from "../store/state";
 import NamedPass from "./NamedPass";
-import { PassProps } from "../passes/PassCore";
+import { PassProps, PassCoreProps } from "../passes/PassCore";
 
 interface DispatchProps {
 	setPassKind: typeof setPassKind,
@@ -59,10 +59,10 @@ class PassSelector extends React.PureComponent<SelectorProps> {
 		console.log("Registering alternatives for", kind, alternatives);
 	}
 
-	onPassSelect(kind: PassKind) {
-		console.log("Performed selection of", kind);
+	onPassSelect(passProps: PassCoreProps) {
+		console.log("Performed selection of", passProps.kind);
 
-		this.props.setPassKind(kind);
+		this.props.setPassKind(passProps.kind);
 
 		// @TODO: Select pass and call function
 		// from parent to pass to the next area
@@ -70,9 +70,9 @@ class PassSelector extends React.PureComponent<SelectorProps> {
 		console.log("Performing next action...");
 	}
 
-	onAlternativeSelection() {
-		console.log("Performed second selection of pass");
-		this.props.selectPassAlternative();
+	onAlternativeSelection(passProps: PassCoreProps) {
+		const propsWithoutKind: PassProps = (({ kind, ...props }) => ({ ...props }))(passProps);
+		this.props.setPassProps(propsWithoutKind);
 	}
 
 	render() {

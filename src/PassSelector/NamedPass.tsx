@@ -10,7 +10,7 @@ import Pass, { PassCoreProps } from "../passes/PassCore";
  * @param props
  */
 
-interface NamedPassProps extends PassCoreProps {
+export interface NamedPassProps extends PassCoreProps {
 	name: string;
 }
 
