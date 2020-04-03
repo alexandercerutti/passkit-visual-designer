@@ -84,7 +84,7 @@ export function Generic(props: GenericProps): JSX.Element {
 					{MiddleFragment({ onFieldSelect, registerField })}
 					<Footer>
 						<Barcodes
-							fallbackKind={isSquaredBarcode ? "square" : "rect"}
+							fallbackShape={isSquaredBarcode ? "square" : "rect"}
 							format={barcode && barcode.format}
 						/>
 					</Footer>

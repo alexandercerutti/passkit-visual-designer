@@ -10,7 +10,7 @@ import { concatClassNames } from "../../utils";
 
 export interface BarcodeProps {
 	format: PKBarcodeFormat;
-	fallbackKind: "square" | "rect";
+	fallbackShape: "square" | "rect";
 	message?: string;
 
 	// @TODO
@@ -19,13 +19,13 @@ export interface BarcodeProps {
 
 export default (props: BarcodeProps) => {
 	const barcodeFormat = props.format || PKBarcodeFormat.None;
-	const component: JSX.Element = selectComponentFromFormat(barcodeFormat, props.fallbackKind);
+	const component: JSX.Element = selectComponentFromFormat(barcodeFormat, props.fallbackShape);
 
 	if (!component) {
 		return null;
 	}
 
-	const className = concatClassNames("barcode", barcodeFormat, props.fallbackKind, barcodeFormat !== PKBarcodeFormat.None && props.message && "content" || "");
+	const className = concatClassNames("barcode", barcodeFormat, props.fallbackShape, barcodeFormat !== PKBarcodeFormat.None && props.message && "content" || "");
 
 	return (
 		<div className={className}>

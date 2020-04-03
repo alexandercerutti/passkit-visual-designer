@@ -75,7 +75,7 @@ export function StoreCard(props: StoreCardProps): JSX.Element {
 						"value": "Lemons"
 					} */}
 					<Footer>
-						<Barcodes format={barcode && barcode.format} fallbackKind="rect" />
+						<Barcodes format={barcode && barcode.format} fallbackShape="rect" />
 					</Footer>
 				</>
 			)}

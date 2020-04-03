@@ -150,7 +150,7 @@ export function BoardingPass(props: BoardingPassProps) {
 						/>
 						<Barcode
 							format={barcode && barcode.format}
-							fallbackKind="rect"
+							fallbackShape="rect"
 						/>
 					</Footer>
 				</>
