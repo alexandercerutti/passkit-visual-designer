@@ -1,10 +1,11 @@
 import * as React from "react";
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
-import PassSelector from "./PassSelector";
-import { PassKind } from "./model";
+import PassSelector from "../PassSelector";
+import { PassKind } from "../model";
 import { Provider } from "react-redux";
 import { createStore } from "redux";
-import reducers from "./store/reducers";
+import reducers from "../store/reducers";
+import SmoothRouter from "./SmoothRouter";
 
 interface AppState {
 	phase: number;
@@ -37,22 +38,20 @@ export default class App extends React.Component<{}, AppState> {
 	render() {
 		return (
 			<Provider store={this.store}>
-				<Router>
-					<Switch>
-						<Route path="/" exact>
-							{null}
-						</Route>
-						<Route path="/select">
-							<PassSelector
-								onPassKindSelection={this.onPassKindSelection}
-							/>
-						</Route>
-						<Route path="/create">
-							{null}
-						</Route>
-						<Route component={null} />
-					</Switch>
-				</Router>
+				<SmoothRouter>
+					<Route path="/" exact>
+						{null}
+					</Route>
+					<Route path="/select">
+						<PassSelector
+							onPassKindSelection={this.onPassKindSelection}
+						/>
+					</Route>
+					<Route path="/creator">
+						<h2 style={{ color: "#FFF" }}>CREATOR</h2>
+					</Route>
+					<Route component={null} />
+				</SmoothRouter>
 			</Provider>
 		);
 	}
