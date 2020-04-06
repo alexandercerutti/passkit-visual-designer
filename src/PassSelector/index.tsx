@@ -108,7 +108,7 @@ class PassSelector extends React.PureComponent<SelectorProps> {
 
 		const AlternativesListComponent = (
 			alternativesList &&
-			<PassList requiresAttention row={2} onPassSelect={this.onAlternativeSelection}>
+			<PassList requiresAttention onPassSelect={this.onAlternativeSelection}>
 				{alternativesList}
 			</PassList>
 		) || null;
@@ -119,7 +119,7 @@ class PassSelector extends React.PureComponent<SelectorProps> {
 					<h2>{this.config.introText}</h2>
 				</header>
 				<div className="selection-window">
-					<PassList row={1} onPassSelect={this.onPassSelect} selectedKind={selectedPassKind}>
+					<PassList onPassSelect={this.onPassSelect} selectedKind={selectedPassKind}>
 						{passes}
 					</PassList>
 					{AlternativesListComponent}
