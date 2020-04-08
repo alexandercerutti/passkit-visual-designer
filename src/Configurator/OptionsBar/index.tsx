@@ -3,6 +3,6 @@ import "./style.less";
 
 export default function OptionsBar(props: any) {
 	return (
-		<div></div>
+		<div className="options-bar"></div>
 	);
 }
