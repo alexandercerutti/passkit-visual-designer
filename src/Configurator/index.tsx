@@ -1,5 +1,8 @@
 import * as React from "react";
-import "style.less";
+import "./style.less";
+import Viewer from "./Viewer";
+import OptionsBar from "./OptionsBar";
+import OptionsMenu from "./OptionsMenu";
 
 interface ConfiguratorProps { }
 
@@ -10,7 +13,15 @@ export default class Configurator extends React.Component<ConfiguratorProps> {
 
 	render() {
 		return (
-			<div></div>
+			<div id="configurator">
+				<div className="screen">
+					<Viewer />
+					<OptionsBar />
+				</div>
+				<div className="config-panel">
+					<OptionsMenu />
+				</div>
+			</div>
 		);
 	}
 }

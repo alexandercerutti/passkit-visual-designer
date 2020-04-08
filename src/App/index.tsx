@@ -6,6 +6,7 @@ import { Provider } from "react-redux";
 import { createStore } from "redux";
 import reducers from "../store/reducers";
 import SmoothRouter from "./SmoothRouter";
+import Configurator from "../Configurator";
 
 interface AppState {
 	phase: number;
@@ -48,7 +49,7 @@ export default class App extends React.Component<{}, AppState> {
 						/>
 					</Route>
 					<Route path="/creator">
-						<h2 style={{ color: "#FFF" }}>CREATOR</h2>
+						<Configurator />
 					</Route>
 					<Route component={null} />
 				</SmoothRouter>
