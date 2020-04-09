@@ -9,6 +9,7 @@ import { StoreCard } from "../StoreCard";
 import { PassAlternative } from "../../PassSelector";
 import { FieldProps } from "../Components/Field";
 import { PKBarcodeFormat, PKTransitType } from "../constants";
+import { InteractionContext } from "./interactionContext";
 
 export { Provider as InteractionProvider, Consumer as InteractionConsumer } from "./interactionContext";
 
@@ -37,7 +38,7 @@ export interface PassProps {
 	appLogo?: string;
 }
 
-export interface PassCoreProps extends PassProps {
+export interface PassCoreProps extends PassProps, Partial<InteractionContext> {
 	kind: PassKind;
 }
 
