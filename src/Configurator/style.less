@@ -12,7 +12,17 @@
 	& > .config-panel {
 		display: flex;
 		background-color: #FFF;
-		width: 300px;
 		flex-shrink: 0;
+		animation-name: open-menu;
+		animation-duration: .8s;
+		animation-fill-mode: forwards;
+		animation-delay: 1s;
+		animation-timing-function: ease-in-out;
+		box-shadow: -3px 0 5px #000;
 	}
+}
+
+@keyframes open-menu {
+	from { width: 0; }
+	to { width: 300px; }
 }
