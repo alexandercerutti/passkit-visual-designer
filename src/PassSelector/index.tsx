@@ -64,11 +64,6 @@ class PassSelector extends React.PureComponent<SelectorProps> {
 		console.log("Performed selection of", passProps.kind);
 
 		this.props.setPassKind(passProps.kind);
-
-		// @TODO: Select pass and call function
-		// from parent to pass to the next area
-
-		console.log("Performing next action...");
 	}
 
 	onAlternativeSelection(passProps: PassCoreProps) {
