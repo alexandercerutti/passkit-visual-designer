@@ -41,7 +41,11 @@ export default class Configurator extends React.Component<ConfiguratorProps> imp
 		return (
 			<div id="configurator">
 				<div className="screen">
-					<Viewer {...this.props} />
+					<Viewer
+						{...this.props}
+						onFieldSelect={this.onFieldSelect}
+						registerField={this.registerField}
+					/>
 					<OptionsBar />
 				</div>
 				<div className="config-panel">
