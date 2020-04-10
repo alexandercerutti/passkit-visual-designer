@@ -7,6 +7,18 @@
 		display: flex;
 		flex-direction: column;
 		flex-grow: 1;
+
+		/**
+		 * This is needed to allow the appearance animation
+		 * of the absolute-positioned option bar
+		 */
+		position: relative;
+
+		/**
+		 * This is needed to avoid bottom bar appearance to
+		 * make the page scrollable
+		 */
+		overflow: hidden;
 	}
 
 	& > .config-panel {

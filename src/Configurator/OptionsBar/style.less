@@ -7,6 +7,20 @@
 	padding: 5px 10px;
 	box-shadow: -3px -3px 5px #2b2b2b;
 	height: 55px;
-	position: relative;
+	position: absolute;
+	bottom: 0;
 	color: #FFF;
+
+	transition: trasform .5s ease-in-out 2s;
+	transform: translateY(100%);
+
+	animation-name: appear;
+	animation-duration: .8s;
+	animation-fill-mode: forwards;
+	animation-delay: 2s;
+}
+
+@keyframes appear {
+	from { transform: translateY(100%); }
+	to { transform: translateY(0%); }
 }
