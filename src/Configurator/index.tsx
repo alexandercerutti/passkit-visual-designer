@@ -7,13 +7,21 @@ import { FieldKind } from "../model";
 import { InteractionContext } from "../passes/PassCore/interactionContext";
 
 interface ConfiguratorProps extends ViewerProps { }
+interface ConfiguratorState {
+	selectedFieldId?: string;
+}
 
-export default class Configurator extends React.Component<ConfiguratorProps> implements InteractionContext {
+export default class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState> implements InteractionContext {
 	constructor(props: ConfiguratorProps) {
 		super(props);
 
 		this.registerField = this.registerField.bind(this);
 		this.onFieldSelect = this.onFieldSelect.bind(this);
+		this.onVoidClick = this.onVoidClick.bind(this);
+
+		this.state = {
+			selectedFieldId: null,
+		};
 	}
 
 	/**
@@ -34,7 +42,24 @@ export default class Configurator extends React.Component<ConfiguratorProps> imp
 	 */
 
 	onFieldSelect(id: string): void {
+		this.setState({ selectedFieldId: id });
+		console.log(id, "selected");
+	}
 
+	/**
+	 * Allows clicking on the void area
+	 * to deselect around the pass to remove
+	 * field selection
+	 *
+	 * @param e
+	 */
+
+	onVoidClick(e: React.MouseEvent) {
+		if (e.target !== e.currentTarget) {
+			return;
+		}
+
+		this.setState({ selectedFieldId: null });
 	}
 
 	render() {
@@ -45,11 +70,14 @@ export default class Configurator extends React.Component<ConfiguratorProps> imp
 						{...this.props}
 						onFieldSelect={this.onFieldSelect}
 						registerField={this.registerField}
+						onVoidClick={this.onVoidClick}
 					/>
 					<OptionsBar />
 				</div>
 				<div className="config-panel">
-					<OptionsMenu />
+					<OptionsMenu
+						selection={this.state.selectedFieldId}
+					/>
 				</div>
 			</div>
 		);
