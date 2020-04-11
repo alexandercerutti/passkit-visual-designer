@@ -12,6 +12,8 @@ interface ConfiguratorState {
 }
 
 export default class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState> implements InteractionContext {
+	registeredFields: Map<string, FieldKind> = new Map();
+
 	constructor(props: ConfiguratorProps) {
 		super(props);
 
@@ -33,6 +35,15 @@ export default class Configurator extends React.Component<ConfiguratorProps, Con
 	 */
 
 	registerField(kind: FieldKind, id: string): boolean {
+		console.log("Received registration request for", kind, "+", id);
+
+		if (this.registeredFields.has(id)) {
+			console.log("...but failed due to duplicate already available");
+			return false;
+		}
+
+		this.registeredFields.set(id, kind);
+
 		return true;
 	}
 
