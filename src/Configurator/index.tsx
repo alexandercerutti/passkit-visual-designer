@@ -20,6 +20,7 @@ export default class Configurator extends React.Component<ConfiguratorProps, Con
 		this.registerField = this.registerField.bind(this);
 		this.onFieldSelect = this.onFieldSelect.bind(this);
 		this.onVoidClick = this.onVoidClick.bind(this);
+		this.onValueChange = this.onValueChange.bind(this);
 
 		this.state = {
 			selectedFieldId: null,
@@ -58,6 +59,23 @@ export default class Configurator extends React.Component<ConfiguratorProps, Con
 	}
 
 	/**
+	 * Updates the storage after a value from
+	 * configurator has been changed and confirmed.
+	 *
+	 * @param key
+	 * @param value
+	 */
+
+	onValueChange(key: string, value: any): boolean {
+		// @TODO: validate the input
+		// @TODO: save to store
+		// @TODO: save to localForage
+
+		// @TODO: return false if cannot validate the input
+		return true;
+	}
+
+	/**
 	 * Allows clicking on the void area
 	 * to deselect around the pass to remove
 	 * field selection
@@ -88,6 +106,7 @@ export default class Configurator extends React.Component<ConfiguratorProps, Con
 				<div className="config-panel">
 					<OptionsMenu
 						selection={this.state.selectedFieldId}
+						onValueChange={this.onValueChange}
 					/>
 				</div>
 			</div>
