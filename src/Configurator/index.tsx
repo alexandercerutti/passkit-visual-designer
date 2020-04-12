@@ -1,17 +1,25 @@
 import * as React from "react";
 import "./style.less";
-import Viewer, { ViewerProps } from "./Viewer";
+import Viewer from "./Viewer";
 import OptionsBar from "./OptionsBar";
 import OptionsMenu from "./OptionsMenu";
-import { FieldKind } from "../model";
+import { FieldKind, PassKind } from "../model";
 import { InteractionContext } from "../passes/PassCore/interactionContext";
+import { connect } from "react-redux";
+import { PassProps } from "../passes/PassCore";
+import { State } from "../store/state";
 
-interface ConfiguratorProps extends ViewerProps { }
+interface ConfiguratorStore {
+	kind: PassKind;
+	passProps: PassProps;
+}
+
+interface ConfiguratorProps extends ConfiguratorStore { }
 interface ConfiguratorState {
 	selectedFieldId?: string;
 }
 
-export default class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState> implements InteractionContext {
+class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState> implements InteractionContext {
 	registeredFields: Map<string, FieldKind> = new Map();
 
 	constructor(props: ConfiguratorProps) {
@@ -113,3 +121,10 @@ export default class Configurator extends React.Component<ConfiguratorProps, Con
 		);
 	}
 }
+
+export default connect(
+	(state: State): ConfiguratorStore => ({
+		kind: state.selectedPass.kind,
+		passProps: state.passContent
+	}),
+)(Configurator);
