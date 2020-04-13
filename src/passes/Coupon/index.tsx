@@ -18,16 +18,16 @@ export function Coupon(props: CouponProps): JSX.Element {
 		}
 	}, []);
 
-	const { secondaryFields, primaryFields, headerData, auxiliaryFields, barcode, stripImage } = props;
+	const { secondaryFields, primaryFields, headerFields, auxiliaryFields, barcode, stripImage, logo, logoText } = props;
 
 	return (
 		<InteractionConsumer>
 			{({ onFieldSelect, registerField }) => (
 				<>
 					<PassHeader
-						headerFieldsData={headerData && headerData.fields}
-						src={headerData && headerData.logoSrc}
-						content={headerData && headerData.logoText}
+						headerFields={headerFields}
+						logo={logo}
+						logoText={logoText}
 						onClick={onFieldSelect}
 						register={registerField}
 					/>

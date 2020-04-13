@@ -18,15 +18,16 @@ export function StoreCard(props: StoreCardProps): JSX.Element {
 		}
 	}, []);
 
-	const { secondaryFields, primaryFields, headerData, auxiliaryFields, barcode } = props;
+	const { secondaryFields, primaryFields, headerFields, auxiliaryFields, barcode, logo, logoText } = props;
 
 	return (
 		<InteractionConsumer>
 			{({ onFieldSelect, registerField }) => (
 				<>
 					<PassHeader
-						src={headerData && headerData.logoSrc}
-						headerFieldsData={headerData && headerData.fields}
+						logo={logo}
+						logoText={logoText}
+						headerFields={headerFields}
 						onClick={onFieldSelect}
 						register={registerField}
 					/>

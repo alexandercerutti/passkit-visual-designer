@@ -29,7 +29,7 @@ export function EventTicket(props: EventTicketProps): JSX.Element {
 		}
 	}, []);
 
-	const { secondaryFields, primaryFields, headerData, auxiliaryFields, barcode } = props;
+	const { secondaryFields, primaryFields, headerFields, auxiliaryFields, barcode, logoText, logo } = props;
 
 	let FieldsFragment: (interaction: InteractionContext) => React.ReactElement<PrimaryFieldPropsKind>;
 
@@ -119,9 +119,9 @@ export function EventTicket(props: EventTicketProps): JSX.Element {
 			{({ onFieldSelect, registerField }) => (
 				<>
 					<PassHeader
-						headerFieldsData={headerData && headerData.fields}
-						content={headerData && headerData.logoText}
-						src={headerData && headerData.logoSrc}
+						headerFields={headerFields}
+						logoText={logoText}
+						logo={logo}
 						onClick={onFieldSelect}
 						register={registerField}
 					/>

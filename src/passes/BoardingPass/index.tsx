@@ -42,7 +42,7 @@ export function BoardingPass(props: BoardingPassProps) {
 		}
 	}, []);
 
-	const { secondaryFields, primaryFields, headerData, auxiliaryFields, barcode, transitType } = props;
+	const { secondaryFields, primaryFields, headerFields, auxiliaryFields, barcode, transitType, logo, logoText } = props;
 
 	return (
 		<InteractionConsumer>
@@ -50,9 +50,9 @@ export function BoardingPass(props: BoardingPassProps) {
 				<>
 					<PassHeader
 						withSeparator
-						src={headerData && headerData.logoSrc}
-						content={headerData && headerData.logoText || undefined}
-						headerFieldsData={headerData && headerData.fields}
+						logo={logo}
+						logoText={logoText || undefined}
+						headerFields={headerFields}
 						onClick={onFieldSelect}
 						register={registerField}
 

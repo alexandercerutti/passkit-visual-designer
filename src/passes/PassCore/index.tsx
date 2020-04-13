@@ -16,13 +16,9 @@ export { Provider as InteractionProvider, Consumer as InteractionConsumer } from
 export interface PassProps {
 	registerAlternatives?(...alternatives: PassAlternative[]): void;
 
+	headerFields?: FieldProps[];
 	secondaryFields?: FieldProps[];
 	primaryFields?: FieldProps[];
-	headerData?: {
-		logoSrc?: string;
-		logoText?: string;
-		fields?: FieldProps[];
-	};
 	auxiliaryFields?: FieldProps[];
 	backFields?: FieldProps[];
 	barcode?: {
@@ -32,6 +28,9 @@ export interface PassProps {
 		locked?: boolean; // @TODO
 	};
 	transitType?: PKTransitType;
+	logoText?: string;
+
+	logo?: string;
 	backgroundImage?: string;
 	thumbnailImage?: string;
 	stripImage?: string;

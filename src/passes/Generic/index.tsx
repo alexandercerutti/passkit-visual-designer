@@ -31,7 +31,7 @@ export function Generic(props: GenericProps): JSX.Element {
 		}
 	}, []);
 
-	const { secondaryFields, primaryFields, headerData, auxiliaryFields, barcode } = props;
+	const { secondaryFields, primaryFields, headerFields, auxiliaryFields, barcode, logoText, logo } = props;
 
 	const isSquaredBarcode = isSquareBarcode(barcode && barcode.format);
 
@@ -69,9 +69,9 @@ export function Generic(props: GenericProps): JSX.Element {
 				<>
 					<PassHeader
 						withSeparator
-						headerFieldsData={headerData && headerData.fields}
-						src={headerData && headerData.logoSrc}
-						content={headerData && headerData.logoText}
+						headerFields={headerFields}
+						logo={logo}
+						logoText={logoText}
 						onClick={onFieldSelect}
 						register={registerField}
 					/>

@@ -1,17 +1,17 @@
 import * as React from "react";
 import "./style.less";
 import TextField, { TextFieldProps } from "../TextField";
-import { onRegister } from "../withRegistration";
+import { onRegister, RegistrableComponent } from "../withRegistration";
 import ImageField, { ImageFieldProps } from "../ImageField";
 import { FieldProps } from "../Field";
 import { InlineFieldsRow } from "../FieldRow";
 import { concatClassNames } from "../../utils";
 
-type HeaderFieldsProps = ImageFieldProps & TextFieldProps;
-
-interface HeaderProps extends Partial<HeaderFieldsProps> {
+interface HeaderProps extends Partial<RegistrableComponent> {
 	register?: onRegister;
-	headerFieldsData?: Omit<FieldProps, "id">[];
+	headerFields?: Omit<FieldProps, "id">[];
+	logoText?: string;
+	logo?: string;
 	withSeparator?: boolean;
 }
 
@@ -22,7 +22,7 @@ export function PassHeader(props: HeaderProps) {
 	 */
 	const headerFields = (
 		<InlineFieldsRow
-			elements={props.headerFieldsData}
+			elements={props.headerFields}
 			maximumElementsAmount={3}
 			areaIdentifier="headerFields"
 			register={props.register}
@@ -37,15 +37,15 @@ export function PassHeader(props: HeaderProps) {
 			<ImageField
 				id="header.logo"
 				register={props.register}
-				// src={props.src || "https://cdn.freebiesupply.com/logos/large/2x/trenitalia-logo-png-transparent.png"}
-				src={props.src}
+				// src={props.logo || "https://cdn.freebiesupply.com/logos/large/2x/trenitalia-logo-png-transparent.png"}
+				src={props.logo}
 				// width={"30px"}
 				onClick={props.onClick}
 			/>
 			<TextField
 				id="header.logoText"
 				className="logo-text"
-				content={props.content || ""}
+				content={props.logoText || ""}
 				register={props.register}
 				onClick={props.onClick}
 			/>
