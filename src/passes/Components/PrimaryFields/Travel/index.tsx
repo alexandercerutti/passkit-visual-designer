@@ -12,11 +12,11 @@ interface PFTravelProps extends PrimaryFieldsProps {
 
 export default function PrimaryFields(props: PFTravelProps) {
 	return (
-		<PrimaryFieldsWrapper {...props}>
+		<div className={concatClassNames("primary-container", props.className)}>
 			<LabelsRow {...props} />
 			<ValuesRow {...props} />
-		</PrimaryFieldsWrapper>
-	)
+		</div>
+	);
 }
 
 function LabelsRow(props: PFTravelProps) {
@@ -75,14 +75,6 @@ function ValuesRow(props: PFTravelProps) {
 				fill={"#d2d2d2"} // @TODO set label color
 			/>
 			{to}
-		</div>
-	);
-}
-
-function PrimaryFieldsWrapper(props: React.PropsWithChildren<PFTravelProps>) {
-	return (
-		<div className={concatClassNames("primary-container", props.className)}>
-			{props.children}
 		</div>
 	);
 }
