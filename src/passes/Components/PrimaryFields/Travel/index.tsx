@@ -1,7 +1,7 @@
 import * as React from "react";
 import { FieldLabel, FieldValue } from "../../Field";
 import { PKTransitType } from "../../../constants";
-import "./primaryFields.less";
+import "./style.less";
 import { PKTransitIcon } from "./icons";
 import { getSafeFieldData, concatClassNames } from "../../../utils";
 import PrimaryFieldsProps from "../primaryFieldsProps";
