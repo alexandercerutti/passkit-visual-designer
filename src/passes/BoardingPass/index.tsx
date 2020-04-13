@@ -74,7 +74,7 @@ export function BoardingPass(props: BoardingPassProps) {
 					/>
 					<PrimaryFields
 						transitType={transitType}
-						primaryFieldsData={primaryFields}
+						fields={primaryFields}
 						onClick={onFieldSelect}
 						register={registerField}
 

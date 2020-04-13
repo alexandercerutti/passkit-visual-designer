@@ -1,18 +1,16 @@
 import * as React from "react";
-import { Field, FieldLabel, FieldValue } from "../../Field";
+import { FieldLabel, FieldValue } from "../../Field";
 import { PKTransitType } from "../../../constants";
 import "./primaryFields.less";
-import { RegistrableComponent } from "../../withRegistration";
 import { PKTransitIcon } from "./icons";
 import { getSafeFieldData, concatClassNames } from "../../../utils";
+import PrimaryFieldsProps from "../primaryFieldsProps";
 
-export interface PrimaryFieldsProps extends Omit<RegistrableComponent, "id"> {
-	className?: string;
-	primaryFieldsData: Omit<Parameters<typeof Field>[0], keyof RegistrableComponent>[];
+interface PFTravelProps extends PrimaryFieldsProps {
 	transitType: PKTransitType;
 }
 
-export default function PrimaryFields(props: PrimaryFieldsProps) {
+export default function PrimaryFields(props: PFTravelProps) {
 	return (
 		<PrimaryFieldsWrapper {...props}>
 			<LabelsRow {...props} />
@@ -21,8 +19,8 @@ export default function PrimaryFields(props: PrimaryFieldsProps) {
 	)
 }
 
-function LabelsRow(props: PrimaryFieldsProps) {
-	const labels = getSafeFieldData(props.primaryFieldsData, 2)
+function LabelsRow(props: PFTravelProps) {
+	const labels = getSafeFieldData(props.fields, 2)
 		.slice(0, 2)
 		.map((fieldData, index) => {
 			const id = `primaryFields.${index}.label`;
@@ -48,8 +46,8 @@ function LabelsRow(props: PrimaryFieldsProps) {
 	);
 }
 
-function ValuesRow(props: PrimaryFieldsProps) {
-	const [from, to] = getSafeFieldData(props.primaryFieldsData, 2)
+function ValuesRow(props: PFTravelProps) {
+	const [from, to] = getSafeFieldData(props.fields, 2)
 		.slice(0, 2)
 		.map((fieldData, index) => {
 			return (
@@ -81,7 +79,7 @@ function ValuesRow(props: PrimaryFieldsProps) {
 	);
 }
 
-function PrimaryFieldsWrapper(props: PrimaryFieldsProps & { children?: React.ReactNode[] }) {
+function PrimaryFieldsWrapper(props: React.PropsWithChildren<PFTravelProps>) {
 	return (
 		<div className={concatClassNames("primary-container", props.className)}>
 			{props.children}

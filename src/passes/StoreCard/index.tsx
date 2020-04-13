@@ -33,7 +33,7 @@ export function StoreCard(props: StoreCardProps): JSX.Element {
 					/>
 					<StripPrimaryFields
 						stripSrc={props.stripImage}
-						primaryFieldsData={primaryFields}
+						fields={primaryFields}
 						onClick={onFieldSelect}
 						register={registerField}
 					/>

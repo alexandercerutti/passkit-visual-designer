@@ -77,7 +77,7 @@ export function EventTicket(props: EventTicketProps): JSX.Element {
 			<>
 				<StripPrimaryFields
 					stripSrc={props.stripImage}
-					primaryFieldsData={primaryFields}
+					fields={primaryFields}
 					onClick={onFieldSelect}
 					register={registerField}
 				/>
@@ -97,7 +97,7 @@ export function EventTicket(props: EventTicketProps): JSX.Element {
 		FieldsFragment = ({ onFieldSelect, registerField }) => (
 			<ThumbnailPrimaryField
 				thumbnailSrc={props.thumbnailImage}
-				primaryFieldsData={primaryFields}
+				fields={primaryFields}
 				onClick={onFieldSelect}
 				register={registerField}
 			>

@@ -1,23 +1,21 @@
 import * as React from "react";
 import "./style.less";
 import { getSafeFieldData } from "../../../utils";
-import { RegistrableComponent } from "../../withRegistration";
 import { Field } from "../../Field";
 import ImageField from "../../ImageField";
+import PrimaryFieldsProps from "../primaryFieldsProps";
 
-export interface TPFProps extends Omit<RegistrableComponent, "id"> {
-	className?: string;
-	primaryFieldsData: Omit<Parameters<typeof Field>[0], keyof RegistrableComponent>[];
+interface PFThumbnailProps extends PrimaryFieldsProps {
 	thumbnailSrc?: string;
 }
 
-export default function ThumbnailPrimaryField(props: React.PropsWithChildren<TPFProps>) {
-	const data = getSafeFieldData(props.primaryFieldsData, 1)
+export default function ThumbnailPrimaryField(props: React.PropsWithChildren<PFThumbnailProps>) {
+	const data = getSafeFieldData(props.fields, 1)
 		.slice(0, 1)
-		.map((fieldData, index) => {
+		.map((field, index) => {
 			const key = `primaryFields.${index}`;
 			return (
-				<Field {...fieldData} id={key} key={key} />
+				<Field {...field} id={key} key={key} />
 			);
 		})
 

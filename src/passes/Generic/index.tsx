@@ -76,7 +76,7 @@ export function Generic(props: GenericProps): JSX.Element {
 						register={registerField}
 					/>
 					<ThumbnailPrimaryField
-						primaryFieldsData={primaryFields}
+						fields={primaryFields}
 						thumbnailSrc={props.thumbnailImage}
 						onClick={onFieldSelect}
 						register={registerField}

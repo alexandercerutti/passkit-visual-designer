@@ -1,33 +1,31 @@
 import * as React from "react";
-import { RegistrableComponent } from "../../withRegistration";
-import { Field, FieldValue, FieldLabel } from "../../Field";
+import { FieldValue, FieldLabel } from "../../Field";
 import { getSafeFieldData } from "../../../utils";
 import ImageField from "../../ImageField";
 import "./style.less";
+import PrimaryFieldsProps from "../primaryFieldsProps";
 
-export interface PrimaryFieldsProps extends Omit<RegistrableComponent, "id"> {
-	className?: string;
-	primaryFieldsData: Omit<Parameters<typeof Field>[0], keyof RegistrableComponent>[];
+interface PFStripProps extends PrimaryFieldsProps {
 	stripSrc?: string;
 }
 
-export default function StripPrimaryFields(props: React.PropsWithChildren<PrimaryFieldsProps>): JSX.Element {
-	const data = getSafeFieldData(props.primaryFieldsData, 1)
+export default function StripPrimaryFields(props: React.PropsWithChildren<PFStripProps>): JSX.Element {
+	const data = getSafeFieldData(props.fields, 1)
 		.slice(0, 1)
-		.map((fieldData, index) => {
+		.map((field, index) => {
 			const labelId = `primaryFields.${index}.label`;
 			const valueId = `primaryFields.${index}.value`;
 
 			return (
 				<React.Fragment key="primaryField">
 					<FieldValue
-						{...fieldData}
+						{...field}
 						id={valueId}
 						onClick={props.onClick}
 						register={props.register}
 					/>
 					<FieldLabel
-						{...fieldData}
+						{...field}
 						id={labelId}
 						onClick={props.onClick}
 						register={props.register}

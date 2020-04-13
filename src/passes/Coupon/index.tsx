@@ -33,7 +33,7 @@ export function Coupon(props: CouponProps): JSX.Element {
 					/>
 					<StripPrimaryFields
 						stripSrc={stripImage}
-						primaryFieldsData={primaryFields}
+						fields={primaryFields}
 						onClick={onFieldSelect}
 						register={registerField}
 					/>
