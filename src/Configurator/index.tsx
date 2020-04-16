@@ -8,6 +8,7 @@ import { InteractionContext } from "../passes/PassCore/interactionContext";
 import { connect } from "react-redux";
 import { PassProps } from "../passes/PassCore";
 import { State } from "../store/state";
+import DefaultFields from "./staticFields";
 
 interface ConfiguratorStore {
 	kind: PassKind;
@@ -17,11 +18,18 @@ interface ConfiguratorStore {
 interface ConfiguratorProps extends ConfiguratorStore { }
 interface ConfiguratorState {
 	selectedFieldId?: string;
+	registeredFields: Map<string, FieldDetails>;
+}
+
+export interface FieldDetails {
+	kind: FieldKind;
+	mockable?: boolean;
+	tooltipText?: string;
+	disabled?: boolean;
+	required?: boolean;
 }
 
 class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState> implements InteractionContext {
-	registeredFields: Map<string, FieldKind> = new Map();
-
 	constructor(props: ConfiguratorProps) {
 		super(props);
 
@@ -32,6 +40,7 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 
 		this.state = {
 			selectedFieldId: null,
+			registeredFields: new Map(DefaultFields),
 		};
 	}
 
@@ -46,12 +55,17 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 	registerField(kind: FieldKind, id: string): boolean {
 		console.log("Received registration request for", kind, "+", id);
 
-		if (this.registeredFields.has(id)) {
+		if (this.state.registeredFields.has(id)) {
 			console.log("...but failed due to duplicate already available");
 			return false;
 		}
 
-		this.registeredFields.set(id, kind);
+		this.setState(previous => {
+			const updatedFields = new Map(previous.registeredFields);
+			return {
+				registeredFields: updatedFields.set(id, { kind })
+			};
+		});
 
 		return true;
 	}
@@ -114,6 +128,7 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 				<div className="config-panel">
 					<OptionsMenu
 						selection={this.state.selectedFieldId}
+						registeredFields={this.state.registeredFields}
 						onValueChange={this.onValueChange}
 					/>
 				</div>
