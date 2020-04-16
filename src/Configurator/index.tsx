@@ -9,6 +9,7 @@ import { connect } from "react-redux";
 import { PassProps } from "../passes/PassCore";
 import { State } from "../store/state";
 import DefaultFields from "./staticFields";
+import { DataGroup } from "./OptionsMenu/MenuGroup";
 
 interface ConfiguratorStore {
 	kind: PassKind;
@@ -22,11 +23,13 @@ interface ConfiguratorState {
 }
 
 export interface FieldDetails {
+	area: DataGroup;
 	kind: FieldKind;
 	mockable?: boolean;
 	tooltipText?: string;
 	disabled?: boolean;
 	required?: boolean;
+	jsonKeys?: string[];
 }
 
 class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState> implements InteractionContext {
@@ -63,7 +66,7 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 		this.setState(previous => {
 			const updatedFields = new Map(previous.registeredFields);
 			return {
-				registeredFields: updatedFields.set(id, { kind })
+				registeredFields: updatedFields.set(id, { kind, area: DataGroup.DATA })
 			};
 		});
 
