@@ -10,8 +10,7 @@ export interface ViewerProps extends PassCoreProps {
 }
 
 export default function Viewer(props: ViewerProps) {
-	const propsWithoutRegistration: PassCoreProps = (({ registerField, onFieldSelect, ...otherProps }) => ({ ...otherProps }))(props);
-	const registrationProps: InteractionContext = (({ registerField, onFieldSelect }) => ({ registerField, onFieldSelect }))(props);
+	const { passProps, registrationProps } = organizeViewerProps(props);
 
 	return (
 		<div className="viewer" onClick={(e) => props.onVoidClick(e)}>
@@ -25,8 +24,27 @@ export default function Viewer(props: ViewerProps) {
 				<Pass
 					kind={PassKind.BOARDING_PASS}
 					transitType={PKTransitType.Boat}
-					{...propsWithoutRegistration} />
+					{...passProps} />
 			</InteractionProvider>
 		</div>
 	);
+}
+
+/**
+ * Splits Viewer Props in props for registering pass components
+ * and props for the pass itself
+ * @param param0
+ */
+
+function organizeViewerProps({ registerField, onFieldSelect, ...passProps }: ViewerProps): {
+	passProps: PassCoreProps,
+	registrationProps: InteractionContext
+} {
+	return {
+		passProps,
+		registrationProps: {
+			registerField,
+			onFieldSelect
+		}
+	}
 }
