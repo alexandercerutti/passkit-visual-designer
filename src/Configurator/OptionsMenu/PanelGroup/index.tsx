@@ -3,7 +3,8 @@ import "./style.less";
 import { FieldDetails } from "../..";
 import { FieldKind } from "../../../model";
 
-interface MenuProps {
+interface GroupProps {
+	name: string;
 	registeredFields: Map<string, FieldDetails>;
 }
 
@@ -14,9 +15,13 @@ export enum DataGroup {
 	DATA
 }
 
-export default function MenuGroup(props: MenuProps) {
+export default function PanelGroup(props: GroupProps) {
 	const panels = Array.from(props.registeredFields.entries(), ([key, value]) => {
 		switch (value.kind) {
+
+			// Each panel should use memoization to its non-targeted value
+			// So if it is targeted, it gets rerendered.
+			// This is needed only if it will change somehow, like... focus on text insertion?
 			case FieldKind.TEXT:
 				return (<div></div>)
 			case FieldKind.COLOR:

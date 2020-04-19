@@ -1,6 +1,6 @@
 import * as React from "react";
 import "./style.less";
-import MenuGroup from "./MenuGroup";
+import PanelGroup from "./PanelGroup";
 import { FieldDetails } from "..";
 
 interface OptionsMenuProps {
@@ -12,7 +12,7 @@ interface OptionsMenuProps {
 export default function OptionsMenu(props: OptionsMenuProps) {
 	return (
 		<div className="options-menu">
-			<MenuGroup
+			<PanelGroup
 				registeredFields={props.registeredFields}
 			/>
 		</div>
