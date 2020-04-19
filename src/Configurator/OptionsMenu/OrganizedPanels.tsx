@@ -32,7 +32,7 @@ export default function OrganizedPanels(props: Props) {
 		return acc;
 	}, {});
 
-	return Object.keys(organizedPanels).map(groupName => (
+	const groups = Object.keys(organizedPanels).map(groupName => (
 		<PanelGroup
 			name={groupName}
 		>
@@ -40,4 +40,7 @@ export default function OrganizedPanels(props: Props) {
 		</PanelGroup>
 	));
 
+	return (
+		<>{groups}</>
+	);
 }
