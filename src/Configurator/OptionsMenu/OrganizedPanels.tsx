@@ -1,5 +1,6 @@
 import * as React from "react";
-import Panel, { FieldDetails } from "./Panel";
+import Panel, { FieldDetails, PanelProps } from "./Panel";
+import PanelGroup from "./PanelGroup";
 
 interface Props {
 	registeredPanels: Map<string, FieldDetails>;
@@ -20,14 +21,23 @@ export default function OrganizedPanels(props: Props) {
 				name={name}
 				kind={kind}
 				data={otherData}
+				key={name}
 			/>
 		);
 	});
 
-	// TODO: Check for Panel kind prop and filter
-	// for them for each DataGroup
+	const organizedPanels = allPanels.reduce((acc, current: React.ReactElement<PanelProps>) => {
+		const { kind } = current.props;
+		acc[kind] = [...(acc[kind] || []), current];
+		return acc;
+	}, {});
 
-	return (
-		<div></div>
-	);
+	return Object.keys(organizedPanels).map(groupName => (
+		<PanelGroup
+			name={groupName}
+		>
+			{organizedPanels[groupName]}
+		</PanelGroup>
+	));
+
 }
