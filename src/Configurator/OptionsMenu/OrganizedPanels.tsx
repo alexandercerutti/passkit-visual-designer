@@ -6,10 +6,10 @@ interface Props {
 }
 
 export enum DataGroup {
-	METADATA,
-	IMAGES,
-	COLORS,
-	DATA
+	METADATA = "Metadata",
+	IMAGES = "Images",
+	COLORS = "Colors",
+	DATA = "Data"
 }
 
 export default function OrganizedPanels(props: Props) {
