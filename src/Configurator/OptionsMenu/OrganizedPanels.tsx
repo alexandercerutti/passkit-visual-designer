@@ -13,6 +13,13 @@ export enum DataGroup {
 	DATA = "Data"
 }
 
+/**
+ * Performs the conversion from registeredFields to React Components and
+ * organizes them for Panel Groups
+ *
+ * @param props
+ */
+
 export default function OrganizedPanels(props: Props) {
 	const allPanels = Array.from(props.registeredFields.entries(), ([name, data]) => {
 		const { kind, ...otherData } = data;
