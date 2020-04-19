@@ -19,9 +19,25 @@ export interface FieldDetails {
 }
 
 export default function Panel(props: PanelProps) {
-	// This will determine which kind of Panel render
-	// based on the kind property
-	return (
-		<div></div>
-	);
+	switch (props.kind) {
+
+		// Each panel should use memoization to its non-targeted value
+		// So if it is targeted, it gets rerendered.
+		// This is needed only if it will change somehow, like... focus on text insertion?
+		case FieldKind.TEXT:
+			return (<div></div>)
+		case FieldKind.COLOR:
+			return (<div></div>)
+		case FieldKind.FIELDS:
+			return (<div></div>)
+		case FieldKind.IMAGE:
+			return (<div></div>)
+		case FieldKind.JSON:
+			return (<div></div>)
+		case FieldKind.SWITCH:
+			return (<div></div>)
+
+		default:
+			return null;
+	}
 }
