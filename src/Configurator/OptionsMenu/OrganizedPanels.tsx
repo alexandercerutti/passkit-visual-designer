@@ -34,8 +34,8 @@ export default function OrganizedPanels(props: Props) {
 	});
 
 	const organizedPanels = allPanels.reduce((acc, current: React.ReactElement<PanelProps>) => {
-		const { kind } = current.props;
-		acc[kind] = [...(acc[kind] || []), current];
+		const { data: { area } } = current.props;
+		acc[area] = [...(acc[area] || []), current];
 		return acc;
 	}, {});
 
