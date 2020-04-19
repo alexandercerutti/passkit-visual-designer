@@ -9,6 +9,7 @@ export enum PassKind {
 export enum FieldKind {
 	TEXT,
 	IMAGE,
+	COLOR,
 	FIELDS,
 	SWITCH,
 	JSON
