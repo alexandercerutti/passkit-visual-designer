@@ -40,9 +40,7 @@ export default function OrganizedPanels(props: Props) {
 	}, {});
 
 	const groups = Object.keys(organizedPanels).map(groupName => (
-		<PanelGroup
-			name={groupName}
-		>
+		<PanelGroup name={groupName}>
 			{organizedPanels[groupName]}
 		</PanelGroup>
 	));
