@@ -1,7 +1,8 @@
 import * as React from "react";
 import "./style.less";
-import PanelGroup from "./PanelGroup";
 import { FieldDetails } from "./Panel";
+import PanelNavigator from "./PanelNavigator";
+import OrganizedPanels from "./OrganizedPanels";
 
 interface OptionsMenuProps {
 	selection?: string;
@@ -12,9 +13,9 @@ interface OptionsMenuProps {
 export default function OptionsMenu(props: OptionsMenuProps) {
 	return (
 		<div className="options-menu">
-			<PanelGroup
-				registeredFields={props.registeredFields}
-			/>
+			<PanelNavigator>
+				<OrganizedPanels registeredFields={props.registeredFields} />
+			</PanelNavigator>
 		</div>
 	);
 }
