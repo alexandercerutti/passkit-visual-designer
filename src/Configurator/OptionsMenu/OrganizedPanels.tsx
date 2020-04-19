@@ -6,6 +6,13 @@ interface Props {
 	registeredPanels: Map<string, FieldDetails>;
 }
 
+export enum DataGroup {
+	METADATA,
+	IMAGES,
+	COLORS,
+	DATA
+}
+
 export default function OrganizedPanels(props: Props) {
 	const allPanels = Array.from(props.registeredPanels.entries(), ([name, data]) => {
 		const { kind, ...otherData } = data;

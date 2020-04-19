@@ -8,13 +8,6 @@ interface GroupProps {
 	registeredFields: Map<string, FieldDetails>;
 }
 
-export enum DataGroup {
-	METADATA,
-	IMAGES,
-	COLORS,
-	DATA
-}
-
 export default function PanelGroup(props: GroupProps) {
 	const panels = Array.from(props.registeredFields.entries(), ([key, value]) => {
 		switch (value.kind) {

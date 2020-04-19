@@ -1,6 +1,6 @@
 import { FieldDetails } from ".";
 import { FieldKind } from "../model";
-import { DataGroup } from "./OptionsMenu/MenuGroup";
+import { DataGroup } from "./OptionsMenu/OrganizedPanels";
 
 const StaticFields: Array<[string, FieldDetails]> = [
 	["description", {
