@@ -1,6 +1,5 @@
 import * as React from "react";
-import { FieldDetails } from "..";
-import Panel from "./Panel";
+import Panel, { FieldDetails } from "./Panel";
 
 interface Props {
 	registeredPanels: Map<string, FieldDetails>;

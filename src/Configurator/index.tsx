@@ -10,6 +10,7 @@ import { PassProps } from "../passes/PassCore";
 import { State } from "../store/state";
 import DefaultFields from "./staticFields";
 import { DataGroup } from "./OptionsMenu/OrganizedPanels";
+import { FieldDetails } from "./OptionsMenu/Panel";
 
 interface ConfiguratorStore {
 	kind: PassKind;
@@ -20,16 +21,6 @@ interface ConfiguratorProps extends ConfiguratorStore { }
 interface ConfiguratorState {
 	selectedFieldId?: string;
 	registeredFields: Map<string, FieldDetails>;
-}
-
-export interface FieldDetails {
-	area: DataGroup;
-	kind: FieldKind;
-	mockable?: boolean;
-	tooltipText?: string;
-	disabled?: boolean;
-	required?: boolean;
-	jsonKeys?: string[];
 }
 
 class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState> implements InteractionContext {

@@ -1,6 +1,6 @@
 import * as React from "react";
 import "./style.less";
-import { FieldDetails } from "../..";
+import { FieldDetails } from "../Panel";
 import { FieldKind } from "../../../model";
 
 interface GroupProps {

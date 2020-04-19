@@ -5,7 +5,17 @@ import { FieldKind } from "../../../model";
 interface Props {
 	name: string;
 	kind: FieldKind;
-	data: any;
+	data: Omit<FieldDetails, "kind">;
+}
+
+export interface FieldDetails {
+	area: DataGroup;
+	kind: FieldKind;
+	mockable?: boolean;
+	tooltipText?: string;
+	disabled?: boolean;
+	required?: boolean;
+	jsonKeys?: string[];
 }
 
 export default function Panel(props: Props) {

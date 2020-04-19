@@ -1,7 +1,7 @@
 import * as React from "react";
 import "./style.less";
 import PanelGroup from "./PanelGroup";
-import { FieldDetails } from "..";
+import { FieldDetails } from "./Panel";
 
 interface OptionsMenuProps {
 	selection?: string;
