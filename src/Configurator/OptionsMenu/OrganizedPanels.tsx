@@ -3,7 +3,7 @@ import Panel, { FieldDetails, PanelProps } from "./Panel";
 import PanelGroup from "./PanelGroup";
 
 interface Props {
-	registeredPanels: Map<string, FieldDetails>;
+	registeredFields: Map<string, FieldDetails>;
 }
 
 export enum DataGroup {
@@ -14,7 +14,7 @@ export enum DataGroup {
 }
 
 export default function OrganizedPanels(props: Props) {
-	const allPanels = Array.from(props.registeredPanels.entries(), ([name, data]) => {
+	const allPanels = Array.from(props.registeredFields.entries(), ([name, data]) => {
 		const { kind, ...otherData } = data;
 		return (
 			<Panel
