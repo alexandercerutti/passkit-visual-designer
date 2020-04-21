@@ -1,0 +1,15 @@
+.scrollableWithoutScrollbars(@direction) {
+	& when(@direction = "both") {
+		overflow: scroll;
+	}
+
+	& when(@direction = y), (@direction = x) {
+		overflow-@{direction}: scroll;
+	}
+
+	scrollbar-width: none; /* Firefox only */
+
+	&::-webkit-scrollbar {
+		width: 0;
+	}
+}
