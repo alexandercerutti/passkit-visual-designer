@@ -22,9 +22,10 @@ export default function Viewer(props: ViewerProps) {
 					 */
 				}
 				<Pass
-					kind={PassKind.BOARDING_PASS}
 					transitType={PKTransitType.Boat}
-					{...passProps} />
+					{...passProps}
+					kind={PassKind.BOARDING_PASS}
+				/>
 			</InteractionProvider>
 		</div>
 	);
