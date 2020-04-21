@@ -8,17 +8,28 @@
 	transition:
 		height .5s ease-in-out,
 		transform .5s ease-in-out;
-    box-shadow: 0 -2px 0px rgb(214, 214, 214);
+    box-shadow: 0 -3px 5px #bdbdbd;
 
 	& > .intro {
 		display: flex;
+		flex-grow: 0;
+		flex-shrink: 0;
 		justify-content: space-between;
 		align-items: baseline;
 		padding: 0 5px;
 
 		& > h3 {
 			font-weight: 300;
+			color: #333;
 		}
+	}
+
+	&:not(.open) > .panels-list {
+		display: none;
+	}
+
+	& > .panels-list {
+		flex-grow: 1;
 	}
 
 	&.open {
