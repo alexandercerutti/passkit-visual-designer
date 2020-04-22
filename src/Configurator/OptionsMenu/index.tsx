@@ -2,11 +2,13 @@ import * as React from "react";
 import "./style.less";
 import { FieldDetails } from "./Panel";
 import PanelNavigator from "./PanelNavigator";
-import OrganizedPanels from "./OrganizedPanels";
+import OrganizedPanels, { DataGroup } from "./OrganizedPanels";
+
+export type RegisteredFieldsMap = Map<DataGroup, FieldDetails[]>;
 
 interface OptionsMenuProps {
 	selection?: string;
-	registeredFields: Map<string, FieldDetails>;
+	registeredFields: RegisteredFieldsMap;
 	onValueChange(key: string, value: any): boolean;
 }
 

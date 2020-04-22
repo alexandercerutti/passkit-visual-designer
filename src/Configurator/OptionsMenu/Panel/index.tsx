@@ -5,11 +5,11 @@ import { FieldKind } from "../../../model";
 export interface PanelProps {
 	name: string;
 	kind: FieldKind;
-	data: Omit<FieldDetails, "kind">;
+	data: Omit<FieldDetails, "kind" | "name">;
 }
 
 export interface FieldDetails {
-	area: DataGroup;
+	name: string;
 	kind: FieldKind;
 	mockable?: boolean;
 	tooltipText?: string;

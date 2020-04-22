@@ -2,7 +2,7 @@ import * as React from "react";
 import "./style.less";
 import Viewer from "./Viewer";
 import OptionsBar from "./OptionsBar";
-import OptionsMenu from "./OptionsMenu";
+import OptionsMenu, { RegisteredFieldsMap } from "./OptionsMenu";
 import { FieldKind, PassKind } from "../model";
 import { InteractionContext } from "../passes/PassCore/interactionContext";
 import { connect } from "react-redux";
@@ -10,7 +10,6 @@ import { PassProps } from "../passes/PassCore";
 import { State } from "../store/state";
 import DefaultFields from "./staticFields";
 import { DataGroup } from "./OptionsMenu/OrganizedPanels";
-import { FieldDetails } from "./OptionsMenu/Panel";
 
 interface ConfiguratorStore {
 	kind: PassKind;
@@ -20,7 +19,7 @@ interface ConfiguratorStore {
 interface ConfiguratorProps extends ConfiguratorStore { }
 interface ConfiguratorState {
 	selectedFieldId?: string;
-	registeredFields: Map<string, FieldDetails>;
+	registeredFields: RegisteredFieldsMap;
 }
 
 class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState> implements InteractionContext {
@@ -46,10 +45,10 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 	 * @param id
 	 */
 
-	registerField(kind: FieldKind, id: string): boolean {
-		console.log("Received registration request for", kind, "+", id);
+	registerField(kind: FieldKind, name: string): boolean {
+		console.log("Received registration request for", kind, "+", name);
 
-		if (this.state.registeredFields.has(id)) {
+		if (this.state.registeredFields.get(DataGroup.DATA).find(data => data.name === name)) {
 			console.log("...but failed due to duplicate already available");
 			return false;
 		}
@@ -57,7 +56,7 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 		this.setState(previous => {
 			const updatedFields = new Map(previous.registeredFields);
 			return {
-				registeredFields: updatedFields.set(id, { kind, area: DataGroup.DATA })
+				registeredFields: updatedFields.set(DataGroup.DATA, [...updatedFields.get(DataGroup.DATA), { name, kind }])
 			};
 		});
 

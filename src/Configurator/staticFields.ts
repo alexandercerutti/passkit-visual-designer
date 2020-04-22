@@ -2,97 +2,82 @@ import { FieldDetails } from "./OptionsMenu/Panel";
 import { FieldKind } from "../model";
 import { DataGroup } from "./OptionsMenu/OrganizedPanels";
 
-const StaticFields: Array<[string, FieldDetails]> = [
-	["description", {
-		area: DataGroup.METADATA,
+const StaticFields: Array<[DataGroup, FieldDetails[]]> = [
+	[DataGroup.METADATA, [{
+		name: "description",
 		kind: FieldKind.TEXT,
 		mockable: false,
 		tooltipText: "",
 		disabled: false,
 		required: true
-	}],
-	["formatVersion", {
-		area: DataGroup.METADATA,
+	}, {
+		name: "formatVersion",
 		kind: FieldKind.SWITCH,
 		mockable: false,
 		tooltipText: "",
 		disabled: true,
 		required: true
-	}],
-	["organizationName", {
-		area: DataGroup.METADATA,
+	}, {
+		name: "organizationName",
 		kind: FieldKind.TEXT,
 		required: true
-	}],
-	["passTypeIdentifier", {
-		area: DataGroup.METADATA,
+	}, {
+		name: "passTypeIdentifier",
+		kind: FieldKind.TEXT,
+		required: true,
+	}, {
+		name: "teamIdentifier",
 		kind: FieldKind.TEXT,
 		required: true
-	}],
-	["serialNumber", {
-		area: DataGroup.METADATA,
+	}, {
+		name: "appLaunchURL",
 		kind: FieldKind.TEXT,
-		required: true
-	}],
-	["teamIdentifier", {
-		area: DataGroup.METADATA,
+	}, {
+		name: "associatedStoreIdentifiers",
 		kind: FieldKind.TEXT,
-		required: true
-	}],
-	["appLaunchURL", {
-		area: DataGroup.METADATA,
-		kind: FieldKind.TEXT
-	}],
-	["associatedStoreIdentifiers", {
-		area: DataGroup.METADATA,
-		kind: FieldKind.TEXT
-	}],
-	["userInfo", {
-		area: DataGroup.METADATA,
-		kind: FieldKind.TEXT
-	}],
-	["authenticationToken", {
-		area: DataGroup.METADATA,
-		kind: FieldKind.TEXT
-	}],
-	["webServiceURL", {
-		area: DataGroup.METADATA,
-		kind: FieldKind.TEXT
-	}],
-	["nfc", {
-		area: DataGroup.METADATA,
-		kind: FieldKind.JSON
-	}],
-	["backgroundColor", {
-		area: DataGroup.COLORS,
-		kind: FieldKind.COLOR,
-	}],
-	["backgroundImage", {
-		area: DataGroup.IMAGES,
+	}, {
+		name: "authenticationToken",
+		kind: FieldKind.TEXT,
+	}, {
+		name: "webServiceURL",
+		kind: FieldKind.TEXT,
+	}, {
+		name: "groupingIdentifier",
+		kind: FieldKind.TEXT,
+	}/*, {
+			name: "becons",
+			kind: FieldKind.JSON,
+			jsonKeys: ["major", "minor", "proximityUUID", "relevantText"]
+		}, {
+			name: "locations",
+			kind: FieldKind.JSON,
+			jsonKeys: ["altitude", "latitude", "longitude", "relevantText"]
+		}, */
+	]],
+	[DataGroup.IMAGES, [{
+		name: "backgroundImage",
 		kind: FieldKind.IMAGE,
-	}],
-	["foregroundColor", {
-		area: DataGroup.COLORS,
-		kind: FieldKind.COLOR
-	}],
-	["labelColor", {
-		area: DataGroup.COLORS,
-		kind: FieldKind.COLOR
-	}],
-	["groupingIdentifier", {
-		area: DataGroup.METADATA,
-		kind: FieldKind.TEXT
-	}],
-	["beacons", {
-		area: DataGroup.METADATA,
-		kind: FieldKind.JSON,
-		jsonKeys: ["major", "minor", "proximityUUID", "relevantText"]
-	}],
-	["locations", {
-		area: DataGroup.METADATA,
-		kind: FieldKind.JSON,
-		jsonKeys: ["altitude", "latitude", "longitude", "relevantText"]
-	}],
+	}, {
+		name: "thumbnail",
+		kind: FieldKind.IMAGE,
+	}, {
+		name: "strip",
+		kind: FieldKind.IMAGE,
+	}, {
+		name: "appIcon",
+		kind: FieldKind.IMAGE,
+	}]],
+	[DataGroup.COLORS, [{
+		name: "backgroundColor",
+		kind: FieldKind.COLOR,
+	}, {
+		name: "foregroundColor",
+		kind: FieldKind.COLOR,
+	}, {
+		name: "labelColor",
+		kind: FieldKind.COLOR,
+	}]],
+	[DataGroup.DATA, []]
 ];
 
 export default StaticFields;

@@ -1,9 +1,10 @@
 import * as React from "react";
-import Panel, { FieldDetails, PanelProps } from "./Panel";
+import Panel from "./Panel";
 import PanelGroup from "./PanelGroup";
+import { RegisteredFieldsMap } from ".";
 
 interface Props {
-	registeredFields: Map<string, FieldDetails>;
+	registeredFields: RegisteredFieldsMap;
 }
 
 export enum DataGroup {
@@ -20,32 +21,26 @@ export enum DataGroup {
  * @param props
  */
 
-export default function OrganizedPanels(props: Props) {
-	const allPanels = Array.from(props.registeredFields.entries(), ([name, data]) => {
-		const { kind, ...otherData } = data;
+export default React.memo(function OrganizedPanels(props: Props) {
+	const groups = Array.from(props.registeredFields.entries(), ([group, details]) => {
 		return (
-			<Panel
-				name={name}
-				kind={kind}
-				data={otherData}
-				key={name}
-			/>
+			<PanelGroup name={group} key={group}>
+				{details.map((data => {
+					const { kind, name, ...otherData } = data;
+					return (
+						<Panel
+							name={name}
+							kind={kind}
+							data={otherData}
+							key={name}
+						/>
+					);
+				}))}
+			</PanelGroup>
 		);
 	});
-
-	const organizedPanels = allPanels.reduce((acc, current: React.ReactElement<PanelProps>) => {
-		const { data: { area } } = current.props;
-		acc[area] = [...(acc[area] || []), current];
-		return acc;
-	}, {});
-
-	const groups = Object.keys(organizedPanels).map(groupName => (
-		<PanelGroup name={groupName}>
-			{organizedPanels[groupName]}
-		</PanelGroup>
-	));
 
 	return (
 		<>{groups}</>
 	);
-}
+});
