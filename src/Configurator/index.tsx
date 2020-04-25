@@ -9,7 +9,7 @@ import { connect } from "react-redux";
 import { PassProps } from "../passes/PassCore";
 import { State } from "../store/state";
 import DefaultFields from "./staticFields";
-import { DataGroup } from "./OptionsMenu/OrganizedPanels";
+import { DataGroup } from "./OptionsMenu";
 
 interface ConfiguratorStore {
 	kind: PassKind;

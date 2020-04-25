@@ -1,23 +1,29 @@
 import * as React from "react";
 import "./style.less";
+import { RegisteredFieldsMap } from "..";
+import PanelGroup from "../PanelGroup";
+import Panel from "../Panel";
 
 interface NavigatorState {
 	pagePanelsHierarchy: React.ReactNode[];
+	activePanel: string;
 }
 
 interface NavigatorProps {
-
+	fields: RegisteredFieldsMap;
 }
 
-export default class PanelNavigator extends React.Component<React.PropsWithChildren<NavigatorProps>, NavigatorState> {
+export default class PanelNavigator extends React.Component<NavigatorProps, NavigatorState> {
 	constructor(props: any) {
 		super(props);
 
 		this.state = {
-			pagePanelsHierarchy: []
+			pagePanelsHierarchy: [],
+			activePanel: null,
 		};
 
 		this.requestPageCreation = this.requestPageCreation.bind(this);
+		this.selectOpenPanel = this.selectOpenPanel.bind(this);
 	}
 
 	requestPageCreation(children: React.ReactNode) {
@@ -26,6 +32,12 @@ export default class PanelNavigator extends React.Component<React.PropsWithChild
 			pagePanelsHierarchy.push(children);
 			return { pagePanelsHierarchy };
 		});
+	}
+
+	selectOpenPanel(panelName: string) {
+		this.setState(previous => ({
+			activePanel: previous.activePanel !== panelName && panelName || null
+		}));
 	}
 
 	render() {
@@ -37,10 +49,33 @@ export default class PanelNavigator extends React.Component<React.PropsWithChild
 			);
 		});
 
+		const groups = Array.from(this.props.fields.entries(), ([group, details]) => {
+			return (
+				<PanelGroup
+					name={group}
+					key={group}
+					isActive={group === this.state.activePanel}
+					setActive={this.selectOpenPanel}
+				>
+					{details.map((data => {
+						const { kind, name, ...otherData } = data;
+						return (
+							<Panel
+								name={name}
+								kind={kind}
+								data={otherData}
+								key={name}
+							/>
+						);
+					}))}
+				</PanelGroup>
+			);
+		});
+
 		return (
 			<div className="panel-navigator">
 				<div className="page">
-					{this.props.children}
+					{groups}
 				</div>
 				{pages}
 			</div>

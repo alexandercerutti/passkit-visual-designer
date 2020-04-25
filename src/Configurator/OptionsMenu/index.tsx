@@ -2,7 +2,13 @@ import * as React from "react";
 import "./style.less";
 import { FieldDetails } from "./Panel";
 import PanelNavigator from "./PanelNavigator";
-import OrganizedPanels, { DataGroup } from "./OrganizedPanels";
+
+export enum DataGroup {
+	METADATA = "Metadata",
+	IMAGES = "Images",
+	COLORS = "Colors",
+	DATA = "Data"
+}
 
 export type RegisteredFieldsMap = Map<DataGroup, FieldDetails[]>;
 
@@ -15,9 +21,7 @@ interface OptionsMenuProps {
 export default function OptionsMenu(props: OptionsMenuProps) {
 	return (
 		<div className="options-menu">
-			<PanelNavigator>
-				<OrganizedPanels registeredFields={props.registeredFields} />
-			</PanelNavigator>
+			<PanelNavigator fields={props.registeredFields} />
 		</div>
 	);
 }

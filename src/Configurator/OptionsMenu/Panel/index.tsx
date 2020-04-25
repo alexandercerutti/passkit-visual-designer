@@ -1,5 +1,4 @@
 import * as React from "react";
-import { DataGroup } from "../OrganizedPanels";
 import { FieldKind } from "../../../model";
 
 export interface PanelProps {
