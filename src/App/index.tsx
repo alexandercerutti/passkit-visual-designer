@@ -7,25 +7,23 @@ import reducers from "../store/reducers";
 import SmoothRouter from "./SmoothRouter";
 import Configurator from "../Configurator";
 
-export default class App extends React.Component {
-	store = createStore(reducers);
+export default function App(): JSX.Element {
+	const { current: store } = React.useRef(createStore(reducers));
 
-	render() {
-		return (
-			<Provider store={this.store}>
-				<SmoothRouter>
-					<Route path="/" exact>
-						{null}
-					</Route>
-					<Route path="/select">
-						<PassSelector />
-					</Route>
-					<Route path="/creator">
-						<Configurator />
-					</Route>
-					<Route component={null} />
-				</SmoothRouter>
-			</Provider>
-		);
-	}
+	return (
+		<Provider store={store}>
+			<SmoothRouter>
+				<Route path="/" exact>
+					{null}
+				</Route>
+				<Route path="/select">
+					<PassSelector />
+				</Route>
+				<Route path="/creator">
+					<Configurator />
+				</Route>
+				<Route component={null} />
+			</SmoothRouter>
+		</Provider>
+	);
 }
