@@ -1,4 +1,13 @@
 .options-menu {
 	display: flex;
-	flex-direction: column;
+	flex-direction: row;
+	overflow: hidden;
+	width: 100%;
+	opacity: 0;
+	animation: menu-appearance .5s ease-in-out 2s forwards;
+}
+
+@keyframes menu-appearance {
+	from { opacity: 0; }
+	to { opacity: 1; }
 }
