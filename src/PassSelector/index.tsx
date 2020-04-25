@@ -1,7 +1,6 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import "./style.less";
-import App from "../App";
 import { PassKind } from "../model";
 import PassList from "./PassList";
 import { setPassKind, setPassProps } from "../store/actions";
@@ -20,9 +19,7 @@ interface StoreProps {
 	passProps: PassProps;
 }
 
-interface SelectorProps extends DispatchProps, StoreProps, RouteComponentProps<any> {
-	onPassKindSelection: App["onPassKindSelection"];
-}
+interface SelectorProps extends DispatchProps, StoreProps, RouteComponentProps<any> { }
 
 export interface PassAlternative {
 	name: string;

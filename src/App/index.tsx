@@ -1,40 +1,14 @@
 import * as React from "react";
-import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
+import { Route } from "react-router-dom";
 import PassSelector from "../PassSelector";
-import { PassKind } from "../model";
 import { Provider } from "react-redux";
 import { createStore } from "redux";
 import reducers from "../store/reducers";
 import SmoothRouter from "./SmoothRouter";
 import Configurator from "../Configurator";
 
-interface AppState {
-	phase: number;
-	selectedPassKind?: PassKind
-}
-
-export default class App extends React.Component<{}, AppState> {
+export default class App extends React.Component {
 	store = createStore(reducers);
-
-	constructor(props: {}) {
-		super(props);
-
-		this.state = {
-			phase: 0,
-			selectedPassKind: null
-		};
-
-		this.onPassKindSelection = this.onPassKindSelection.bind(this);
-	}
-
-	/**
-	 * Sets selected kind in the global scope
-	 * @param selectedPassKind
-	 */
-
-	onPassKindSelection(selectedPassKind: PassKind) {
-		this.setState({ selectedPassKind });
-	}
 
 	render() {
 		return (
@@ -44,9 +18,7 @@ export default class App extends React.Component<{}, AppState> {
 						{null}
 					</Route>
 					<Route path="/select">
-						<PassSelector
-							onPassKindSelection={this.onPassKindSelection}
-						/>
+						<PassSelector />
 					</Route>
 					<Route path="/creator">
 						<Configurator />
