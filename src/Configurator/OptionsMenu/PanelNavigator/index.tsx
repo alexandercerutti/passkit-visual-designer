@@ -14,7 +14,7 @@ interface NavigatorProps {
 }
 
 export default class PanelNavigator extends React.Component<NavigatorProps, NavigatorState> {
-	constructor(props: any) {
+	constructor(props: NavigatorProps) {
 		super(props);
 
 		this.state = {
