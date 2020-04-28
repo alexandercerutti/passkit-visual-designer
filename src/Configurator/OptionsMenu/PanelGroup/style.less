@@ -3,14 +3,12 @@
 
 .menu-group {
 	@baseCardBoxShadow: 0 -3px 5px #bdbdbd;
-	@baseCardRadius: 10px;
 
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-start;
 	height: @menuheight;
 	background-color: #e6e6e6;
-	border-radius: @baseCardRadius @baseCardRadius 0 0;
 	transition:
 		height .5s ease-in-out,
 		transform .5s ease-in-out;
@@ -41,15 +39,9 @@
 	}
 
 	&.open {
-		.scrollableWithoutScrollbars(x);
-		@menuOpenDistancing: 10px;
+		.scrollableWithoutScrollbars(y);
 		height: 500px;
-		transform: translateY(@menuOpenDistancing);
-		margin-bottom: @menuOpenDistancing+2px;
-		border-radius: @baseCardRadius;
-		box-shadow:
-			@baseCardBoxShadow,
-			0 3px 5px #888888;
+		margin-bottom: 12px;
 
 		& > .intro {
 			& .arrow-icon {
