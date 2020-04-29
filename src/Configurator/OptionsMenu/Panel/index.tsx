@@ -1,5 +1,9 @@
 import * as React from "react";
 import { FieldKind } from "../../../model";
+import TextPanel from "./panels/Text";
+import ColorPanel from "./panels/Color";
+import FieldPanel from "./panels/Fields";
+import ImagePanel from "./panels/Image";
 
 export interface PanelProps {
 	name: string;
@@ -24,17 +28,17 @@ export default function Panel(props: PanelProps) {
 		// So if it is targeted, it gets rerendered.
 		// This is needed only if it will change somehow, like... focus on text insertion?
 		case FieldKind.TEXT:
-			return (<div></div>)
+			return <TextPanel {...props} />;
 		case FieldKind.COLOR:
-			return (<div></div>)
+			return <ColorPanel {...props} />;
 		case FieldKind.FIELDS:
-			return (<div></div>)
+			return <FieldPanel {...props} />;
 		case FieldKind.IMAGE:
-			return (<div></div>)
-		case FieldKind.JSON:
-			return (<div></div>)
-		case FieldKind.SWITCH:
-			return (<div></div>)
+			return <ImagePanel {...props} />;
+		/* 		case FieldKind.JSON:
+					return (<div></div>)
+				case FieldKind.SWITCH:
+					return (<div></div>) */
 
 		default:
 			return null;
