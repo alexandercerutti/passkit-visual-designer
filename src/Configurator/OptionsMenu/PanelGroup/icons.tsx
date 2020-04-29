@@ -14,7 +14,7 @@ export function TagIcon(props: React.SVGProps<SVGSVGElement>) {
 // https://thenounproject.com/term/color/3170709
 export function ColorIcon(props: React.SVGProps<SVGSVGElement>) {
 	return (
-		<svg viewBox="0 0 26 33" {...props}>
+		<svg viewBox="0 0 25 32" {...props}>
 			<path d="M12.19,0C7.71,6.55,0,13.36,0,19.2a12.14,12.14,0,1,0,24.27,0C24.27,13.44,16.61,6.48,12.19,0Zm-.05,27.74a8.41,8.41,0,0,1-8.4-8.4.9.9,0,0,1,1.8,0,6.61,6.61,0,0,0,6.6,6.6.9.9,0,1,1,0,1.8Z" />
 		</svg>
 	);
@@ -24,7 +24,7 @@ export function ColorIcon(props: React.SVGProps<SVGSVGElement>) {
 // https://thenounproject.com/term/pictures/1529846
 export function ImagesIcon(props: React.SVGProps<SVGSVGElement>) {
 	return (
-		<svg viewBox="0 0 31 31" {...props}>
+		<svg viewBox="0 0 32 31" {...props}>
 			<rect x="3.93" y="2.71" width="11.51" height="27.45" transform="translate(-1.35 0.88) rotate(-4.84)" />
 			<path style={{ fill: "#FFF" }} d="M16.14,29.66l-9.48.8a1.47,1.47,0,0,1-1.59-1.34L3,4.73a1.44,1.44,0,0,1,.33-1.06,1.47,1.47,0,0,1,1-.53L11,2.59A.44.44,0,1,0,11,1.72l-6.69.55a2.34,2.34,0,0,0-1.6.83,2.31,2.31,0,0,0-.53,1.7L4.21,29.19a2.34,2.34,0,0,0,2.32,2.15h.21l9.48-.8a.44.44,0,0,0,.4-.47A.43.43,0,0,0,16.14,29.66Z" />
 			<rect x="9.98" y="1.76" width="20.46" height="27.53" transform="matrix(0.99, 0.13, -0.13, 0.99, 2.2, -2.51)" />
