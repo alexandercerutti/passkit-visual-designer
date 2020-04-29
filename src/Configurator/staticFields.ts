@@ -10,14 +10,14 @@ const StaticFields: Array<[DataGroup, FieldDetails[]]> = [
 		tooltipText: "",
 		disabled: false,
 		required: true
-	}, {
+	},/* {
 		name: "formatVersion",
 		kind: FieldKind.SWITCH,
 		mockable: false,
 		tooltipText: "",
 		disabled: true,
 		required: true
-	}, {
+	},*/ {
 		name: "organizationName",
 		kind: FieldKind.TEXT,
 		required: true
