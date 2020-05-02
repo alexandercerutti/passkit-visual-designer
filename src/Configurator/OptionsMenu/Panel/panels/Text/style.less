@@ -8,10 +8,23 @@
 
 	& > label {
 		cursor: pointer;
+		display: flex;
+		justify-content: space-between;
 
 		& h4 {
 			margin: 0;
 			font-weight: 400;
+		}
+
+		& .required::after {
+			content: "required";
+			color: #FFF;
+			font-size: 10px;
+			background-color: #333;
+			padding: 5px 7px;
+			border-radius: 2px;
+			position: relative;
+			bottom: 2px;
 		}
 	}
 
