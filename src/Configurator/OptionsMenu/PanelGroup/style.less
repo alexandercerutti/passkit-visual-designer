@@ -40,7 +40,6 @@
 	}
 
 	&.open {
-		.scrollableWithoutScrollbars(y);
 		height: 500px;
 		margin-bottom: 12px;
 
@@ -55,6 +54,7 @@
 
 	& > .panels-list {
 		padding-top: 10px;
+		.scrollableWithoutScrollbars(y);
 	}
 
 	&:last-child {
