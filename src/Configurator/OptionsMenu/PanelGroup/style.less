@@ -2,15 +2,12 @@
 @menuheight: 70px;
 
 .menu-group {
-	@baseCardBoxShadow: 0 -3px 5px #bdbdbd;
-
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-start;
 	height: @menuheight;
-	background-color: #e6e6e6;
 	transition: height .5s ease-in-out;
-	box-shadow: @baseCardBoxShadow;
+	border-bottom: 1px solid #333;
 	overflow: hidden;
 
 	& > .intro {
@@ -22,42 +19,46 @@
 		align-items: center;
 		padding: 0 15px;
 		min-height: @menuheight;
-		transition: border-left .5s ease-in-out;
+		transition:
+			border-left .5s ease-in-out,
+			border-bottom .5s ease-in-out;
     	border-left: 0px solid #444;
 
 		& > h3 {
 			font-weight: 300;
-			color: #333;
+			color: #d2d2d2;
 			margin: 0;
+			transition: color .5s ease-in-out;
 		}
 
 		& .icon {
 			width: 21px;
 			height: 21px;
-			fill: #333;
+			fill: #d2d2d2;
 			transition: fill .5s ease-in-out;
 		}
 	}
 
 	&.open {
-		height: 500px;
-		margin-bottom: 12px;
+		height: 72%;
+		padding-bottom: 12px;
 
 		& > .intro {
 			border-left: 5px solid #444;
 
+			& > h3 {
+				color: #FFF;
+			}
+
 			& .icon {
-				fill: #000;
+				fill: #FFF;
 			}
 		}
 	}
 
 	& > .panels-list {
 		padding-top: 10px;
+		background-color: #282828;
 		.scrollableWithoutScrollbars(y);
-	}
-
-	&:last-child {
-		border-bottom: 2px solid rgb(214, 214, 214);
 	}
 }
