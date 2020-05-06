@@ -21,7 +21,6 @@ export default function PanelGroup(props: React.PropsWithChildren<GroupProps>) {
 				{icon}
 			</div>
 			<div className="panels-list">
-				<span>Here are your unstyled panels!</span>
 				{props.children}
 			</div>
 		</div>
