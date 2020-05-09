@@ -15,14 +15,20 @@
 		-webkit-user-select: none;
 	}
 
-	& > .dd-area {
+	& .dd-area {
 		height: 100px;
 		margin-top: 10px;
 		border-radius: 5px;
-		border: 10px solid #333;
+		border-width: 5px;
+		border-style: dashed;
+		border-color: #333;
+		transition: border-style .5s ease-in-out;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
+		background-color: #2d2d2d;
+		color: #cacaca;
+		cursor: pointer;
 	}
 }
