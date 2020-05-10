@@ -1,5 +1,5 @@
 import * as React from "react";
-import UploadIcon from "./uploadIcon";
+import { UploadIcon } from "./icons";
 
 interface DnDProps {
 	onFilesUploaded: (files: FileList) => void;
