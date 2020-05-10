@@ -33,7 +33,9 @@ interface PictureShowdownProps {
 
 function PictureShowdown(props: PictureShowdownProps): JSX.Element {
 	return (
-		<img src={props.pictureURL} alt={props.name} />
+		<div className="picture">
+			<img src={props.pictureURL} alt={props.name} />
+		</div>
 	);
 }
 
