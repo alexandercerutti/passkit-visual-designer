@@ -34,7 +34,8 @@
 		border-width: 5px;
 		border-style: dashed;
 		border-color: #333;
-		transition: border-style .5s ease-in-out;
+		transition:
+			background-color .5s ease-in-out;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
@@ -42,5 +43,9 @@
 		background-color: #2d2d2d;
 		color: #cacaca;
 		cursor: pointer;
+
+		&.drag-active {
+			background-color: #424242;
+		}
 	}
 }

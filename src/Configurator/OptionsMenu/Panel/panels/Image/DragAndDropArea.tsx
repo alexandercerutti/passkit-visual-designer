@@ -1,5 +1,6 @@
 import * as React from "react";
 import { UploadIcon } from "./icons";
+import { concatClassNames } from "../../../../../passes/utils";
 
 interface DnDProps {
 	onFilesUploaded: (files: FileList) => void;
@@ -29,13 +30,14 @@ export default function DragAndDropArea(props: DnDProps): JSX.Element {
 		props.onFilesUploaded(event.dataTransfer.files);
 	});
 
+	const className = concatClassNames("dd-area", dragging && "drag-active");
+
 	return (
 		<div
-			className="dd-area"
+			className={className}
 			onDragOver={onDragOverHandlerRef.current}
 			onDragLeave={onDragLeaveHandlerRef.current}
 			onDrop={onDropHandlerRef.current}
-			style={{ borderStyle: dragging ? "solid" : "dashed" }}
 		>
 			<UploadIcon width="50px" height="50px" fill="#cacaca" />
 			<span>Click or drag to upload</span>
