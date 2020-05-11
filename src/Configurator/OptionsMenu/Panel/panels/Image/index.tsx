@@ -21,7 +21,7 @@ export default function ImagePanel(props: ImagePanelProps) {
 			{props.fileURL
 				? <PictureShowdown
 					name={props.name}
-					pictureURL={props.fileURL}
+					pictureData={props.fileURL}
 					onDelete={onChosenFileChangedHandlerRef.current}
 				/>
 				: <UploadArea onFileUpload={onChosenFileChangedHandlerRef.current} />
@@ -32,14 +32,25 @@ export default function ImagePanel(props: ImagePanelProps) {
 
 interface PictureShowdownProps {
 	name: string;
-	pictureURL: string;
+	pictureData: Blob;
 	onDelete: () => void;
 }
 
 function PictureShowdown(props: PictureShowdownProps): JSX.Element {
+	const [pictureURL, setPictureURL] = React.useState(null);
+
+	React.useEffect(() => {
+		if (pictureURL !== props.pictureData) {
+			URL.revokeObjectURL(pictureURL);
+			setPictureURL(URL.createObjectURL(props.pictureData));
+		}
+
+		return () => URL.revokeObjectURL(pictureURL);
+	}, [props.pictureData]);
+
 	return (
 		<div className="picture">
-			<img src={props.pictureURL} alt={props.name} />
+			<img src={pictureURL} alt={props.name} />
 			<div className="opts">
 				<div>
 					<EditIcon fill="#e6e6e6" />
