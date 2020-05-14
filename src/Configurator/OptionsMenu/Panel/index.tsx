@@ -9,6 +9,9 @@ export interface PanelProps {
 	name: string;
 	kind: FieldKind;
 	data: Omit<FieldDetails, "kind" | "name">;
+	value?: any; // will be overridden by single panels
+	requestPageCreation?(children: React.ReactNode): void;
+	onValueChange<T>(name: string, data: T): void;
 }
 
 export interface FieldDetails {

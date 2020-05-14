@@ -5,23 +5,25 @@ import "./style.less";
 import { EditIcon, DeleteIcon } from "./icons";
 
 interface ImagePanelProps extends PanelProps {
-	fileURL?: string;
+	value?: string;
 }
 
 export default function ImagePanel(props: ImagePanelProps) {
+	const [file, setFile] = React.useState<File>(null);
 	const showTitle = props.name.replace(/([a-z])([A-Z])/g, "$1 $2");
 
 	const onChosenFileChangedHandlerRef = React.useRef((file?: File) => {
-		// Send the url outside
+		setFile(file);
+		props.onValueChange(props.name, file);
 	});
 
 	return (
 		<div className="panel image" data-name={props.name}>
 			<h4>{showTitle}</h4>
-			{props.fileURL
+			{file
 				? <PictureShowdown
 					name={props.name}
-					pictureData={props.fileURL}
+					pictureData={file}
 					onDelete={onChosenFileChangedHandlerRef.current}
 				/>
 				: <UploadArea onFileUpload={onChosenFileChangedHandlerRef.current} />
