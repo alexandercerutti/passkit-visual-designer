@@ -2,20 +2,24 @@ import * as React from "react";
 import { PanelProps } from "../..";
 import "./style.less";
 
-interface TextPanelProps extends PanelProps { }
+interface TextPanelProps extends PanelProps {
+	value?: string;
+}
 
 export default function TextPanel(props: TextPanelProps) {
+	const [content, setContent] = React.useState<string>(props.value || null);
+
 	const onKeyDownEventRef = React.useRef(({ key, currentTarget }: React.KeyboardEvent<HTMLInputElement>) => {
 		key === "Enter" && currentTarget.blur();
 	});
 
-	const onBlurEventRef = React.useRef(() => {
-		// perform save
-		console.log("//// SAVING VALUE FOR", props.name);
+	const onBlurEventRef = React.useRef((event: React.FocusEvent<HTMLInputElement>) => {
+		// Should check if new value equals to old value or not?
+		setContent(event.target.value);
+		props.onValueChange(props.name, event.target.value);
 	});
 
-	const showTitle = `${props.name.slice(0, 1).toUpperCase()}${props.name.slice(1)}`
-		.replace(/([a-z])([A-Z])/g, "$1 $2");
+	const showTitle = props.name.replace(/([a-z])([A-Z])/g, "$1 $2");
 
 	const required = (
 		props.data.required &&
@@ -30,6 +34,7 @@ export default function TextPanel(props: TextPanelProps) {
 				placeholder={props.name}
 				onBlur={onBlurEventRef.current}
 				onKeyDown={onKeyDownEventRef.current}
+				defaultValue={content}
 			/>
 		</div>
 	);
