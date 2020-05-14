@@ -32,6 +32,7 @@ export default class PanelNavigator extends React.Component<NavigatorProps, Navi
 
 		this.requestPageCreation = this.requestPageCreation.bind(this);
 		this.selectOpenPanel = this.selectOpenPanel.bind(this);
+		this.saveChanges = this.saveChanges.bind(this);
 	}
 
 	requestPageCreation(children: React.ReactNode) {
@@ -40,6 +41,10 @@ export default class PanelNavigator extends React.Component<NavigatorProps, Navi
 			pagePanelsHierarchy.push(children);
 			return { pagePanelsHierarchy };
 		});
+	}
+
+	saveChanges<T>(name: string, data: T) {
+		console.log("Panel with name", name, "tried to save", data);
 	}
 
 	selectOpenPanel(panelName: string) {
@@ -74,6 +79,8 @@ export default class PanelNavigator extends React.Component<NavigatorProps, Navi
 								kind={kind}
 								data={otherData}
 								key={name}
+								requestPageCreation={this.requestPageCreation}
+								onValueChange={this.saveChanges}
 							/>
 						);
 					}))}
