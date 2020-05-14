@@ -5,11 +5,11 @@ import PictureShowdown from "./PictureShowdown";
 import "./style.less";
 
 interface ImagePanelProps extends PanelProps {
-	value?: string;
+	value?: File;
 }
 
 export default function ImagePanel(props: ImagePanelProps) {
-	const [file, setFile] = React.useState<File>(null);
+	const [file, setFile] = React.useState<File>(props.value || null);
 	const showTitle = props.name.replace(/([a-z])([A-Z])/g, "$1 $2");
 
 	const onChosenFileChangedHandlerRef = React.useRef((file?: File) => {
