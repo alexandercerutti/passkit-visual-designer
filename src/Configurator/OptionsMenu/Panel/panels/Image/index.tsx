@@ -47,6 +47,10 @@ function PictureShowdown(props: PictureShowdownProps): JSX.Element {
 			setPictureURL(URL.createObjectURL(props.pictureData));
 		}
 
+		if (!props.pictureData) {
+			props.onDelete();
+		}
+
 		return () => URL.revokeObjectURL(pictureURL);
 	}, [props.pictureData]);
 
