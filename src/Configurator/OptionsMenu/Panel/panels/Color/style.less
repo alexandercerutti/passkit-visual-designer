@@ -1,0 +1,19 @@
+.panel.color {
+
+	// Overrides for react-color styles
+	.color-selector {
+		background-color: #1c1c1c !important;
+
+		& > div {
+			& > span ~ div {
+				background-color: #282828 !important;
+			}
+
+			& > div ~ div > input {
+				background-color: #333;
+				box-shadow: #3c3c3c 0px 0px 0px 1px inset !important;
+				color: #e6e6e6 !important;
+			}
+		}
+	}
+}
