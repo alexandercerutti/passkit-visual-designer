@@ -8,11 +8,13 @@ interface PictureShowdownProps {
 }
 
 export default function PictureShowdown(props: PictureShowdownProps): JSX.Element {
-	const [pictureURL, setPictureURL] = React.useState(null);
+	const [lastRaw, setLastRaw] = React.useState<Blob>(props.pictureData);
+	const [pictureURL, setPictureURL] = React.useState<string>(URL.createObjectURL(props.pictureData));
 
 	React.useEffect(() => {
-		if (pictureURL !== props.pictureData) {
+		if (lastRaw !== props.pictureData) {
 			URL.revokeObjectURL(pictureURL);
+			setLastRaw(props.pictureData);
 			setPictureURL(URL.createObjectURL(props.pictureData));
 		}
 
@@ -20,8 +22,8 @@ export default function PictureShowdown(props: PictureShowdownProps): JSX.Elemen
 			props.onDelete();
 		}
 
-		return () => URL.revokeObjectURL(pictureURL);
-	}, [props.pictureData]);
+		return () => pictureURL && URL.revokeObjectURL(pictureURL);
+	});
 
 	return (
 		<div className="picture">
@@ -30,7 +32,7 @@ export default function PictureShowdown(props: PictureShowdownProps): JSX.Elemen
 				<div>
 					<EditIcon fill="#e6e6e6" />
 				</div>
-				<div onClick={() => setPictureURL(null)}>
+				<div onClick={() => props.onDelete()}>
 					<DeleteIcon fill="#e6e6e6" />
 				</div>
 			</div>
