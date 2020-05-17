@@ -18,7 +18,7 @@ export default function ImagePanel(props: ImagePanelProps) {
 	});
 
 	return (
-		<div className="panel image" data-name={props.name}>
+		<>
 			<h4>{showTitle}</h4>
 			{file
 				? <PictureShowdown
@@ -28,6 +28,6 @@ export default function ImagePanel(props: ImagePanelProps) {
 				/>
 				: <UploadArea onFileUpload={onChosenFileChangedHandlerRef.current} />
 			}
-		</div>
+		</>
 	);
 }

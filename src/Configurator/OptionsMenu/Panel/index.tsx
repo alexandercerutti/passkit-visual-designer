@@ -1,5 +1,6 @@
 import * as React from "react";
 import { FieldKind } from "../../../model";
+import "./style.less";
 import TextPanel from "./panels/Text";
 import ColorPanel from "./panels/Color";
 import FieldPanel from "./panels/Fields";
@@ -25,19 +26,29 @@ export interface FieldDetails {
 }
 
 export default function Panel(props: PanelProps) {
-	switch (props.kind) {
+	const Panel = switchPanelKind(props);
+
+	return (
+		<div className={`panel ${props.kind}`} data-name={props.name}>
+			<Panel {...props} />
+		</div>
+	);
+}
+
+function switchPanelKind({ kind }: PanelProps): React.FunctionComponent<PanelProps> {
+	switch (kind) {
 
 		// Each panel should use memoization to its non-targeted value
 		// So if it is targeted, it gets rerendered.
 		// This is needed only if it will change somehow, like... focus on text insertion?
 		case FieldKind.TEXT:
-			return <TextPanel {...props} />;
+			return TextPanel;
 		case FieldKind.COLOR:
-			return <ColorPanel {...props} />;
+			return ColorPanel;
 		case FieldKind.FIELDS:
-			return <FieldPanel {...props} />;
+			return FieldPanel;
 		case FieldKind.IMAGE:
-			return <ImagePanel {...props} />;
+			return ImagePanel;
 		/* 		case FieldKind.JSON:
 					return (<div></div>)
 				case FieldKind.SWITCH:

@@ -27,7 +27,7 @@ export default function TextPanel(props: TextPanelProps) {
 	) || null;
 
 	return (
-		<div className="panel text" data-name={props.name}>
+		<>
 			<label htmlFor={props.name}>
 				<h4>{showTitle}</h4>
 				{required}
@@ -39,6 +39,6 @@ export default function TextPanel(props: TextPanelProps) {
 				onKeyDown={onKeyDownEventRef.current}
 				defaultValue={content}
 			/>
-		</div>
+		</>
 	);
 }
