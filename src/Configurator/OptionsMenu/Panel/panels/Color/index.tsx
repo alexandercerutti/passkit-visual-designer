@@ -23,7 +23,7 @@ export default function ColorPanel(props: ColorPanelProps) {
 		if (colorInRecentlyUsedIndex === -1) {
 			colorHistory.unshift(hex);
 			colorHistory.pop(); // to keep them 10
-		} else {
+		} else if (colorInRecentlyUsedIndex !== 0) {
 			colorHistory.unshift(...colorHistory.splice(colorInRecentlyUsedIndex, 1));
 		}
 
@@ -37,7 +37,7 @@ export default function ColorPanel(props: ColorPanelProps) {
 			<h4>{showTitle}</h4>
 			<TwitterPicker
 				triangle="hide"
-				// PR #403 on react-color: https://github.com/casesandberg/react-color/pull/403 TO FIX
+				// PR @types/react-color: https://github.com/DefinitelyTyped/DefinitelyTyped/pull/44867
 				className="color-selector"
 				color={color}
 				colors={colorHistory}
