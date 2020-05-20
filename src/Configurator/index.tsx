@@ -55,8 +55,16 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 
 		this.setState(previous => {
 			const updatedFields = new Map(previous.registeredFields);
+			const fieldDataGroup = convertFieldKindToDataGroup(kind);
+
+			if (!fieldDataGroup) {
+				return {
+					registeredFields: updatedFields
+				};
+			}
+
 			return {
-				registeredFields: updatedFields.set(DataGroup.DATA, [...updatedFields.get(DataGroup.DATA), { name, kind }])
+				registeredFields: updatedFields.set(fieldDataGroup, [...updatedFields.get(fieldDataGroup), { name, kind }])
 			};
 		});
 
@@ -128,6 +136,22 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 			</div>
 		);
 	}
+}
+
+function convertFieldKindToDataGroup(kind: FieldKind): DataGroup {
+	if (kind === FieldKind.IMAGE) {
+		return DataGroup.IMAGES;
+	}
+
+	if (kind === FieldKind.COLOR) {
+		return DataGroup.COLORS;
+	}
+
+	if (kind === FieldKind.FIELDS || kind === FieldKind.TEXT) {
+		return DataGroup.DATA;
+	}
+
+	return undefined
 }
 
 export default connect(
