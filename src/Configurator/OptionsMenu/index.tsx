@@ -2,13 +2,7 @@ import * as React from "react";
 import "./style.less";
 import { FieldDetails } from "./Panel";
 import PanelNavigator from "./PanelNavigator";
-
-export enum DataGroup {
-	METADATA = "Metadata",
-	IMAGES = "Images",
-	COLORS = "Colors",
-	DATA = "Data"
-}
+import { DataGroup } from "./PanelGroup";
 
 export type RegisteredFieldsMap = Map<DataGroup, FieldDetails[]>;
 

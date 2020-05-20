@@ -1,9 +1,8 @@
 import * as React from "react";
 import "./style.less";
-import { RegisteredFieldsMap, DataGroup } from "..";
-import PanelGroup from "../PanelGroup";
+import { RegisteredFieldsMap } from "..";
+import PanelGroup, { DataGroup } from "../PanelGroup";
 import Panel, { FieldDetails } from "../Panel";
-import { TagIcon, ColorIcon, ImagesIcon, DataIcon } from "../PanelGroup/icons";
 
 interface NavigatorState {
 	pagePanelsHierarchy: React.ReactNode[];
@@ -15,13 +14,6 @@ interface NavigatorProps {
 }
 
 export default class PanelNavigator extends React.Component<NavigatorProps, NavigatorState> {
-	icons = new Map([
-		[DataGroup.METADATA, <TagIcon />],
-		[DataGroup.COLORS, <ColorIcon />],
-		[DataGroup.IMAGES, <ImagesIcon />],
-		[DataGroup.DATA, <DataIcon />]
-	]);
-
 	constructor(props: NavigatorProps) {
 		super(props);
 
@@ -65,11 +57,10 @@ export default class PanelNavigator extends React.Component<NavigatorProps, Navi
 		const groups = Array.from<[DataGroup, FieldDetails[]], JSX.Element>(this.props.fields.entries(), ([group, details]) => {
 			return (
 				<PanelGroup
-					name={group}
+					group={group}
 					key={group}
 					isActive={group === this.state.activePanel}
 					setActive={this.selectOpenPanel}
-					icon={this.icons.get(group)}
 				>
 					{details.map((data => {
 						const { kind, name, ...otherData } = data;
