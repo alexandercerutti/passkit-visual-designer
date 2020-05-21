@@ -135,7 +135,7 @@ export function EventTicket(props: EventTicketProps): JSX.Element {
 					/>
 					<Footer>
 						<Barcodes
-							format={barcode && barcode.format}
+							format={barcode?.format}
 							fallbackShape="square"
 						/>
 					</Footer>

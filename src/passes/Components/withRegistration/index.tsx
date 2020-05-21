@@ -15,7 +15,7 @@ export interface RegistrableComponent {
 }
 
 function onSafeSelect(id: string, onSelectFn?: onSelect) {
-	return onSelectFn && onSelectFn(id);
+	return onSelectFn?.(id);
 }
 
 /**

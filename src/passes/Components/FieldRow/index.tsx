@@ -25,8 +25,7 @@ interface RowProps extends Omit<RegistrableComponent, "id"> {
 export function InlineFieldsRow(props: RowProps) {
 	const elements = (
 		(
-			props.elements &&
-			props.elements.length && (
+			(props.elements?.length ?? 0) && (
 				(props.maximumElementsAmount || 0) > 0
 					? props.elements.slice(0, props.maximumElementsAmount)
 					: props.elements

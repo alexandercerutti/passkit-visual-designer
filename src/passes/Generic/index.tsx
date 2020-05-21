@@ -33,7 +33,7 @@ export function Generic(props: GenericProps): JSX.Element {
 
 	const { secondaryFields, primaryFields, headerFields, auxiliaryFields, barcode, logoText, logo } = props;
 
-	const isSquaredBarcode = isSquareBarcode(barcode && barcode.format);
+	const isSquaredBarcode = isSquareBarcode(barcode?.format);
 
 	const MiddleFragment = ({ onFieldSelect, registerField }: InteractionContext) => isSquaredBarcode &&
 		(
@@ -85,7 +85,7 @@ export function Generic(props: GenericProps): JSX.Element {
 					<Footer>
 						<Barcodes
 							fallbackShape={isSquaredBarcode ? "square" : "rect"}
-							format={barcode && barcode.format}
+							format={barcode?.format}
 						/>
 					</Footer>
 				</>

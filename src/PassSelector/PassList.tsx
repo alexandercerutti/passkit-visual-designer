@@ -17,10 +17,9 @@ export default function PassList(props: PassListPropsWithChildren): JSX.Element 
 	const selectionTray = React.useRef<HTMLDivElement>(null);
 
 	if (props.requiresAttention) {
-		React.useEffect(() => {
-			selectionTray.current &&
-				selectionTray.current.scrollIntoView({ behavior: "smooth", block: "end" })
-		});
+		React.useEffect(() =>
+			selectionTray.current?.scrollIntoView({ behavior: "smooth", block: "end" })
+		);
 	}
 
 	const children = React.Children.map(props.children, (node: React.ReactElement<PassCoreProps>) => {

@@ -10,7 +10,7 @@
 
 export function getSafeFieldData<T>(data: T[], fallbackAmount: number) {
 	const fallbackData = new Array(fallbackAmount).fill({}) as T[];
-	return (data && data.length && data) || fallbackData;
+	return (data?.length && data) ?? fallbackData;
 }
 
 /**

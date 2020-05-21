@@ -45,7 +45,7 @@ export function PureField(props: FieldProps) {
 		<div
 			style={props.style || {}}
 			className={className}
-			onClick={() => props.onClick && props.onClick(props.id)}
+			onClick={() => props.onClick?.(props.id)}
 		>
 			<PureFieldLabel {...propsWithoutClickEvent} />
 			<PureFieldValue {...propsWithoutClickEvent} />
@@ -60,7 +60,7 @@ function PureFieldLabel(props: LabelProps) {
 		<span
 			className="label"
 			style={style}
-			onClick={() => props.onClick && props.onClick(props.id)}
+			onClick={() => props.onClick?.(props.id)}
 		>
 			{props.label || ""}
 		</span>
@@ -80,7 +80,7 @@ function PureFieldValue(props: ValueProps) {
 		<span
 			className="value"
 			style={style}
-			onClick={() => props.onClick && props.onClick(props.id)}
+			onClick={() => props.onClick?.(props.id)}
 		>
 			{parsedValue}
 		</span>

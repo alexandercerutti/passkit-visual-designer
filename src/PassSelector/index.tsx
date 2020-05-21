@@ -85,18 +85,16 @@ class PassSelector extends React.PureComponent<SelectorProps> {
 			);
 		});
 
-		const alternativesList = availableAlternatives.length && (
-			availableAlternatives.map((alternative: PassAlternative) => {
-				return (
-					<NamedPass
-						key={alternative.name}
-						name={alternative.name}
-						kind={selectedPassKind}
-						{...alternative.specificProps}
-					/>
-				);
-			})
-		) || null;
+		const alternativesList = availableAlternatives.map((alternative: PassAlternative) => {
+			return (
+				<NamedPass
+					key={alternative.name}
+					name={alternative.name}
+					kind={selectedPassKind}
+					{...alternative.specificProps}
+				/>
+			);
+		}) || null;
 
 		const AlternativesListComponent = (
 			alternativesList &&

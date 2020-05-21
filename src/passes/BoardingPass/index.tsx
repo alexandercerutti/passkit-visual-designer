@@ -149,7 +149,7 @@ export function BoardingPass(props: BoardingPassProps) {
 							id="footer"
 						/>
 						<Barcode
-							format={barcode && barcode.format}
+							format={barcode?.format}
 							fallbackShape="rect"
 						/>
 					</Footer>
