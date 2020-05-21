@@ -43,7 +43,7 @@ export function PassHeader(props: HeaderProps) {
 				onClick={props.onClick}
 			/>
 			<TextField
-				id="header.logoText"
+				id="logoText"
 				className="logo-text"
 				content={props.logoText || ""}
 				register={props.register}
