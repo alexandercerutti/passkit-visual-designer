@@ -1,33 +1,11 @@
 import * as React from "react";
-import withRegistration, { RegistrableComponent, onSelect } from "../withRegistration";
+import "./style.less";
+import withRegistration from "../withRegistration";
 import withFallback from "../EmptyField/withFallback";
 import { FieldKind } from "../../../model";
-import "./style.less";
-import { PKTextAlignment, PKDataDetectorType, PKDateStyle } from "../../constants";
 import { concatClassNames } from "../../utils";
-
-interface FieldProperties extends RegistrableComponent {
-	className?: string;
-	style?: React.CSSProperties;
-	fieldKey: string;
-
-	// to be implemented
-	textAlignment?: PKTextAlignment;
-	dataDetectorTypes?: PKDataDetectorType;
-	changeMessage?: string; // check for @s
-	dateStyle?: PKDateStyle;
-	timeStyle?: PKDateStyle;
-}
-
-export interface LabelProps extends FieldProperties {
-	labelColor?: string;
-	label?: string;
-}
-
-export interface ValueProps extends FieldProperties {
-	value: any;
-	textColor?: string;
-}
+import { PureFieldValue, ValueProps } from "./FieldValue";
+import { PureFieldLabel, LabelProps } from "./FieldLabel";
 
 export type FieldProps = ValueProps & LabelProps;
 
@@ -53,124 +31,4 @@ export function PureField(props: FieldProps) {
 	);
 }
 
-function PureFieldLabel(props: LabelProps) {
-	const style = composeLabelValueStylesFromProps(props, "label");
-
-	return (
-		<span
-			className="label"
-			style={style}
-			onClick={() => props.onClick?.(props.id)}
-		>
-			{props.label || ""}
-		</span>
-	);
-}
-
-/**
- * @TODO use svg text to allow it to resize manually
- */
-
-function PureFieldValue(props: ValueProps) {
-	const style = composeLabelValueStylesFromProps(props, "label");
-
-	const parsedValue = getValueFromProps(props);
-
-	return (
-		<span
-			className="value"
-			style={style}
-			onClick={() => props.onClick?.(props.id)}
-		>
-			{parsedValue}
-		</span>
-	);
-}
-
-function composeLabelValueStylesFromProps(props: Partial<FieldProps>, origin: "label" | "value"): React.CSSProperties {
-	const textAlignment = props.textAlignment || PKTextAlignment.Natural;
-
-	return {
-		textAlign: textAlignment,
-		color: String(origin === "value" && props.textColor || props.labelColor) || "#000",
-		overflow: "hidden",
-		textOverflow: "ellipsis",
-	}
-}
-
-function getValueFromProps(props: ValueProps) {
-	const valueAsDate = new Date(props.value);
-
-	const shouldShowDate = (
-		props.dateStyle !== undefined &&
-		props.dateStyle !== PKDateStyle.None
-	);
-	const shouldShowTime = (
-		props.timeStyle !== undefined &&
-		props.timeStyle !== PKDateStyle.None
-	);
-
-	if (isNaN(valueAsDate.getTime()) || !(shouldShowTime && shouldShowDate)) {
-		/**
-		 * Date parsing failed ("Invalid date").
-		 * Or it doesn't have to be parsed as date
-		 * We are returning directly the value
-		 * without performing any kind of parsing.
-		 */
-		return props.value;
-	}
-
-	const timeValues = [];
-
-	if (shouldShowDate) {
-		timeValues.push(getDateValueFromDateStyle(props.dateStyle, props.value));
-	}
-
-	if (shouldShowTime) {
-		timeValues.push(getTimeValueFromTimeStyle(props.timeStyle, props.value));
-	}
-
-	return timeValues.join(" ");
-}
-
-function getDateValueFromDateStyle(dateStyle: PKDateStyle, value: Date) {
-	switch (dateStyle) {
-		case PKDateStyle.Short:
-			// @TODO: Parse Date as short
-			return value;
-		case PKDateStyle.Medium:
-			// @TODO: Parse Date as medium
-			return value;
-		case PKDateStyle.Long:
-			// @TODO: Parse Date as long
-			return value;
-		case PKDateStyle.Full:
-			// @TODO: Parse Date as full
-			return value;
-		default:
-			return value;
-	}
-}
-
-function getTimeValueFromTimeStyle(timeStyle: PKDateStyle, value: Date) {
-	switch (timeStyle) {
-		case PKDateStyle.Short:
-			// @TODO: Parse Date as short
-			return value;
-		case PKDateStyle.Medium:
-			// @TODO: Parse Date as medium
-			return value;
-		case PKDateStyle.Long:
-			// @TODO: Parse Date as long
-			return value;
-		case PKDateStyle.Full:
-			// @TODO: Parse Date as full
-			return value;
-		default:
-			return value;
-	}
-}
-
 export const Field = withRegistration(withFallback(PureField, ["value", "fieldKey"]), FieldKind.FIELDS);
-export const FieldLabel = withRegistration(withFallback(PureFieldLabel, ["label", "fieldKey"]), FieldKind.FIELDS);
-export const FieldValue = withRegistration(withFallback(PureFieldValue, ["value", "fieldKey"]), FieldKind.FIELDS);
