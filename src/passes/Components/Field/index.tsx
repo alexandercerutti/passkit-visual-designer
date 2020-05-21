@@ -14,8 +14,7 @@ export function PureField(props: FieldProps) {
 	 * We don't want to pass the click event to children.
 	 * They will still accept it but only if used separately.
 	 */
-	const propsWithoutClickEvent = Object.assign({}, props);
-	delete propsWithoutClickEvent["onClick"];
+	const { onClick, ...propsWithoutClickEvent } = props;
 
 	const className = concatClassNames("field", props.className, props.fieldKey && `field-${props.fieldKey}`);
 
@@ -23,7 +22,7 @@ export function PureField(props: FieldProps) {
 		<div
 			style={props.style || {}}
 			className={className}
-			onClick={() => props.onClick?.(props.id)}
+			onClick={() => onClick?.(props.id)}
 		>
 			<PureFieldLabel {...propsWithoutClickEvent} />
 			<PureFieldValue {...propsWithoutClickEvent} />
