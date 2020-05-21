@@ -35,7 +35,7 @@ export function PassHeader(props: HeaderProps) {
 	return (
 		<div className={className}>
 			<ImageField
-				id="header.logo"
+				id="logo"
 				register={props.register}
 				// src={props.logo || "https://cdn.freebiesupply.com/logos/large/2x/trenitalia-logo-png-transparent.png"}
 				src={props.logo}
