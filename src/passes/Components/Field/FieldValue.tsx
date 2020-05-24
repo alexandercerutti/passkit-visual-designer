@@ -1,7 +1,4 @@
 import * as React from "react";
-import withRegistration from "../withRegistration";
-import withFallback from "../EmptyField/withFallback";
-import { FieldKind } from "../../../model";
 import { PKDateStyle } from "../../constants";
 import { composeLabelValueStylesFromProps, FieldProperties } from "./fieldCommons";
 
@@ -14,7 +11,7 @@ export interface ValueProps extends FieldProperties {
  * @TODO use svg text to allow it to resize manually
  */
 
-export function PureFieldValue(props: ValueProps) {
+export default function PureFieldValue(props: ValueProps) {
 	const style = composeLabelValueStylesFromProps(props, "label");
 
 	const parsedValue = getValueFromProps(props);
@@ -23,13 +20,11 @@ export function PureFieldValue(props: ValueProps) {
 		<span
 			className="value"
 			style={style}
-			onClick={() => props.onClick?.(props.id)}
 		>
 			{parsedValue}
 		</span>
 	);
 }
-
 
 function getValueFromProps(props: ValueProps) {
 	const valueAsDate = new Date(props.value);
@@ -103,5 +98,3 @@ function getTimeValueFromTimeStyle(timeStyle: PKDateStyle, value: Date) {
 			return value;
 	}
 }
-
-export const FieldValue = withRegistration(withFallback(PureFieldValue, ["value", "fieldKey"]), FieldKind.FIELDS);

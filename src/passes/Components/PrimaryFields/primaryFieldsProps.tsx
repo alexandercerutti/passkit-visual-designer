@@ -1,7 +1,7 @@
 import { RegistrableComponent } from "../withRegistration";
-import { Field } from "../Field";
+import { Field, FieldProps } from "../Field";
 
-export default interface PrimaryFieldsProps extends Omit<RegistrableComponent, "id"> {
+export default interface PrimaryFieldsProps extends RegistrableComponent {
 	className?: string;
-	fields: Omit<Parameters<typeof Field>[0], keyof RegistrableComponent>[];
+	fields?: FieldProps[];
 }

@@ -36,6 +36,7 @@ export function StoreCard(props: StoreCardProps): JSX.Element {
 						fields={primaryFields}
 						onClick={onFieldSelect}
 						register={registerField}
+						id={"primaryFields"}
 					/>
 					{/*
 						{

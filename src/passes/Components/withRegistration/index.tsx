@@ -38,7 +38,7 @@ function onSafeSelect(id: string, onSelectFn?: onSelect) {
  */
 
 export default function withRegistration<P extends RegistrableComponent>(WrappedField: React.ComponentType<P>, fieldKind: FieldKind) {
-	return (props: P) => {
+	return (props: React.PropsWithChildren<P>) => {
 		const [approved, setApproved] = React.useState(false);
 
 		React.useEffect(() => {

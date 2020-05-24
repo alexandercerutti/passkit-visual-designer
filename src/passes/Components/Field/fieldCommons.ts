@@ -1,6 +1,5 @@
 import { PKTextAlignment, PKDataDetectorType, PKDateStyle } from "../../constants";
 import { FieldProps } from ".";
-import { RegistrableComponent } from "../withRegistration";
 
 export function composeLabelValueStylesFromProps(props: Partial<FieldProps>, origin: "label" | "value"): React.CSSProperties {
 	const textAlignment = props.textAlignment || PKTextAlignment.Natural;
@@ -13,7 +12,7 @@ export function composeLabelValueStylesFromProps(props: Partial<FieldProps>, ori
 	}
 }
 
-export interface FieldProperties extends RegistrableComponent {
+export interface FieldProperties {
 	className?: string;
 	style?: React.CSSProperties;
 	fieldKey: string;

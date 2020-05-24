@@ -80,6 +80,7 @@ export function Generic(props: GenericProps): JSX.Element {
 						thumbnailSrc={props.thumbnailImage}
 						onClick={onFieldSelect}
 						register={registerField}
+						id={"primaryFields"}
 					/>
 					{MiddleFragment({ onFieldSelect, registerField })}
 					<Footer>

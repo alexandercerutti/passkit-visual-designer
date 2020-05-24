@@ -1,6 +1,6 @@
 import * as React from "react";
 import "./style.less";
-import { getSafeFieldData } from "../../../utils";
+import { getSafeFieldData } from "../../Field/getSafeFieldData";
 import { Field } from "../../Field";
 import ImageField from "../../ImageField";
 import PrimaryFieldsProps from "../primaryFieldsProps";

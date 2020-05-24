@@ -77,6 +77,7 @@ export function BoardingPass(props: BoardingPassProps) {
 						fields={primaryFields}
 						onClick={onFieldSelect}
 						register={registerField}
+						id={"primaryFields"}
 
 					/**
 					{

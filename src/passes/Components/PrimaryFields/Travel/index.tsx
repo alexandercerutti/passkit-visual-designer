@@ -1,73 +1,38 @@
 import * as React from "react";
-import { FieldLabel, FieldValue } from "../../Field";
-import { PKTransitType } from "../../../constants";
-import "./style.less";
-import { PKTransitIcon } from "./icons";
-import { getSafeFieldData, concatClassNames } from "../../../utils";
 import PrimaryFieldsProps from "../primaryFieldsProps";
+import useBoundField from "../../Field/useBoundField";
+import { getSafeFieldData } from "../../Field/getSafeFieldData";
+import { GhostField } from "../../Field";
+import { concatClassNames } from "../../../utils";
+import { PKTransitType } from "../../../constants";
+import { PKTransitIcon } from "./icons";
+import "./style.less";
 
 interface PFTravelProps extends PrimaryFieldsProps {
 	transitType: PKTransitType;
 }
 
 export default function PrimaryFields(props: PFTravelProps) {
-	return (
-		<div className={concatClassNames("primary-container", props.className)}>
-			<LabelsRow {...props} />
-			<ValuesRow {...props} />
-		</div>
-	);
-}
+	const registrationProps = (({ id, register }) => ({ id, register }))(props);
+	const [FieldLabel, FieldValue] = useBoundField(registrationProps);
 
-function LabelsRow(props: PFTravelProps) {
-	const labels = getSafeFieldData(props.fields, 2)
-		.slice(0, 2)
-		.map((fieldData, index) => {
-			const id = `primaryFields.${index}.label`;
-
-			return (
-				<FieldLabel
-					label={fieldData.label}
-					labelColor={fieldData.labelColor}
-					textAlignment={fieldData.textAlignment}
-					fieldKey={fieldData.fieldKey}
-					key={id}
-					id={id}
-					onClick={props.onClick}
-					register={props.register}
-				/>
-			)
-		});
-
-	return (
-		<div className="label-row">
-			{labels}
-		</div>
-	);
-}
-
-function ValuesRow(props: PFTravelProps) {
 	const [from, to] = getSafeFieldData(props.fields, 2)
 		.slice(0, 2)
 		.map((fieldData, index) => {
+			const id = `${props.id}.${index}`;
+
 			return (
-				<FieldValue
-					value={fieldData.value}
-					textColor={fieldData.textColor}
-					textAlignment={fieldData.textAlignment}
-					fieldKey={fieldData.fieldKey}
-					key={`primaryFields.${index}.value`}
-					id={`primaryFields.${index}.value`}
-					onClick={props.onClick}
-					register={props.register}
-				/>
+				<GhostField key={id} {...fieldData}>
+					<FieldLabel {...fieldData} />
+					<FieldValue {...fieldData} />
+				</GhostField>
 			)
 		});
 
 	const TransitIcon = PKTransitIcon(props.transitType === undefined && PKTransitType.Generic || props.transitType);
 
 	return (
-		<div className="value-row">
+		<div className={concatClassNames("primary-container", props.className)}>
 			{from}
 			<TransitIcon
 				width={30}
