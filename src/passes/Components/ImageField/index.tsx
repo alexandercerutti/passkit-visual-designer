@@ -1,5 +1,5 @@
 import * as React from "react";
-import withRegistration, { RegistrableComponent } from "../withRegistration";
+import useRegistration, { RegistrableComponent } from "../useRegistration";
 import { FieldKind } from "../../../model";
 import { concatClassNames } from "../../utils";
 import useFallback from "../EmptyField/useFallback";
@@ -11,8 +11,10 @@ export interface ImageFieldProps extends RegistrableComponent {
 	src?: string;
 }
 
-function PureImageField(props: ImageFieldProps) {
-	const { src, width, height, className: sourceClassName } = props;
+export default function ImageField(props: ImageFieldProps) {
+	const { src, width, height, className: sourceClassName, register, id } = props;
+
+	useRegistration(register, FieldKind.IMAGE, id);
 
 	return useFallback(() => {
 		const className = concatClassNames("image-field", sourceClassName);
@@ -24,5 +26,3 @@ function PureImageField(props: ImageFieldProps) {
 		);
 	}, [src]);
 }
-
-export default withRegistration(PureImageField, FieldKind.IMAGE);

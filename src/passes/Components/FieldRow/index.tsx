@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Field, FieldProps } from "../Field";
 import "./style.less";
-import { RegistrableComponent } from "../withRegistration";
+import { RegistrableComponent } from "../useRegistration";
 import useBoundField from "../Field/useBoundField";
 
 interface RowProps extends RegistrableComponent {

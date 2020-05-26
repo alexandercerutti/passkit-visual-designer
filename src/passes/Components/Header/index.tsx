@@ -1,8 +1,8 @@
 import * as React from "react";
 import "./style.less";
-import TextField, { TextFieldProps } from "../TextField";
-import { onRegister, RegistrableComponent } from "../withRegistration";
-import ImageField, { ImageFieldProps } from "../ImageField";
+import TextField from "../TextField";
+import { onRegister, RegistrableComponent } from "../useRegistration";
+import ImageField from "../ImageField";
 import { FieldProps } from "../Field";
 import { InlineFieldsRow } from "../FieldRow";
 import { concatClassNames } from "../../utils";

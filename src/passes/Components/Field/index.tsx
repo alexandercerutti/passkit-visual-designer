@@ -1,11 +1,12 @@
 import * as React from "react";
-import { RegistrableComponent } from "../withRegistration";
+import useRegistration, { RegistrableComponent, } from "../useRegistration";
 import { concatClassNames } from "../../utils";
 import { ValueProps } from "./FieldValue";
 import { LabelProps } from "./FieldLabel";
 import "./style.less";
 import useFallback from "../EmptyField/useFallback";
-import useClickEvent from "../withRegistration/useClickEvent";
+import useClickEvent from "../useRegistration/useClickEvent";
+import { FieldKind } from "../../../model";
 
 export { default as FieldLabel } from "./FieldLabel";
 export { default as FieldValue } from "./FieldValue";
@@ -16,7 +17,9 @@ export function Field(props: React.PropsWithChildren<Partial<FieldProps> & Regis
 	 * We don't want to pass the click event to children.
 	 * They will still accept it but only if used separately.
 	 */
-	const { onClick, id, className: sourceClassName, fieldKey, label, value, style, children } = props;
+	const { onClick, id, register, className: sourceClassName, fieldKey, label, value, style, children } = props;
+
+	useRegistration(register, FieldKind.FIELDS, id);
 
 	return useClickEvent(id, onClick,
 		useFallback(() => {
@@ -43,7 +46,9 @@ export function Field(props: React.PropsWithChildren<Partial<FieldProps> & Regis
  */
 
 export function GhostField(props: React.PropsWithChildren<Partial<FieldProps> & RegistrableComponent>) {
-	const { onClick, id, fieldKey, label, value, children } = props;
+	const { onClick, id, register, fieldKey, label, value, children } = props;
+
+	useRegistration(register, FieldKind.FIELDS, id);
 
 	return useClickEvent(id, onClick,
 		useFallback(() => {

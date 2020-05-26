@@ -22,7 +22,12 @@ export default function PrimaryFields(props: PFTravelProps) {
 			const id = `${props.id}.${index}`;
 
 			return (
-				<GhostField key={id} {...fieldData} onClick={props.onClick} id={id}>
+				<GhostField key={id}
+					{...fieldData}
+					register={props.register}
+					onClick={props.onClick}
+					id={id}
+				>
 					<FieldLabel {...fieldData} />
 					<FieldValue {...fieldData} />
 				</GhostField>
