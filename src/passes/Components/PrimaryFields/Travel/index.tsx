@@ -1,8 +1,7 @@
 import * as React from "react";
 import PrimaryFieldsProps from "../primaryFieldsProps";
-import useBoundField from "../../Field/useBoundField";
 import { getSafeFieldData } from "../../Field/getSafeFieldData";
-import { GhostField } from "../../Field";
+import { GhostField, FieldLabel, FieldValue } from "../../Field";
 import { concatClassNames } from "../../../utils";
 import { PKTransitType } from "../../../constants";
 import { PKTransitIcon } from "./icons";
@@ -13,9 +12,6 @@ interface PFTravelProps extends PrimaryFieldsProps {
 }
 
 export default function PrimaryFields(props: PFTravelProps) {
-	const registrationProps = (({ id, register }) => ({ id, register }))(props);
-	const [FieldLabel, FieldValue] = useBoundField(registrationProps);
-
 	const [from, to] = getSafeFieldData(props.fields, 2)
 		.slice(0, 2)
 		.map((fieldData, index) => {

@@ -1,8 +1,7 @@
 import * as React from "react";
-import { Field, FieldProps } from "../Field";
+import { Field, FieldProps, FieldLabel, FieldValue } from "../Field";
 import "./style.less";
 import { RegistrableComponent } from "../useRegistration";
-import useBoundField from "../Field/useBoundField";
 
 interface RowProps extends RegistrableComponent {
 	maximumElementsAmount: number;
@@ -24,7 +23,6 @@ interface RowProps extends RegistrableComponent {
 
 export function InlineFieldsRow(props: RowProps) {
 	const { maximumElementsAmount = 0, onClick, register, id, elements = [] } = props;
-	const [FieldLabel, FieldValue] = useBoundField({ id, register });
 
 	const mappableElements = (
 		elements.length &&
