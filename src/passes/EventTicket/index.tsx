@@ -35,11 +35,11 @@ export function EventTicket(props: EventTicketProps): JSX.Element {
 
 	const SecondaryFieldRow = ({ onFieldSelect, registerField }: InteractionContext) => (
 		<FieldsRow
-			areaIdentifier="secondaryFields"
 			elements={secondaryFields}
 			maximumElementsAmount={4}
 			onClick={onFieldSelect}
 			register={registerField}
+			id="secondaryFields"
 		/>
 	);
 
@@ -129,7 +129,7 @@ export function EventTicket(props: EventTicketProps): JSX.Element {
 					/>
 					{FieldsFragment({ onFieldSelect, registerField })}
 					<FieldsRow
-						areaIdentifier="auxiliaryFields"
+						id="auxiliaryFields"
 						maximumElementsAmount={4}
 						elements={auxiliaryFields}
 						onClick={onFieldSelect}

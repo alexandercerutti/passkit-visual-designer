@@ -46,7 +46,6 @@ export function Coupon(props: CouponProps): JSX.Element {
 						}
 					*/}
 					<FieldsRow
-						areaIdentifier="secondary-auxiliary"
 						// @TODO: this component, as is,
 						// might not be fully correct because 4 fields
 						// get rendered in two columns. We don't have
@@ -58,6 +57,7 @@ export function Coupon(props: CouponProps): JSX.Element {
 						maximumElementsAmount={-1}
 						onClick={onFieldSelect}
 						register={registerField}
+						id="secondary-auxiliary"
 					/>
 					{/* {
 					"fieldKey": "deal",

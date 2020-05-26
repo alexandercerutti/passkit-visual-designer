@@ -5,7 +5,6 @@ import { RegistrableComponent } from "../useRegistration";
 import useBoundField from "../Field/useBoundField";
 
 interface RowProps extends RegistrableComponent {
-	areaIdentifier: string;
 	maximumElementsAmount: number;
 	elements: Omit<FieldProps, "id">[];
 }
@@ -24,7 +23,7 @@ interface RowProps extends RegistrableComponent {
  */
 
 export function InlineFieldsRow(props: RowProps) {
-	const { maximumElementsAmount = 0, areaIdentifier, onClick, register, id, elements = [] } = props;
+	const { maximumElementsAmount = 0, onClick, register, id, elements = [] } = props;
 	const [FieldLabel, FieldValue] = useBoundField({ id, register });
 
 	const mappableElements = (
@@ -32,18 +31,22 @@ export function InlineFieldsRow(props: RowProps) {
 		props.elements.slice(0, maximumElementsAmount || elements.length)
 	) || [{}] as RowProps["elements"];
 
-	const mappedElements = mappableElements.map((data, index) => (
-		<Field
-			key={`${areaIdentifier}.${index}`}
-			id={`${areaIdentifier}.${index}`}
-			onClick={onClick}
-			register={register}
-			fieldKey={data.fieldKey}
-		>
-			<FieldLabel {...data} />
-			<FieldValue {...data} />
-		</Field>
-	));
+	const mappedElements = mappableElements.map((data, index) => {
+		const fieldID = `${id}.${index}`;
+
+		return (
+			<Field
+				key={fieldID}
+				id={fieldID}
+				onClick={onClick}
+				register={register}
+				fieldKey={data.fieldKey}
+			>
+				<FieldLabel {...data} />
+				<FieldValue {...data} />
+			</Field>
+		);
+	});
 
 	return (
 		<>

@@ -38,23 +38,23 @@ export function Generic(props: GenericProps): JSX.Element {
 	const MiddleFragment = ({ onFieldSelect, registerField }: InteractionContext) => isSquaredBarcode &&
 		(
 			<FieldsRow
-				areaIdentifier="secondary-auxiliary"
 				elements={[...(secondaryFields || []), ...(auxiliaryFields || [])]}
 				maximumElementsAmount={4}
 				onClick={onFieldSelect}
 				register={registerField}
+				id="secondary-auxiliary"
 			/>
 		) || (
 			<>
 				<FieldsRow
-					areaIdentifier="secondaryFields"
+					id="secondaryFields"
 					elements={secondaryFields}
 					maximumElementsAmount={4}
 					onClick={onFieldSelect}
 					register={registerField}
 				/>
 				<FieldsRow
-					areaIdentifier="auxiliaryFields"
+					id="auxiliaryFields"
 					elements={auxiliaryFields}
 					maximumElementsAmount={4}
 					onClick={onFieldSelect}

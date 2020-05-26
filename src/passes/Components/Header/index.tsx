@@ -24,7 +24,7 @@ export function PassHeader(props: HeaderProps) {
 		<InlineFieldsRow
 			elements={props.headerFields}
 			maximumElementsAmount={3}
-			areaIdentifier="headerFields"
+			id="headerFields"
 			register={props.register}
 			onClick={props.onClick}
 		/>

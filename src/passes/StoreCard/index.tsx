@@ -46,7 +46,7 @@ export function StoreCard(props: StoreCardProps): JSX.Element {
 						}
 					*/}
 					<FieldsRow
-						areaIdentifier="secondary-auxiliary"
+						id="secondary-auxiliary"
 						// @TODO: this component, as is,
 						// might not be fully correct because 4 fields
 						// get rendered in two columns. We don't have

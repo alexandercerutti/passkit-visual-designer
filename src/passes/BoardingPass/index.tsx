@@ -93,11 +93,11 @@ export function BoardingPass(props: BoardingPassProps) {
 
 					/>
 					<FieldsRow
-						areaIdentifier="auxiliaryFields"
 						maximumElementsAmount={-1}
 						elements={auxiliaryFields}
 						onClick={onFieldSelect}
 						register={registerField}
+						id="auxiliaryFields"
 
 					/**
 					 * 	{
@@ -118,11 +118,11 @@ export function BoardingPass(props: BoardingPassProps) {
 						*/
 					/>
 					<FieldsRow
-						areaIdentifier="secondaryFields"
 						maximumElementsAmount={-1}
 						elements={secondaryFields}
 						onClick={onFieldSelect}
 						register={registerField}
+						id="secondaryFields"
 					/**
 						{
 							"fieldKey": "gateClose",
