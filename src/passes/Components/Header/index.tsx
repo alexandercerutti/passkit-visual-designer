@@ -9,7 +9,7 @@ import { concatClassNames } from "../../utils";
 
 interface HeaderProps extends Partial<RegistrableComponent> {
 	register?: onRegister;
-	headerFields?: Omit<FieldProps, "id">[];
+	headerFields?: FieldProps[];
 	logoText?: string;
 	logo?: string;
 	withSeparator?: boolean;

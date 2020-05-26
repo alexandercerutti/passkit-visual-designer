@@ -5,7 +5,7 @@ import { RegistrableComponent } from "../useRegistration";
 
 interface RowProps extends RegistrableComponent {
 	maximumElementsAmount: number;
-	elements: Omit<FieldProps, "id">[];
+	elements: FieldProps[];
 }
 
 /**
