@@ -2,8 +2,8 @@ import * as React from "react";
 import "./style.less";
 import withRegistration, { RegistrableComponent } from "../withRegistration";
 import { FieldKind } from "../../../model";
-import withFallback from "../EmptyField/withFallback";
 import { concatClassNames } from "../../utils";
+import useFallback from "../EmptyField/useFallback";
 
 export interface TextFieldProps extends RegistrableComponent {
 	content?: string;
@@ -11,13 +11,17 @@ export interface TextFieldProps extends RegistrableComponent {
 }
 
 function PureTextField(props: TextFieldProps) {
-	const className = concatClassNames("text-field", props.className);
+	const { content, className: sourceClassName } = props;
 
-	return (
-		<div className={className}>
-			{props.content}
-		</div>
-	);
+	return useFallback(() => {
+		const className = concatClassNames("text-field", sourceClassName);
+
+		return (
+			<div className={className}>
+				{content}
+			</div>
+		);
+	}, [content]);
 }
 
-export default withRegistration(withFallback(PureTextField, ["content"]), FieldKind.TEXT);
+export default withRegistration(PureTextField, FieldKind.TEXT);

@@ -1,33 +1,36 @@
 import * as React from "react";
-import withRegistration, { RegistrableComponent } from "../withRegistration";
-import withFallback from "../EmptyField/withFallback";
-import useBoundField from "./useBoundField";
-import { FieldKind } from "../../../model";
+import { RegistrableComponent } from "../withRegistration";
 import { concatClassNames } from "../../utils";
 import { ValueProps } from "./FieldValue";
 import { LabelProps } from "./FieldLabel";
 import "./style.less";
+import useFallback from "../EmptyField/useFallback";
+import useClickEvent from "../withRegistration/useClickEvent";
 
 export { default as FieldLabel } from "./FieldLabel";
 export { default as FieldValue } from "./FieldValue";
 export type FieldProps = ValueProps & LabelProps;
 
-export function PureField(props: React.PropsWithChildren<Partial<FieldProps> & RegistrableComponent>) {
+export function Field(props: React.PropsWithChildren<Partial<FieldProps> & RegistrableComponent>) {
 	/**
 	 * We don't want to pass the click event to children.
 	 * They will still accept it but only if used separately.
 	 */
-	const { onClick, id, register, ...propsWithoutClickEvent } = props;
-	const className = concatClassNames("field", props.className, props.fieldKey && `field-${props.fieldKey}`);
+	const { onClick, id, className: sourceClassName, fieldKey, label, value, style, children } = props;
 
-	return (
-		<div
-			style={props.style || {}}
-			className={className}
-			onClick={() => onClick?.(id)}
-		>
-			{props.children}
-		</div>
+	return useClickEvent(id, onClick,
+		useFallback(() => {
+			const className = concatClassNames("field", sourceClassName, fieldKey && `field-${fieldKey}`);
+
+			return (
+				<div
+					style={style ?? {}}
+					className={className}
+				>
+					{children}
+				</div>
+			);
+		}, [label, value, fieldKey])
 	);
 }
 
@@ -39,12 +42,16 @@ export function PureField(props: React.PropsWithChildren<Partial<FieldProps> & R
  * fit in the grid.
  */
 
-export const GhostField = withFallback(function (props: React.PropsWithChildren<Partial<FieldProps>>) {
-	return (
-		<>
-			{props.children}
-		</>
-	);
-}, ["label", "value", "fieldKey"]);
+export function GhostField(props: React.PropsWithChildren<Partial<FieldProps> & RegistrableComponent>) {
+	const { onClick, id, fieldKey, label, value, children } = props;
 
-export const Field = withRegistration(withFallback(PureField, ["label", "value", "fieldKey"]), FieldKind.FIELDS);
+	return useClickEvent(id, onClick,
+		useFallback(() => {
+			return (
+				<>
+					{children}
+				</>
+			);
+		}, [label, value, fieldKey])
+	);
+}

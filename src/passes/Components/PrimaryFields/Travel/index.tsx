@@ -22,11 +22,11 @@ export default function PrimaryFields(props: PFTravelProps) {
 			const id = `${props.id}.${index}`;
 
 			return (
-				<GhostField key={id} {...fieldData}>
+				<GhostField key={id} {...fieldData} onClick={props.onClick} id={id}>
 					<FieldLabel {...fieldData} />
 					<FieldValue {...fieldData} />
 				</GhostField>
-			)
+			);
 		});
 
 	const TransitIcon = PKTransitIcon(props.transitType === undefined && PKTransitType.Generic || props.transitType);

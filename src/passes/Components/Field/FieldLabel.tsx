@@ -1,5 +1,4 @@
 import * as React from "react";
-import withFallback from "../EmptyField/withFallback";
 import { composeLabelValueStylesFromProps, FieldProperties } from "./fieldCommons";
 
 export interface LabelProps extends FieldProperties {
