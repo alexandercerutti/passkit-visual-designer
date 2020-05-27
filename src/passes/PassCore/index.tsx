@@ -43,38 +43,30 @@ export interface PassCoreProps extends PassProps, Partial<InteractionContext> {
 
 type AllPassesTypes = typeof BoardingPass | typeof StoreCard | typeof Coupon | typeof EventTicket | typeof Generic;
 
-export default class Pass extends React.Component<PassCoreProps> {
-	constructor(props: PassCoreProps) {
-		super(props);
-	}
+export default function Pass(props: PassCoreProps) {
+	const { kind, ...newProps } = props;
+	const PassComponent = getPassKind(kind);
 
-	deriveComponentFromKind(kind: PassKind): AllPassesTypes {
-		switch (kind) {
-			case PassKind.BOARDING_PASS:
-				return BoardingPass
-			case PassKind.COUPON:
-				return Coupon;
-			case PassKind.EVENT:
-				return EventTicket;
-			case PassKind.GENERIC:
-				return Generic;
-			case PassKind.STORE:
-				return StoreCard;
-		}
-	}
-
-	render(): JSX.Element {
-		const PassComponent = this.deriveComponentFromKind(this.props.kind);
-		const newProps = (({ kind, ...otherProps }: PassCoreProps) => ({ ...otherProps }))(this.props);
-
-		console.log(this.props, PassComponent);
-
-		return (
-			<div className={`pass ${this.props.kind.toLowerCase()}`}>
-				<div className="content">
-					<PassComponent {...newProps} />
-				</div>
+	return (
+		<div className={`pass ${kind.toLowerCase()}`}>
+			<div className="content">
+				<PassComponent {...newProps} />
 			</div>
-		);
+		</div>
+	);
+}
+
+function getPassKind(kind: PassKind): AllPassesTypes {
+	switch (kind) {
+		case PassKind.BOARDING_PASS:
+			return BoardingPass
+		case PassKind.COUPON:
+			return Coupon;
+		case PassKind.EVENT:
+			return EventTicket;
+		case PassKind.GENERIC:
+			return Generic;
+		case PassKind.STORE:
+			return StoreCard;
 	}
 }
