@@ -1,6 +1,7 @@
 import * as React from "react";
 import { TwitterPicker, RGBColor, ColorResult } from "react-color";
 import { PanelProps } from "../..";
+import useContentSavingHandler from "../useContentSavingHandler";
 import "./style.less";
 
 interface ColorPanelProps extends PanelProps {
@@ -8,7 +9,7 @@ interface ColorPanelProps extends PanelProps {
 }
 
 export default function ColorPanel(props: ColorPanelProps) {
-	const [color, setColor] = React.useState<string>(props.value || "rgb(0,0,0)");
+	const [color, onContentChangeHandler] = useContentSavingHandler(props.onValueChange, props.name, props.value || "rgb(0,0,0)");
 	const showTitle = props.name.replace(/([a-z])([A-Z])/g, "$1 $2");
 
 	// Default react-color hashes
@@ -28,8 +29,7 @@ export default function ColorPanel(props: ColorPanelProps) {
 		}
 
 		const rgbColor = rgbaToRGBString(rgb);
-		setColor(rgbColor);
-		props.onValueChange(props.name, rgbColor);
+		onContentChangeHandler(rgbColor);
 	});
 
 	return (

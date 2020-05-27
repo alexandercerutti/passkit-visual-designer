@@ -1,5 +1,6 @@
 import * as React from "react";
 import { PanelProps } from "../..";
+import useContentSavingHandler from "../useContentSavingHandler";
 import "./style.less";
 
 interface TextPanelProps extends PanelProps {
@@ -7,16 +8,10 @@ interface TextPanelProps extends PanelProps {
 }
 
 export default function TextPanel(props: TextPanelProps) {
-	const [content, setContent] = React.useState<string>(props.value || null);
+	const [content, onBlurEventRef] = useContentSavingHandler(props.onValueChange, props.name, props.value);
 
 	const onKeyDownEventRef = React.useRef(({ key, currentTarget }: React.KeyboardEvent<HTMLInputElement>) => {
 		key === "Enter" && currentTarget.blur();
-	});
-
-	const onBlurEventRef = React.useRef((event: React.FocusEvent<HTMLInputElement>) => {
-		// Should check if new value equals to old value or not?
-		setContent(event.target.value);
-		props.onValueChange(props.name, event.target.value);
 	});
 
 	const showTitle = props.name.replace(/([a-z])([A-Z])/g, "$1 $2");
@@ -35,7 +30,7 @@ export default function TextPanel(props: TextPanelProps) {
 			<input
 				id={props.name}
 				placeholder={props.name}
-				onBlur={onBlurEventRef.current}
+				onBlur={(event) => onBlurEventRef(event.target.value)}
 				onKeyDown={onKeyDownEventRef.current}
 				defaultValue={content}
 			/>

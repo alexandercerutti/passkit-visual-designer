@@ -2,6 +2,7 @@ import * as React from "react";
 import { PanelProps } from "../..";
 import UploadArea from "./UploadArea";
 import PictureShowdown from "./PictureShowdown";
+import useContentSavingHandler from "../useContentSavingHandler";
 import "./style.less";
 
 interface ImagePanelProps extends PanelProps {
@@ -9,13 +10,8 @@ interface ImagePanelProps extends PanelProps {
 }
 
 export default function ImagePanel(props: ImagePanelProps) {
-	const [file, setFile] = React.useState<File>(props.value || null);
+	const [file, onChosenFileChangedHandlerRef] = useContentSavingHandler(props.onValueChange, props.name, props.value);
 	const showTitle = props.name.replace(/([a-z])([A-Z])/g, "$1 $2");
-
-	const onChosenFileChangedHandlerRef = React.useRef((file?: File) => {
-		setFile(file);
-		props.onValueChange(props.name, file);
-	});
 
 	return (
 		<>
@@ -24,9 +20,9 @@ export default function ImagePanel(props: ImagePanelProps) {
 				? <PictureShowdown
 					name={props.name}
 					pictureData={file}
-					onDelete={onChosenFileChangedHandlerRef.current}
+					onDelete={onChosenFileChangedHandlerRef}
 				/>
-				: <UploadArea onFileUpload={onChosenFileChangedHandlerRef.current} />
+				: <UploadArea onFileUpload={onChosenFileChangedHandlerRef} />
 			}
 		</>
 	);
