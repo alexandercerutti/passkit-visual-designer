@@ -1,10 +1,10 @@
 import * as React from "react";
-import useRegistration, { RegistrableComponent } from "../useRegistration";
+import useRegistration, { RegistrableComponent } from "../../useRegistration";
 import { concatClassNames } from "../../../utils";
 import { ValueProps } from "./FieldValue";
 import { LabelProps } from "./FieldLabel";
-import useFallback from "../EmptyField/useFallback";
-import useClickEvent from "../useRegistration/useClickEvent";
+import useFallback from "../useFallback";
+import useClickEvent from "../useClickEvent";
 import { FieldKind } from "../../../../model";
 import "./style.less";
 

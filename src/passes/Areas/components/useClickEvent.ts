@@ -1,5 +1,5 @@
 import * as React from "react";
-import { onSelect } from ".";
+import { onSelect } from "../useRegistration";
 
 export default function useClickEvent(id: string, onClick: onSelect, element: React.ReactElement<any>) {
 	if (!(onClick && id)) {

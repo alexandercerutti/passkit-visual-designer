@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Field, FieldProps, FieldLabel, FieldValue } from "../components/Field";
 import "./style.less";
-import { RegistrableComponent } from "../components/useRegistration";
+import { RegistrableComponent } from "../useRegistration";
 
 interface RowProps extends RegistrableComponent {
 	maximumElementsAmount: number;
