@@ -97,7 +97,7 @@ class PassSelector extends React.PureComponent<SelectorProps> {
 		}) || null;
 
 		const AlternativesListComponent = (
-			alternativesList &&
+			alternativesList.length &&
 			<PassList requiresAttention onPassSelect={this.onAlternativeSelection}>
 				{alternativesList}
 			</PassList>
