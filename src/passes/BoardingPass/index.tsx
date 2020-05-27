@@ -7,40 +7,37 @@ import FieldsRow from "../Components/FieldRow";
 import Footer from "../Components/Footer";
 import ImageField from "../Components/ImageField";
 import Barcode from "../Components/Barcodes";
+import useAlternativesRegistration from "../PassCore/useAlternativesRegistration";
 
 export interface BoardingPassProps extends PassProps { }
 
 export function BoardingPass(props: BoardingPassProps) {
-	React.useEffect(() => {
-		if (props.registerAlternatives) {
-			props.registerAlternatives({
-				name: "Generic Boarding Pass",
-				specificProps: {
-					transitType: PKTransitType.Generic
-				}
-			}, {
-				name: "Air Boarding Pass",
-				specificProps: {
-					transitType: PKTransitType.Air
-				}
-			}, {
-				name: "Boat Boarding Pass",
-				specificProps: {
-					transitType: PKTransitType.Boat
-				}
-			}, {
-				name: "Bus Boarding Pass",
-				specificProps: {
-					transitType: PKTransitType.Bus
-				}
-			}, {
-				name: "Train Boarding Pass",
-				specificProps: {
-					transitType: PKTransitType.Train
-				}
-			});
+	useAlternativesRegistration(props.registerAlternatives, {
+		name: "Generic Boarding Pass",
+		specificProps: {
+			transitType: PKTransitType.Generic
 		}
-	}, []);
+	}, {
+		name: "Air Boarding Pass",
+		specificProps: {
+			transitType: PKTransitType.Air
+		}
+	}, {
+		name: "Boat Boarding Pass",
+		specificProps: {
+			transitType: PKTransitType.Boat
+		}
+	}, {
+		name: "Bus Boarding Pass",
+		specificProps: {
+			transitType: PKTransitType.Bus
+		}
+	}, {
+		name: "Train Boarding Pass",
+		specificProps: {
+			transitType: PKTransitType.Train
+		}
+	});
 
 	const { secondaryFields, primaryFields, headerFields, auxiliaryFields, barcode, transitType, logo, logoText } = props;
 

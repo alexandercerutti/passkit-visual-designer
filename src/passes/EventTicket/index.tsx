@@ -7,27 +7,24 @@ import StripPrimaryFields from "../Components/PrimaryFields/Strip";
 import Footer from "../Components/Footer";
 import Barcodes from "../Components/Barcodes";
 import { InteractionContext } from "../PassCore/interactionContext";
+import useAlternativesRegistration from "../PassCore/useAlternativesRegistration";
 
 export interface EventTicketProps extends PassProps { }
 
 type PrimaryFieldPropsKind = Parameters<(typeof StripPrimaryFields | typeof ThumbnailPrimaryField)>[0]
 
 export function EventTicket(props: EventTicketProps): JSX.Element {
-	React.useEffect(() => {
-		if (props.registerAlternatives) {
-			props.registerAlternatives({
-				name: "With background image",
-				specificProps: {
-					backgroundImage: null,
-				},
-			}, {
-				name: "With strip image",
-				specificProps: {
-					stripImage: null,
-				},
-			});
-		}
-	}, []);
+	useAlternativesRegistration(props.registerAlternatives, {
+		name: "With background image",
+		specificProps: {
+			backgroundImage: null,
+		},
+	}, {
+		name: "With strip image",
+		specificProps: {
+			stripImage: null,
+		},
+	});
 
 	const { secondaryFields, primaryFields, headerFields, auxiliaryFields, barcode, logoText, logo } = props;
 

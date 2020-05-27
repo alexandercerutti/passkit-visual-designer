@@ -5,18 +5,15 @@ import StripPrimaryFields from "../Components/PrimaryFields/Strip";
 import FieldsRow from "../Components/FieldRow";
 import Footer from "../Components/Footer";
 import Barcodes from "../Components/Barcodes";
+import useAlternativesRegistration from "../PassCore/useAlternativesRegistration";
 
 export interface StoreCardProps extends PassProps { }
 
 export function StoreCard(props: StoreCardProps): JSX.Element {
-	React.useEffect(() => {
-		if (props.registerAlternatives) {
-			props.registerAlternatives({
-				name: "StoreCard",
-				specificProps: {}
-			});
-		}
-	}, []);
+	useAlternativesRegistration(props.registerAlternatives, {
+		name: "StoreCard",
+		specificProps: {}
+	});
 
 	const { secondaryFields, primaryFields, headerFields, auxiliaryFields, barcode, logo, logoText } = props;
 

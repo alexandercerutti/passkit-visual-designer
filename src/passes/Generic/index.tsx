@@ -7,29 +7,26 @@ import Barcodes, { isSquareBarcode } from "../Components/Barcodes";
 import FieldsRow from "../Components/FieldRow";
 import Footer from "../Components/Footer";
 import { InteractionContext } from "../PassCore/interactionContext";
+import useAlternativesRegistration from "../PassCore/useAlternativesRegistration";
 
 export interface GenericProps extends PassProps { }
 
 export function Generic(props: GenericProps): JSX.Element {
-	React.useEffect(() => {
-		if (props.registerAlternatives) {
-			props.registerAlternatives({
-				name: "With rectangular barcode",
-				specificProps: {
-					barcode: {
-						format: PKBarcodeFormat.Rectangle
-					},
-				}
-			}, {
-				name: "With square barcode",
-				specificProps: {
-					barcode: {
-						format: PKBarcodeFormat.Square
-					}
-				}
-			});
+	useAlternativesRegistration(props.registerAlternatives, {
+		name: "With rectangular barcode",
+		specificProps: {
+			barcode: {
+				format: PKBarcodeFormat.Rectangle
+			},
 		}
-	}, []);
+	}, {
+		name: "With square barcode",
+		specificProps: {
+			barcode: {
+				format: PKBarcodeFormat.Square
+			}
+		}
+	});
 
 	const { secondaryFields, primaryFields, headerFields, auxiliaryFields, barcode, logoText, logo } = props;
 

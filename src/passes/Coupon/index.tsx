@@ -5,18 +5,15 @@ import StripPrimaryFields from "../Components/PrimaryFields/Strip";
 import FieldsRow from "../Components/FieldRow";
 import Barcode from "../Components/Barcodes";
 import Footer from "../Components/Footer";
+import useAlternativesRegistration from "../PassCore/useAlternativesRegistration";
 
 export interface CouponProps extends PassProps { }
 
 export function Coupon(props: CouponProps): JSX.Element {
-	React.useEffect(() => {
-		if (props.registerAlternatives) {
-			props.registerAlternatives({
-				name: "Coupon Pass",
-				specificProps: {}
-			});
-		}
-	}, []);
+	useAlternativesRegistration(props.registerAlternatives, {
+		name: "Coupon Pass",
+		specificProps: {}
+	});
 
 	const { secondaryFields, primaryFields, headerFields, auxiliaryFields, barcode, stripImage, logo, logoText } = props;
 
