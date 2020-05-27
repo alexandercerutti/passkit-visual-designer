@@ -41,11 +41,17 @@ export interface PassCoreProps extends PassProps, Partial<InteractionContext> {
 	kind: PassKind;
 }
 
-type AllPassesTypes = typeof BoardingPass | typeof StoreCard | typeof Coupon | typeof EventTicket | typeof Generic;
+const PassKindsMap = new Map<PassKind, React.FunctionComponent<PassProps>>([
+	[PassKind.BOARDING_PASS, BoardingPass],
+	[PassKind.COUPON, Coupon],
+	[PassKind.EVENT, EventTicket],
+	[PassKind.GENERIC, Generic],
+	[PassKind.STORE, StoreCard]
+]);
 
 export default function Pass(props: PassCoreProps) {
 	const { kind, ...newProps } = props;
-	const PassComponent = getPassKind(kind);
+	const PassComponent = PassKindsMap.get(kind);
 
 	return (
 		<div className={`pass ${kind.toLowerCase()}`}>
@@ -54,19 +60,4 @@ export default function Pass(props: PassCoreProps) {
 			</div>
 		</div>
 	);
-}
-
-function getPassKind(kind: PassKind): AllPassesTypes {
-	switch (kind) {
-		case PassKind.BOARDING_PASS:
-			return BoardingPass
-		case PassKind.COUPON:
-			return Coupon;
-		case PassKind.EVENT:
-			return EventTicket;
-		case PassKind.GENERIC:
-			return Generic;
-		case PassKind.STORE:
-			return StoreCard;
-	}
 }
