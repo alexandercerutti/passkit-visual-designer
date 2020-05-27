@@ -14,14 +14,14 @@ export interface NamedPassProps extends PassCoreProps {
 	name: string;
 }
 
-export default function NamedPass(props: React.PropsWithChildren<NamedPassProps>): JSX.Element {
-	const passProps = (({ name, ...otherProps }) => ({ ...otherProps }))(props);
+export default function NamedPass(props: NamedPassProps): JSX.Element {
+	const { name, ...passProps } = props;
 
 	return (
 		<>
 			<Pass {...passProps} />
 			<div className="name">
-				{props.name}
+				{name}
 			</div>
 		</>
 	);
