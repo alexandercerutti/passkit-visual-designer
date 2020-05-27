@@ -1,11 +1,11 @@
 import * as React from "react";
 import { PassProps, InteractionConsumer } from "../PassCore";
-import { PassHeader } from "../Components/Header";
-import ThumbnailPrimaryField from "../Components/PrimaryFields/Thumbnail";
-import FieldsRow from "../Components/FieldRow";
-import StripPrimaryFields from "../Components/PrimaryFields/Strip";
-import Footer from "../Components/Footer";
-import Barcodes from "../Components/Barcodes";
+import { PassHeader } from "../Areas/Header";
+import ThumbnailPrimaryField from "../Areas/PrimaryFields/Thumbnail";
+import FieldsRow from "../Areas/FieldRow";
+import StripPrimaryFields from "../Areas/PrimaryFields/Strip";
+import Footer from "../Areas/Footer";
+import Barcodes from "../Areas/components/Barcodes";
 import { InteractionContext } from "../PassCore/interactionContext";
 import useAlternativesRegistration from "../PassCore/useAlternativesRegistration";
 

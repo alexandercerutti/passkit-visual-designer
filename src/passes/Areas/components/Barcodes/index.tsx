@@ -1,12 +1,12 @@
 import * as React from "react";
-import { PKBarcodeFormat } from "../../constants";
+import { PKBarcodeFormat } from "../../../constants";
 import QRCode from "./qr-code";
 import Code128 from "./code128";
 import PDF417 from "./pdf417";
 import Aztec from "./aztec";
 import { EmptyBarcode, EmptySquareCode } from "./empty";
 import "./style.less";
-import { concatClassNames } from "../../utils";
+import { concatClassNames } from "../../../utils";
 
 export interface BarcodeProps {
 	format: PKBarcodeFormat;

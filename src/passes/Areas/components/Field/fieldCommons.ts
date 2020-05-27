@@ -1,4 +1,4 @@
-import { PKTextAlignment, PKDataDetectorType, PKDateStyle } from "../../constants";
+import { PKTextAlignment, PKDataDetectorType, PKDateStyle } from "../../../constants";
 import { FieldProps } from ".";
 
 export function composeLabelValueStylesFromProps(props: Partial<FieldProps>, origin: "label" | "value"): React.CSSProperties {

@@ -1,10 +1,10 @@
 import * as React from "react";
 import { PassProps, InteractionConsumer } from "../PassCore";
-import { PassHeader } from "../Components/Header";
-import StripPrimaryFields from "../Components/PrimaryFields/Strip";
-import FieldsRow from "../Components/FieldRow";
-import Footer from "../Components/Footer";
-import Barcodes from "../Components/Barcodes";
+import { PassHeader } from "../Areas/Header";
+import StripPrimaryFields from "../Areas/PrimaryFields/Strip";
+import FieldsRow from "../Areas/FieldRow";
+import Footer from "../Areas/Footer";
+import Barcodes from "../Areas/components/Barcodes";
 import useAlternativesRegistration from "../PassCore/useAlternativesRegistration";
 
 export interface StoreCardProps extends PassProps { }

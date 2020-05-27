@@ -1,7 +1,7 @@
 import * as React from "react";
 import useRegistration, { RegistrableComponent } from "../useRegistration";
-import { FieldKind } from "../../../model";
-import { concatClassNames } from "../../utils";
+import { FieldKind } from "../../../../model";
+import { concatClassNames } from "../../../utils";
 import useFallback from "../EmptyField/useFallback";
 
 export interface ImageFieldProps extends RegistrableComponent {

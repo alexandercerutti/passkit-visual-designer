@@ -7,7 +7,7 @@ import { EventTicket } from "../EventTicket";
 import { Generic } from "../Generic";
 import { StoreCard } from "../StoreCard";
 import { PassAlternative } from "../../PassSelector";
-import { FieldProps } from "../Components/Field";
+import { FieldProps } from "../Areas/components/Field";
 import { PKBarcodeFormat, PKTransitType } from "../constants";
 import { InteractionContext } from "./interactionContext";
 

@@ -1,8 +1,8 @@
 import * as React from "react";
 import "./style.less";
 import useRegistration, { RegistrableComponent } from "../useRegistration";
-import { FieldKind } from "../../../model";
-import { concatClassNames } from "../../utils";
+import { FieldKind } from "../../../../model";
+import { concatClassNames } from "../../../utils";
 import useFallback from "../EmptyField/useFallback";
 
 export interface TextFieldProps extends RegistrableComponent {

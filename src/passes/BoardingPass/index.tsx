@@ -1,12 +1,12 @@
 import * as React from "react";
 import { PassProps, InteractionConsumer } from "../PassCore";
-import { PassHeader } from "../Components/Header";
+import { PassHeader } from "../Areas/Header";
 import { PKTransitType } from "../constants";
-import PrimaryFields from "../Components/PrimaryFields/Travel";
-import FieldsRow from "../Components/FieldRow";
-import Footer from "../Components/Footer";
-import ImageField from "../Components/ImageField";
-import Barcode from "../Components/Barcodes";
+import PrimaryFields from "../Areas/PrimaryFields/Travel";
+import FieldsRow from "../Areas/FieldRow";
+import Footer from "../Areas/Footer";
+import ImageField from "../Areas/components/ImageField";
+import Barcode from "../Areas/components/Barcodes";
 import useAlternativesRegistration from "../PassCore/useAlternativesRegistration";
 
 export interface BoardingPassProps extends PassProps { }

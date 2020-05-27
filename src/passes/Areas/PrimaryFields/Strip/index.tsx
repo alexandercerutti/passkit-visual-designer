@@ -1,8 +1,8 @@
 import * as React from "react";
-import { getSafeFieldData } from "../../Field/getSafeFieldData";
-import ImageField from "../../ImageField";
+import { getSafeFieldData } from "../../components/Field/getSafeFieldData";
+import ImageField from "../../components/ImageField";
 import PrimaryFieldsProps from "../primaryFieldsProps";
-import { FieldValue, FieldLabel } from "../../Field";
+import { FieldValue, FieldLabel } from "../../components/Field";
 import "./style.less";
 
 interface PFStripProps extends PrimaryFieldsProps {

@@ -1,7 +1,7 @@
 import * as React from "react";
 import PrimaryFieldsProps from "../primaryFieldsProps";
-import { getSafeFieldData } from "../../Field/getSafeFieldData";
-import { GhostField, FieldLabel, FieldValue } from "../../Field";
+import { getSafeFieldData } from "../../components/Field/getSafeFieldData";
+import { GhostField, FieldLabel, FieldValue } from "../../components/Field";
 import { concatClassNames } from "../../../utils";
 import { PKTransitType } from "../../../constants";
 import { PKTransitIcon } from "./icons";

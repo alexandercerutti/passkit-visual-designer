@@ -1,5 +1,5 @@
 import * as React from "react";
-import { FieldKind } from "../../../model";
+import { FieldKind } from "../../../../model";
 
 export type onRegister = (kind: FieldKind, id: string) => boolean;
 export type onSelect = (id: string) => void;

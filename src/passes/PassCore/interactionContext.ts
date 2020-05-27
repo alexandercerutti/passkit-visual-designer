@@ -1,5 +1,5 @@
 import * as React from "react";
-import { onSelect, onRegister } from "../Components/useRegistration";
+import { onSelect, onRegister } from "../Areas/components/useRegistration";
 
 /**
  * Base pass context. This is used to pass to all the

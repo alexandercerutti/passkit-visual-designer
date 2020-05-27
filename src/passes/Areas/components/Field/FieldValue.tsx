@@ -1,5 +1,5 @@
 import * as React from "react";
-import { PKDateStyle } from "../../constants";
+import { PKDateStyle } from "../../../constants";
 import { composeLabelValueStylesFromProps, FieldProperties } from "./fieldCommons";
 
 export interface ValueProps extends FieldProperties {

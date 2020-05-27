@@ -1,11 +1,11 @@
 import * as React from "react";
 import { PassProps, InteractionConsumer } from "../PassCore";
-import { PassHeader } from "../Components/Header";
-import ThumbnailPrimaryField from "../Components/PrimaryFields/Thumbnail";
+import { PassHeader } from "../Areas/Header";
+import ThumbnailPrimaryField from "../Areas/PrimaryFields/Thumbnail";
 import { PKBarcodeFormat } from "../constants";
-import Barcodes, { isSquareBarcode } from "../Components/Barcodes";
-import FieldsRow from "../Components/FieldRow";
-import Footer from "../Components/Footer";
+import Barcodes, { isSquareBarcode } from "../Areas/components/Barcodes";
+import FieldsRow from "../Areas/FieldRow";
+import Footer from "../Areas/Footer";
 import { InteractionContext } from "../PassCore/interactionContext";
 import useAlternativesRegistration from "../PassCore/useAlternativesRegistration";
 

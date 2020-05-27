@@ -1,10 +1,10 @@
 import * as React from "react";
 import { PassProps, InteractionConsumer } from "../PassCore";
-import { PassHeader } from "../Components/Header";
-import StripPrimaryFields from "../Components/PrimaryFields/Strip";
-import FieldsRow from "../Components/FieldRow";
-import Barcode from "../Components/Barcodes";
-import Footer from "../Components/Footer";
+import { PassHeader } from "../Areas/Header";
+import StripPrimaryFields from "../Areas/PrimaryFields/Strip";
+import FieldsRow from "../Areas/FieldRow";
+import Barcode from "../Areas/components/Barcodes";
+import Footer from "../Areas/Footer";
 import useAlternativesRegistration from "../PassCore/useAlternativesRegistration";
 
 export interface CouponProps extends PassProps { }
