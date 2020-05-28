@@ -16,11 +16,10 @@ type PassListPropsWithChildren = React.PropsWithChildren<PassListProps>;
 export default function PassList(props: PassListPropsWithChildren): JSX.Element {
 	const selectionTray = React.useRef<HTMLDivElement>(null);
 
-	if (props.requiresAttention) {
-		React.useEffect(() =>
-			selectionTray.current?.scrollIntoView({ behavior: "smooth", block: "end" })
-		);
-	}
+	React.useEffect(() => void (
+		props.requiresAttention &&
+		selectionTray.current?.scrollIntoView({ behavior: "smooth", block: "end" })
+	));
 
 	const children = React.Children.map(props.children, (node: React.ReactElement<PassCoreProps>) => {
 		const isHighlighted = node.props.kind === props.selectedKind;
