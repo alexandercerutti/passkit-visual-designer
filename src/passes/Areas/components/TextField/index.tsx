@@ -1,19 +1,16 @@
 import * as React from "react";
 import "./style.less";
-import useRegistration, { RegistrableComponent } from "../../useRegistration";
-import { FieldKind } from "../../../../model";
+import { RegisteredComponent } from "../../useRegistrations";
 import { concatClassNames } from "../../../utils";
 import useFallback from "../useFallback";
 
-export interface TextFieldProps extends RegistrableComponent {
+export interface TextFieldProps extends Partial<RegisteredComponent> {
 	content?: string;
 	className?: string;
 }
 
 export default function TextField(props: TextFieldProps) {
-	const { id, register, content, className: sourceClassName } = props;
-
-	useRegistration(register, FieldKind.TEXT, id);
+	const { content, className: sourceClassName } = props;
 
 	return useFallback(() => {
 		const className = concatClassNames("text-field", sourceClassName);

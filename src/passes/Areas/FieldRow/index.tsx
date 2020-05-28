@@ -1,7 +1,8 @@
 import * as React from "react";
 import { Field, FieldProps, FieldLabel, FieldValue } from "../components/Field";
 import "./style.less";
-import { RegistrableComponent } from "../useRegistration";
+import { RegistrableComponent, useRegistrations } from "../useRegistrations";
+import { FieldKind } from "../../../model";
 
 interface RowProps extends RegistrableComponent {
 	maximumElementsAmount: number;
@@ -24,6 +25,10 @@ interface RowProps extends RegistrableComponent {
 export function InlineFieldsRow(props: RowProps) {
 	const { maximumElementsAmount = 0, onClick, register, id, elements = [] } = props;
 
+	useRegistrations(props.register, [
+		[FieldKind.FIELDS, id],
+	]);
+
 	const mappableElements = (
 		elements.length &&
 		props.elements.slice(0, maximumElementsAmount || elements.length)
@@ -37,7 +42,6 @@ export function InlineFieldsRow(props: RowProps) {
 				key={fieldID}
 				id={fieldID}
 				onClick={onClick}
-				register={register}
 				fieldKey={data.fieldKey}
 			>
 				<FieldLabel {...data} />

@@ -4,6 +4,11 @@ import { FieldKind } from "../../model";
 export type onRegister = (kind: FieldKind, id: string) => boolean;
 export type onSelect = (id: string) => void;
 
+export interface RegisteredComponent {
+	id: string;
+	onClick: onSelect;
+}
+
 export interface RegistrableComponent {
 	id: string;
 	register?: onRegister;
@@ -14,15 +19,23 @@ export interface RegistrableComponent {
 	onClick?: onSelect;
 }
 
-export default function useRegistration(registerFn: onRegister, kind: FieldKind, id: string) {
+export function useRegistrations(registerFn: onRegister, components: [FieldKind, string][]) {
 	const [registered, setRegistered] = React.useState(false);
+	const approvedComponents = [];
 
 	React.useEffect(() => {
 		/**
 		 * If no registration function is provided, we
 		 * act like it was approved
 		 */
-		if (!registerFn || registerFn(kind, id)) {
+
+		if (!registerFn) {
+			return setRegistered(true);
+		}
+
+		approvedComponents.push(...components.map(([kind, id]) => registerFn(kind, id)));
+
+		if (approvedComponents.some(Boolean)) {
 			return setRegistered(true);
 		}
 	}, []);

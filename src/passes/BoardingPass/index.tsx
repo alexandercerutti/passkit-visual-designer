@@ -143,7 +143,6 @@ export function BoardingPass(props: BoardingPassProps) {
 					<Footer>
 						<ImageField
 							onClick={onFieldSelect}
-							register={registerField}
 							id="footer"
 						/>
 						<Barcode

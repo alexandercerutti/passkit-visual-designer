@@ -1,11 +1,12 @@
 import * as React from "react";
 import "./style.less";
 import TextField from "../components/TextField";
-import { onRegister, RegistrableComponent } from "../useRegistration";
+import { onRegister, RegistrableComponent, useRegistrations } from "../useRegistrations";
 import ImageField from "../components/ImageField";
 import { FieldProps } from "../components/Field";
 import { InlineFieldsRow } from "../FieldRow";
 import { concatClassNames } from "../../utils";
+import { FieldKind } from "../../../model";
 
 interface HeaderProps extends Partial<RegistrableComponent> {
 	register?: onRegister;
@@ -16,6 +17,15 @@ interface HeaderProps extends Partial<RegistrableComponent> {
 }
 
 export function PassHeader(props: HeaderProps) {
+	/**
+	 * The Field row will register itself
+	 * with the ID we pass to it.
+	 */
+	useRegistrations(props.register, [
+		[FieldKind.IMAGE, "Logo"],
+		[FieldKind.TEXT, "logoText"]
+	]);
+
 	/**
 	 * Taking only the first three headers
 	 * as per Apple maximum number of header fields
@@ -36,7 +46,6 @@ export function PassHeader(props: HeaderProps) {
 		<div className={className}>
 			<ImageField
 				id="logo"
-				register={props.register}
 				// src={props.logo || "https://cdn.freebiesupply.com/logos/large/2x/trenitalia-logo-png-transparent.png"}
 				src={props.logo}
 				// width={"30px"}
@@ -46,7 +55,6 @@ export function PassHeader(props: HeaderProps) {
 				id="logoText"
 				className="logo-text"
 				content={props.logoText || ""}
-				register={props.register}
 				onClick={props.onClick}
 			/>
 			{headerFields}

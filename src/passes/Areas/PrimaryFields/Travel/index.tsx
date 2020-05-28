@@ -6,22 +6,29 @@ import { concatClassNames } from "../../../utils";
 import { PKTransitType } from "../../../constants";
 import { PKTransitIcon } from "./icons";
 import "./style.less";
+import { useRegistrations } from "../../useRegistrations";
+import { FieldKind } from "../../../../model";
 
 interface PFTravelProps extends PrimaryFieldsProps {
 	transitType: PKTransitType;
 }
 
 export default function PrimaryFields(props: PFTravelProps) {
-	const [from, to] = getSafeFieldData(props.fields, 2)
+	const { register, onClick, id: parentId, fields, transitType, className } = props;
+
+	useRegistrations(register, [
+		[FieldKind.FIELDS, "Primary Fields"]
+	]);
+
+	const [from, to] = getSafeFieldData(fields, 2)
 		.slice(0, 2)
 		.map((fieldData, index) => {
-			const id = `${props.id}.${index}`;
+			const id = `${parentId}.${index}`;
 
 			return (
 				<GhostField key={id}
 					{...fieldData}
-					register={props.register}
-					onClick={props.onClick}
+					onClick={onClick}
 					id={id}
 				>
 					<FieldLabel {...fieldData} />
@@ -30,10 +37,10 @@ export default function PrimaryFields(props: PFTravelProps) {
 			);
 		});
 
-	const TransitIcon = PKTransitIcon(props.transitType === undefined && PKTransitType.Generic || props.transitType);
+	const TransitIcon = PKTransitIcon(transitType === undefined && PKTransitType.Generic || transitType);
 
 	return (
-		<div className={concatClassNames("primary-container", props.className)}>
+		<div className={concatClassNames("primary-container", className)}>
 			{from}
 			<TransitIcon
 				width={30}

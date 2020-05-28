@@ -2,6 +2,9 @@ import * as React from "react";
 import "./style.less";
 
 export default <T extends Object>(props: React.PropsWithChildren<T>) => {
+
+	// @TODO: add useRegistration with props and highlight if
+	// an image is being passed in children
 	return (
 		<div className="footer">
 			{

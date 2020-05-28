@@ -1,4 +1,4 @@
-import { RegistrableComponent } from "../useRegistration";
+import { RegistrableComponent } from "../useRegistrations";
 import { FieldProps } from "../components/Field";
 
 export default interface PrimaryFieldsProps extends RegistrableComponent {

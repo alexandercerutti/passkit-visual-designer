@@ -1,10 +1,9 @@
 import * as React from "react";
-import useRegistration, { RegistrableComponent } from "../../useRegistration";
-import { FieldKind } from "../../../../model";
+import { RegisteredComponent } from "../../useRegistrations";
 import { concatClassNames } from "../../../utils";
 import useFallback from "../useFallback";
 
-export interface ImageFieldProps extends RegistrableComponent {
+export interface ImageFieldProps extends Partial<RegisteredComponent> {
 	className?: string;
 	width?: string;
 	height?: string;
@@ -12,9 +11,9 @@ export interface ImageFieldProps extends RegistrableComponent {
 }
 
 export default function ImageField(props: ImageFieldProps) {
-	const { src, width, height, className: sourceClassName, register, id } = props;
+	const { src, width, height, className: sourceClassName, id, onClick } = props;
 
-	useRegistration(register, FieldKind.IMAGE, id);
+	// @TODO add useClickEvent with id
 
 	return useFallback(() => {
 		const className = concatClassNames("image-field", sourceClassName);
