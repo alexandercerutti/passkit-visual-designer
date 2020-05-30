@@ -139,10 +139,7 @@ export function BoardingPass(props: BoardingPassProps) {
 						}
 						*/
 					/>
-					<Footer register={registerField}>
-						<ImageField
-						/*src={}*/
-						/>
+					<Footer allowFooterImage register={registerField}>
 						<Barcode
 							format={barcode?.format}
 							fallbackShape="rect"

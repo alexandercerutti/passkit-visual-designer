@@ -1,10 +1,30 @@
 import * as React from "react";
 import "./style.less";
+import { useRegistrations, RegistrableComponent } from "../useRegistrations";
+import { FieldKind } from "../../../model";
+import ImageField, { ImageFieldProps } from "../components/ImageField";
 
-export default <T extends Object>(props: React.PropsWithChildren<T>) => {
+interface FooterProps extends Pick<RegistrableComponent, "register">, ImageFieldProps {
+	allowFooterImage?: boolean;
+}
 
-	// @TODO: add useRegistration with props and highlight if
-	// an image is being passed in children
+export default function Footer(props: React.PropsWithChildren<FooterProps>) {
+	const { children = null } = props;
+	let footerImage: JSX.Element = null;
+
+	if (props.allowFooterImage) {
+		const [FooterClickHandler] = useRegistrations(props.register, [
+			[FieldKind.IMAGE, "Footer Image"]
+		]);
+
+		footerImage = (
+			<ImageField
+				src={props.src}
+				onClick={FooterClickHandler}
+			/>
+		);
+	}
+
 	return (
 		<div className="footer">
 			{
@@ -15,7 +35,8 @@ export default <T extends Object>(props: React.PropsWithChildren<T>) => {
 				 */
 			}
 			<div>
-				{props.children || null}
+				{footerImage}
+				{children}
 			</div>
 		</div>
 	);
