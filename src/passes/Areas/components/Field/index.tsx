@@ -16,7 +16,7 @@ export function Field(props: React.PropsWithChildren<Partial<FieldProps & Select
 	 * We don't want to pass the click event to children.
 	 * They will still accept it but only if used separately.
 	 */
-	const { onClick, className: sourceClassName, fieldKey, label, value, style, children } = props;
+	const { onClick, className: sourceClassName, fieldKey, label, value, style = {}, children } = props;
 
 	return useClickEvent(onClick,
 		useFallback(() => {
@@ -24,7 +24,7 @@ export function Field(props: React.PropsWithChildren<Partial<FieldProps & Select
 
 			return (
 				<div
-					style={style ?? {}}
+					style={style}
 					className={className}
 				>
 					{children}

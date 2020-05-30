@@ -5,7 +5,6 @@ import { PKTransitType } from "../constants";
 import PrimaryFields from "../Areas/PrimaryFields/Travel";
 import FieldsRow from "../Areas/FieldRow";
 import Footer from "../Areas/Footer";
-import ImageField from "../Areas/components/ImageField";
 import Barcode from "../Areas/components/Barcodes";
 import useAlternativesRegistration from "../PassCore/useAlternativesRegistration";
 
@@ -89,7 +88,7 @@ export function BoardingPass(props: BoardingPassProps) {
 
 					/>
 					<FieldsRow
-						maximumElementsAmount={-1}
+						maximumElementsAmount={5}
 						elements={auxiliaryFields}
 						onClick={onFieldSelect}
 						register={registerField}
@@ -114,7 +113,7 @@ export function BoardingPass(props: BoardingPassProps) {
 						*/
 					/>
 					<FieldsRow
-						maximumElementsAmount={-1}
+						maximumElementsAmount={4}
 						elements={secondaryFields}
 						onClick={onFieldSelect}
 						register={registerField}

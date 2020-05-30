@@ -19,7 +19,6 @@ export default function StripPrimaryFields(props: React.PropsWithChildren<PFStri
 	]);
 
 	const data = getSafeFieldData(fields, 1)
-		.slice(0, 1)
 		.map(field => {
 			return (
 				<GhostField

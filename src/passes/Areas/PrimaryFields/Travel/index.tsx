@@ -23,7 +23,6 @@ export default function PrimaryFields(props: PFTravelProps) {
 	]);
 
 	const [from, to] = getSafeFieldData(fields, 2)
-		.slice(0, 2)
 		.map((fieldData, index) => {
 			const id = `${parentId}.${index}`;
 

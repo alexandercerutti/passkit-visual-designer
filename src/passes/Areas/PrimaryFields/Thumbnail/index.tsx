@@ -21,7 +21,6 @@ export default function ThumbnailPrimaryField(props: React.PropsWithChildren<PFT
 	]);
 
 	const data = getSafeFieldData(fields, 1)
-		.slice(0, 1)
 		.map((fieldData, index) => {
 			const key = `${parentId}.${index}`;
 

@@ -10,6 +10,6 @@
 
 import { FieldProps } from ".";
 
-export function getSafeFieldData(data: FieldProps[], fallbackAmount: number) {
-	return (data?.length && data) ?? new Array<FieldProps>(fallbackAmount).fill({} as FieldProps);
+export function getSafeFieldData(data: FieldProps[], amount: number) {
+	return (data?.length && data.slice(0, amount)) ?? new Array<FieldProps>(amount).fill({} as FieldProps);
 }
