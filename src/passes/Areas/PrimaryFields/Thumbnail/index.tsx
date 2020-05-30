@@ -12,10 +12,11 @@ interface PFThumbnailProps extends PrimaryFieldsProps {
 }
 
 export default function ThumbnailPrimaryField(props: React.PropsWithChildren<PFThumbnailProps>) {
-	const { register, onClick, id: parentId, fields, thumbnailSrc, className } = props;
+	const { register, fields, thumbnailSrc, children } = props;
+	const parentId = "PrimaryFields";
 
-	useRegistrations(register, [
-		[FieldKind.FIELDS, "Primary Fields"],
+	const [primaryFieldsClickHandler, thumbnailClickHandler] = useRegistrations(register, [
+		[FieldKind.FIELDS, parentId],
 		[FieldKind.IMAGE, "Thumbnail"]
 	]);
 
@@ -23,8 +24,13 @@ export default function ThumbnailPrimaryField(props: React.PropsWithChildren<PFT
 		.slice(0, 1)
 		.map((fieldData, index) => {
 			const key = `${parentId}.${index}`;
+
 			return (
-				<Field {...fieldData} id={key} key={key}>
+				<Field
+					key={key}
+					onClick={primaryFieldsClickHandler}
+					{...fieldData}
+				>
 					<FieldLabel {...fieldData} />
 					<FieldValue {...fieldData} />
 				</Field>
@@ -35,14 +41,14 @@ export default function ThumbnailPrimaryField(props: React.PropsWithChildren<PFT
 		<div className="thumbnail-primaryFields">
 			<div className="left">
 				{data}
-				{props.children}
+				{children}
 			</div>
 			<div className="right">
 				<ImageField
-					id="thumbnail"
 					height="100%"
 					className="thumbnail"
-					src={props.thumbnailSrc}
+					src={thumbnailSrc}
+					onClick={thumbnailClickHandler}
 				/>
 			</div>
 		</div>

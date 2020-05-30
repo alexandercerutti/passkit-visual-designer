@@ -1,8 +1,8 @@
 import * as React from "react";
 import { FieldKind } from "../../model";
 
-export type onRegister = (kind: FieldKind, id: string) => boolean;
-export type onSelect = (id: string) => void;
+export type FieldSelectHandler = () => void;
+export type onRegister = (kind: FieldKind, id: string) => FieldSelectHandler;
 
 export interface RegisteredComponent {
 	id: string;
@@ -10,7 +10,6 @@ export interface RegisteredComponent {
 }
 
 export interface RegistrableComponent {
-	id: string;
 	register?: onRegister;
 
 	// This will be returned to the component
@@ -19,9 +18,8 @@ export interface RegistrableComponent {
 	onClick?: onSelect;
 }
 
-export function useRegistrations(registerFn: onRegister, components: [FieldKind, string][]) {
-	const [registered, setRegistered] = React.useState(false);
-	const approvedComponents = [];
+export function useRegistrations(registerFn: onRegister, components: [FieldKind, string][]): FieldSelectHandler[] {
+	const [handlers, setHandlers] = React.useState<FieldSelectHandler[]>([]);
 
 	React.useEffect(() => {
 		/**
@@ -30,15 +28,13 @@ export function useRegistrations(registerFn: onRegister, components: [FieldKind,
 		 */
 
 		if (!registerFn) {
-			return setRegistered(true);
+			return setHandlers([]);
 		}
 
-		approvedComponents.push(...components.map(([kind, id]) => registerFn(kind, id)));
-
-		if (approvedComponents.some(Boolean)) {
-			return setRegistered(true);
-		}
+		return setHandlers(
+			components.map(([kind, id]) => registerFn(kind, id))
+		);
 	}, []);
 
-	return registered;
+	return handlers;
 }

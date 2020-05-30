@@ -21,7 +21,7 @@ export function PassHeader(props: HeaderProps) {
 	 * The Field row will register itself
 	 * with the ID we pass to it.
 	 */
-	useRegistrations(props.register, [
+	const [logoClickHandler, logoTextClickHandler] = useRegistrations(props.register, [
 		[FieldKind.IMAGE, "Logo"],
 		[FieldKind.TEXT, "logoText"]
 	]);
@@ -45,17 +45,15 @@ export function PassHeader(props: HeaderProps) {
 	return (
 		<div className={className}>
 			<ImageField
-				id="logo"
 				// src={props.logo || "https://cdn.freebiesupply.com/logos/large/2x/trenitalia-logo-png-transparent.png"}
 				src={props.logo}
 				// width={"30px"}
-				onClick={props.onClick}
+				onClick={logoClickHandler}
 			/>
 			<TextField
-				id="logoText"
 				className="logo-text"
 				content={props.logoText || ""}
-				onClick={props.onClick}
+				onClick={logoTextClickHandler}
 			/>
 			{headerFields}
 		</div>

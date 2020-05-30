@@ -14,10 +14,12 @@ interface PFTravelProps extends PrimaryFieldsProps {
 }
 
 export default function PrimaryFields(props: PFTravelProps) {
-	const { register, onClick, id: parentId, fields, transitType, className } = props;
+	const { register, fields, transitType, className } = props;
+	const parentId = "PrimaryFields";
 
-	useRegistrations(register, [
-		[FieldKind.FIELDS, "Primary Fields"]
+	const primaryFieldsClickHandlers = useRegistrations(register, [
+		[FieldKind.FIELDS, `${parentId}.0`],
+		[FieldKind.FIELDS, `${parentId}.1`]
 	]);
 
 	const [from, to] = getSafeFieldData(fields, 2)
@@ -26,10 +28,10 @@ export default function PrimaryFields(props: PFTravelProps) {
 			const id = `${parentId}.${index}`;
 
 			return (
-				<GhostField key={id}
+				<GhostField
+					key={id}
+					onClick={primaryFieldsClickHandlers?.[index]}
 					{...fieldData}
-					onClick={onClick}
-					id={id}
 				>
 					<FieldLabel {...fieldData} />
 					<FieldValue {...fieldData} />

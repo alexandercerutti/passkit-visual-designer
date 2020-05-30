@@ -10,6 +10,7 @@ import { PassProps } from "../passes/PassCore";
 import { State } from "../store/state";
 import DefaultFields from "./staticFields";
 import { DataGroup } from "./OptionsMenu/PanelGroup";
+import { FieldSelectHandler } from "../passes/Areas/useRegistrations";
 
 interface ConfiguratorStore {
 	kind: PassKind;
@@ -45,12 +46,12 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 	 * @param id
 	 */
 
-	registerField(kind: FieldKind, name: string): boolean {
+	registerField(kind: FieldKind, name: string): FieldSelectHandler {
 		console.log("Received registration request for", kind, "+", name);
 
 		if (this.state.registeredFields.get(DataGroup.DATA).find(data => data.name === name)) {
 			console.log("...but failed due to duplicate already available");
-			return false;
+			return null;
 		}
 
 		this.setState(previous => {
@@ -68,7 +69,7 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 			};
 		});
 
-		return true;
+		return () => this.onFieldSelect(name);
 	}
 
 	/**

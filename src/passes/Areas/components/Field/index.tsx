@@ -16,9 +16,9 @@ export function Field(props: React.PropsWithChildren<Partial<FieldProps & Regist
 	 * We don't want to pass the click event to children.
 	 * They will still accept it but only if used separately.
 	 */
-	const { onClick, id, className: sourceClassName, fieldKey, label, value, style, children } = props;
+	const { onClick, className: sourceClassName, fieldKey, label, value, style, children } = props;
 
-	return useClickEvent(id, onClick,
+	return useClickEvent(onClick,
 		useFallback(() => {
 			const className = concatClassNames("field", sourceClassName, fieldKey && `field-${fieldKey}`);
 
@@ -42,10 +42,9 @@ export function Field(props: React.PropsWithChildren<Partial<FieldProps & Regist
  * fit in the grid.
  */
 
-export function GhostField(props: React.PropsWithChildren<Partial<FieldProps & RegisteredComponent>>) {
-	const { onClick, id, fieldKey, label, value, children } = props;
+	const { onClick, fieldKey, label, value, children } = props;
 
-	return useClickEvent(id, onClick,
+	return useClickEvent(onClick,
 		useFallback(() => {
 			return (
 				<>

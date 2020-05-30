@@ -77,7 +77,6 @@ export function EventTicket(props: EventTicketProps): JSX.Element {
 					fields={primaryFields}
 					onClick={onFieldSelect}
 					register={registerField}
-					id={"primaryFIelds"}
 				/>
 				{SecondaryFieldRow({ onFieldSelect, registerField })}
 			</>
@@ -98,7 +97,6 @@ export function EventTicket(props: EventTicketProps): JSX.Element {
 				fields={primaryFields}
 				onClick={onFieldSelect}
 				register={registerField}
-				id={"primaryFields"}
 			>
 				{SecondaryFieldRow({ onFieldSelect, registerField })}
 			</ThumbnailPrimaryField>

@@ -5,6 +5,7 @@ import { RegistrableComponent, useRegistrations } from "../useRegistrations";
 import { FieldKind } from "../../../model";
 
 interface RowProps extends RegistrableComponent {
+	id: string;
 	maximumElementsAmount: number;
 	elements: FieldProps[];
 }
@@ -23,11 +24,14 @@ interface RowProps extends RegistrableComponent {
  */
 
 export function InlineFieldsRow(props: RowProps) {
-	const { maximumElementsAmount = 0, onClick, register, id, elements = [] } = props;
+	const { maximumElementsAmount = 0, register, id, elements = [] } = props;
+	const elementsClickHandlersIdentifiers = (
+		elements.length &&
+		elements.map<[FieldKind, string]>((_, index) => [FieldKind.FIELDS, `${id}.${index}`]) ||
+		[[FieldKind.FIELDS, `${id}.0`]] // for empty field placeholder
+	);
 
-	useRegistrations(props.register, [
-		[FieldKind.FIELDS, id],
-	]);
+	const fieldsClickHandlers = useRegistrations(register, elementsClickHandlersIdentifiers);
 
 	const mappableElements = (
 		elements.length &&
@@ -40,8 +44,7 @@ export function InlineFieldsRow(props: RowProps) {
 		return (
 			<Field
 				key={fieldID}
-				id={fieldID}
-				onClick={onClick}
+				onClick={fieldsClickHandlers?.[index]}
 				fieldKey={data.fieldKey}
 			>
 				<FieldLabel {...data} />

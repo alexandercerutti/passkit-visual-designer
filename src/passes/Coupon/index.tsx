@@ -33,7 +33,6 @@ export function Coupon(props: CouponProps): JSX.Element {
 						fields={primaryFields}
 						onClick={onFieldSelect}
 						register={registerField}
-						id={"primaryFields"}
 					/>
 					{/*
 						{
