@@ -2,6 +2,7 @@ import * as React from "react";
 import { SelectableComponent } from "../../useRegistrations";
 import { concatClassNames } from "../../../utils";
 import useFallback from "../useFallback";
+import useClickEvent from "../useClickEvent";
 
 export interface ImageFieldProps extends Partial<SelectableComponent> {
 	className?: string;
@@ -13,7 +14,7 @@ export interface ImageFieldProps extends Partial<SelectableComponent> {
 export default function ImageField(props: ImageFieldProps) {
 	const { src, width, height, className: sourceClassName, onClick } = props;
 
-	return useFallback(() => {
+	return useClickEvent(onClick, useFallback(() => {
 		const className = concatClassNames("image-field", sourceClassName);
 
 		return (
@@ -21,5 +22,5 @@ export default function ImageField(props: ImageFieldProps) {
 				<img {...{ src, width, height }} />
 			</div>
 		);
-	}, [src]);
+	}, [src]));
 }

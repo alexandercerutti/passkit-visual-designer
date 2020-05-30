@@ -1,5 +1,5 @@
 import * as React from "react";
-import { RegisteredComponent } from "../../useRegistrations";
+import { SelectableComponent } from "../../useRegistrations";
 import { concatClassNames } from "../../../utils";
 import { ValueProps } from "./FieldValue";
 import { LabelProps } from "./FieldLabel";
@@ -11,7 +11,7 @@ export { default as FieldLabel } from "./FieldLabel";
 export { default as FieldValue } from "./FieldValue";
 export type FieldProps = ValueProps & LabelProps;
 
-export function Field(props: React.PropsWithChildren<Partial<FieldProps & RegisteredComponent>>) {
+export function Field(props: React.PropsWithChildren<Partial<FieldProps & SelectableComponent>>) {
 	/**
 	 * We don't want to pass the click event to children.
 	 * They will still accept it but only if used separately.
@@ -42,6 +42,7 @@ export function Field(props: React.PropsWithChildren<Partial<FieldProps & Regist
  * fit in the grid.
  */
 
+export function GhostField(props: React.PropsWithChildren<Partial<FieldProps & SelectableComponent>>) {
 	const { onClick, fieldKey, label, value, children } = props;
 
 	return useClickEvent(onClick,

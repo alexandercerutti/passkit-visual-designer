@@ -3,10 +3,10 @@ import { FieldKind } from "../../model";
 
 export type FieldSelectHandler = () => void;
 export type onRegister = (kind: FieldKind, id: string) => FieldSelectHandler;
+export type onComponentSelection = (id: string) => void;
 
-export interface RegisteredComponent {
-	id: string;
-	onClick: onSelect;
+export interface SelectableComponent {
+	onClick: FieldSelectHandler;
 }
 
 export interface RegistrableComponent {
@@ -15,7 +15,7 @@ export interface RegistrableComponent {
 	// This will be returned to the component
 	// and will be a function that will call onSelect.
 	// This can be used in the "pure functional components"
-	onClick?: onSelect;
+	onClick?: onComponentSelection;
 }
 
 export function useRegistrations(registerFn: onRegister, components: [FieldKind, string][]): FieldSelectHandler[] {

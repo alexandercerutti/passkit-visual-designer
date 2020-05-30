@@ -1,18 +1,19 @@
 import * as React from "react";
 import "./style.less";
-import { RegisteredComponent } from "../../useRegistrations";
+import { SelectableComponent } from "../../useRegistrations";
 import { concatClassNames } from "../../../utils";
 import useFallback from "../useFallback";
+import useClickEvent from "../useClickEvent";
 
-export interface TextFieldProps extends Partial<RegisteredComponent> {
+export interface TextFieldProps extends Partial<SelectableComponent> {
 	content?: string;
 	className?: string;
 }
 
 export default function TextField(props: TextFieldProps) {
-	const { content, className: sourceClassName } = props;
+	const { content, className: sourceClassName, onClick } = props;
 
-	return useFallback(() => {
+	return useClickEvent(onClick, useFallback(() => {
 		const className = concatClassNames("text-field", sourceClassName);
 
 		return (
@@ -20,5 +21,5 @@ export default function TextField(props: TextFieldProps) {
 				{content}
 			</div>
 		);
-	}, [content]);
+	}, [content]));
 }

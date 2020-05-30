@@ -1,13 +1,10 @@
 import * as React from "react";
-import { onSelect } from "../useRegistrations";
+import { FieldSelectHandler } from "../useRegistrations";
 
-export default function useClickEvent(id: string, onClick: onSelect, element: React.ReactElement<any>) {
-	if (!(onClick && id)) {
-		console.warn("DEV: Supposed click event usage but no onClick or id received. ID:", id, "; onClick:", onClick);
+export default function useClickEvent(onClick: FieldSelectHandler, element: React.ReactElement<any>) {
+	if (!onClick) {
 		return element;
 	}
 
-	return React.cloneElement(element, {
-		onClick: (e: React.MouseEvent) => onClick(id)
-	});
+	return React.cloneElement(element, { onClick });
 }

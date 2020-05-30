@@ -1,5 +1,5 @@
 import * as React from "react";
-import { onSelect, onRegister } from "../Areas/useRegistrations";
+import { onComponentSelection, onRegister } from "../Areas/useRegistrations";
 
 /**
  * Base pass context. This is used to pass to all the
@@ -7,7 +7,7 @@ import { onSelect, onRegister } from "../Areas/useRegistrations";
  */
 
 export interface InteractionContext {
-	onFieldSelect?: onSelect;
+	onFieldSelect?: onComponentSelection;
 	registerField?: onRegister;
 }
 
