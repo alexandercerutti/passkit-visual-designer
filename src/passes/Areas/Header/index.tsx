@@ -22,7 +22,7 @@ export function PassHeader(props: HeaderProps) {
 	 * with the ID we pass to it.
 	 */
 	const [logoClickHandler, logoTextClickHandler] = useRegistrations(props.register, [
-		[FieldKind.IMAGE, "Logo"],
+		[FieldKind.IMAGE, "logo"],
 		[FieldKind.TEXT, "logoText"]
 	]);
 
@@ -36,7 +36,6 @@ export function PassHeader(props: HeaderProps) {
 			maximumElementsAmount={3}
 			id="headerFields"
 			register={props.register}
-			onClick={props.onClick}
 		/>
 	);
 
@@ -48,12 +47,12 @@ export function PassHeader(props: HeaderProps) {
 				// src={props.logo || "https://cdn.freebiesupply.com/logos/large/2x/trenitalia-logo-png-transparent.png"}
 				src={props.logo}
 				// width={"30px"}
-				onClick={logoClickHandler}
+				onClick={() => logoClickHandler(null)}
 			/>
 			<TextField
 				className="logo-text"
 				content={props.logoText || ""}
-				onClick={logoTextClickHandler}
+				onClick={() => logoTextClickHandler(null)}
 			/>
 			{headerFields}
 		</div>

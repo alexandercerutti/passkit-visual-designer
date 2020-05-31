@@ -1,9 +1,9 @@
 import * as React from "react";
 import { FieldKind } from "../../model";
 
-export type FieldSelectHandler = () => void;
+export type FieldSelectHandler = (fieldIdentifier: string | null) => void;
 export type onRegister = (kind: FieldKind, id: string) => FieldSelectHandler;
-export type onComponentSelection = (id: string) => void;
+export type onComponentSelection = (id: string, key: string | null) => void;
 
 export interface SelectableComponent {
 	onClick: FieldSelectHandler;
@@ -18,7 +18,9 @@ export interface RegistrableComponent {
 	onClick?: onComponentSelection;
 }
 
-export function useRegistrations(registerFn: onRegister, components: [FieldKind, string][]): FieldSelectHandler[] {
+type RegistrationDescriptor = [FieldKind, string];
+
+export function useRegistrations(registerFn: onRegister, components: RegistrationDescriptor[]): FieldSelectHandler[] {
 	const [handlers, setHandlers] = React.useState<FieldSelectHandler[]>([]);
 
 	React.useEffect(() => {

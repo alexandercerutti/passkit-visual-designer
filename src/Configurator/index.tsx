@@ -46,10 +46,10 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 	 * @param id
 	 */
 
-	registerField(kind: FieldKind, name: string): FieldSelectHandler {
-		console.log("Received registration request for", kind, "+", name);
+	registerField(kind: FieldKind, groupName: string): FieldSelectHandler {
+		console.log("Received registration request for", kind, "+", groupName);
 
-		if (this.state.registeredFields.get(DataGroup.DATA).find(data => data.name === name)) {
+		if (this.state.registeredFields.get(DataGroup.DATA).find(data => data.name === groupName)) {
 			console.log("...but failed due to duplicate already available");
 			return null;
 		}
@@ -65,11 +65,11 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 			}
 
 			return {
-				registeredFields: updatedFields.set(fieldDataGroup, [...updatedFields.get(fieldDataGroup), { name, kind }])
+				registeredFields: updatedFields.set(fieldDataGroup, [...updatedFields.get(fieldDataGroup), { name: groupName, kind }])
 			};
 		});
 
-		return () => this.onFieldSelect(name);
+		return (key: string) => this.onFieldSelect(groupName, key);
 	}
 
 	/**
@@ -77,9 +77,10 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 	 * to highlight the linked field
 	 */
 
-	onFieldSelect(id: string): void {
+	onFieldSelect(id: string, key: string | null): void {
+		// @TODO: Resolve key in id
 		this.setState({ selectedFieldId: id });
-		console.log(id, "selected");
+		console.log(id, "selected, with key", key);
 	}
 
 	/**

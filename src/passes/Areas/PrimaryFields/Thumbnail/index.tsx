@@ -27,7 +27,7 @@ export default function ThumbnailPrimaryField(props: React.PropsWithChildren<PFT
 			return (
 				<Field
 					key={key}
-					onClick={primaryFieldsClickHandler}
+					onClick={() => primaryFieldsClickHandler(fieldData?.fieldKey ?? null)}
 					{...fieldData}
 				>
 					<FieldLabel {...fieldData} />

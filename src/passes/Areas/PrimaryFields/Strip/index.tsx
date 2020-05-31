@@ -14,8 +14,8 @@ interface PFStripProps extends PrimaryFieldsProps {
 export default function StripPrimaryFields(props: React.PropsWithChildren<PFStripProps>): JSX.Element {
 	const { register, fields, stripSrc } = props;
 	const [primaryFieldsClickHandler, stripImageClickHandler] = useRegistrations(register, [
-		[FieldKind.FIELDS, "Primary Fields"],
-		[FieldKind.IMAGE, "Strip Image"]
+		[FieldKind.FIELDS, "PrimaryField"],
+		[FieldKind.IMAGE, "Strip"]
 	]);
 
 	const data = getSafeFieldData(fields, 1)

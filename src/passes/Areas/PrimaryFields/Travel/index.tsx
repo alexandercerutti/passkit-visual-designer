@@ -17,9 +17,8 @@ export default function PrimaryFields(props: PFTravelProps) {
 	const { register, fields, transitType, className } = props;
 	const parentId = "PrimaryFields";
 
-	const primaryFieldsClickHandlers = useRegistrations(register, [
-		[FieldKind.FIELDS, `${parentId}.0`],
-		[FieldKind.FIELDS, `${parentId}.1`]
+	const [primaryFieldsClickHandler] = useRegistrations(register, [
+		[FieldKind.FIELDS, parentId]
 	]);
 
 	const [from, to] = getSafeFieldData(fields, 2)
@@ -29,7 +28,7 @@ export default function PrimaryFields(props: PFTravelProps) {
 			return (
 				<GhostField
 					key={id}
-					onClick={primaryFieldsClickHandlers?.[index]}
+					onClick={() => primaryFieldsClickHandler(fieldData?.fieldKey ?? null)}
 					{...fieldData}
 				>
 					<FieldLabel {...fieldData} />

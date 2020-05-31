@@ -13,14 +13,14 @@ export default function Footer(props: React.PropsWithChildren<FooterProps>) {
 	let footerImage: JSX.Element = null;
 
 	if (props.allowFooterImage) {
-		const [FooterClickHandler] = useRegistrations(props.register, [
+		const [footerClickHandler] = useRegistrations(props.register, [
 			[FieldKind.IMAGE, "Footer Image"]
 		]);
 
 		footerImage = (
 			<ImageField
 				src={props.src}
-				onClick={FooterClickHandler}
+				onClick={() => footerClickHandler(null)}
 			/>
 		);
 	}

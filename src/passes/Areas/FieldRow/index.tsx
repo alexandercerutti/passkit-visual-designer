@@ -25,13 +25,10 @@ interface RowProps extends RegistrableComponent {
 
 export function InlineFieldsRow(props: RowProps) {
 	const { maximumElementsAmount = 0, register, id, elements = [] } = props;
-	const elementsClickHandlersIdentifiers = (
-		elements.length &&
-		elements.map<[FieldKind, string]>((_, index) => [FieldKind.FIELDS, `${id}.${index}`]) ||
-		[[FieldKind.FIELDS, `${id}.0`]] // for empty field placeholder
-	);
 
-	const fieldsClickHandlers = useRegistrations(register, elementsClickHandlersIdentifiers);
+	const [fieldsClickHandler] = useRegistrations(register, [
+		[FieldKind.FIELDS, id]
+	]);
 
 	const mappableElements = (
 		elements.length &&
@@ -44,7 +41,7 @@ export function InlineFieldsRow(props: RowProps) {
 		return (
 			<Field
 				key={fieldID}
-				onClick={fieldsClickHandlers?.[index]}
+				onClick={() => fieldsClickHandler(data?.fieldKey ?? null)}
 				fieldKey={data.fieldKey}
 			>
 				<FieldLabel {...data} />
