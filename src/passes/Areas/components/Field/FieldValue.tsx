@@ -11,9 +11,7 @@ type ValueProps = FieldProperties<FieldTypes.VALUE> & Partial<SelectableComponen
 
 export default function PureFieldValue(props: ValueProps) {
 	const style = composeLabelValueStylesFromProps(props, "label");
-
 	const parsedValue = getValueFromProps(props);
-	console.log("PureFieldValue ", props)
 
 	return (
 		<span
