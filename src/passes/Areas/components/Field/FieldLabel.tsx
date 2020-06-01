@@ -4,7 +4,7 @@ import { SelectableComponent } from "../../useRegistrations";
 
 type LabelProps = FieldProperties<FieldTypes.LABEL> & Partial<SelectableComponent<never>>;
 
-export default function PureFieldLabel(props: LabelProps) {
+export default function FieldLabel(props: LabelProps) {
 	const style = composeLabelValueStylesFromProps(props, "label");
 
 	return (

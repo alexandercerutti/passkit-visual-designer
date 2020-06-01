@@ -9,7 +9,7 @@ type ValueProps = FieldProperties<FieldTypes.VALUE> & Partial<SelectableComponen
  * @TODO use svg text to allow it to resize manually
  */
 
-export default function PureFieldValue(props: ValueProps) {
+export default function FieldValue(props: ValueProps) {
 	const style = composeLabelValueStylesFromProps(props, "label");
 	const parsedValue = getValueFromProps(props);
 
