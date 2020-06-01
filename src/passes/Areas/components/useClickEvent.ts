@@ -6,5 +6,14 @@ export default function useClickEvent(onClick: FieldSelectHandler, element: Reac
 		return element;
 	}
 
+	if (element.type === React.Fragment) {
+		// Mapping the fragment props on children
+		const children = React.Children.map(element.props.children, (node) =>
+			React.cloneElement(node, { onClick })
+		);
+
+		return React.cloneElement(element, {}, children);
+	}
+
 	return React.cloneElement(element, { onClick });
 }

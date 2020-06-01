@@ -1,15 +1,16 @@
 import * as React from "react";
 import { SelectableComponent } from "../../useRegistrations";
 import { concatClassNames } from "../../../utils";
-import { ValueProps } from "./FieldValue";
-import { LabelProps } from "./FieldLabel";
 import useFallback from "../useFallback";
 import useClickEvent from "../useClickEvent";
 import "./style.less";
+import { FieldProperties } from "./fieldCommons";
 
 export { default as FieldLabel } from "./FieldLabel";
 export { default as FieldValue } from "./FieldValue";
-export type FieldProps = ValueProps & LabelProps;
+
+// Omitting onClick because we need it only if we are using FieldLabel and FieldValue without a container
+export type FieldProps = Omit<FieldProperties, "onClick">;
 
 export function Field(props: React.PropsWithChildren<Partial<FieldProps & SelectableComponent>>) {
 	/**

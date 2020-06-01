@@ -12,7 +12,23 @@ export function composeLabelValueStylesFromProps(props: Partial<FieldProps>, ori
 	}
 }
 
-export interface FieldProperties {
+type LabelSpecificProps = {
+	labelColor?: string;
+	label?: string;
+};
+
+type ValueSpecificProps = {
+	value: any;
+	textColor?: string;
+}
+
+export const enum FieldTypes {
+	LABEL,
+	VALUE,
+	BOTH
+}
+
+export type FieldProperties<T extends FieldTypes = FieldTypes.BOTH> = {
 	className?: string;
 	style?: React.CSSProperties;
 	fieldKey: string;
@@ -23,4 +39,8 @@ export interface FieldProperties {
 	changeMessage?: string; // check for @s
 	dateStyle?: PKDateStyle;
 	timeStyle?: PKDateStyle;
-}
+} & (
+		T extends FieldTypes.LABEL ? LabelSpecificProps :
+		T extends FieldTypes.VALUE ? ValueSpecificProps :
+		T extends FieldTypes.BOTH ? LabelSpecificProps & ValueSpecificProps : never
+	);

@@ -1,10 +1,8 @@
 import * as React from "react";
-import { composeLabelValueStylesFromProps, FieldProperties } from "./fieldCommons";
+import { composeLabelValueStylesFromProps, FieldProperties, FieldTypes } from "./fieldCommons";
+import { SelectableComponent } from "../../useRegistrations";
 
-export interface LabelProps extends FieldProperties {
-	labelColor?: string;
-	label?: string;
-}
+type LabelProps = FieldProperties<FieldTypes.LABEL> & Partial<SelectableComponent<never>>;
 
 export default function PureFieldLabel(props: LabelProps) {
 	const style = composeLabelValueStylesFromProps(props, "label");
@@ -13,6 +11,7 @@ export default function PureFieldLabel(props: LabelProps) {
 		<span
 			className="label"
 			style={style}
+			onClick={props.onClick ?? null}
 		>
 			{props.label || ""}
 		</span>

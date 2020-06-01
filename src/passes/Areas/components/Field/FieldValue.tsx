@@ -1,11 +1,9 @@
 import * as React from "react";
 import { PKDateStyle } from "../../../constants";
-import { composeLabelValueStylesFromProps, FieldProperties } from "./fieldCommons";
+import { composeLabelValueStylesFromProps, FieldProperties, FieldTypes } from "./fieldCommons";
+import { SelectableComponent } from "../../useRegistrations";
 
-export interface ValueProps extends FieldProperties {
-	value: any;
-	textColor?: string;
-}
+type ValueProps = FieldProperties<FieldTypes.VALUE> & Partial<SelectableComponent<never>>;
 
 /**
  * @TODO use svg text to allow it to resize manually
@@ -15,11 +13,13 @@ export default function PureFieldValue(props: ValueProps) {
 	const style = composeLabelValueStylesFromProps(props, "label");
 
 	const parsedValue = getValueFromProps(props);
+	console.log("PureFieldValue ", props)
 
 	return (
 		<span
 			className="value"
 			style={style}
+			onClick={props.onClick}
 		>
 			{parsedValue}
 		</span>

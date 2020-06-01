@@ -1,12 +1,15 @@
 import * as React from "react";
 import { FieldKind } from "../../model";
 
-export type FieldSelectHandler = (fieldIdentifier: string | null) => void;
+// I actually not really understood how does conditional distributed types work...
+// But what I wanted to achieve is to obtain a "forced" no-parameter function
+// If a SelectableComponent does not return
+export type FieldSelectHandler<P = any> = [P] extends [never] ? () => void : (fieldIdentifier: string | null) => void;
 export type onRegister = (kind: FieldKind, id: string) => FieldSelectHandler;
 export type onComponentSelection = (id: string, key: string | null) => void;
 
-export interface SelectableComponent {
-	onClick: FieldSelectHandler;
+export interface SelectableComponent<P = any> {
+	onClick: FieldSelectHandler<P>;
 }
 
 export interface RegistrableComponent {
