@@ -37,12 +37,11 @@ export default function PrimaryFields(props: PFTravelProps) {
 			);
 		});
 
-	const TransitIcon = PKTransitIcon(transitType === undefined && PKTransitType.Generic || transitType);
-
 	return (
 		<div className={concatClassNames("primary-container", className)}>
 			{from}
-			<TransitIcon
+			<PKTransitIcon
+				type={transitType === undefined && PKTransitType.Generic || transitType}
 				width={30}
 				height={30}
 				fill={"#d2d2d2"} // @TODO set label color
