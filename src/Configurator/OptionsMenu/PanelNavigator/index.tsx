@@ -23,6 +23,7 @@ export default class PanelNavigator extends React.Component<NavigatorProps, Navi
 		};
 
 		this.requestPageCreation = this.requestPageCreation.bind(this);
+		this.requestPageClosing = this.requestPageClosing.bind(this);
 		this.selectOpenPanel = this.selectOpenPanel.bind(this);
 		this.saveChanges = this.saveChanges.bind(this);
 	}
@@ -31,6 +32,19 @@ export default class PanelNavigator extends React.Component<NavigatorProps, Navi
 		this.setState((previousState) => {
 			const pagePanelsHierarchy = previousState.pagePanelsHierarchy;
 			pagePanelsHierarchy.push(children);
+			return { pagePanelsHierarchy };
+		});
+	}
+
+	/**
+	 * Removes the last page in the hierarchy
+	 * with a MacOS-like fullscreen app closing
+	 */
+
+	requestPageClosing() {
+		this.setState(previousState => {
+			const pagePanelsHierarchy = previousState.pagePanelsHierarchy;
+			pagePanelsHierarchy.pop();
 			return { pagePanelsHierarchy };
 		});
 	}
@@ -71,6 +85,7 @@ export default class PanelNavigator extends React.Component<NavigatorProps, Navi
 								data={otherData}
 								key={name}
 								requestPageCreation={this.requestPageCreation}
+								requestPageClosing={this.requestPageClosing}
 								onValueChange={this.saveChanges}
 							/>
 						);
