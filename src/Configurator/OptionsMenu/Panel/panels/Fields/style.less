@@ -27,3 +27,86 @@
 		}
 	}
 }
+
+/** Page styles for this panel **/
+
+.panel-navigator > .page > .fields-page {
+	padding: 5px;
+	display: flex;
+	flex-direction: column;
+	flex-grow: 1;
+	color: #e6e6e6;
+	opacity: 0.3;
+	transform: scale(0.95);
+	animation: appear .5s ease-in-out .1s forwards;
+
+	& header {
+		display: flex;
+		flex-shrink: 0;
+		flex-grow: 0;
+		height: 50px;
+		padding-left: 5px;
+		align-items: center;
+		border-bottom: 1px solid rgb(47, 47, 47);
+		margin-bottom: 10px;
+
+		& .back {
+			display: flex;
+			align-items: center;
+			flex-grow: 1;
+			cursor: pointer;
+
+			& svg {
+				width: 22px;
+				transform: rotate(180deg);
+				fill: #e6e6e6;
+				margin-right: 5px;
+			}
+		}
+
+		& h4 {
+			flex-grow: 2;
+			font-weight: inherit;
+			margin: 0;
+		}
+	}
+
+	& .fields {
+		display: flex;
+		flex-grow: 1;
+		flex-direction: column;
+
+		& .placeholder {
+			display: flex;
+			flex-direction: column;
+			flex-grow: 1;
+			align-items: center;
+			justify-content: center;
+
+			& p {
+				font-size: 13px;
+				// text-align: center;
+				margin: 0;
+				// Yeah, gray as f**k :D
+				color: #afafaf;
+
+				&.icon {
+					font-size: 30pt;
+					margin-bottom: 10px;
+				}
+			}
+		}
+	}
+}
+
+@keyframes appear {
+	from {
+		transform: scale(0.95);
+		opacity: 0.3;
+	}
+
+	to {
+		transform: scale(1);
+		opacity: 1;
+	}
+}
