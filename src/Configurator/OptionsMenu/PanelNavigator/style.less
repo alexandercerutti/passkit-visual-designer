@@ -1,11 +1,14 @@
 .panel-navigator {
 	width: 100%;
 	height: 100%;
+	transition: transform .5s ease-in-out;
+	display: flex;
 
 	& > .page {
 		width: 100%;
 		height: 100%;
 		display: flex;
 		flex-direction: column;
+		flex-shrink: 0;
 	}
 }

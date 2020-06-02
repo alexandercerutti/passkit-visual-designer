@@ -46,9 +46,9 @@ export default class PanelNavigator extends React.Component<NavigatorProps, Navi
 	}
 
 	render() {
-		const pages = this.state.pagePanelsHierarchy.map(page => {
+		const pages = this.state.pagePanelsHierarchy.map((page, index) => {
 			return (
-				<div className="page">
+				<div className="page" key={`panel-depth${index}`}>
 					{page}
 				</div>
 			);
@@ -80,8 +80,8 @@ export default class PanelNavigator extends React.Component<NavigatorProps, Navi
 		});
 
 		return (
-			<div className="panel-navigator">
-				<div className="page">
+			<div className="panel-navigator" style={{ transform: `translate(-${this.state.pagePanelsHierarchy.length * 100}%)` }}>
+				<div className="page" key="mainPanel">
 					{groups}
 				</div>
 				{pages}
