@@ -1,6 +1,7 @@
 import * as React from "react";
 import { PanelProps } from "../..";
 import useContentSavingHandler from "../useContentSavingHandler";
+import FieldTitle from "../FieldTitle";
 import "./style.less";
 
 interface TextPanelProps extends PanelProps {
@@ -14,8 +15,6 @@ export default function TextPanel(props: TextPanelProps) {
 		key === "Enter" && currentTarget.blur();
 	});
 
-	const showTitle = props.name.replace(/([a-z])([A-Z])/g, "$1 $2");
-
 	const required = (
 		props.data.required &&
 		<span className="required" />
@@ -24,7 +23,7 @@ export default function TextPanel(props: TextPanelProps) {
 	return (
 		<>
 			<label htmlFor={props.name}>
-				<h4>{showTitle}</h4>
+				<FieldTitle name={props.name} />
 				{required}
 			</label>
 			<input

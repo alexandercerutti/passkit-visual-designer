@@ -2,6 +2,7 @@ import * as React from "react";
 import { TwitterPicker, RGBColor, ColorResult } from "react-color";
 import { PanelProps } from "../..";
 import useContentSavingHandler from "../useContentSavingHandler";
+import FieldTitle from "../FieldTitle";
 import "./style.less";
 
 interface ColorPanelProps extends PanelProps {
@@ -10,7 +11,6 @@ interface ColorPanelProps extends PanelProps {
 
 export default function ColorPanel(props: ColorPanelProps) {
 	const [color, onContentChangeHandler] = useContentSavingHandler(props.onValueChange, props.name, props.value || "rgb(0,0,0)");
-	const showTitle = props.name.replace(/([a-z])([A-Z])/g, "$1 $2");
 
 	// Default react-color hashes
 	const { current: colorHistory } = React.useRef<string[]>([
@@ -34,7 +34,7 @@ export default function ColorPanel(props: ColorPanelProps) {
 
 	return (
 		<>
-			<h4>{showTitle}</h4>
+			<FieldTitle name={props.name} />
 			<TwitterPicker
 				triangle="hide"
 				// PR @types/react-color: https://github.com/DefinitelyTyped/DefinitelyTyped/pull/44867

@@ -3,6 +3,7 @@ import { PanelProps } from "../..";
 import UploadArea from "./UploadArea";
 import PictureShowdown from "./PictureShowdown";
 import useContentSavingHandler from "../useContentSavingHandler";
+import FieldTitle from "../FieldTitle";
 import "./style.less";
 
 interface ImagePanelProps extends PanelProps {
@@ -11,11 +12,10 @@ interface ImagePanelProps extends PanelProps {
 
 export default function ImagePanel(props: ImagePanelProps) {
 	const [file, onChosenFileChangedHandlerRef] = useContentSavingHandler(props.onValueChange, props.name, props.value);
-	const showTitle = props.name.replace(/([a-z])([A-Z])/g, "$1 $2");
 
 	return (
 		<>
-			<h4>{showTitle}</h4>
+			<FieldTitle name={props.name} />
 			{file
 				? <PictureShowdown
 					name={props.name}
