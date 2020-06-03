@@ -1,7 +1,7 @@
 import * as React from "react";
 import { PanelProps } from "../..";
 import { FieldProps } from "../../../../../passes/Areas/components/Field";
-import { FieldsArrow } from "./icons";
+import { FieldsArrowIcon, FieldsAddIcon } from "./icons";
 import FieldTitle from "../FieldTitle";
 import "./style.less";
 
@@ -28,7 +28,7 @@ export default function FieldPanel(props: FieldPanelProps) {
 					<FieldTitle name={props.name} />
 					<em>{`${props.value?.length ?? 0} fields for this area`}</em>
 				</div>
-				<FieldsArrow />
+				<FieldsArrowIcon />
 			</div>
 		</>
 	);
@@ -45,10 +45,11 @@ function FieldInternalPanel(props: FieldInternalPanel) {
 		<div className="fields-page">
 			<header>
 				<div className="back" onClick={props.onBack}>
-					<FieldsArrow />
+					<FieldsArrowIcon />
 					<span>Back</span>
 				</div>
 				<FieldTitle name={name} />
+				<FieldsAddIcon />
 			</header>
 			<div className="fields">
 				<FieldsDrawer {...props} />
