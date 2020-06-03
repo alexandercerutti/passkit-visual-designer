@@ -85,14 +85,22 @@
 
 			& p {
 				font-size: 13px;
-				// text-align: center;
 				margin: 0;
 				// Yeah, gray as f**k :D
 				color: #afafaf;
+			}
 
-				&.icon {
-					font-size: 30pt;
-					margin-bottom: 10px;
+			& svg.icon {
+				font-size: 30pt;
+				margin-bottom: 10px;
+
+				& > text {
+					fill: none;
+					stroke: #5d5d5d;
+					stroke-width: 0.4px;
+					stroke-linecap: round;
+					stroke-linejoin: round;
+					animation: neonText 7s step-end 1s forwards infinite;
 				}
 			}
 		}
@@ -109,4 +117,26 @@
 		transform: scale(1);
 		opacity: 1;
 	}
+}
+
+@keyframes neonText {
+	0% { stroke: #e6e6e6; }
+	10% { stroke: #5d5d5d; }
+	13% { stroke: #e6e6e6; }
+
+	20% { stroke: #5d5d5d; }
+	22% { stroke: #e6e6e6; }
+	24% { stroke: #5d5d5d; }
+	26% { stroke: #e6e6e6; }
+	35% { stroke: #5d5d5d; }
+
+	50% { stroke: #e6e6e6; }
+	52% { stroke: #5d5d5d; }
+	54% { stroke: #e6e6e6; }
+	56% { stroke: #5d5d5d; }
+	65% { stroke: #e6e6e6; }
+	70% { stroke: #5d5d5d; }
+
+	75% { stroke: #e6e6e6; }
+	90% { stroke: #5d5d5d; }
 }

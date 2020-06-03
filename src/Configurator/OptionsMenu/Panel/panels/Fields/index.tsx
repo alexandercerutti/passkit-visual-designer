@@ -61,7 +61,9 @@ function FieldsDrawer(props: FieldInternalPanel) {
 	if (!props.value?.length) {
 		return (
 			<div className="placeholder">
-				<p className="icon">¯\_(ツ)_/¯</p>
+				<svg className="icon" viewBox="0 0 200 50">
+					<text y="35" x="20">¯\_(ツ)_/¯</text>
+				</svg>
 				<p>There are no fields here yet.</p>
 				<p>What about starting adding some? 🤔</p>
 			</div>
