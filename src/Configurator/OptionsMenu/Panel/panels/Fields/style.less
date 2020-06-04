@@ -79,11 +79,15 @@
 
 		& svg#plus {
 			width: 28px;
-			fill: #e6e6e6;
+			fill: #333333;
 			cursor: pointer;
 
+			&:active path:first-child {
+				fill: #252525;
+			}
+
 			& path:nth-child(2) {
-				fill: black;
+				fill: #e6e6e6;
 			}
 		}
 	}
