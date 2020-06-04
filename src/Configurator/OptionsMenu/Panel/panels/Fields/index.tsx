@@ -39,7 +39,12 @@ interface FieldInternalPanel extends Omit<FieldPanelProps, "requestPageClosing" 
 }
 
 function FieldInternalPanel(props: FieldInternalPanel) {
-	const name = `${props.name.slice(0, 1).toUpperCase()}${props.name.slice(1)}`
+	const [fields, setFields] = React.useState(props.value || []);
+	const name = `${props.name.slice(0, 1).toUpperCase()}${props.name.slice(1)}`;
+
+	const { current: newFieldClickHandler } = React.useRef((fields: FieldProps[]) => {
+		setFields(fields);
+	});
 
 	return (
 		<div className="fields-page">
@@ -49,10 +54,10 @@ function FieldInternalPanel(props: FieldInternalPanel) {
 					<span>Back</span>
 				</div>
 				<FieldTitle name={name} />
-				<FieldsAddIcon />
+				<FieldsAddIcon onClick={() => newFieldClickHandler([...fields, {} as FieldProps])} />
 			</header>
 			<div className="fields">
-				<FieldsDrawer {...props} />
+				<FieldsDrawer {...props} value={fields} />
 			</div>
 		</div>
 	);
@@ -77,9 +82,9 @@ function FieldsDrawer(props: FieldInternalPanel) {
 }
 
 function FieldsCustomizer(props: FieldInternalPanel) {
-	const panels = props.value.map(field => {
+	const panels = props.value.map((field, index) => {
 		return (
-			<div className={`field-${field.fieldKey}`}></div>
+			<div className={`field-edit-item field-${field.fieldKey || "new"}`} key={field.fieldKey || `new-${index}`}></div>
 		);
 	});
 

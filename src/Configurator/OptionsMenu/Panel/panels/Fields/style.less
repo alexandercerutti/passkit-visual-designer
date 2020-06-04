@@ -1,3 +1,5 @@
+@import "../../../../../App/common.less";
+
 .panel.fields {
 	color: #FFF;
 	display: flex;
@@ -39,6 +41,8 @@
 	opacity: 0.3;
 	transform: scale(0.95);
 	animation: appear .5s ease-in-out .1s forwards;
+	/* To scroll flexbox along with its props */
+	overflow: auto;
 
 	& header {
 		display: flex;
@@ -84,6 +88,7 @@
 	}
 
 	& .fields {
+		.scrollableWithoutScrollbars(y);
 		display: flex;
 		flex-grow: 1;
 		flex-direction: column;
@@ -115,6 +120,14 @@
 					animation: neonText 7s step-end 1s forwards infinite;
 				}
 			}
+		}
+
+		& .field-edit-item {
+			display: flex;
+			height: 300px;
+			border-bottom: 1px solid #333;
+			/* To allow scrolling */
+			flex-shrink: 0;
 		}
 	}
 }
