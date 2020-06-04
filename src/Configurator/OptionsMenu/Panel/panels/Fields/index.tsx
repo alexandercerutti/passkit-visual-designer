@@ -45,10 +45,6 @@ function FieldInternalPanel(props: FieldInternalPanel) {
 
 	const name = `${props.name.slice(0, 1).toUpperCase()}${props.name.slice(1)}`;
 
-	const { current: newFieldClickHandler } = React.useRef((fields: FieldProps[]) => {
-		setFields(fields);
-	});
-
 	React.useEffect(() => {
 		const { current: fieldList } = listRef;
 
@@ -79,7 +75,7 @@ function FieldInternalPanel(props: FieldInternalPanel) {
 					<span>Back</span>
 				</div>
 				<FieldTitle name={name} />
-				<FieldsAddIcon onClick={() => newFieldClickHandler([...fields, {} as FieldProps])} />
+				<FieldsAddIcon onClick={() => setFields([...fields, {} as FieldProps])} />
 			</header>
 			<div className="fields" ref={listRef}>
 				<FieldsDrawer {...props} value={fields} />
