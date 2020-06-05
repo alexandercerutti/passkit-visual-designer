@@ -45,7 +45,7 @@
 	overflow: auto;
 	position: relative;
 
-	& header {
+	& > header {
 		display: flex;
 		justify-content: space-between;
 		flex-shrink: 0;
@@ -75,20 +75,6 @@
 			margin: 0;
 			// "Ignoring" the "back" text and centering a little bit more
 			margin-right: 25px;
-		}
-
-		& svg#plus {
-			width: 28px;
-			fill: #333333;
-			cursor: pointer;
-
-			&:active path:first-child {
-				fill: #252525;
-			}
-
-			& path:nth-child(2) {
-				fill: #e6e6e6;
-			}
 		}
 	}
 
@@ -154,6 +140,20 @@
 				fill: #FFF;
 			}
 		}
+	}
+}
+
+svg.add {
+	width: 28px;
+	fill: #333333;
+	cursor: pointer;
+
+	&:active path:first-child {
+		fill: #252525;
+	}
+
+	& path:nth-child(2) {
+		fill: #e6e6e6;
 	}
 }
 

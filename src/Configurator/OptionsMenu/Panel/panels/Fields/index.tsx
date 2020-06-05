@@ -75,7 +75,7 @@ function FieldInternalPanel(props: FieldInternalPanel) {
 					<span>Back</span>
 				</div>
 				<FieldTitle name={name} />
-				<FieldsAddIcon onClick={() => setFields([...fields, {} as FieldProps])} />
+				<FieldsAddIcon className="add" onClick={() => setFields([...fields, {} as FieldProps])} />
 			</header>
 			<div className="fields" ref={listRef}>
 				<FieldsDrawer {...props} value={fields} />
