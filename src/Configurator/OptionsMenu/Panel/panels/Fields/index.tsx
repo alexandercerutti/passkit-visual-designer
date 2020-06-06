@@ -141,13 +141,19 @@ const OptionalFieldProps = [{
 
 function FieldPropertiesList(props: FieldInternalPanel) {
 	const [shouldShowAddMenu, showAddMenu] = React.useState(false);
-	const [usedProperties, updateProperties] = React.useState([]);
+	const [usedProperties, updateProperties] = React.useState<string[]>([
+		"key", "value"
+	]);
 
 	const onPropertySelectHandler = React.useRef((appliedProps: string[]) => {
 		console.log("Selected voice", appliedProps[appliedProps.length - 1]);
 		showAddMenu(false);
 		updateProperties(appliedProps);
 	});
+
+	const properties = usedProperties.map((element) => (
+		<div key={element}>{element}</div>
+	));
 
 	return (
 		<>
@@ -161,7 +167,7 @@ function FieldPropertiesList(props: FieldInternalPanel) {
 				onPropertySelect={onPropertySelectHandler.current}
 			/>
 			<div className="field-properties-list">
-
+				{properties}
 			</div>
 		</>
 	);
