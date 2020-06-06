@@ -153,9 +153,14 @@
 				right: 0;
 				left: 0;
 				box-shadow: 0 3px 4px 0px #000;
+				z-index: 1;
 				transition: opacity .3s ease-in-out, transform .3s ease-in-out;
 
 				&.hidden {
+					transition:
+						opacity .3s ease-in-out,
+						transform .3s ease-in-out,
+						z-index .3s linear .3s;
 					opacity: 0;
 					transform: scale(0.95);
 					z-index: -1;
