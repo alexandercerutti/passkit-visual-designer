@@ -150,7 +150,7 @@ function FieldPropertiesList(props: FieldInternalPanel) {
 	});
 
 	return (
-		<div className="field-properties-list">
+		<>
 			<div onClick={() => showAddMenu(!shouldShowAddMenu)}>
 				<FieldsAddIcon className="add" />
 				<span>Add property</span>
@@ -160,7 +160,10 @@ function FieldPropertiesList(props: FieldInternalPanel) {
 				appliedProperties={usedProperties}
 				onPropertySelect={onPropertySelectHandler.current}
 			/>
-		</div>
+			<div className="field-properties-list">
+
+			</div>
+		</>
 	);
 }
 

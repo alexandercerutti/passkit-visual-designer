@@ -115,71 +115,72 @@
 
 		& .field-edit-item {
 			display: flex;
+			flex-direction: column;
 			height: 300px;
 			border-bottom: 1px solid #333;
+			position: relative;
 			/* To allow scrolling */
 			flex-shrink: 0;
 
 			& > .field-properties-list {
 				display: flex;
 				flex-direction: column;
-				position: relative;
 				width: 100%;
+			}
 
-				& > div:first-child {
-					display: flex;
-					justify-content: flex-end;
-					align-items: center;
-					margin-bottom: 15px;
-					cursor: pointer;
+			& > div:first-child {
+				display: flex;
+				justify-content: flex-end;
+				align-items: center;
+				margin-bottom: 15px;
+				cursor: pointer;
 
-					& > svg {
-						margin-right: 5px;
-						width: 22px;
-					}
+				& > svg {
+					margin-right: 5px;
+					width: 22px;
+				}
+			}
+
+			& > .field-new-property-list {
+				display: flex;
+				flex-wrap: wrap;
+				justify-content: center;
+				padding: 5px;
+				border-bottom: 1px solid #333;
+				position: absolute;
+				background-color: #282828;
+				top: 38px;
+				right: 0;
+				left: 0;
+				box-shadow: 0 3px 4px 0px #000;
+				transition: opacity .3s ease-in-out, transform .3s ease-in-out;
+
+				&.hidden {
+					opacity: 0;
+					transform: scale(0.95);
+					z-index: -1;
 				}
 
-				& > .field-new-property-list {
-					display: flex;
-					flex-wrap: wrap;
-					justify-content: center;
-					padding: 5px;
-					border-bottom: 1px solid #333;
+				&::before {
+					content: "";
+					width: 0;
+					height: 0;
+					border-style: solid;
+					border-width: 0 13px 13px 13px;
+					border-color: transparent transparent #282828 transparent;
 					position: absolute;
-					background-color: #282828;
-					top: 38px;
-					right: 0;
-					left: 0;
-					box-shadow: 0 3px 4px 0px #000;
-					transition: opacity .3s ease-in-out, transform .3s ease-in-out;
+					top: -13px;
+					right: 33px;
+				}
 
-					&.hidden {
-						opacity: 0;
-						transform: scale(0.95);
-						z-index: -1;
-					}
-
-					&::before {
-						content: "";
-						width: 0;
-						height: 0;
-						border-style: solid;
-						border-width: 0 13px 13px 13px;
-						border-color: transparent transparent #282828 transparent;
-						position: absolute;
-						top: -13px;
-						right: 33px;
-					}
-
-					& > .field-property {
-						font-size: 10pt;
-						border: 1px solid #3a3a3a;
-						background-color: #353535;
-						border-radius: 5px;
-						padding: 2px 8px;
-						margin: 2px;
-						cursor: pointer;
-					}
+				& > .field-property {
+					font-size: 10pt;
+					border: 1px solid #3a3a3a;
+					background-color: #353535;
+					border-radius: 5px;
+					padding: 2px 8px;
+					margin: 2px;
+					cursor: pointer;
 				}
 			}
 		}
