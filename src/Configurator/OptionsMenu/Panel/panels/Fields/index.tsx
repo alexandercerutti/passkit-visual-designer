@@ -154,6 +154,15 @@ function FieldPropertiesList(props: FieldInternalPanel) {
 		showAddMenu(false);
 	});
 
+	const onPropertyAddRowClickHandler = React.useCallback(() => {
+		// Excluding the mandatory ones
+		if (usedProperties.length - 2 === OptionalFieldProps.length) {
+			return;
+		}
+
+		showAddMenu(true);
+	}, [usedProperties]);
+
 	const properties = usedProperties.map((element) => (
 		<div key={element}>{element}</div>
 	));
@@ -163,7 +172,7 @@ function FieldPropertiesList(props: FieldInternalPanel) {
 			<div className="field-properties-list">
 				{properties}
 			</div>
-			<div className="property-add-row" onClick={() => showAddMenu(!shouldShowAddMenu)}>
+			<div className="property-add-row" onClick={onPropertyAddRowClickHandler}>
 				<span>Add property</span>
 				<FieldsAddIcon className="add" />
 			</div>
