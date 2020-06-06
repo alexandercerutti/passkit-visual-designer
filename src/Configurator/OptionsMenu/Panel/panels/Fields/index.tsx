@@ -96,17 +96,11 @@ function FieldsDrawer(props: FieldInternalPanel) {
 		);
 	}
 
-	return (
-		<FieldsCustomizer {...props} />
-	);
-}
-
-function FieldsCustomizer(props: FieldInternalPanel) {
-	const panels = props.value.map((field, index) => {
-		return (
-			<div className={`field-edit-item field-${field.fieldKey || "new"}`} key={field.fieldKey || `new-${index}`}></div>
-		);
-	});
+	const panels = props.value.map((field, index) => (
+		<div className={`field-edit-item field-${field.fieldKey || "new"}`} key={field.fieldKey || `new-${index}`}>
+			<FieldPropertiesList {...props} />
+		</div>
+	));
 
 	return (
 		<>
