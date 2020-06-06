@@ -1,11 +1,9 @@
-export type PKDataDetectorType = "PKDataDetectorTypePhoneNumber" | "PKDataDetectorTypeLink" | "PKDataDetectorTypeAddress" | "PKDataDetectorTypeCalendarEvent";
-
 export enum PKDateStyle {
-	"None", /** ??? */
-	"Short", /** “11/23/37” or “3:30 PM”. */
-	"Medium", /** “Nov 23, 1937” or “3:30:32 PM” */
-	"Long", /** “November 23, 1937” or “3:30:32 PM PST” */
-	"Full" 	/** “Tuesday, April 12, 1952 AD” or “3:30:42 PM Pacific Standard Time” */
+	None = "PKDateStyleNone", /** ??? */
+	Short = "PKDateStyleShort", /** “11/23/37” or “3:30 PM”. */
+	Medium = "PKDateStyleMedium", /** “Nov 23, 1937” or “3:30:32 PM” */
+	Long = "PKDateStyleLong", /** “November 23, 1937” or “3:30:32 PM PST” */
+	Full = "PKDateStyleFull" 	/** “Tuesday, April 12, 1952 AD” or “3:30:42 PM Pacific Standard Time” */
 }
 
 export enum PKTransitType {
@@ -17,10 +15,10 @@ export enum PKTransitType {
 }
 
 export enum PKTextAlignment {
-	"Left" = "left",
-	"Center" = "center",
-	"Right" = "right",
-	"Natural" = "start",
+	"Left" = "PKTextAlignmentLeft",
+	"Center" = "PKTextAlignmentCenter",
+	"Right" = "PKTextAlignmentRight",
+	"Natural" = "PKTextAlignmentNatural",
 }
 
 export enum PKBarcodeFormat {
@@ -34,4 +32,11 @@ export enum PKBarcodeFormat {
 	/** Generic descriptors */
 	Square = "squared",
 	Rectangle = "rectangle"
+}
+
+export enum PKDataDetectorType {
+	PhoneNumber = "PKDataDetectorTypePhoneNumber",
+	Link = "PKDataDetectorTypeLink",
+	Address = "PKDataDetectorTypeAddress",
+	CalendarEvent = "PKDataDetectorTypeCalendarEvent"
 }

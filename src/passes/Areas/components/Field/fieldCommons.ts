@@ -5,10 +5,23 @@ export function composeLabelValueStylesFromProps(props: Partial<FieldProps>, ori
 	const textAlignment = props.textAlignment || PKTextAlignment.Natural;
 
 	return {
-		textAlign: textAlignment,
+		textAlign: transformPKTextAlignmentToCSS(textAlignment),
 		color: String(origin === "value" && props.textColor || props.labelColor) || "#000",
 		overflow: "hidden",
 		textOverflow: "ellipsis",
+	}
+}
+
+function transformPKTextAlignmentToCSS(textAlignment: PKTextAlignment) {
+	switch (textAlignment) {
+		case PKTextAlignment.Left:
+			return "left";
+		case PKTextAlignment.Center:
+			return "center";
+		case PKTextAlignment.Right:
+			return "right";
+		case PKTextAlignment.Natural:
+			return "start";
 	}
 }
 
