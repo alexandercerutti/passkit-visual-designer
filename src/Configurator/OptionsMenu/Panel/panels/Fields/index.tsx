@@ -146,9 +146,12 @@ function FieldPropertiesList(props: FieldInternalPanel) {
 	]);
 
 	const onPropertySelectHandler = React.useRef((appliedProps: string[]) => {
-		console.log("Selected voice", appliedProps[appliedProps.length - 1]);
+		if (appliedProps !== null) {
+			console.log("Selected voice", appliedProps[appliedProps.length - 1]);
+			updateProperties(appliedProps);
+		}
+
 		showAddMenu(false);
-		updateProperties(appliedProps);
 	});
 
 	const properties = usedProperties.map((element) => (
@@ -157,18 +160,18 @@ function FieldPropertiesList(props: FieldInternalPanel) {
 
 	return (
 		<>
-			<div onClick={() => showAddMenu(!shouldShowAddMenu)}>
-				<FieldsAddIcon className="add" />
+			<div className="field-properties-list">
+				{properties}
+			</div>
+			<div className="property-add-row" onClick={() => showAddMenu(!shouldShowAddMenu)}>
 				<span>Add property</span>
+				<FieldsAddIcon className="add" />
 			</div>
 			<AvailableFieldsList
 				className={!shouldShowAddMenu && "hidden" || ""}
 				appliedProperties={usedProperties}
 				onPropertySelect={onPropertySelectHandler.current}
 			/>
-			<div className="field-properties-list">
-				{properties}
-			</div>
 		</>
 	);
 }
@@ -191,8 +194,10 @@ function AvailableFieldsList({ appliedProperties = [], onPropertySelect, classNa
 	));
 
 	return (
-		<div className={`field-new-property-list ${className}`}>
-			{properties}
+		<div className={`field-prop-choice-overlay ${className}`} onClick={() => onPropertySelect(null)}>
+			<div className="field-new-property-list">
+				{properties}
+			</div>
 		</div>
 	)
 }

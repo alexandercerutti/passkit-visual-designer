@@ -125,10 +125,12 @@
 			& > .field-properties-list {
 				display: flex;
 				flex-direction: column;
+				flex-grow: 1;
 				width: 100%;
+				.scrollableWithoutScrollbars(y);
 			}
 
-			& > div:first-child {
+			& > .property-add-row {
 				display: flex;
 				justify-content: flex-end;
 				align-items: center;
@@ -136,56 +138,75 @@
 				cursor: pointer;
 
 				& > svg {
-					margin-right: 5px;
+					margin-left: 5px;
 					width: 22px;
 				}
 			}
 
-			& > .field-new-property-list {
+			& > .field-prop-choice-overlay {
 				display: flex;
-				flex-wrap: wrap;
-				justify-content: center;
-				padding: 5px;
+				justify-content: flex-end;
+				flex-direction: column;
 				border-bottom: 1px solid #333;
+				overflow-y: hidden;
+				z-index: 1;
 				position: absolute;
-				background-color: #282828;
-				top: 38px;
+				top: 0;
 				right: 0;
 				left: 0;
-				box-shadow: 0 3px 4px 0px #000;
-				z-index: 1;
-				transition: opacity .3s ease-in-out, transform .3s ease-in-out;
+				bottom: 0;
 
 				&.hidden {
-					transition:
-						opacity .3s ease-in-out,
-						transform .3s ease-in-out,
-						z-index .3s linear .3s;
-					opacity: 0;
-					transform: scale(0.95);
 					z-index: -1;
+					transition: z-index 0s linear .3s;
+
+					&::before {
+						opacity: 0;
+					}
+
+					& > .field-new-property-list {
+						bottom: -50%;
+					}
 				}
 
 				&::before {
 					content: "";
-					width: 0;
-					height: 0;
-					border-style: solid;
-					border-width: 0 13px 13px 13px;
-					border-color: transparent transparent #282828 transparent;
+					cursor: pointer;
 					position: absolute;
-					top: -13px;
-					right: 33px;
+					top: 0;
+					bottom: 0;
+					left: 0;
+					right: 0;
+					background-color: rgba(0,0,0,0.4);
+					z-index: -1;
+					opacity: 1;
+					transition: opacity .3s ease-in-out;
 				}
 
-				& > .field-property {
-					font-size: 10pt;
-					border: 1px solid #3a3a3a;
-					background-color: #353535;
-					border-radius: 5px;
-					padding: 2px 8px;
-					margin: 2px;
-					cursor: pointer;
+				& > .field-new-property-list {
+					display: flex;
+					flex-wrap: wrap;
+					justify-content: center;
+					align-content: center;
+					background-color: #282828;
+					height: -moz-fit-content;
+					height: fit-content;
+					box-sizing: border-box;
+					padding: 6px;
+					transition: bottom .3s ease-in-out;
+					border-radius: 5px 5px 0 0;
+					position: relative;
+					bottom: 0;
+
+					& > .field-property {
+						font-size: 10pt;
+						border: 1px solid #3a3a3a;
+						background-color: #353535;
+						border-radius: 5px;
+						padding: 5px 8px;
+						margin: 2px;
+						cursor: pointer;
+					}
 				}
 			}
 		}
