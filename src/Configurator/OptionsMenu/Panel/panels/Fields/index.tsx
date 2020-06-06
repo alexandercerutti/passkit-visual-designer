@@ -4,6 +4,7 @@ import { FieldProps } from "../../../../../passes/Areas/components/Field";
 import { FieldsArrowIcon, FieldsAddIcon, MoreFieldsBelowIcon } from "./icons";
 import FieldTitle from "../FieldTitle";
 import "./style.less";
+import { PKDataDetectorType, PKTextAlignment, PKDateStyle } from "../../../../../passes/constants";
 
 interface FieldPanelProps extends PanelProps {
 	value?: FieldProps[];
@@ -107,4 +108,82 @@ function FieldsDrawer(props: FieldInternalPanel) {
 			{panels}
 		</>
 	);
+}
+
+const OptionalFieldProps = [{
+	property: "label",
+	type: "string"
+}, {
+	property: "attributedValue",
+	type: "string",
+}, {
+	property: "changeMessage",
+	type: "string"
+}, {
+	property: "dataDetectorTypes",
+	type: PKDataDetectorType,
+}, {
+	property: "textAlignment",
+	type: PKTextAlignment
+}, {
+	property: "dateStyle",
+	type: PKDateStyle
+}, {
+	property: "timeStyle",
+	type: PKDateStyle
+}, {
+	property: "ignoresTimeZone",
+	type: Boolean
+}, {
+	property: "isRelative",
+	type: Boolean
+}];
+
+function FieldPropertiesList(props: FieldInternalPanel) {
+	const [shouldShowAddMenu, showAddMenu] = React.useState(false);
+	const [usedProperties, updateProperties] = React.useState([]);
+
+	const onPropertySelectHandler = React.useRef((appliedProps: string[]) => {
+		console.log("Selected voice", appliedProps[appliedProps.length - 1]);
+		showAddMenu(false);
+		updateProperties(appliedProps);
+	});
+
+	return (
+		<div className="field-properties-list">
+			<div onClick={() => showAddMenu(!shouldShowAddMenu)}>
+				<FieldsAddIcon className="add" />
+				<span>Add property</span>
+			</div>
+			<AvailableFieldsList
+				className={!shouldShowAddMenu && "hidden" || ""}
+				appliedProperties={usedProperties}
+				onPropertySelect={onPropertySelectHandler.current}
+			/>
+		</div>
+	);
+}
+
+interface AvailableFieldsListProps {
+	appliedProperties?: string[],
+	onPropertySelect: (propertyName: string[]) => void;
+	className?: string;
+}
+
+function AvailableFieldsList({ appliedProperties = [], onPropertySelect, className }: AvailableFieldsListProps) {
+	const properties = (
+		!appliedProperties.length && OptionalFieldProps ||
+		OptionalFieldProps
+			.filter(prop => !appliedProperties.includes(prop.property))
+	).map(({ property }) => (
+		<div key={property} className="field-property" onClick={() => onPropertySelect([...appliedProperties, property])}>
+			{property}
+		</div>
+	));
+
+	return (
+		<div className={`field-new-property-list ${className}`}>
+			{properties}
+		</div>
+	)
 }
