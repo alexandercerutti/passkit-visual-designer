@@ -45,17 +45,13 @@ function FieldInternalPanel(props: FieldInternalPanel) {
 
 	const name = `${props.name.slice(0, 1).toUpperCase()}${props.name.slice(1)}`;
 
-	React.useEffect(() => {
-		const { current: fieldList } = listRef;
-
-		fieldList.addEventListener("scroll", () => {
-			const didReachEndOfScroll = (
-				fieldList.scrollHeight - fieldList.scrollTop === fieldList.clientHeight
-			);
-			// We want to hide "more" icon if we reached end of the scroll
-			setMoreAvailability(!didReachEndOfScroll);
-		});
-	}, []);
+	const onListScrollHandler = React.useRef(() => {
+		const didReachEndOfScroll = (
+			listRef.current.scrollHeight - listRef.current.scrollTop === listRef.current.clientHeight
+		);
+		// We want to hide "more" icon if we reached end of the scroll
+		setMoreAvailability(!didReachEndOfScroll);
+	});
 
 	React.useEffect(() => {
 		const { current: fieldList } = listRef;
@@ -77,7 +73,7 @@ function FieldInternalPanel(props: FieldInternalPanel) {
 				<FieldTitle name={name} />
 				<FieldsAddIcon className="add" onClick={() => setFields([...fields, {} as FieldProps])} />
 			</header>
-			<div className="fields" ref={listRef}>
+			<div className="fields" ref={listRef} onScroll={onListScrollHandler.current}>
 				<FieldsDrawer {...props} value={fields} />
 			</div>
 			<div className="more-items-indicator" style={{ opacity: Number(isThereMoreAfterTheSkyline) }}>
