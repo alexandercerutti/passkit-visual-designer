@@ -122,6 +122,10 @@
 			/* To allow scrolling */
 			flex-shrink: 0;
 
+			&:not(:last-child) {
+				margin-bottom: 10px;
+			}
+
 			& > .field-properties-list {
 				display: flex;
 				flex-direction: column;
@@ -130,16 +134,30 @@
 				.scrollableWithoutScrollbars(y);
 			}
 
-			& > .property-add-row {
+			& > .field-options-row {
 				display: flex;
-				justify-content: flex-end;
-				align-items: center;
+				justify-content: space-between;
 				margin-bottom: 15px;
-				cursor: pointer;
 
-				& > svg {
-					margin-left: 5px;
+				& > * {
+					display: flex;
+					align-items: center;
+					cursor: pointer;
+				}
+
+				& > .field-delete {
+					span {
+						color: #ff6363
+					}
+
+					& svg {
+						transform: rotate(45deg);
+					}
+				}
+
+				& svg {
 					width: 22px;
+					margin: 0 5px;
 				}
 			}
 

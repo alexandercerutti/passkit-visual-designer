@@ -35,11 +35,11 @@ export default function FieldPanel(props: FieldPanelProps) {
 	);
 }
 
-interface FieldInternalPanel extends Omit<FieldPanelProps, "requestPageClosing" | "requestPageCreation"> {
-	onBack: () => void;
+interface FieldInternalPanelProps extends Omit<FieldPanelProps, "requestPageClosing" | "requestPageCreation"> {
+	onBack(): void;
 }
 
-function FieldInternalPanel(props: FieldInternalPanel) {
+function FieldInternalPanel(props: FieldInternalPanelProps) {
 	const [fields, setFields] = React.useState(props.value || []);
 	const [isThereMoreAfterTheSkyline, setMoreAvailability] = React.useState(false);
 	const listRef = React.useRef<HTMLDivElement>();
@@ -53,6 +53,20 @@ function FieldInternalPanel(props: FieldInternalPanel) {
 		// We want to hide "more" icon if we reached end of the scroll
 		setMoreAvailability(!didReachEndOfScroll);
 	});
+
+	const onFieldDeleteHandler = (fieldKey: string) => {
+		const fieldWithKeyIndex = fields.findIndex(f => f.fieldKey === fieldKey);
+		const newFields = [...fields];
+		newFields.splice(fieldWithKeyIndex, 1);
+		setFields(newFields);
+	};
+
+	const onFieldAddHandler = () => {
+		// Defining a custom initial fieldKey that, we hope,
+		// shouldn't be used by anyone to identify their fields
+		const fieldKey = `::pkvd-new-${fields.length + 1}$`;
+		setFields([...fields, { fieldKey } as FieldProps]);
+	}
 
 	React.useEffect(() => {
 		const { current: fieldList } = listRef;
@@ -72,10 +86,14 @@ function FieldInternalPanel(props: FieldInternalPanel) {
 					<span>Back</span>
 				</div>
 				<FieldTitle name={name} />
-				<FieldsAddIcon className="add" onClick={() => setFields([...fields, {} as FieldProps])} />
+				<FieldsAddIcon className="add" onClick={onFieldAddHandler} />
 			</header>
 			<div className="fields" ref={listRef} onScroll={onListScrollHandler.current}>
-				<FieldsDrawer {...props} value={fields} />
+				<FieldsDrawer
+					{...props}
+					value={fields}
+					onFieldDelete={onFieldDeleteHandler}
+				/>
 			</div>
 			<div className="more-items-indicator" style={{ opacity: Number(isThereMoreAfterTheSkyline) }}>
 				<MoreFieldsBelowIcon />
@@ -84,7 +102,7 @@ function FieldInternalPanel(props: FieldInternalPanel) {
 	);
 }
 
-function FieldsDrawer(props: FieldInternalPanel) {
+function FieldsDrawer(props: { value: FieldProps[], onFieldDelete: (fieldKey: string) => void }) {
 	if (!props.value?.length) {
 		return (
 			<div className="placeholder">
@@ -98,8 +116,8 @@ function FieldsDrawer(props: FieldInternalPanel) {
 	}
 
 	const panels = props.value.map((field, index) => (
-		<div className={`field-edit-item field-${field.fieldKey || "new"}`} key={field.fieldKey || `new-${index}`}>
-			<FieldPropertiesList {...props} />
+		<div className={`field-edit-item field-${field.fieldKey}`} key={field.fieldKey}>
+			<FieldPropertiesList {...props} fieldKey={field.fieldKey} />
 		</div>
 	));
 
@@ -139,7 +157,7 @@ const OptionalFieldProps = [{
 	type: Boolean
 }];
 
-function FieldPropertiesList(props: FieldInternalPanel) {
+function FieldPropertiesList(props: { fieldKey: string, onFieldDelete: (fieldKey: string) => void }) {
 	const [shouldShowAddMenu, showAddMenu] = React.useState(false);
 	const [usedProperties, updateProperties] = React.useState<string[]>([
 		"key", "value"
@@ -166,13 +184,19 @@ function FieldPropertiesList(props: FieldInternalPanel) {
 			<div className="field-properties-list">
 				{properties}
 			</div>
-			<div
-				className="property-add-row"
-				style={{ display: allOptionalPropertiesAdded ? "none" : "inherit" }}
-				onClick={() => showAddMenu(true)}
-			>
-				<span>Add property</span>
-				<FieldsAddIcon className="add" />
+			<div className="field-options-row">
+				<div className="field-delete" onClick={() => props.onFieldDelete(props.fieldKey)}>
+					<FieldsAddIcon className="add" />
+					<span>Delete</span>
+				</div>
+				<div
+					className="property-add-row"
+					style={{ display: allOptionalPropertiesAdded ? "none" : "inherit" }}
+					onClick={() => showAddMenu(true)}
+				>
+					<span>Add property</span>
+					<FieldsAddIcon className="add" />
+				</div>
 			</div>
 			<AvailableFieldsList
 				className={!shouldShowAddMenu && "hidden" || ""}
@@ -192,8 +216,7 @@ interface AvailableFieldsListProps {
 function AvailableFieldsList({ appliedProperties = [], onPropertySelect, className }: AvailableFieldsListProps) {
 	const properties = (
 		!appliedProperties.length && OptionalFieldProps ||
-		OptionalFieldProps
-			.filter(prop => !appliedProperties.includes(prop.property))
+		OptionalFieldProps.filter(prop => !appliedProperties.includes(prop.property))
 	).map(({ property }) => (
 		<div key={property} className="field-property" onClick={() => onPropertySelect([...appliedProperties, property])}>
 			{property}
