@@ -138,6 +138,7 @@
 				display: flex;
 				justify-content: space-between;
 				margin-bottom: 15px;
+				padding: 0 5px;
 
 				& > * {
 					display: flex;
@@ -145,19 +146,13 @@
 					cursor: pointer;
 				}
 
-				& > .field-delete {
-					span {
-						color: #ff6363
-					}
-
-					& svg {
-						transform: rotate(45deg);
-					}
-				}
-
 				& svg {
-					width: 22px;
-					margin: 0 5px;
+					width: 25px;
+
+					&.danger {
+						fill: #ff6363;
+						width: 22px;
+					}
 				}
 			}
 

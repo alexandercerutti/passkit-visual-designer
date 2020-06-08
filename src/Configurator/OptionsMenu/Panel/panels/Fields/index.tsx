@@ -1,7 +1,7 @@
 import * as React from "react";
 import { PanelProps } from "../..";
 import { FieldProps } from "../../../../../passes/Areas/components/Field";
-import { FieldsArrowIcon, FieldsAddIcon, MoreFieldsBelowIcon } from "./icons";
+import { FieldsArrowIcon, FieldsAddIcon, MoreFieldsBelowIcon, ListAddProp, DeleteFieldIcon } from "./icons";
 import FieldTitle from "../FieldTitle";
 import "./style.less";
 import { PKDataDetectorType, PKTextAlignment, PKDateStyle } from "../../../../../passes/constants";
@@ -186,16 +186,14 @@ function FieldPropertiesList(props: { fieldKey: string, onFieldDelete: (fieldKey
 			</div>
 			<div className="field-options-row">
 				<div className="field-delete" onClick={() => props.onFieldDelete(props.fieldKey)}>
-					<FieldsAddIcon className="add" />
-					<span>Delete</span>
+					<DeleteFieldIcon className="danger" />
 				</div>
 				<div
 					className="property-add-row"
 					style={{ display: allOptionalPropertiesAdded ? "none" : "inherit" }}
 					onClick={() => showAddMenu(true)}
 				>
-					<span>Add property</span>
-					<FieldsAddIcon className="add" />
+					<ListAddProp className="add" />
 				</div>
 			</div>
 			<AvailableFieldsList
