@@ -1,6 +1,13 @@
 import * as React from "react";
-import { PKDataDetectorType, PKTextAlignment, PKDateStyle } from "../../../../../../passes/constants";
-import { DeleteFieldIcon, ListAddProp } from "../icons";
+import { PKDataDetectorType, PKTextAlignment, PKDateStyle } from "../../../../../../../passes/constants";
+import { DeleteFieldIcon, ListAddProp } from "../../icons";
+
+interface FPOptionsProps {
+	deleteField(key: string): void;
+	updateUsedProperties(usedProperties: string[]): void;
+	usedProperties?: string[];
+	fieldKey: string;
+}
 
 const OptionalFieldProps = [{
 	property: "label",
@@ -31,53 +38,7 @@ const OptionalFieldProps = [{
 	type: Boolean
 }];
 
-interface FieldsDrawerElementProps {
-	onFieldDelete(key: string): void;
-	fieldKey: string;
-}
-
-export function FieldsDrawerElement(props: FieldsDrawerElementProps) {
-	const [usedProperties, setUsedProperties] = React.useState([
-		"key", "value"
-	]);
-
-	return (
-		<div className={`field-edit-item field-${props.fieldKey}`} key={props.fieldKey}>
-			<FDEPropertiesList usedProperties={usedProperties} />
-			<FDEOptionsBar
-				deleteField={props.onFieldDelete}
-				updateUsedProperties={setUsedProperties}
-				usedProperties={usedProperties}
-				fieldKey={props.fieldKey}
-			/>
-		</div>
-	);
-}
-
-interface FPPropsListProps {
-	usedProperties?: string[];
-}
-
-function FDEPropertiesList(props: FPPropsListProps) {
-	const properties = props.usedProperties.map((element) => (
-		<div key={element}>{element}</div>
-	));
-
-	return (
-		<div className="field-properties-list">
-			{properties}
-		</div>
-	);
-}
-
-interface FPOptionsProps {
-	deleteField(key: string): void;
-	updateUsedProperties(usedProperties: string[]): void;
-	usedProperties?: string[];
-	fieldKey: string;
-}
-
-function FDEOptionsBar(props: FPOptionsProps) {
+export default function FieldOptionsBar(props: FPOptionsProps) {
 	const [shouldShowAddMenu, showAddMenu] = React.useState(false);
 
 	const onPropertySelectHandler = React.useRef((appliedProps: string[]) => {
