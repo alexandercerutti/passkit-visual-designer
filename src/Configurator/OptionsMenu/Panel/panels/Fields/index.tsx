@@ -1,12 +1,12 @@
 import * as React from "react";
 import { PanelProps } from "../..";
 import { FieldProps } from "../../../../../passes/Areas/components/Field";
-import { FieldsArrowIcon, FieldsAddIcon, MoreFieldsBelowIcon, ListAddProp, DeleteFieldIcon } from "./icons";
+import { FieldsArrowIcon } from "./icons";
 import FieldTitle from "../FieldTitle";
 import "./style.less";
-import { PKDataDetectorType, PKTextAlignment, PKDateStyle } from "../../../../../passes/constants";
+import FieldsPage from "./FieldsPage";
 
-interface FieldPanelProps extends PanelProps {
+export interface FieldPanelProps extends PanelProps {
 	value?: FieldProps[];
 }
 
@@ -15,7 +15,7 @@ export default function FieldPanel(props: FieldPanelProps) {
 		const { requestPageClosing, requestPageCreation, ...otherProps } = props;
 
 		requestPageCreation(
-			<FieldInternalPanel
+			<FieldsPage
 				{...otherProps}
 				onBack={requestPageClosing}
 			/>
@@ -33,199 +33,4 @@ export default function FieldPanel(props: FieldPanelProps) {
 			</div>
 		</>
 	);
-}
-
-interface FieldInternalPanelProps extends Omit<FieldPanelProps, "requestPageClosing" | "requestPageCreation"> {
-	onBack(): void;
-}
-
-function FieldInternalPanel(props: FieldInternalPanelProps) {
-	const [fields, setFields] = React.useState(props.value || []);
-	const [isThereMoreAfterTheSkyline, setMoreAvailability] = React.useState(false);
-	const listRef = React.useRef<HTMLDivElement>();
-
-	const name = `${props.name.slice(0, 1).toUpperCase()}${props.name.slice(1)}`;
-
-	const onListScrollHandler = React.useRef(() => {
-		const didReachEndOfScroll = (
-			listRef.current.scrollHeight - listRef.current.scrollTop === listRef.current.clientHeight
-		);
-		// We want to hide "more" icon if we reached end of the scroll
-		setMoreAvailability(!didReachEndOfScroll);
-	});
-
-	const onFieldDeleteHandler = (fieldKey: string) => {
-		const fieldWithKeyIndex = fields.findIndex(f => f.fieldKey === fieldKey);
-		const newFields = [...fields];
-		newFields.splice(fieldWithKeyIndex, 1);
-		setFields(newFields);
-	};
-
-	const onFieldAddHandler = () => {
-		// Defining a custom initial fieldKey that, we hope,
-		// shouldn't be used by anyone to identify their fields
-		const fieldKey = `::pkvd-new-${fields.length + 1}$`;
-		setFields([...fields, { fieldKey } as FieldProps]);
-	}
-
-	React.useEffect(() => {
-		const { current: fieldList } = listRef;
-		const { children } = listRef.current.parentNode;
-		const [header] = Array.from(children) as HTMLDivElement[];
-
-		if (fields.length) {
-			setMoreAvailability((header.offsetHeight + fieldList.scrollHeight) > window.innerHeight);
-		}
-	}, [fields]);
-
-	return (
-		<div className="fields-page">
-			<header>
-				<div className="back" onClick={props.onBack}>
-					<FieldsArrowIcon />
-					<span>Back</span>
-				</div>
-				<FieldTitle name={name} />
-				<FieldsAddIcon className="add" onClick={onFieldAddHandler} />
-			</header>
-			<div className="fields" ref={listRef} onScroll={onListScrollHandler.current}>
-				<FieldsDrawer
-					{...props}
-					value={fields}
-					onFieldDelete={onFieldDeleteHandler}
-				/>
-			</div>
-			<div className="more-items-indicator" style={{ opacity: Number(isThereMoreAfterTheSkyline) }}>
-				<MoreFieldsBelowIcon />
-			</div>
-		</div>
-	);
-}
-
-function FieldsDrawer(props: { value: FieldProps[], onFieldDelete: (fieldKey: string) => void }) {
-	if (!props.value?.length) {
-		return (
-			<div className="placeholder">
-				<svg className="icon" viewBox="0 0 200 50">
-					<text y="35" x="20">¯\_(ツ)_/¯</text>
-				</svg>
-				<p>There are no fields here yet.</p>
-				<p>What about starting adding some? 🤔</p>
-			</div>
-		);
-	}
-
-	const panels = props.value.map((field, index) => (
-		<div className={`field-edit-item field-${field.fieldKey}`} key={field.fieldKey}>
-			<FieldPropertiesList {...props} fieldKey={field.fieldKey} />
-		</div>
-	));
-
-	return (
-		<>
-			{panels}
-		</>
-	);
-}
-
-const OptionalFieldProps = [{
-	property: "label",
-	type: "string"
-}, {
-	property: "attributedValue",
-	type: "string",
-}, {
-	property: "changeMessage",
-	type: "string"
-}, {
-	property: "dataDetectorTypes",
-	type: PKDataDetectorType,
-}, {
-	property: "textAlignment",
-	type: PKTextAlignment
-}, {
-	property: "dateStyle",
-	type: PKDateStyle
-}, {
-	property: "timeStyle",
-	type: PKDateStyle
-}, {
-	property: "ignoresTimeZone",
-	type: Boolean
-}, {
-	property: "isRelative",
-	type: Boolean
-}];
-
-function FieldPropertiesList(props: { fieldKey: string, onFieldDelete: (fieldKey: string) => void }) {
-	const [shouldShowAddMenu, showAddMenu] = React.useState(false);
-	const [usedProperties, updateProperties] = React.useState<string[]>([
-		"key", "value"
-	]);
-
-	const onPropertySelectHandler = React.useRef((appliedProps: string[]) => {
-		if (appliedProps !== null) {
-			console.log("Selected voice", appliedProps[appliedProps.length - 1]);
-			updateProperties(appliedProps);
-		}
-
-		showAddMenu(false);
-	});
-
-	const properties = usedProperties.map((element) => (
-		<div key={element}>{element}</div>
-	));
-
-	// Excluding the mandatory ones
-	const allOptionalPropertiesAdded = usedProperties.length - 2 === OptionalFieldProps.length;
-
-	return (
-		<>
-			<div className="field-properties-list">
-				{properties}
-			</div>
-			<div className="field-options-row">
-				<div className="field-delete" onClick={() => props.onFieldDelete(props.fieldKey)}>
-					<DeleteFieldIcon className="danger" />
-				</div>
-				<div
-					className="property-add-row"
-					style={{ display: allOptionalPropertiesAdded ? "none" : "inherit" }}
-					onClick={() => showAddMenu(true)}
-				>
-					<ListAddProp className="add" />
-				</div>
-			</div>
-			<AvailableFieldsList
-				className={!shouldShowAddMenu && "hidden" || ""}
-				appliedProperties={usedProperties}
-				onPropertySelect={onPropertySelectHandler.current}
-			/>
-		</>
-	);
-}
-
-interface AvailableFieldsListProps {
-	appliedProperties?: string[],
-	onPropertySelect: (propertyName: string[]) => void;
-	className?: string;
-}
-
-function AvailableFieldsList({ appliedProperties = [], onPropertySelect, className }: AvailableFieldsListProps) {
-	const properties = (
-		!appliedProperties.length && OptionalFieldProps ||
-		OptionalFieldProps.filter(prop => !appliedProperties.includes(prop.property))
-	).map(({ property }) => (
-		<div key={property} className="field-property" onClick={() => onPropertySelect([...appliedProperties, property])}>
-			{property}
-		</div>
-	));
-
-	return (
-		<div className={`field-prop-choice-overlay ${className}`} onClick={() => onPropertySelect(null)}>
-			<div className="field-new-property-list">
-				{properties}
-			</div>
-		</div>
-	)
 }

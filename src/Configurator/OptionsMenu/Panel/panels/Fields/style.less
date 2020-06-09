@@ -78,40 +78,40 @@
 		}
 	}
 
+	& .fields-placeholder {
+		display: flex;
+		flex-direction: column;
+		flex-grow: 1;
+		align-items: center;
+		justify-content: center;
+
+		& p {
+			font-size: 13px;
+			margin: 0;
+			// Yeah, gray as f**k :D
+			color: #afafaf;
+		}
+
+		& svg.icon {
+			font-size: 30pt;
+			margin-bottom: 10px;
+
+			& > text {
+				fill: none;
+				stroke: #5d5d5d;
+				stroke-width: 0.4px;
+				stroke-linecap: round;
+				stroke-linejoin: round;
+				animation: neonText 7s step-end 1s forwards infinite;
+			}
+		}
+	}
+
 	& .fields {
 		.scrollableWithoutScrollbars(y);
 		display: flex;
 		flex-grow: 1;
 		flex-direction: column;
-
-		& .placeholder {
-			display: flex;
-			flex-direction: column;
-			flex-grow: 1;
-			align-items: center;
-			justify-content: center;
-
-			& p {
-				font-size: 13px;
-				margin: 0;
-				// Yeah, gray as f**k :D
-				color: #afafaf;
-			}
-
-			& svg.icon {
-				font-size: 30pt;
-				margin-bottom: 10px;
-
-				& > text {
-					fill: none;
-					stroke: #5d5d5d;
-					stroke-width: 0.4px;
-					stroke-linecap: round;
-					stroke-linejoin: round;
-					animation: neonText 7s step-end 1s forwards infinite;
-				}
-			}
-		}
 
 		& .field-edit-item {
 			display: flex;
