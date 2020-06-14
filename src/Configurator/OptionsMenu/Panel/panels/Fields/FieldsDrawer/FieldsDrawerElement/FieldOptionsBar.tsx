@@ -2,7 +2,7 @@ import * as React from "react";
 import { PKDataDetectorType, PKTextAlignment, PKDateStyle } from "../../../../../../../passes/constants";
 import { DeleteFieldIcon, ListAddProp } from "../../icons";
 
-interface FPOptionsProps {
+interface FieldOptionsProps {
 	deleteField(key: string): void;
 	updateUsedProperties(usedProperties: string[]): void;
 	usedProperties?: string[];
@@ -38,7 +38,7 @@ const OptionalFieldProps = [{
 	type: Boolean
 }];
 
-export default function FieldOptionsBar(props: FPOptionsProps) {
+export default function FieldOptionsBar(props: FieldOptionsProps) {
 	const [shouldShowAddMenu, showAddMenu] = React.useState(false);
 
 	const onPropertySelectHandler = React.useRef((appliedProps: string[]) => {
