@@ -33,7 +33,6 @@
 /** Page styles for this panel **/
 
 .panel-navigator > .page > .fields-page {
-	padding: 5px;
 	display: flex;
 	flex-direction: column;
 	flex-grow: 1;
@@ -54,6 +53,7 @@
 		align-items: center;
 		border-bottom: 1px solid rgb(47, 47, 47);
 		margin-bottom: 10px;
+		padding: 5px 5px 0 5px;
 
 		& .back {
 			display: flex;
@@ -117,13 +117,16 @@
 			display: flex;
 			flex-direction: column;
 			height: 300px;
-			border-bottom: 1px solid #333;
-			position: relative;
+			padding: 5px;
 			/* To allow scrolling */
 			flex-shrink: 0;
 
-			&:not(:last-child) {
-				margin-bottom: 10px;
+			&:only-child {
+				border-bottom: 1px solid #333;
+			}
+
+			&:nth-child(2n) {
+				background-color: #272727;
 			}
 
 			& > .field-properties-list {
