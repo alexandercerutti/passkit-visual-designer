@@ -13,7 +13,11 @@ export default function FieldsDrawerElement(props: FieldsDrawerElementProps) {
 	]);
 
 	return (
-		<div className={`field-edit-item field-${props.fieldKey}`} key={props.fieldKey}>
+		<div
+			className="field-edit-item"
+			data-key={props.fieldKey}
+			key={props.fieldKey}
+		>
 			<FieldPropertiesList usedProperties={usedProperties} />
 			<FieldOptionsBar
 				deleteField={props.onFieldDelete}
