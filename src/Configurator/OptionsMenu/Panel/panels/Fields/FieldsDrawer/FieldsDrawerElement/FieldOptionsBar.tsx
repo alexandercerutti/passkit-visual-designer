@@ -1,12 +1,16 @@
 import * as React from "react";
 import { PKDataDetectorType, PKTextAlignment, PKDateStyle } from "../../../../../../../passes/constants";
-import { DeleteFieldIcon, ListAddProp } from "../../icons";
+import { DeleteFieldIcon, ListAddProp, FieldsArrowIcon } from "../../icons";
 
 interface FieldOptionsProps {
 	deleteField(key: string): void;
 	updateUsedProperties(usedProperties: string[]): void;
+	changeFieldOrder(fromIndex: number, of: number): void;
 	usedProperties?: string[];
 	fieldKey: string;
+	fieldIndex: number;
+	isUpperBoundary: boolean;
+	isLowerBoundary: boolean;
 }
 
 const OptionalFieldProps = [{
@@ -59,6 +63,17 @@ export default function FieldOptionsBar(props: FieldOptionsProps) {
 				<div className="field-delete" onClick={() => props.deleteField(props.fieldKey)}>
 					<DeleteFieldIcon className="danger" />
 				</div>
+				<div className="field-order-handler">
+					<FieldsArrowIcon
+						className={props.isUpperBoundary && "disabled" || undefined}
+						onClick={() => !props.isUpperBoundary && props.changeFieldOrder(props.fieldIndex, -1)}
+					/>
+					{props.fieldIndex + 1}
+					<FieldsArrowIcon
+						className={props.isLowerBoundary && "disabled" || undefined}
+						onClick={() => !props.isLowerBoundary && props.changeFieldOrder(props.fieldIndex, 1)}
+					/>
+				</div>
 				<div
 					className="property-add-row"
 					style={{ display: allOptionalPropertiesAdded ? "none" : "inherit" }}
@@ -98,5 +113,5 @@ function AvailableFieldsList({ appliedProperties = [], onPropertySelect, classNa
 				{properties}
 			</div>
 		</div>
-	)
+	);
 }

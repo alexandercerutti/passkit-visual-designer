@@ -6,6 +6,7 @@ import FieldsDrawerElement from "./FieldsDrawerElement";
 interface FieldsDrawerProps {
 	fieldsData: FieldProps[];
 	onFieldDelete(fieldKey: string): void;
+	onFieldOrderChange(fromIndex: number, of: number): void;
 }
 
 export default function FieldsDrawer(props: FieldsDrawerProps) {
@@ -35,6 +36,10 @@ export default function FieldsDrawer(props: FieldsDrawerProps) {
 			key={field.fieldKey}
 			fieldKey={field.fieldKey}
 			onFieldDelete={props.onFieldDelete}
+			onFieldOrderChange={props.onFieldOrderChange}
+			index={index}
+			isUpperBoundary={index === 0}
+			isLowerBoundary={index === props.fieldsData.length - 1}
 		/>
 	));
 

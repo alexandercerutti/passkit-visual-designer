@@ -1,10 +1,9 @@
 import * as React from "react";
 import { FieldPanelProps } from ".";
 import { FieldProps } from "../../../../../passes/Areas/components/Field";
-import { FieldsArrowIcon, FieldsAddIcon, MoreFieldsBelowIcon } from "./icons";
+import { FieldsArrowIcon, FieldsAddIcon } from "./icons";
 import FieldTitle from "../FieldTitle";
 import FieldsDrawer from "./FieldsDrawer";
-import { getSafeFieldData } from "../../../../../passes/Areas/components/Field/getSafeFieldData";
 import { FieldsDrawerPlaceholder } from "./FieldsDrawer/placeholder";
 
 interface FieldsPageProps extends Omit<FieldPanelProps, "requestPageClosing" | "requestPageCreation"> {
@@ -29,12 +28,24 @@ export default function FieldsPage(props: FieldsPageProps) {
 		setFields([...fields, { fieldKey } as FieldProps]);
 	}
 
+	const onFieldOrderChange = (fromIndex: number, of: number): void => {
+		// Creating a copy of the array and swapping two elements
+		const nextFields = fields.slice(0);
+		nextFields[fromIndex] = [
+			nextFields[fromIndex + of],
+			nextFields[fromIndex + of] = nextFields[fromIndex]
+		][0];
+
+		setFields(nextFields);
+	}
+
 	const fullPageElement = (
 		fields.length &&
 		<FieldsDrawer
 			{...props}
 			fieldsData={fields}
 			onFieldDelete={onFieldDeleteHandler}
+			onFieldOrderChange={onFieldOrderChange}
 		/> ||
 		<FieldsDrawerPlaceholder />
 	);

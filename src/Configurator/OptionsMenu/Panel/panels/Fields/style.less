@@ -149,6 +149,27 @@
 					cursor: pointer;
 				}
 
+				& > .field-order-handler {
+					& svg {
+						width: 15px;
+						fill: #e6e6e6;
+						margin: 0 10px;
+
+						&.disabled {
+							pointer-events: none;
+							fill: #333333;
+						}
+
+						&:nth-child(1) {
+							transform: rotate(-90deg);
+						}
+
+						&:nth-child(2) {
+							transform: rotate(90deg);
+						}
+					}
+				}
+
 				& svg {
 					width: 25px;
 
