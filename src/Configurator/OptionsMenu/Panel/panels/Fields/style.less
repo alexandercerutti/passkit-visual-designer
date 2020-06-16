@@ -87,13 +87,13 @@
 			display: flex;
 			flex-direction: column;
 			position: relative;
-			height: 300px;
+			min-height: 170px;
 			padding: 5px;
 			padding-top: 10px;
 			/* To allow scrolling */
 			flex-shrink: 0;
 
-			&:only-child {
+			&:last-child {
 				border-bottom: 1px solid #333;
 			}
 
@@ -106,14 +106,14 @@
 				flex-direction: column;
 				flex-grow: 1;
 				width: 100%;
+				margin-bottom: 5px;
 				.scrollableWithoutScrollbars(y);
 			}
 
 			& > .field-options-row {
 				display: flex;
 				justify-content: space-between;
-				margin-bottom: 15px;
-				padding: 0 5px;
+				padding: 5px;
 
 				& > * {
 					display: flex;
@@ -173,7 +173,7 @@
 					}
 
 					& > .field-new-property-list {
-						bottom: -50%;
+						bottom: -100%;
 					}
 				}
 
