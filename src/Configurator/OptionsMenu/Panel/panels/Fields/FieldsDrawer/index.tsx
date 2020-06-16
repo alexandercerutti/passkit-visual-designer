@@ -16,7 +16,7 @@ export default function FieldsDrawer(props: FieldsDrawerProps) {
 	const onListScrollHandler = React.useRef(({ currentTarget }: Partial<React.UIEvent<HTMLDivElement>>) => {
 		// Tollerance of 50px before showing the indicator
 		const didReachEndOfScroll = (
-			currentTarget.scrollHeight - currentTarget.scrollTop <= currentTarget.clientHeight + 50
+			currentTarget.scrollHeight - currentTarget.scrollTop <= currentTarget.clientHeight + 25
 		);
 		// We want to hide "more" icon if we reached end of the scroll
 		setMoreAvailability(!didReachEndOfScroll);
