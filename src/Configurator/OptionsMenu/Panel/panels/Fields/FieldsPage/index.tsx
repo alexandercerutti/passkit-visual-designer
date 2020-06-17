@@ -5,7 +5,7 @@ import { FieldProps } from "../../../../../../passes/Areas/components/Field";
 import { FieldsArrowIcon, FieldsAddIcon } from "../icons";
 import FieldTitle from "../../FieldTitle";
 import FieldsDrawer from "../FieldsDrawer";
-import FieldsDrawerPlaceholder from "../Placeholder";
+import FieldsDrawerPlaceholder from "./components/FieldDrawerPlaceholder";
 
 interface FieldsPageProps extends Omit<FieldPanelProps, "requestPageClosing" | "requestPageCreation"> {
 	onBack(): void;
