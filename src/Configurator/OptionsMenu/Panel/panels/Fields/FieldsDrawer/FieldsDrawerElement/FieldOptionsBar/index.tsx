@@ -1,8 +1,9 @@
 import * as React from "react";
 import "./style.less";
-import { DeleteFieldIcon, ListAddProp, FieldsArrowIcon } from "../../../icons";
+import { DeleteFieldIcon, ListAddProp } from "../../../icons";
 import { OptionalFieldProperties } from "../FieldProperties";
 import FieldOrderHandler, { Directions } from "./components/FieldOrderHandler";
+import AvailablePropertiesMenu from "./components/AvailablePropertiesMenu";
 
 interface FieldOptionsProps {
 	deleteField(key: string): void;
@@ -56,37 +57,11 @@ export default function FieldOptionsBar(props: FieldOptionsProps) {
 					<ListAddProp className="add" />
 				</div>
 			</div>
-			<AvailableFieldsList
+			<AvailablePropertiesMenu
 				className={!shouldShowAddMenu && "hidden" || ""}
 				appliedProperties={props.usedProperties}
 				onPropertySelect={onPropertySelectHandler.current}
 			/>
 		</>
-	);
-}
-
-interface AvailableFieldsListProps {
-	appliedProperties?: string[],
-	onPropertySelect: (propertyName: string[]) => void;
-	className?: string;
-}
-
-function AvailableFieldsList({ appliedProperties = [], onPropertySelect, className }: AvailableFieldsListProps) {
-	const OFPKeys = Object.keys(OptionalFieldProperties);
-	const properties = (
-		!appliedProperties.length && OFPKeys ||
-		OFPKeys.filter(prop => !appliedProperties.includes(prop))
-	).map(prop => (
-		<div key={prop} className="field-property" onClick={() => onPropertySelect([...appliedProperties, prop])}>
-			{prop}
-		</div>
-	));
-
-	return (
-		<div className={`field-prop-choice-overlay ${className}`} onClick={() => onPropertySelect(null)}>
-			<div className="field-new-property-list">
-				{properties}
-			</div>
-		</div>
 	);
 }
