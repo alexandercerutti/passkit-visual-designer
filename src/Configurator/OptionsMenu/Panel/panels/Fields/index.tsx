@@ -1,9 +1,9 @@
 import * as React from "react";
+import "./style.less";
 import { PanelProps } from "../..";
 import { FieldProps } from "../../../../../passes/Areas/components/Field";
 import { FieldsArrowIcon } from "./icons";
 import FieldTitle from "../FieldTitle";
-import "./style.less";
 import FieldsPage from "./FieldsPage";
 
 export interface FieldPanelProps extends PanelProps {

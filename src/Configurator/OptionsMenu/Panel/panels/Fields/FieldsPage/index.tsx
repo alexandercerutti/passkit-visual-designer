@@ -1,10 +1,11 @@
 import * as React from "react";
-import { FieldPanelProps } from ".";
-import { FieldProps } from "../../../../../passes/Areas/components/Field";
-import { FieldsArrowIcon, FieldsAddIcon } from "./icons";
-import FieldTitle from "../FieldTitle";
-import FieldsDrawer from "./FieldsDrawer";
-import FieldsDrawerPlaceholder from "./Placeholder";
+import "./style.less";
+import { FieldPanelProps } from "..";
+import { FieldProps } from "../../../../../../passes/Areas/components/Field";
+import { FieldsArrowIcon, FieldsAddIcon } from "../icons";
+import FieldTitle from "../../FieldTitle";
+import FieldsDrawer from "../FieldsDrawer";
+import FieldsDrawerPlaceholder from "../Placeholder";
 
 interface FieldsPageProps extends Omit<FieldPanelProps, "requestPageClosing" | "requestPageCreation"> {
 	onBack(): void;
@@ -45,6 +46,7 @@ export default function FieldsPage(props: FieldsPageProps) {
 			{...props}
 			fieldsData={fields}
 			onFieldDelete={onFieldDeleteHandler}
+			onFieldChange={() => void 0}
 			onFieldOrderChange={onFieldOrderChange}
 		/> ||
 		<FieldsDrawerPlaceholder />
