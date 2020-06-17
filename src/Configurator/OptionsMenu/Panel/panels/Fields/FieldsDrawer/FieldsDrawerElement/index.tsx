@@ -1,5 +1,5 @@
 import * as React from "react";
-import FieldPropertiesList from "./FieldPropertiesList";
+import FieldPropertiesEditList from "./FieldPropertiesEditList";
 import FieldOptionsBar from "./FieldOptionsBar";
 
 interface FieldsDrawerElementProps {
@@ -22,7 +22,9 @@ export default function FieldsDrawerElement(props: FieldsDrawerElementProps) {
 			data-key={props.fieldKey}
 			key={props.fieldKey}
 		>
-			<FieldPropertiesList usedProperties={usedProperties} />
+			<FieldPropertiesEditList
+				usedProperties={usedProperties}
+			/>
 			<FieldOptionsBar
 				deleteField={props.onFieldDelete}
 				updateUsedProperties={setUsedProperties}
