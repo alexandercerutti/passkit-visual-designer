@@ -1,6 +1,7 @@
 import * as React from "react";
 import { PKDataDetectorType, PKTextAlignment, PKDateStyle } from "../../../../../../../passes/constants";
 import { DeleteFieldIcon, ListAddProp, FieldsArrowIcon } from "../../icons";
+import { OptionalFieldProperties } from "./FieldProperties";
 
 interface FieldOptionsProps {
 	deleteField(key: string): void;
@@ -12,35 +13,6 @@ interface FieldOptionsProps {
 	isUpperBoundary: boolean;
 	isLowerBoundary: boolean;
 }
-
-const OptionalFieldProps = [{
-	property: "label",
-	type: "string"
-}, {
-	property: "attributedValue",
-	type: "string",
-}, {
-	property: "changeMessage",
-	type: "string"
-}, {
-	property: "dataDetectorTypes",
-	type: PKDataDetectorType,
-}, {
-	property: "textAlignment",
-	type: PKTextAlignment
-}, {
-	property: "dateStyle",
-	type: PKDateStyle
-}, {
-	property: "timeStyle",
-	type: PKDateStyle
-}, {
-	property: "ignoresTimeZone",
-	type: Boolean
-}, {
-	property: "isRelative",
-	type: Boolean
-}];
 
 export default function FieldOptionsBar(props: FieldOptionsProps) {
 	const [shouldShowAddMenu, showAddMenu] = React.useState(false);
@@ -55,7 +27,7 @@ export default function FieldOptionsBar(props: FieldOptionsProps) {
 	});
 
 	// Excluding the mandatory ones
-	const allOptionalPropertiesAdded = props.usedProperties?.length - 2 === OptionalFieldProps.length;
+	const allOptionalPropertiesAdded = props.usedProperties?.length - 2 === Object.keys(OptionalFieldProperties).length;
 
 	return (
 		<>
@@ -98,12 +70,13 @@ interface AvailableFieldsListProps {
 }
 
 function AvailableFieldsList({ appliedProperties = [], onPropertySelect, className }: AvailableFieldsListProps) {
+	const OFPKeys = Object.keys(OptionalFieldProperties);
 	const properties = (
-		!appliedProperties.length && OptionalFieldProps ||
-		OptionalFieldProps.filter(prop => !appliedProperties.includes(prop.property))
-	).map(({ property }) => (
-		<div key={property} className="field-property" onClick={() => onPropertySelect([...appliedProperties, property])}>
-			{property}
+		!appliedProperties.length && OFPKeys ||
+		OFPKeys.filter(prop => !appliedProperties.includes(prop))
+	).map(prop => (
+		<div key={prop} className="field-property" onClick={() => onPropertySelect([...appliedProperties, prop])}>
+			{prop}
 		</div>
 	));
 
