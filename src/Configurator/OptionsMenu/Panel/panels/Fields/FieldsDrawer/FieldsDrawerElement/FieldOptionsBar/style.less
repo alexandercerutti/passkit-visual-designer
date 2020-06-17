@@ -1,0 +1,20 @@
+.field-options-bar {
+	display: flex;
+	justify-content: space-between;
+	padding: 5px;
+
+	& > * {
+		display: flex;
+		align-items: center;
+		cursor: pointer;
+	}
+
+	& svg {
+		width: 25px;
+
+		&.danger {
+			fill: #ff6363;
+			width: 22px;
+		}
+	}
+}

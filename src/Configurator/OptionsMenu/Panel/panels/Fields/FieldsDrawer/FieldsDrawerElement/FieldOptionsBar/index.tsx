@@ -1,7 +1,8 @@
 import * as React from "react";
-import { PKDataDetectorType, PKTextAlignment, PKDateStyle } from "../../../../../../../passes/constants";
-import { DeleteFieldIcon, ListAddProp, FieldsArrowIcon } from "../../icons";
-import { OptionalFieldProperties } from "./FieldProperties";
+import "./style.less";
+import { DeleteFieldIcon, ListAddProp, FieldsArrowIcon } from "../../../icons";
+import { OptionalFieldProperties } from "../FieldProperties";
+import FieldOrderHandler, { Directions } from "./components/FieldOrderHandler";
 
 interface FieldOptionsProps {
 	deleteField(key: string): void;
@@ -29,23 +30,24 @@ export default function FieldOptionsBar(props: FieldOptionsProps) {
 	// Excluding the mandatory ones
 	const allOptionalPropertiesAdded = props.usedProperties?.length - 2 === Object.keys(OptionalFieldProperties).length;
 
+	const allowedMovingDirections = (
+		props.isLowerBoundary && props.isUpperBoundary ? Directions.NONE :
+			props.isLowerBoundary ? Directions.UP :
+				props.isUpperBoundary ? Directions.DOWN :
+					Directions.BOTH
+	);
+
 	return (
 		<>
-			<div className="field-options-row">
+			<div className="field-options-bar">
 				<div className="field-delete" onClick={() => props.deleteField(props.fieldKey)}>
 					<DeleteFieldIcon className="danger" />
 				</div>
-				<div className="field-order-handler">
-					<FieldsArrowIcon
-						className={props.isUpperBoundary && "disabled" || undefined}
-						onClick={() => !props.isUpperBoundary && props.changeFieldOrder(props.fieldIndex, -1)}
-					/>
-					{props.fieldIndex + 1}
-					<FieldsArrowIcon
-						className={props.isLowerBoundary && "disabled" || undefined}
-						onClick={() => !props.isLowerBoundary && props.changeFieldOrder(props.fieldIndex, 1)}
-					/>
-				</div>
+				<FieldOrderHandler
+					allowedDirections={allowedMovingDirections}
+					fieldIndex={props.fieldIndex}
+					requestFieldOrderChange={props.changeFieldOrder}
+				/>
 				<div
 					className="property-add-row"
 					style={{ display: allOptionalPropertiesAdded ? "none" : "inherit" }}
