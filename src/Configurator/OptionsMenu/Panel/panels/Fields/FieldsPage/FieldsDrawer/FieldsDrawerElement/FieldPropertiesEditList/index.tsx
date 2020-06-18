@@ -2,6 +2,9 @@ import * as React from "react";
 import "./style.less";
 import { PKTextAlignment, PKDateStyle, PKDataDetectorType } from "../../../../../../../../../passes/constants";
 import { AllFieldProperties } from "../FieldProperties";
+import FieldStringPropertyPanel from "./FieldPropertyPanels/String";
+import FieldCheckboxPropertyPanel from "./FieldPropertyPanels/Checkbox";
+import FieldEnumPropertyPanel from "./FieldPropertyPanels/Enum";
 
 interface FieldPropertiesEditListProps {
 	usedProperties?: string[];
@@ -9,13 +12,38 @@ interface FieldPropertiesEditListProps {
 
 export default function FieldPropertiesEditList(props: FieldPropertiesEditListProps) {
 	const properties = props.usedProperties.map((element) => {
-		const PropertyArea = switchPropertyTypePanel(element);
+		const property = AllFieldProperties[element];
 
-		return (
-			<PropertyArea
-				key={element}
-			/>
-		);
+		if (isPanelTypeEnum(property.type)) {
+			return (
+				<FieldEnumPropertyPanel
+					key={element}
+					name={element}
+					options={AllFieldProperties[element].type}
+					onValueChange={() => console.log("attempting to change enum")}
+				/>
+			);
+		}
+
+		if (isPanelTypeString(property.type)) {
+			return (
+				<FieldStringPropertyPanel
+					key={element}
+					name={element}
+					onValueChange={() => console.log("attempting to change string")}
+				/>
+			);
+		}
+
+		if (isPanelTypeCheckbox(property.type)) {
+			return (
+				<FieldCheckboxPropertyPanel
+					key={element}
+					name={element}
+					onValueChange={() => console.log("attempting to change checkbox")}
+				/>
+			);
+		}
 	});
 
 	return (
@@ -25,19 +53,14 @@ export default function FieldPropertiesEditList(props: FieldPropertiesEditListPr
 	);
 }
 
-function switchPropertyTypePanel(elementKey: string): React.FC<any> {
-	switch (AllFieldProperties[elementKey].type) {
-		case String:
-			return () => <div>ImmaStreeeeng</div>;
-		case Boolean:
-			return () => <div>ImmaBollean</div>;
-		case PKTextAlignment:
-			return () => <div />;
-		case PKDateStyle:
-			return () => <div />;
-		case PKDataDetectorType:
-			return () => <div />;
-		default:
-			return () => null;
-	}
+function isPanelTypeEnum(type: Object) {
+	return type === PKTextAlignment || type === PKDateStyle || type === PKDataDetectorType;
+}
+
+function isPanelTypeString(type: Object) {
+	return type === String;
+}
+
+function isPanelTypeCheckbox(type: Object) {
+	return type === Boolean;
 }
