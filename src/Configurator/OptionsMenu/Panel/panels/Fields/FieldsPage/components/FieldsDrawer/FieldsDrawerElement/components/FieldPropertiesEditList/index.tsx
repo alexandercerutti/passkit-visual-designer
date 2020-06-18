@@ -1,6 +1,6 @@
 import * as React from "react";
 import "./style.less";
-import { PKTextAlignment, PKDateStyle, PKDataDetectorType } from "../../../../../../../../../passes/constants";
+import { PKTextAlignment, PKDateStyle, PKDataDetectorType } from "../../../../../../../../../../../passes/constants";
 import { AllFieldProperties } from "../../FieldProperties";
 
 interface FieldPropertiesEditListProps {

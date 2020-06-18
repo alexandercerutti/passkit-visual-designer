@@ -1,6 +1,6 @@
 import * as React from "react";
-import { FieldProps } from "../../../../../../passes/Areas/components/Field";
-import { MoreFieldsBelowIcon } from "../icons";
+import { FieldProps } from "../../../../../../../../passes/Areas/components/Field";
+import { MoreFieldsBelowIcon } from "../../../icons";
 import FieldsDrawerElement from "./FieldsDrawerElement";
 
 interface FieldsDrawerProps {
