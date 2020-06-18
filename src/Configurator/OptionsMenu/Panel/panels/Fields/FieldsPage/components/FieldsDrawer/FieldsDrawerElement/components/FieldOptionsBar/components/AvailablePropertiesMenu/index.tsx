@@ -10,15 +10,17 @@ interface AvailablePropertiesMenuProps {
 }
 
 export default function AvailablePropertiesMenu({ appliedProperties = [], onPropertySelect, className }: AvailablePropertiesMenuProps) {
-	const OFPKeys = Object.keys(OptionalFieldProperties);
-	const properties = (
-		!appliedProperties.length && OFPKeys ||
-		OFPKeys.filter(prop => !appliedProperties.includes(prop))
-	).map(prop => (
-		<div key={prop} className="field-property" onClick={() => onPropertySelect([...appliedProperties, prop])}>
-			{prop}
-		</div>
-	));
+	const properties = Object.keys(OptionalFieldProperties).reduce<React.ReactElement[]>((acc, current) => {
+		if (appliedProperties.includes(current)) {
+			return acc;
+		}
+
+		return [...acc, (
+			<div key={current} className="field-property" onClick={() => onPropertySelect([...appliedProperties, current])}>
+				{current}
+			</div>
+		)];
+	}, []);
 
 	return (
 		<div className={`field-prop-choice-overlay ${className}`} onClick={() => onPropertySelect(null)}>
