@@ -1,6 +1,6 @@
 import * as React from "react";
-import FieldPropertiesEditList from "./FieldPropertiesEditList";
-import FieldOptionsBar from "./FieldOptionsBar";
+import FieldPropertiesEditList from "./components/FieldPropertiesEditList";
+import FieldOptionsBar from "./components/FieldOptionsBar";
 
 interface FieldsDrawerElementProps {
 	onFieldDelete(key: string): void;

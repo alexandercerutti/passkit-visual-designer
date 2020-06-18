@@ -1,6 +1,6 @@
 import * as React from "react";
 import "./style.less";
-import { OptionalFieldProperties } from "../../../FieldProperties";
+import { OptionalFieldProperties } from "../../../../FieldProperties";
 
 interface AvailablePropertiesMenuProps {
 	className?: string;
