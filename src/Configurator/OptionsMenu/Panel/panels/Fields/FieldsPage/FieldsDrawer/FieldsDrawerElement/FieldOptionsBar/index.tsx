@@ -1,9 +1,9 @@
 import * as React from "react";
 import "./style.less";
-import { DeleteFieldIcon, ListAddProp } from "../../../../../../icons";
-import { OptionalFieldProperties } from "../../FieldProperties";
-import FieldOrderHandler, { Directions } from "./components/FieldOrderHandler";
-import AvailablePropertiesMenu from "./components/AvailablePropertiesMenu";
+import { DeleteFieldIcon, ListAddProp } from "../../../../icons";
+import { OptionalFieldProperties } from "../FieldProperties";
+import FieldOrderHandler, { Directions } from "./FieldOrderHandler";
+import AvailablePropertiesMenu from "./AvailablePropertiesMenu";
 
 interface FieldOptionsProps {
 	deleteField(key: string): void;

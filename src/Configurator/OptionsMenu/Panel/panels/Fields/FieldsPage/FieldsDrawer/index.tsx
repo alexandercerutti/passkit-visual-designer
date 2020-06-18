@@ -1,11 +1,13 @@
 import * as React from "react";
-import { FieldProps } from "../../../../../../../../passes/Areas/components/Field";
-import { MoreFieldsBelowIcon } from "../../../icons";
+import { FieldProps } from "../../../../../../../passes/Areas/components/Field";
+import { MoreFieldsBelowIcon } from "../../icons";
 import FieldsDrawerElement from "./FieldsDrawerElement";
+import { AllFieldProperties } from "./FieldsDrawerElement/FieldProperties";
 
 interface FieldsDrawerProps {
 	fieldsData: FieldProps[];
 	onFieldDelete(fieldKey: string): void;
+	onFieldChange(data: AllFieldProperties): void;
 	onFieldOrderChange(fromIndex: number, of: number): void;
 }
 
@@ -20,6 +22,10 @@ export default function FieldsDrawer(props: FieldsDrawerProps) {
 		);
 		// We want to hide "more" icon if we reached end of the scroll
 		setMoreAvailability(!didReachEndOfScroll);
+	});
+
+	const onFieldContentChange = React.useRef(() => {
+
 	});
 
 	React.useEffect(() => {
