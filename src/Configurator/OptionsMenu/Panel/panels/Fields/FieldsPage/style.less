@@ -1,5 +1,3 @@
-@import "../../../../../../App/common.less";
-
 .panel-navigator > .page > .fields-page {
 	display: flex;
 	flex-direction: column;
@@ -42,32 +40,6 @@
 			margin: 0;
 			// "Ignoring" the "back" text and centering a little bit more
 			margin-right: 25px;
-		}
-	}
-
-	& .fields {
-		.scrollableWithoutScrollbars(y);
-		display: flex;
-		flex-grow: 1;
-		flex-direction: column;
-
-		& .field-edit-item {
-			display: flex;
-			flex-direction: column;
-			position: relative;
-			min-height: 170px;
-			padding: 5px;
-			padding-top: 10px;
-			/* To allow scrolling */
-			flex-shrink: 0;
-
-			&:last-child {
-				border-bottom: 1px solid #333;
-			}
-
-			&:nth-child(2n) {
-				background-color: #272727;
-			}
 		}
 	}
 

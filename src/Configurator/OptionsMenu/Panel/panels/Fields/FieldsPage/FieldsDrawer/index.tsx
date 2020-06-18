@@ -1,4 +1,5 @@
 import * as React from "react";
+import "./style.less";
 import { FieldProps } from "../../../../../../../passes/Areas/components/Field";
 import { MoreFieldsBelowIcon } from "../../icons";
 import FieldsDrawerElement from "./FieldsDrawerElement";
@@ -52,7 +53,7 @@ export default function FieldsDrawer(props: FieldsDrawerProps) {
 	return (
 		<>
 			<div
-				className="fields"
+				id="fields-drawer"
 				ref={drawerRef}
 				onScroll={onListScrollHandler.current}
 			>

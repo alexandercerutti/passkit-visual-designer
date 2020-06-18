@@ -1,4 +1,5 @@
 import * as React from "react";
+import "./style.less";
 import FieldPropertiesEditList from "./FieldPropertiesEditList";
 import FieldOptionsBar from "./FieldOptionsBar";
 
