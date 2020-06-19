@@ -4,7 +4,7 @@ import { PanelProps } from "../..";
 import { FieldProps } from "../../../../../passes/Areas/components/Field";
 import { FieldsArrowIcon } from "./icons";
 import FieldTitle from "../FieldTitle";
-import FieldsPage from "./FieldsPage";
+import FieldsPage from "../../../FieldsPage";
 
 export interface FieldPanelProps extends PanelProps {
 	value?: FieldProps[];

@@ -1,6 +1,6 @@
 import * as React from "react";
 import "./style.less";
-import { FieldsArrowIcon } from "../../../../../icons";
+import { FieldsArrowIcon } from "../../../../Panel/panels/Fields/icons";
 
 export const enum Directions {
 	UP,

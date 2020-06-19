@@ -1,4 +1,4 @@
-import { PKDataDetectorType, PKTextAlignment, PKDateStyle } from "../../../../../../../../passes/constants";
+import { PKDataDetectorType, PKTextAlignment, PKDateStyle } from "../../../../passes/constants";
 
 type FieldPropStructure = { [key: string]: { type: typeof String | typeof Boolean | typeof PKTextAlignment | typeof PKDateStyle | typeof PKDataDetectorType } }
 
