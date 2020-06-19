@@ -17,18 +17,8 @@ interface Props {
 }
 
 export default function FieldOrderHandler(props: Props) {
-	const canMoveUp = (
-		props.allowedDirections !== Directions.NONE && (
-			props.allowedDirections === Directions.UP ||
-			props.allowedDirections === Directions.BOTH
-		)
-	);
-	const canMoveDown = (
-		props.allowedDirections !== Directions.NONE && (
-			props.allowedDirections === Directions.DOWN ||
-			props.allowedDirections === Directions.BOTH
-		)
-	);
+	const canMoveUp = canMoveInDirection(props.allowedDirections, Directions.UP);
+	const canMoveDown = canMoveInDirection(props.allowedDirections, Directions.DOWN);
 
 	return (
 		<div className="field-order-handler">
@@ -42,5 +32,14 @@ export default function FieldOrderHandler(props: Props) {
 				onClick={() => canMoveDown && props.requestFieldOrderChange(props.fieldIndex, 1)}
 			/>
 		</div>
+	);
+}
+
+function canMoveInDirection(directionProp: Directions, targetDirection: Directions) {
+	return (
+		directionProp !== Directions.NONE && (
+			directionProp === targetDirection ||
+			directionProp === Directions.BOTH
+		)
 	);
 }
