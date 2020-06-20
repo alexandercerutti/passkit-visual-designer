@@ -51,7 +51,7 @@ export default function FieldOptionsBar(props: FieldOptionsProps) {
 				/>
 				<div
 					className="property-add-row"
-					style={{ display: allOptionalPropertiesAdded ? "none" : "inherit" }}
+					style={{ visibility: allOptionalPropertiesAdded ? "hidden" : "inherit" }}
 					onClick={() => showAddMenu(true)}
 				>
 					<ListAddProp className="add" />
