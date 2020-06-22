@@ -5,7 +5,7 @@ import PanelGroup, { DataGroup } from "../PanelGroup";
 import Panel, { FieldDetails } from "../Panel";
 
 interface NavigatorState {
-	pagePanelsHierarchy: React.ReactNode[];
+	pagePanelsHierarchy: [string, React.ReactNode][];
 	activePanel: string;
 }
 
@@ -28,10 +28,14 @@ export default class PanelNavigator extends React.Component<NavigatorProps, Navi
 		this.saveChanges = this.saveChanges.bind(this);
 	}
 
-	requestPageCreation(children: React.ReactNode) {
+	requestPageCreation(identifier: string, children: React.ReactNode) {
+		if (this.state.pagePanelsHierarchy.find(([id]) => id === identifier)) {
+			return;
+		}
+
 		this.setState((previousState) => {
 			const pagePanelsHierarchy = previousState.pagePanelsHierarchy;
-			pagePanelsHierarchy.push(children);
+			pagePanelsHierarchy.push([identifier, children]);
 			return { pagePanelsHierarchy };
 		});
 	}
@@ -60,7 +64,7 @@ export default class PanelNavigator extends React.Component<NavigatorProps, Navi
 	}
 
 	render() {
-		const pages = this.state.pagePanelsHierarchy.map((page, index) => {
+		const pages = this.state.pagePanelsHierarchy.map(([_, page], index) => {
 			return (
 				<div className="page" key={`panel-depth${index}`}>
 					{page}

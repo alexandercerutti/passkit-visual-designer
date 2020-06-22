@@ -14,7 +14,7 @@ export default function FieldPanel(props: FieldPanelProps) {
 	const { current: pageCreationClickHandler } = React.useRef(() => {
 		const { requestPageClosing, requestPageCreation, ...otherProps } = props;
 
-		requestPageCreation(
+		requestPageCreation("fieldsPage",
 			<FieldsPage
 				{...otherProps}
 				onBack={requestPageClosing}

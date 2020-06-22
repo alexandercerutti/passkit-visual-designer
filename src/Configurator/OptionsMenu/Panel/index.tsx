@@ -11,7 +11,7 @@ export interface PanelProps {
 	kind: FieldKind;
 	data: Omit<FieldDetails, "kind" | "name">;
 	value?: any; // will be overridden by single panels
-	requestPageCreation?(children: React.ReactNode): void;
+	requestPageCreation?(identifier: string, children: React.ReactNode): void;
 	requestPageClosing?(): void;
 	onValueChange<T>(name: string, data: T): void;
 }
