@@ -5,14 +5,14 @@ import { MoreFieldsBelowIcon } from "../icons";
 import FieldsDrawerElement from "../FieldsDrawerElement";
 import { AllFieldProperties } from "../FieldsDrawerElement/FieldProperties";
 
-interface FieldsDrawerProps {
+interface Props {
 	fieldsData: FieldProps[];
 	onFieldDelete(fieldKey: string): void;
 	onFieldChange(data: AllFieldProperties): void;
 	onFieldOrderChange(fromIndex: number, of: number): void;
 }
 
-export default function FieldsDrawer(props: FieldsDrawerProps) {
+export default function Drawer(props: Props) {
 	const [isThereMoreAfterTheSkyline, setMoreAvailability] = React.useState(false);
 	const drawerRef = React.useRef<HTMLDivElement>();
 
@@ -53,7 +53,7 @@ export default function FieldsDrawer(props: FieldsDrawerProps) {
 	return (
 		<>
 			<div
-				id="fields-drawer"
+				id="drawer"
 				ref={drawerRef}
 				onScroll={onListScrollHandler.current}
 			>

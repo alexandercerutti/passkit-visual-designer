@@ -3,7 +3,7 @@ import "./style.less";
 import { FieldPanelProps } from "../../Panel/panels/Fields";
 import { FieldProps } from "../../../../passes/Areas/components/Field";
 import { FieldsAddIcon } from "./icons";
-import FieldsDrawer from "./FieldsDrawer";
+import Drawer from "./Drawer";
 import FieldsDrawerPlaceholder from "./FieldDrawerPlaceholder";
 import PageHeader from "../Header";
 import { PageProps } from "../pages";
@@ -41,7 +41,7 @@ export default function FieldsPreviewPage(props: Props) {
 
 	const fullPageElement = (
 		fields.length &&
-		<FieldsDrawer
+		<Drawer
 			{...props}
 			fieldsData={fields}
 			onFieldDelete={onFieldDeleteHandler}
