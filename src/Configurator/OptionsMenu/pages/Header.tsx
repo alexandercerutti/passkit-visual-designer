@@ -1,5 +1,5 @@
 import * as React from "react";
-import { FieldsArrowIcon } from "../FieldsPage/icons";
+import { FieldsArrowIcon } from "./icons";
 import CapitalHeaderTitle from "../CapitalHeaderTitle";
 
 interface Props {

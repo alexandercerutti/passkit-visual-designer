@@ -4,7 +4,7 @@ import { PanelProps } from "../..";
 import { FieldProps } from "../../../../../passes/Areas/components/Field";
 import { FieldsArrowIcon } from "./icons";
 import CapitalHeaderTitle from "../../../CapitalHeaderTitle";
-import FieldsPage from "../../../FieldsPage";
+import FieldsPreviewPage from "../../../pages/FieldsPreviewPage";
 
 export interface FieldPanelProps extends PanelProps {
 	value?: FieldProps[];
@@ -15,7 +15,7 @@ export default function FieldPanel(props: FieldPanelProps) {
 		const { requestPageClosing, requestPageCreation, ...otherProps } = props;
 
 		requestPageCreation("fieldsPage",
-			<FieldsPage
+			<FieldsPreviewPage
 				{...otherProps}
 				onBack={requestPageClosing}
 			/>

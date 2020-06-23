@@ -1,16 +1,16 @@
 import * as React from "react";
 import "./style.less";
-import { FieldPanelProps } from "../Panel/panels/Fields";
-import { FieldProps } from "../../../passes/Areas/components/Field";
+import { FieldPanelProps } from "../../Panel/panels/Fields";
+import { FieldProps } from "../../../../passes/Areas/components/Field";
 import { FieldsAddIcon } from "./icons";
 import FieldsDrawer from "./FieldsDrawer";
 import FieldsDrawerPlaceholder from "./FieldDrawerPlaceholder";
-import PageHeader from "../Pages/Header";
-import { PageProps } from "../Pages/pages";
+import PageHeader from "../Header";
+import { PageProps } from "../pages";
 
 interface Props extends PageProps, Omit<FieldPanelProps, "requestPageClosing" | "requestPageCreation"> { }
 
-export default function FieldsPage(props: Props) {
+export default function FieldsPreviewPage(props: Props) {
 	const [fields, setFields] = React.useState(props.value || []);
 	const name = `${props.name.slice(0, 1).toUpperCase()}${props.name.slice(1)}`;
 

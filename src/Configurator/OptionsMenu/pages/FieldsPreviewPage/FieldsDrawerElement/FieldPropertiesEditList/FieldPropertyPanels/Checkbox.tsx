@@ -13,7 +13,6 @@ export default function FieldCheckboxPropertyPanel(props: Props) {
 			<input
 				id={props.name}
 				type="checkbox"
-				checked={props.value ?? false}
 				onChange={(ev) => props.onValueChange(ev.currentTarget.checked)}
 			/>
 		</div>

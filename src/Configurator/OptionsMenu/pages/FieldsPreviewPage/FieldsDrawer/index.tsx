@@ -1,6 +1,6 @@
 import * as React from "react";
 import "./style.less";
-import { FieldProps } from "../../../../passes/Areas/components/Field";
+import { FieldProps } from "../../../../../passes/Areas/components/Field";
 import { MoreFieldsBelowIcon } from "../icons";
 import FieldsDrawerElement from "../FieldsDrawerElement";
 import { AllFieldProperties } from "../FieldsDrawerElement/FieldProperties";
