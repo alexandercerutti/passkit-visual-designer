@@ -4,7 +4,7 @@ import { FieldPanelProps } from "../../Panel/panels/Fields";
 import { FieldProps } from "../../../../passes/Areas/components/Field";
 import { FieldsAddIcon } from "./icons";
 import Drawer from "./Drawer";
-import FieldsDrawerPlaceholder from "./FieldDrawerPlaceholder";
+import DrawerPlaceholder from "./DrawerPlaceholder";
 import PageHeader from "../Header";
 import { PageProps } from "../pages";
 
@@ -48,7 +48,7 @@ export default function FieldsPreviewPage(props: Props) {
 			onFieldChange={() => void 0}
 			onFieldOrderChange={onFieldOrderChange}
 		/> ||
-		<FieldsDrawerPlaceholder />
+		<DrawerPlaceholder />
 	);
 
 	return (
