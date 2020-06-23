@@ -2,10 +2,10 @@ import * as React from "react";
 import "./style.less";
 import { FieldPanelProps } from "../Panel/panels/Fields";
 import { FieldProps } from "../../../passes/Areas/components/Field";
-import { FieldsArrowIcon, FieldsAddIcon } from "./icons";
-import CapitalHeaderTitle from "../CapitalHeaderTitle";
+import { FieldsAddIcon } from "./icons";
 import FieldsDrawer from "./FieldsDrawer";
 import FieldsDrawerPlaceholder from "./FieldDrawerPlaceholder";
+import PageHeader from "../Pages/Header";
 
 interface FieldsPageProps extends Omit<FieldPanelProps, "requestPageClosing" | "requestPageCreation"> {
 	onBack(): void;
@@ -54,14 +54,9 @@ export default function FieldsPage(props: FieldsPageProps) {
 
 	return (
 		<div className="fields-page">
-			<header>
-				<div className="back" onClick={props.onBack}>
-					<FieldsArrowIcon />
-					<span>Back</span>
-				</div>
-				<CapitalHeaderTitle name={name} />
+			<PageHeader name={name} onBack={props.onBack}>
 				<FieldsAddIcon className="add" onClick={onFieldAddHandler} />
-			</header>
+			</PageHeader>
 			{fullPageElement}
 		</div >
 	);
