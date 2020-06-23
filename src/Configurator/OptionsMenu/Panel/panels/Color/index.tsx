@@ -2,7 +2,7 @@ import * as React from "react";
 import { TwitterPicker, RGBColor, ColorResult } from "react-color";
 import { PanelProps } from "../..";
 import useContentSavingHandler from "../useContentSavingHandler";
-import FieldTitle from "../FieldTitle";
+import CapitalHeaderTitle from "../../../CapitalHeaderTitle";
 import "./style.less";
 
 interface ColorPanelProps extends PanelProps {
@@ -34,7 +34,7 @@ export default function ColorPanel(props: ColorPanelProps) {
 
 	return (
 		<>
-			<FieldTitle name={props.name} />
+			<CapitalHeaderTitle name={props.name} />
 			<TwitterPicker
 				triangle="hide"
 				// PR @types/react-color: https://github.com/DefinitelyTyped/DefinitelyTyped/pull/44867

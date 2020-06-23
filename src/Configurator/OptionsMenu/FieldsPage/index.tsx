@@ -3,7 +3,7 @@ import "./style.less";
 import { FieldPanelProps } from "../Panel/panels/Fields";
 import { FieldProps } from "../../../passes/Areas/components/Field";
 import { FieldsArrowIcon, FieldsAddIcon } from "./icons";
-import FieldTitle from "../Panel/panels/FieldTitle";
+import CapitalHeaderTitle from "../CapitalHeaderTitle";
 import FieldsDrawer from "./FieldsDrawer";
 import FieldsDrawerPlaceholder from "./FieldDrawerPlaceholder";
 
@@ -59,7 +59,7 @@ export default function FieldsPage(props: FieldsPageProps) {
 					<FieldsArrowIcon />
 					<span>Back</span>
 				</div>
-				<FieldTitle name={name} />
+				<CapitalHeaderTitle name={name} />
 				<FieldsAddIcon className="add" onClick={onFieldAddHandler} />
 			</header>
 			{fullPageElement}

@@ -3,7 +3,7 @@ import "./style.less";
 import { PanelProps } from "../..";
 import { FieldProps } from "../../../../../passes/Areas/components/Field";
 import { FieldsArrowIcon } from "./icons";
-import FieldTitle from "../FieldTitle";
+import CapitalHeaderTitle from "../../../CapitalHeaderTitle";
 import FieldsPage from "../../../FieldsPage";
 
 export interface FieldPanelProps extends PanelProps {
@@ -26,7 +26,7 @@ export default function FieldPanel(props: FieldPanelProps) {
 		<>
 			<div className="cta-edit" onClick={pageCreationClickHandler}>
 				<div className="col-left">
-					<FieldTitle name={props.name} />
+					<CapitalHeaderTitle name={props.name} />
 					<em>{`${props.value?.length ?? 0} fields for this area`}</em>
 				</div>
 				<FieldsArrowIcon />

@@ -1,7 +1,7 @@
 import * as React from "react";
 import { PanelProps } from "../..";
 import useContentSavingHandler from "../useContentSavingHandler";
-import FieldTitle from "../FieldTitle";
+import CapitalHeaderTitle from "../../../CapitalHeaderTitle";
 import "./style.less";
 
 interface TextPanelProps extends PanelProps {
@@ -23,7 +23,7 @@ export default function TextPanel(props: TextPanelProps) {
 	return (
 		<>
 			<label htmlFor={props.name}>
-				<FieldTitle name={props.name} />
+				<CapitalHeaderTitle name={props.name} />
 				{required}
 			</label>
 			<input
