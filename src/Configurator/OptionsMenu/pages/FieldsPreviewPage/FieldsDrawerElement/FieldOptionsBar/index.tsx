@@ -52,16 +52,16 @@ export default function FieldOptionsBar(props: FieldOptionsProps) {
 				<div
 					className="property-add-row"
 					style={{ visibility: allOptionalPropertiesAdded ? "hidden" : "inherit" }}
-					onClick={() => showAddMenu(true)}
+				// onClick={() => showAddMenu(true)}
 				>
 					<ListAddProp className="add" />
 				</div>
 			</div>
-			<AvailablePropertiesMenu
+			{/* 			<AvailablePropertiesMenu
 				className={!shouldShowAddMenu && "hidden" || ""}
 				appliedProperties={props.usedProperties}
 				onPropertySelect={onPropertySelectHandler.current}
-			/>
+			/> */}
 		</>
 	);
 }

@@ -41,7 +41,7 @@ export default function Drawer(props: Props) {
 	const panels = props.fieldsData.map((field, index) => (
 		<FieldsDrawerElement
 			key={field.fieldKey}
-			fieldKey={field.fieldKey}
+			elementData={field}
 			onFieldDelete={props.onFieldDelete}
 			onFieldOrderChange={props.onFieldOrderChange}
 			index={index}
