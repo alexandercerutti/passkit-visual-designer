@@ -28,7 +28,10 @@ export default function FieldsDrawerElement(props: FieldsDrawerElementProps) {
 			{/* <FieldPropertiesEditList
 				usedProperties={usedProperties}
 			/> */}
-			<FieldPreview previewData={props.elementData} />
+			<FieldPreview
+				previewData={props.elementData}
+				isFieldHidden={false}
+			/>
 			<FieldOptionsBar
 				deleteField={props.onFieldDelete}
 				updateUsedProperties={setUsedProperties}

@@ -11,7 +11,7 @@ export default function FieldPreview(props: Props) {
 	const isPresetFieldKey = props.previewData.fieldKey.includes("::pkvd-new");
 
 	return (
-		<div className={`field-preview${!props.isFieldHidden && " hidden" || ""}`}>
+		<div className={`field-preview${props.isFieldHidden && " hidden" || ""}`}>
 			<div className={`preview-field-key${isPresetFieldKey && " none" || ""}`}>
 				<span>{isPresetFieldKey ? "not setted" : props.previewData?.fieldKey}</span>
 			</div>
