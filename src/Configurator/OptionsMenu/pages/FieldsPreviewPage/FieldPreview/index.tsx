@@ -3,15 +3,22 @@ import "./style.less";
 import { FieldProperties } from "../../../../../passes/Areas/components/Field/fieldCommons";
 
 interface Props {
-	previewData: FieldProperties
+	previewData: FieldProperties;
+	isFieldHidden?: boolean;
 }
 
 export default function FieldPreview(props: Props) {
+	const isPresetFieldKey = props.previewData.fieldKey.includes("::pkvd-new");
+
 	return (
-		<div className="field-preview">
-			<h4>field: {props.previewData?.fieldKey}</h4>
-			<span className="label">{props.previewData.label}</span>
-			<span className="value">{props.previewData.value}</span>
+		<div className={`field-preview${!props.isFieldHidden && " hidden" || ""}`}>
+			<div className={`preview-field-key${isPresetFieldKey && " none" || ""}`}>
+				<span>{isPresetFieldKey ? "not setted" : props.previewData?.fieldKey}</span>
+			</div>
+			<div className="preview-main-box">
+				<span className="label">{props.previewData.label || "label"}</span>
+				<span className="value">{props.previewData.value || "value"}</span>
+			</div>
 		</div>
 	);
 }

@@ -1,3 +1,81 @@
-.field-preview {
+@import "../FieldsDrawerElement/style.less";
+@base-background-color: #1c1c1c;
 
+.field-preview {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	padding: 0 5px;
+	margin-top: 20px;
+
+	& .preview-field-key {
+		width: 100%;
+		padding-bottom: 18px;
+		border-bottom: 1px solid #272727;
+
+		&.none {
+			& span {
+				color: #6f6f6f;
+			}
+		}
+
+		& span {
+			font-weight: 100;
+
+			&::before {
+				content: "field-key:";
+				color: #e6e6e6;
+				letter-spacing: 1px;
+				margin-right: 15px;
+				font-size: 13pt;
+			}
+		}
+	}
+
+	&.hidden {
+		& .preview-main-box {
+			& span.label, & span.value {
+				color: #757575;
+			}
+
+			& span.label {
+				background-color: #21201e;
+			}
+
+			& span.value {
+				background-color: #292826;
+			}
+		}
+	}
+
+	& .preview-main-box {
+		display: flex;
+		flex-direction: column;
+		letter-spacing: 0.5px;
+		text-transform: uppercase;
+		margin: 20px auto 10px auto;
+		max-width: 100%;
+
+		& span.label, & span.value {
+			color: @base-background-color;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			flex-grow: 1;
+			padding: 3px 6px;;
+		}
+
+		& span.label {
+			font-size: 11pt;
+			background-color: #ff8d00;
+			border-radius: 2px 2px 0 0;
+		}
+
+		& span.value {
+			font-size: 16pt;
+			background-color: #ffb838;
+			border-radius: 0 0 2px 2px;
+		}
+	}
 }
