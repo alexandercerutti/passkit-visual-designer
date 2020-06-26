@@ -1,10 +1,11 @@
+@even-elements-color: #272727;
+
 .field-edit-item {
 	display: flex;
 	flex-direction: column;
 	position: relative;
 	min-height: 170px;
 	padding: 5px;
-	padding-top: 10px;
 	/* To allow scrolling */
 	flex-shrink: 0;
 
@@ -13,6 +14,6 @@
 	}
 
 	&:nth-child(2n) {
-		background-color: #272727;
+		background-color: @even-elements-color;
 	}
 }
