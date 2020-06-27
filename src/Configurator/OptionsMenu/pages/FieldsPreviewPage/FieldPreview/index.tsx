@@ -5,13 +5,17 @@ import { FieldProperties } from "../../../../../passes/Areas/components/Field/fi
 interface Props {
 	previewData: FieldProperties;
 	isFieldHidden?: boolean;
+	onClick?(): void;
 }
 
 export default function FieldPreview(props: Props) {
 	const isPresetFieldKey = props.previewData.fieldKey.includes("::pkvd-new");
 
 	return (
-		<div className={`field-preview${props.isFieldHidden && " hidden" || ""}`}>
+		<div
+			className={`field-preview${props.isFieldHidden && " hidden" || ""}`}
+			onClick={props?.onClick}
+		>
 			<div className={`preview-field-key${isPresetFieldKey && " none" || ""}`}>
 				<span>{isPresetFieldKey ? "not setted" : props.previewData?.fieldKey}</span>
 			</div>
