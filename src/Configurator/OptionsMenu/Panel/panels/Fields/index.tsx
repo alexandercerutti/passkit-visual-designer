@@ -13,14 +13,7 @@ export interface FieldPanelProps extends PanelProps {
 export default function FieldPanel(props: FieldPanelProps) {
 	const { current: pageCreationClickHandler } = React.useRef(() => {
 		const { requestPageClosing, requestPageCreation, ...otherProps } = props;
-
-		requestPageCreation("fieldsPage",
-			<FieldsPreviewPage
-				{...otherProps}
-				requestPageCreation={requestPageCreation}
-				requestPageClosing={requestPageClosing}
-			/>
-		);
+		requestPageCreation(props.name, FieldsPreviewPage, otherProps);
 	});
 
 	return (

@@ -3,6 +3,6 @@ export interface PageProps {
 }
 
 export interface PageNavigation {
-	requestPageCreation?(identifier: string, children: React.ReactNode): void;
-	requestPageClosing?(): void
+	requestPageCreation<T extends Object>(identifier: string, PageElement: React.ReactNode, contextProps?: T): void;
+	requestPageClosing(): void
 }

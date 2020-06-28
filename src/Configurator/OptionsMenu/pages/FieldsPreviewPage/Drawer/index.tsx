@@ -4,8 +4,9 @@ import { FieldProps } from "../../../../../passes/Areas/components/Field";
 import { MoreFieldsBelowIcon } from "../icons";
 import FieldsDrawerElement from "../FieldsDrawerElement";
 import { AllFieldProperties } from "../FieldsDrawerElement/FieldProperties";
+import { PageNavigation } from "../../pages";
 
-interface Props {
+interface Props extends Pick<PageNavigation, "requestPageCreation"> {
 	fieldsData: FieldProps[];
 	onFieldDelete(fieldKey: string): void;
 	onFieldChange(data: AllFieldProperties): void;
@@ -44,6 +45,7 @@ export default function Drawer(props: Props) {
 			elementData={field}
 			onFieldDelete={props.onFieldDelete}
 			onFieldOrderChange={props.onFieldOrderChange}
+			requestPageCreation={props.requestPageCreation}
 			index={index}
 			isUpperBoundary={index === 0}
 			isLowerBoundary={index === props.fieldsData.length - 1}

@@ -4,8 +4,10 @@ import FieldPropertiesEditList from "./FieldPropertiesEditList";
 import FieldOptionsBar from "./FieldOptionsBar";
 import FieldPreview from "../FieldPreview";
 import { FieldProps } from "../../../../../passes/Areas/components/Field";
+import FieldsPropertiesEditPage from "../../FieldsPropertiesEditPage";
+import { PageNavigation } from "../../pages";
 
-interface FieldsDrawerElementProps {
+interface FieldsDrawerElementProps extends Pick<PageNavigation, "requestPageCreation"> {
 	onFieldDelete(key: string): void;
 	onFieldOrderChange(fromIndex: number, of: number): void;
 	elementData: FieldProps;

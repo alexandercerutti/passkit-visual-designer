@@ -48,6 +48,7 @@ export default function FieldsPreviewPage(props: Props) {
 			onFieldDelete={onFieldDeleteHandler}
 			onFieldChange={() => void 0}
 			onFieldOrderChange={onFieldOrderChange}
+			requestPageCreation={props.requestPageCreation}
 		/> ||
 		<DrawerPlaceholder />
 	);

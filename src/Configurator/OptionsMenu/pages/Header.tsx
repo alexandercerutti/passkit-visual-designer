@@ -3,7 +3,7 @@ import { FieldsArrowIcon } from "./icons";
 import CapitalHeaderTitle from "../CapitalHeaderTitle";
 import { PageProps, PageNavigation } from "./pages";
 
-interface Props extends PageProps, PageNavigation { }
+interface Props extends PageProps, Pick<PageNavigation, "requestPageClosing"> { }
 
 export default function PageHeader(props: React.PropsWithChildren<Props>) {
 	return (

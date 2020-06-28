@@ -3,6 +3,7 @@ import "./style.less";
 import { RegisteredFieldsMap } from "..";
 import PanelGroup, { DataGroup } from "../PanelGroup";
 import Panel, { FieldDetails } from "../Panel";
+import { PageNavigation, PageProps } from "../pages/pages";
 
 interface NavigatorState {
 	pagePanelsHierarchy: [string, React.ReactNode][];
@@ -13,7 +14,7 @@ interface NavigatorProps {
 	fields: RegisteredFieldsMap;
 }
 
-export default class PanelNavigator extends React.Component<NavigatorProps, NavigatorState> {
+export default class PanelNavigator extends React.Component<NavigatorProps, NavigatorState> implements PageNavigation {
 	constructor(props: NavigatorProps) {
 		super(props);
 
@@ -28,14 +29,23 @@ export default class PanelNavigator extends React.Component<NavigatorProps, Navi
 		this.saveChanges = this.saveChanges.bind(this);
 	}
 
-	requestPageCreation(identifier: string, children: React.ReactNode) {
+	requestPageCreation<T extends Object>(identifier: string, PageElement: React.ComponentType<PageProps & PageNavigation>, contextProps: T = {} as any) {
 		if (this.state.pagePanelsHierarchy.find(([id]) => id === identifier)) {
 			return;
 		}
 
+		const PageComponent = (
+			<PageElement
+				name={identifier}
+				requestPageCreation={this.requestPageCreation}
+				requestPageClosing={this.requestPageClosing}
+				{...(contextProps || {})}
+			/>
+		);
+
 		this.setState((previousState) => {
 			const pagePanelsHierarchy = previousState.pagePanelsHierarchy;
-			pagePanelsHierarchy.push([identifier, children]);
+			pagePanelsHierarchy.push([identifier, PageComponent]);
 			return { pagePanelsHierarchy };
 		});
 	}
