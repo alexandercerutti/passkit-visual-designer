@@ -17,7 +17,8 @@ export default function FieldPanel(props: FieldPanelProps) {
 		requestPageCreation("fieldsPage",
 			<FieldsPreviewPage
 				{...otherProps}
-				onBack={requestPageClosing}
+				requestPageCreation={requestPageCreation}
+				requestPageClosing={requestPageClosing}
 			/>
 		);
 	});

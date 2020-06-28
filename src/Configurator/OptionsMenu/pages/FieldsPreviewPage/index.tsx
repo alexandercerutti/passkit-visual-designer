@@ -1,14 +1,15 @@
 import * as React from "react";
 import "./style.less";
-import { FieldPanelProps } from "../../Panel/panels/Fields";
 import { FieldProps } from "../../../../passes/Areas/components/Field";
 import { FieldsAddIcon } from "./icons";
 import Drawer from "./Drawer";
 import DrawerPlaceholder from "./DrawerPlaceholder";
 import PageHeader from "../Header";
-import { PageProps } from "../pages";
+import { PageProps, PageNavigation } from "../pages";
 
-interface Props extends PageProps, Omit<FieldPanelProps, "requestPageClosing" | "requestPageCreation"> { }
+interface Props extends PageProps, PageNavigation {
+	value?: FieldProps[];
+}
 
 export default function FieldsPreviewPage(props: Props) {
 	const [fields, setFields] = React.useState(props.value || []);
@@ -53,7 +54,7 @@ export default function FieldsPreviewPage(props: Props) {
 
 	return (
 		<div className="fields-preview-page">
-			<PageHeader name={name} onBack={props.onBack}>
+			<PageHeader name={name} requestPageClosing={props.requestPageClosing}>
 				<FieldsAddIcon className="add" onClick={onFieldAddHandler} />
 			</PageHeader>
 			{fullPageElement}

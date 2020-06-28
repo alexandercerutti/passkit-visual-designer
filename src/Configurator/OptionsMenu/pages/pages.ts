@@ -1,4 +1,8 @@
 export interface PageProps {
 	name: string;
-	onBack(): void;
+}
+
+export interface PageNavigation {
+	requestPageCreation?(identifier: string, children: React.ReactNode): void;
+	requestPageClosing?(): void
 }

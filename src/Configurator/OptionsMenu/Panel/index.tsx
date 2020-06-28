@@ -5,14 +5,13 @@ import TextPanel from "./panels/Text";
 import ColorPanel from "./panels/Color";
 import FieldPanel from "./panels/Fields";
 import ImagePanel from "./panels/Image";
+import { PageNavigation } from "../pages/pages";
 
-export interface PanelProps {
+export interface PanelProps extends PageNavigation {
 	name: string;
 	kind: FieldKind;
 	data: Omit<FieldDetails, "kind" | "name">;
 	value?: any; // will be overridden by single panels
-	requestPageCreation?(identifier: string, children: React.ReactNode): void;
-	requestPageClosing?(): void;
 	onValueChange<T>(name: string, data: T): void;
 }
 

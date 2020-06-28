@@ -1,16 +1,14 @@
 import * as React from "react";
 import { FieldsArrowIcon } from "./icons";
 import CapitalHeaderTitle from "../CapitalHeaderTitle";
+import { PageProps, PageNavigation } from "./pages";
 
-interface Props {
-	name: string;
-	onBack(): void;
-}
+interface Props extends PageProps, PageNavigation { }
 
 export default function PageHeader(props: React.PropsWithChildren<Props>) {
 	return (
 		<header>
-			<div className="back" onClick={props.onBack}>
+			<div className="back" onClick={props.requestPageClosing}>
 				<FieldsArrowIcon />
 				<span>Back</span>
 			</div>
