@@ -1,8 +1,9 @@
 import * as React from "react";
-import { FieldsArrowIcon } from "./icons";
-import CapitalHeaderTitle from "../CapitalHeaderTitle";
-import { PageProps } from "./pages";
-import PageNavigationContext from "./PageNavigationContext";
+import "./style.less";
+import { FieldsArrowIcon } from "../icons";
+import CapitalHeaderTitle from "../../CapitalHeaderTitle";
+import { PageProps } from "../pages";
+import PageNavigationContext from "../PageNavigationContext";
 
 interface Props extends PageProps { }
 
