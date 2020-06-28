@@ -52,7 +52,7 @@ export default function FieldsPreviewPage(props: Props) {
 	);
 
 	return (
-		<div className="fields-page">
+		<div className="fields-preview-page">
 			<PageHeader name={name} onBack={props.onBack}>
 				<FieldsAddIcon className="add" onClick={onFieldAddHandler} />
 			</PageHeader>
