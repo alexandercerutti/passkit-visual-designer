@@ -4,6 +4,7 @@ import { RegisteredFieldsMap } from "..";
 import PanelGroup, { DataGroup } from "../PanelGroup";
 import Panel, { FieldDetails } from "../Panel";
 import { PageNavigation, PageProps } from "../pages/pages";
+import PageNavigationContext from "../pages/PageNavigationContext";
 
 interface NavigatorState {
 	pagePanelsHierarchy: [string, React.ReactNode][];
@@ -109,12 +110,19 @@ export default class PanelNavigator extends React.Component<NavigatorProps, Navi
 		});
 
 		return (
-			<div className="panel-navigator" style={{ transform: `translate(-${this.state.pagePanelsHierarchy.length * 100}%)` }}>
-				<div className="page" key="mainPanel">
-					{groups}
+			<PageNavigationContext.Provider
+				value={{
+					requestPageClosing: this.requestPageClosing,
+					requestPageCreation: this.requestPageCreation
+				}}
+			>
+				<div className="panel-navigator" style={{ transform: `translate(-${this.state.pagePanelsHierarchy.length * 100}%)` }}>
+					<div className="page" key="mainPanel">
+						{groups}
+					</div>
+					{pages}
 				</div>
-				{pages}
-			</div>
+			</PageNavigationContext.Provider>
 		);
 	}
 }

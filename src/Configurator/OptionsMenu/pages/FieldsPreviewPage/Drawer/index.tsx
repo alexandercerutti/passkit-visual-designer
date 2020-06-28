@@ -4,9 +4,9 @@ import { FieldProps } from "../../../../../passes/Areas/components/Field";
 import { MoreFieldsBelowIcon } from "../icons";
 import FieldsDrawerElement from "../FieldsDrawerElement";
 import { AllFieldProperties } from "../FieldsDrawerElement/FieldProperties";
-import { PageNavigation } from "../../pages";
+import PageNavigationContext from "../../PageNavigationContext";
 
-interface Props extends Pick<PageNavigation, "requestPageCreation"> {
+interface Props {
 	fieldsData: FieldProps[];
 	onFieldDelete(fieldKey: string): void;
 	onFieldChange(data: AllFieldProperties): void;
@@ -40,16 +40,19 @@ export default function Drawer(props: Props) {
 	}, [props.fieldsData]);
 
 	const panels = props.fieldsData.map((field, index) => (
-		<FieldsDrawerElement
-			key={field.fieldKey}
-			elementData={field}
-			onFieldDelete={props.onFieldDelete}
-			onFieldOrderChange={props.onFieldOrderChange}
-			requestPageCreation={props.requestPageCreation}
-			index={index}
-			isUpperBoundary={index === 0}
-			isLowerBoundary={index === props.fieldsData.length - 1}
-		/>
+		<PageNavigationContext.Consumer key={field.fieldKey}>
+			{({ requestPageCreation }) => (
+				<FieldsDrawerElement
+					elementData={field}
+					onFieldDelete={props.onFieldDelete}
+					onFieldOrderChange={props.onFieldOrderChange}
+					requestPageCreation={requestPageCreation}
+					index={index}
+					isUpperBoundary={index === 0}
+					isLowerBoundary={index === props.fieldsData.length - 1}
+				/>
+			)}
+		</PageNavigationContext.Consumer>
 	));
 
 	return (

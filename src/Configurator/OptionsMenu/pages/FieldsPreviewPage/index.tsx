@@ -48,17 +48,16 @@ export default function FieldsPreviewPage(props: Props) {
 			onFieldDelete={onFieldDeleteHandler}
 			onFieldChange={() => void 0}
 			onFieldOrderChange={onFieldOrderChange}
-			requestPageCreation={props.requestPageCreation}
 		/> ||
 		<DrawerPlaceholder />
 	);
 
 	return (
 		<div className="fields-preview-page">
-			<PageHeader name={name} requestPageClosing={props.requestPageClosing}>
+			<PageHeader name={name}>
 				<FieldsAddIcon className="add" onClick={onFieldAddHandler} />
 			</PageHeader>
 			{fullPageElement}
-		</div >
+		</div>
 	);
 }

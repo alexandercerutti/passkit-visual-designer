@@ -1,19 +1,24 @@
 import * as React from "react";
 import { FieldsArrowIcon } from "./icons";
 import CapitalHeaderTitle from "../CapitalHeaderTitle";
-import { PageProps, PageNavigation } from "./pages";
+import { PageProps } from "./pages";
+import PageNavigationContext from "./PageNavigationContext";
 
-interface Props extends PageProps, Pick<PageNavigation, "requestPageClosing"> { }
+interface Props extends PageProps { }
 
 export default function PageHeader(props: React.PropsWithChildren<Props>) {
 	return (
-		<header>
-			<div className="back" onClick={props.requestPageClosing}>
-				<FieldsArrowIcon />
-				<span>Back</span>
-			</div>
-			<CapitalHeaderTitle name={props.name} />
-			{props.children}
-		</header>
+		<PageNavigationContext.Consumer>
+			{({ requestPageClosing }) => (
+				<header>
+					<div className="back" onClick={requestPageClosing}>
+						<FieldsArrowIcon />
+						<span>Back</span>
+					</div>
+					<CapitalHeaderTitle name={props.name} />
+					{props.children}
+				</header>
+			)}
+		</PageNavigationContext.Consumer>
 	);
 }
