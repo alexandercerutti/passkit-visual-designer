@@ -1,12 +1,20 @@
 /**
- * Appends some classNames only if they are
- * truthy if converted to boolean
+ * Creates a list of classNames only if they are
+ * truthy if converted to boolean, along with some
+ * default ones.
  *
- * @param defaultCN
- * @param classNames
+ * @param staticClassNames
+ * @param candidates
  */
 
-export function concatClassNames(defaultCN: string, ...classNames: string[]) {
-	const finalClassNames = [...classNames.filter(Boolean), defaultCN];
-	return finalClassNames.join(" ");
+type CandidateClassNameList = {
+	[key: string]: any;
+}
+
+export function createClassName(staticClassNames: string[], candidates: CandidateClassNameList = {}) {
+	const keys = Object.keys(candidates);
+	return [
+		...staticClassNames,
+		...keys.filter(key => Boolean(candidates[key]))
+	].join(" ");
 }

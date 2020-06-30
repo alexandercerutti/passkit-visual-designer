@@ -1,6 +1,6 @@
 import * as React from "react";
 import "./style.less";
-import { concatClassNames } from "../../../passes/utils";
+import { createClassName } from "../../../passes/utils";
 import { TagIcon, ColorIcon, ImagesIcon, DataIcon } from "./icons";
 
 export enum DataGroup {
@@ -24,7 +24,9 @@ interface GroupProps {
 }
 
 export default function PanelGroup({ group, isActive, setActive, children }: React.PropsWithChildren<GroupProps>) {
-	const className = concatClassNames("menu-group", isActive && "open");
+	const className = createClassName(["menu-group"], {
+		"open": isActive
+	});
 	const Icon = DataGroupIcons.get(group);
 
 	return (

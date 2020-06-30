@@ -1,6 +1,6 @@
 import * as React from "react";
 import { UploadIcon } from "./icons";
-import { concatClassNames } from "../../../../../passes/utils";
+import { createClassName } from "../../../../../passes/utils";
 
 interface DnDProps {
 	onFilesUploaded: (files: FileList) => void;
@@ -30,7 +30,9 @@ export default function DragAndDropArea(props: DnDProps): JSX.Element {
 		props.onFilesUploaded(event.dataTransfer.files);
 	});
 
-	const className = concatClassNames("dd-area", dragging && "drag-active");
+	const className = createClassName(["dd-area"], {
+		"drag-active": dragging
+	});
 
 	return (
 		<div

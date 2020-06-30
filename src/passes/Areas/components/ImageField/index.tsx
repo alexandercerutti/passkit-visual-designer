@@ -1,6 +1,6 @@
 import * as React from "react";
 import { SelectableComponent } from "../../useRegistrations";
-import { concatClassNames } from "../../../utils";
+import { createClassName } from "../../../utils";
 import useFallback from "../useFallback";
 import useClickEvent from "../useClickEvent";
 
@@ -15,7 +15,7 @@ export default function ImageField(props: ImageFieldProps) {
 	const { src, width, height, className: sourceClassName, onClick } = props;
 
 	return useClickEvent(onClick, useFallback(() => {
-		const className = concatClassNames("image-field", sourceClassName);
+		const className = createClassName(["image-field", sourceClassName]);
 
 		return (
 			<div className={className}>

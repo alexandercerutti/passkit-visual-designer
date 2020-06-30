@@ -2,7 +2,7 @@ import * as React from "react";
 import PrimaryFieldsProps from "../primaryFieldsProps";
 import { getSafeFieldData } from "../../components/Field/getSafeFieldData";
 import { GhostField, FieldLabel, FieldValue } from "../../components/Field";
-import { concatClassNames } from "../../../utils";
+import { createClassName } from "../../../utils";
 import { PKTransitType } from "../../../constants";
 import { PKTransitIcon } from "./icons";
 import "./style.less";
@@ -14,7 +14,7 @@ interface PFTravelProps extends PrimaryFieldsProps {
 }
 
 export default function PrimaryFields(props: PFTravelProps) {
-	const { register, fields, transitType, className } = props;
+	const { register, fields, transitType, className: PFClassName } = props;
 	const parentId = "PrimaryFields";
 
 	const [primaryFieldsClickHandler] = useRegistrations(register, [
@@ -37,8 +37,10 @@ export default function PrimaryFields(props: PFTravelProps) {
 			);
 		});
 
+	const className = createClassName(["primary-container", "className"]);
+
 	return (
-		<div className={concatClassNames("primary-container", className)}>
+		<div className={className}>
 			{from}
 			<PKTransitIcon
 				type={transitType === undefined && PKTransitType.Generic || transitType}

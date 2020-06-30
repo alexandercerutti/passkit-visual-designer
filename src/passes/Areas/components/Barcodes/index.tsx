@@ -6,7 +6,7 @@ import PDF417 from "./pdf417";
 import Aztec from "./aztec";
 import { EmptyBarcode, EmptySquareCode } from "./empty";
 import "./style.less";
-import { concatClassNames } from "../../../utils";
+import { createClassName } from "../../../utils";
 
 export interface BarcodeProps {
 	format: PKBarcodeFormat;
@@ -25,7 +25,9 @@ export default (props: BarcodeProps) => {
 		return null;
 	}
 
-	const className = concatClassNames("barcode", barcodeFormat, props.fallbackShape, barcodeFormat !== PKBarcodeFormat.None && props.message && "content" || "");
+	const className = createClassName(["barcode", barcodeFormat, props.fallbackShape], {
+		"content": barcodeFormat !== PKBarcodeFormat.None && props.message
+	});
 
 	return (
 		<div className={className}>

@@ -2,7 +2,7 @@ import * as React from "react";
 import "./style.less";
 import { PassKind } from "../model";
 import { PassCoreProps } from "../passes/PassCore";
-import { concatClassNames } from "../passes/utils";
+import { createClassName } from "../passes/utils";
 import { NamedPassProps } from "./NamedPass";
 
 interface PassListProps {
@@ -27,8 +27,9 @@ export default function PassList(props: PassListPropsWithChildren): JSX.Element 
 
 	const children = React.Children.map(props.children, (node: React.ReactElement<NamedPassProps>) => {
 		const { kind, name, ...passProps } = node.props;
-		const isHighlighted = kind === props.selectedKind;
-		const className = concatClassNames("select", isHighlighted && "highlighted");
+		const className = createClassName(["select"], {
+			"highlighted": kind === props.selectedKind
+		});
 
 		return (
 			<div
@@ -41,7 +42,11 @@ export default function PassList(props: PassListPropsWithChildren): JSX.Element 
 		)
 	});
 
-	const className = concatClassNames(children.length > 2 ? "space-first" : "element-first", props.selectedKind && "selection-active");
+	const className = createClassName([], {
+		"space-first": children.length > 2,
+		"element-first": children.length < 2,
+		"selection-active": props.selectedKind
+	});
 
 	return (
 		<div className="pass-list" ref={selectionTray}>

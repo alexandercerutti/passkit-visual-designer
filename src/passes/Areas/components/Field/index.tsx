@@ -1,6 +1,6 @@
 import * as React from "react";
 import { SelectableComponent } from "../../useRegistrations";
-import { concatClassNames } from "../../../utils";
+import { createClassName } from "../../../utils";
 import useFallback from "../useFallback";
 import useClickEvent from "../useClickEvent";
 import "./style.less";
@@ -21,7 +21,9 @@ export function Field(props: React.PropsWithChildren<Partial<FieldProps & Select
 
 	return useClickEvent(onClick,
 		useFallback(() => {
-			const className = concatClassNames("field", sourceClassName, fieldKey && `field-${fieldKey}`);
+			const className = createClassName(["field", sourceClassName], {
+				[`field-${fieldKey ?? ""}`]: fieldKey
+			});
 
 			return (
 				<div

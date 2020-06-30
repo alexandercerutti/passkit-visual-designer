@@ -5,7 +5,7 @@ import { onRegister, RegistrableComponent, useRegistrations } from "../useRegist
 import ImageField from "../components/ImageField";
 import { FieldProps } from "../components/Field";
 import { InlineFieldsRow } from "../FieldRow";
-import { concatClassNames } from "../../utils";
+import { createClassName } from "../../utils";
 import { FieldKind } from "../../../model";
 
 interface HeaderProps extends Partial<RegistrableComponent> {
@@ -39,7 +39,9 @@ export function PassHeader(props: HeaderProps) {
 		/>
 	);
 
-	const className = concatClassNames("header-container", props.withSeparator && "separator" || "");
+	const className = createClassName(["header-container"], {
+		"separator": props.withSeparator
+	});
 
 	return (
 		<div className={className}>
