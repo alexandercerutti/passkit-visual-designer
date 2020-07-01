@@ -30,7 +30,7 @@ export default class PanelNavigator extends React.Component<NavigatorProps, Navi
 		this.saveChanges = this.saveChanges.bind(this);
 	}
 
-	requestPageCreation<T extends Object>(identifier: string, PageElement: React.ComponentType<PageProps & PageNavigation>, contextProps: T = {} as any) {
+	requestPageCreation<T extends Partial<PageNavigation> & PageProps>(identifier: string, PageElement: React.ComponentType<Partial<PageNavigation> & PageProps>, contextProps?: T & { [key: string]: any }) {
 		if (this.state.pagePanelsHierarchy.find(([id]) => id === identifier)) {
 			return;
 		}
