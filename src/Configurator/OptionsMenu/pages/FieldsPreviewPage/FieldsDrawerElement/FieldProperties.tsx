@@ -1,6 +1,12 @@
 import { PKDataDetectorType, PKTextAlignment, PKDateStyle } from "../../../../../passes/constants";
 
-type FieldPropStructure = { [key: string]: { type: typeof String | typeof Boolean | typeof PKTextAlignment | typeof PKDateStyle | typeof PKDataDetectorType } }
+type FieldProperty = {
+	name: string,
+	type: typeof String | typeof Boolean | typeof PKTextAlignment | typeof PKDateStyle | typeof PKDataDetectorType,
+	placeholder?: string;
+	optional?: boolean;
+};
+
 
 export interface AllFieldProperties {
 	key: string;
@@ -16,42 +22,57 @@ export interface AllFieldProperties {
 	isRelative: boolean;
 }
 
-export const OptionalFieldProperties: FieldPropStructure = {
-	"label": {
+export const FieldProperties: FieldProperty[] = [
+	{
+		name: "value",
 		type: String,
+		optional: false,
 	},
-	"attributedValue": {
+	{
+		name: "label",
 		type: String,
+		optional: true,
 	},
-	"changeMessage": {
+	{
+		name: "attributedValue",
 		type: String,
+		placeholder: "<a href='http://example.com/customers/123'>Edit my profile</a>",
+		optional: true,
 	},
-	"dataDetectorTypes": {
+	{
+		name: "changeMessage",
+		type: String,
+		placeholder: "Gate changed to %@",
+		optional: true,
+	},
+	{
+		name: "dataDetectorTypes",
 		type: PKDataDetectorType,
+		optional: true,
 	},
-	"textAlignment": {
+	{
+		name: "textAlignment",
 		type: PKTextAlignment,
+		optional: true,
 	},
-	"dateStyle": {
+	{
+		name: "dateStyle",
 		type: PKDateStyle,
+		optional: true,
 	},
-	"timeStyle": {
+	{
+		name: "timeStyle",
 		type: PKDateStyle,
+		optional: true,
 	},
-	"ignoresTimeZone": {
+	{
+		name: "ignoresTimeZone",
 		type: Boolean,
+		optional: true,
 	},
-	"isRelative": {
+	{
+		name: "isRelative",
 		type: Boolean,
+		optional: true,
 	}
-};
-
-export const AllFieldProperties: FieldPropStructure = {
-	...OptionalFieldProperties,
-	"key": {
-		type: String
-	},
-	"value": {
-		type: String
-	}
-};
+];

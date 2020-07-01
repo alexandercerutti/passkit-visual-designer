@@ -1,45 +1,42 @@
 import * as React from "react";
 import "./style.less";
 import { PKTextAlignment, PKDateStyle, PKDataDetectorType } from "../../../../../../passes/constants";
-import { AllFieldProperties } from "../FieldProperties";
+import { FieldProperties } from "../FieldProperties";
 import FieldStringPropertyPanel from "./FieldPropertyPanels/String";
 import FieldCheckboxPropertyPanel from "./FieldPropertyPanels/Checkbox";
 import FieldEnumPropertyPanel from "./FieldPropertyPanels/Enum";
 
-interface FieldPropertiesEditListProps {
-	usedProperties?: string[];
-}
+interface FieldPropertiesEditListProps { }
 
 export default function FieldPropertiesEditList(props: FieldPropertiesEditListProps) {
-	const properties = props.usedProperties.map((element) => {
-		const property = AllFieldProperties[element];
-
-		if (isPanelTypeEnum(property.type)) {
+	const properties = FieldProperties.map(({ name, type, placeholder }) => {
+		if (isPanelTypeEnum(type)) {
 			return (
 				<FieldEnumPropertyPanel
-					key={element}
-					name={element}
-					options={AllFieldProperties[element].type}
+					key={name}
+					name={name}
+					options={type}
 					onValueChange={() => console.log("attempting to change enum")}
 				/>
 			);
 		}
 
-		if (isPanelTypeString(property.type)) {
+		if (isPanelTypeString(type)) {
 			return (
 				<FieldStringPropertyPanel
-					key={element}
-					name={element}
+					key={name}
+					name={name}
+					placeholder={placeholder}
 					onValueChange={() => console.log("attempting to change string")}
 				/>
 			);
 		}
 
-		if (isPanelTypeCheckbox(property.type)) {
+		if (isPanelTypeCheckbox(type)) {
 			return (
 				<FieldCheckboxPropertyPanel
-					key={element}
-					name={element}
+					key={name}
+					name={name}
 					onValueChange={() => console.log("attempting to change checkbox")}
 				/>
 			);

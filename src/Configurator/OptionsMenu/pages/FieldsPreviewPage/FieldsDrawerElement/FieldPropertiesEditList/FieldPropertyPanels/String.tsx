@@ -3,6 +3,7 @@ import * as React from "react";
 interface Props {
 	name: string;
 	value?: string;
+	placeholder?: string;
 	onValueChange<T>(value: T): void;
 }
 
@@ -14,6 +15,7 @@ export default function FieldStringPropertyPanel(props: Props) {
 				id={props.name}
 				type="text"
 				value={props.value}
+				placeholder={props.placeholder}
 				onChange={(ev) => props.onValueChange(ev.currentTarget.value)}
 			/>
 		</div>
