@@ -14,15 +14,28 @@ interface Props extends PageProps {
 export default function FieldsPropertiesEditPage(props: Props) {
 	const [data, setData] = React.useState(props.fieldData);
 
+	React.useEffect(() => {
+		if (data !== props.fieldData) {
+			props.onFieldPropsChange(data);
+		}
+	}, [data]);
+
 	return (
 		<div id="fields-properties-edit-page">
 			<PageHeader />
 			<FieldPreview
 				keyEditable
-				onFieldKeyChange={(evt) => console.log("Changed", evt)}
+				onFieldKeyChange={(fieldKey) => setData({ ...data, fieldKey })}
 				previewData={data}
 			/>
-			<FieldPropertiesEditList />
+			<FieldPropertiesEditList
+				onValueChange={(prop, value) => {
+					setData({
+						...data,
+						[prop]: value
+					});
+				}}
+			/>
 		</div>
 	);
 }
