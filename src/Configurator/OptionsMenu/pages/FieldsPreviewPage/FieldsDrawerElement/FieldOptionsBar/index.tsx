@@ -1,15 +1,12 @@
 import * as React from "react";
 import "./style.less";
 import { DeleteFieldIcon, ListAddProp } from "./icons";
-import { OptionalFieldProperties } from "../FieldProperties";
 import FieldOrderHandler, { Directions } from "./FieldOrderHandler";
-import AvailablePropertiesMenu from "./AvailablePropertiesMenu";
 
 interface FieldOptionsProps {
 	deleteField(key: string): void;
-	updateUsedProperties(usedProperties: string[]): void;
 	changeFieldOrder(fromIndex: number, of: number): void;
-	usedProperties?: string[];
+	onPropsEditClick(): void;
 	fieldKey: string;
 	fieldIndex: number;
 	isUpperBoundary: boolean;
@@ -17,20 +14,6 @@ interface FieldOptionsProps {
 }
 
 export default function FieldOptionsBar(props: FieldOptionsProps) {
-	const [shouldShowAddMenu, showAddMenu] = React.useState(false);
-
-	const onPropertySelectHandler = React.useRef((appliedProps: string[]) => {
-		if (appliedProps !== null) {
-			console.log("Selected voice", appliedProps[appliedProps.length - 1]);
-			props.updateUsedProperties(appliedProps);
-		}
-
-		showAddMenu(false);
-	});
-
-	// Excluding the mandatory ones
-	const allOptionalPropertiesAdded = props.usedProperties?.length - 2 === Object.keys(OptionalFieldProperties).length;
-
 	const allowedMovingDirections = (
 		props.isLowerBoundary && props.isUpperBoundary ? Directions.NONE :
 			props.isLowerBoundary ? Directions.UP :
@@ -51,8 +34,7 @@ export default function FieldOptionsBar(props: FieldOptionsProps) {
 				/>
 				<div
 					className="property-add-row"
-					style={{ visibility: allOptionalPropertiesAdded ? "hidden" : "inherit" }}
-				// onClick={() => showAddMenu(true)}
+					onClick={props.onPropsEditClick}
 				>
 					<ListAddProp className="add" />
 				</div>
