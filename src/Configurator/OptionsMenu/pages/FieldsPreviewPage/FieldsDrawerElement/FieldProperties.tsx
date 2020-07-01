@@ -5,6 +5,7 @@ type FieldProperty = {
 	type: typeof String | typeof Boolean | typeof PKTextAlignment | typeof PKDateStyle | typeof PKDataDetectorType,
 	placeholder?: string;
 	optional?: boolean;
+	defaultValue?: string;
 };
 
 
@@ -49,21 +50,25 @@ export const FieldProperties: FieldProperty[] = [
 		name: "dataDetectorTypes",
 		type: PKDataDetectorType,
 		optional: true,
+		defaultValue: "None"
 	},
 	{
 		name: "textAlignment",
 		type: PKTextAlignment,
 		optional: true,
+		defaultValue: PKTextAlignment.Natural,
 	},
 	{
 		name: "dateStyle",
 		type: PKDateStyle,
 		optional: true,
+		defaultValue: PKDateStyle.None
 	},
 	{
 		name: "timeStyle",
 		type: PKDateStyle,
 		optional: true,
+		defaultValue: PKDateStyle.None
 	},
 	{
 		name: "ignoresTimeZone",

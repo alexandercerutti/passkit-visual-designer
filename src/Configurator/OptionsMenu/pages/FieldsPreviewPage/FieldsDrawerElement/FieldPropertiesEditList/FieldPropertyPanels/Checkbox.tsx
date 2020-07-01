@@ -3,7 +3,7 @@ import * as React from "react";
 interface Props {
 	name: string;
 	value?: boolean;
-	onValueChange<T>(value: T): void;
+	onValueChange<T>(prop: string, value: T): void;
 }
 
 export default function FieldCheckboxPropertyPanel(props: Props) {
@@ -13,7 +13,7 @@ export default function FieldCheckboxPropertyPanel(props: Props) {
 			<input
 				id={props.name}
 				type="checkbox"
-				onChange={(ev) => props.onValueChange(ev.currentTarget.checked)}
+				onChange={(ev) => props.onValueChange(props.name, ev.currentTarget.checked)}
 			/>
 		</div>
 	);

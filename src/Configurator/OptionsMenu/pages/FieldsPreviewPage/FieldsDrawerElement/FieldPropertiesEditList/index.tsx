@@ -6,17 +6,20 @@ import FieldStringPropertyPanel from "./FieldPropertyPanels/String";
 import FieldCheckboxPropertyPanel from "./FieldPropertyPanels/Checkbox";
 import FieldEnumPropertyPanel from "./FieldPropertyPanels/Enum";
 
-interface FieldPropertiesEditListProps { }
+interface FieldPropertiesEditListProps {
+	onValueChange<T>(prop: string, value: T): void;
+}
 
 export default function FieldPropertiesEditList(props: FieldPropertiesEditListProps) {
-	const properties = FieldProperties.map(({ name, type, placeholder }) => {
+	const properties = FieldProperties.map(({ name, type, placeholder, defaultValue }) => {
 		if (isPanelTypeEnum(type)) {
 			return (
 				<FieldEnumPropertyPanel
 					key={name}
 					name={name}
 					options={type}
-					onValueChange={() => console.log("attempting to change enum")}
+					onValueChange={props.onValueChange}
+					defaultValue={defaultValue}
 				/>
 			);
 		}
@@ -27,7 +30,8 @@ export default function FieldPropertiesEditList(props: FieldPropertiesEditListPr
 					key={name}
 					name={name}
 					placeholder={placeholder}
-					onValueChange={() => console.log("attempting to change string")}
+					onValueChange={props.onValueChange}
+
 				/>
 			);
 		}
@@ -37,7 +41,7 @@ export default function FieldPropertiesEditList(props: FieldPropertiesEditListPr
 				<FieldCheckboxPropertyPanel
 					key={name}
 					name={name}
-					onValueChange={() => console.log("attempting to change checkbox")}
+					onValueChange={props.onValueChange}
 				/>
 			);
 		}

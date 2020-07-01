@@ -4,7 +4,7 @@ interface Props {
 	name: string;
 	value?: string;
 	placeholder?: string;
-	onValueChange<T>(value: T): void;
+	onValueChange<T>(prop: string, value: T): void;
 }
 
 export default function FieldStringPropertyPanel(props: Props) {
@@ -16,7 +16,7 @@ export default function FieldStringPropertyPanel(props: Props) {
 				type="text"
 				value={props.value}
 				placeholder={props.placeholder}
-				onChange={(ev) => props.onValueChange(ev.currentTarget.value)}
+				onChange={(ev) => props.onValueChange(props.name, ev.currentTarget.value)}
 			/>
 		</div>
 	);
