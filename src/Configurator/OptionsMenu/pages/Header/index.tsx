@@ -5,7 +5,7 @@ import CapitalHeaderTitle from "../../CapitalHeaderTitle";
 import { PageProps } from "../pages";
 import PageNavigationContext from "../PageNavigationContext";
 
-interface Props extends PageProps { }
+interface Props extends Partial<PageProps> { }
 
 export default function PageHeader(props: React.PropsWithChildren<Props>) {
 	return (
@@ -16,7 +16,7 @@ export default function PageHeader(props: React.PropsWithChildren<Props>) {
 						<FieldsArrowIcon />
 						<span>Back</span>
 					</div>
-					<CapitalHeaderTitle name={props.name} />
+					{props.name && <CapitalHeaderTitle name={props.name} />}
 					{props.children}
 				</header>
 			)}
