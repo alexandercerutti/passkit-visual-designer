@@ -26,16 +26,11 @@ export default function Drawer(props: Props) {
 		setMoreAvailability(!didReachEndOfScroll);
 	});
 
-	const onFieldContentChange = React.useRef(() => {
-
-	});
-
 	React.useEffect(() => {
-		const { current: fieldList } = drawerRef;
-		const [header] = Array.from(fieldList.parentNode.children) as HTMLDivElement[];
+		const { current: currentTarget } = drawerRef;
 
 		if (props.fieldsData.length) {
-			onListScrollHandler.current({ currentTarget: fieldList });
+			onListScrollHandler.current({ currentTarget });
 		}
 	}, [props.fieldsData]);
 
