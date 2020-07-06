@@ -40,9 +40,8 @@ export default function Drawer(props: Props) {
 				<FieldsDrawerElement
 					elementData={field}
 					onFieldDelete={props.onFieldDelete}
-					onFieldOrderChange={props.onFieldOrderChange}
+					onFieldOrderChange={(amount) => props.onFieldOrderChange(index, amount)}
 					requestPageCreation={requestPageCreation}
-					index={index}
 					isUpperBoundary={index === 0}
 					isLowerBoundary={index === props.fieldsData.length - 1}
 				/>

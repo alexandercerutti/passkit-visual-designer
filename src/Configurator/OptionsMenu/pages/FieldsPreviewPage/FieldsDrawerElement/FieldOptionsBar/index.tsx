@@ -5,10 +5,9 @@ import FieldOrderHandler, { Directions } from "./FieldOrderHandler";
 
 interface FieldOptionsProps {
 	deleteField(key: string): void;
-	changeFieldOrder(fromIndex: number, of: number): void;
+	requestFieldOrderChange(of: number): void;
 	onPropsEditClick(): void;
 	fieldKey: string;
-	fieldIndex: number;
 	isUpperBoundary: boolean;
 	isLowerBoundary: boolean;
 }
@@ -29,8 +28,7 @@ export default function FieldOptionsBar(props: FieldOptionsProps) {
 				</div>
 				<FieldOrderHandler
 					allowedDirections={allowedMovingDirections}
-					fieldIndex={props.fieldIndex}
-					requestFieldOrderChange={props.changeFieldOrder}
+					requestFieldOrderChange={props.requestFieldOrderChange}
 				/>
 				<div
 					className="property-add-row"

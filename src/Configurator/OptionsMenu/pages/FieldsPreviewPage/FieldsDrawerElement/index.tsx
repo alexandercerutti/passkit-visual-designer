@@ -9,9 +9,8 @@ import { PageNavigation } from "../../pages";
 
 interface FieldsDrawerElementProps extends Pick<PageNavigation, "requestPageCreation"> {
 	onFieldDelete(key: string): void;
-	onFieldOrderChange(fromIndex: number, of: number): void;
+	onFieldOrderChange(of: number): void;
 	elementData: FieldProps;
-	index: number;
 	isUpperBoundary: boolean;
 	isLowerBoundary: boolean;
 }
@@ -37,10 +36,9 @@ export default function FieldsDrawerElement(props: FieldsDrawerElementProps) {
 			<FieldOptionsBar
 				deleteField={props.onFieldDelete}
 				updateUsedProperties={setUsedProperties}
-				changeFieldOrder={props.onFieldOrderChange}
+				requestFieldOrderChange={props.onFieldOrderChange}
 				usedProperties={usedProperties}
 				fieldKey={props.elementData.fieldKey}
-				fieldIndex={props.index}
 				isUpperBoundary={props.isUpperBoundary}
 				isLowerBoundary={props.isLowerBoundary}
 			/>

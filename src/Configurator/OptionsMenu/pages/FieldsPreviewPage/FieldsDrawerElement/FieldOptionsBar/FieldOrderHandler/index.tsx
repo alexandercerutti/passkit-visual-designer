@@ -11,9 +11,7 @@ export const enum Directions {
 
 interface Props {
 	allowedDirections: Directions;
-	fieldIndex: number;
-
-	requestFieldOrderChange(fieldIndex: number, of: number): void;
+	requestFieldOrderChange(of: number): void;
 }
 
 export default function FieldOrderHandler(props: Props) {
@@ -24,12 +22,11 @@ export default function FieldOrderHandler(props: Props) {
 		<div className="field-order-handler">
 			<FieldsArrowIcon
 				className={!canMoveUp && "disabled" || undefined}
-				onClick={() => canMoveUp && props.requestFieldOrderChange(props.fieldIndex, -1)}
+				onClick={() => canMoveUp && props.requestFieldOrderChange(-1)}
 			/>
-			{props.fieldIndex + 1}
 			<FieldsArrowIcon
 				className={!canMoveDown && "disabled" || undefined}
-				onClick={() => canMoveDown && props.requestFieldOrderChange(props.fieldIndex, 1)}
+				onClick={() => canMoveDown && props.requestFieldOrderChange(1)}
 			/>
 		</div>
 	);
