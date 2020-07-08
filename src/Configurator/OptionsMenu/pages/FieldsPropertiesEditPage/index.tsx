@@ -7,16 +7,16 @@ import { FieldProps } from "../../../../passes/Areas/components/Field";
 import FieldPropertiesEditList from "../FieldsPreviewPage/FieldsDrawerElement/FieldPropertiesEditList";
 
 interface Props extends PageProps {
-	fieldData: FieldProps;
-	onFieldPropsChange(props: any): void;
+	data: FieldProps;
+	onChange(props: FieldProps): void;
 }
 
 export default function FieldsPropertiesEditPage(props: Props) {
-	const [data, setData] = React.useState(props.fieldData);
+	const [data, setData] = React.useState(props.data);
 
 	React.useEffect(() => {
-		if (data !== props.fieldData) {
-			props.onFieldPropsChange(data);
+		if (data !== props.data) {
+			props.onChange(data);
 		}
 	}, [data]);
 

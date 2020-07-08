@@ -3,11 +3,15 @@ import "./style.less";
 import { RegisteredFieldsMap } from "..";
 import PanelGroup, { DataGroup } from "../PanelGroup";
 import Panel, { FieldDetails } from "../Panel";
-import { PageNavigation, PageProps } from "../pages/pages";
+import { PageNavigation, PageProps, RequestPageCreationSignature } from "../pages/pages";
 import PageNavigationContext from "../pages/PageNavigationContext";
 
 interface NavigatorState {
-	pagePanelsHierarchy: [string, React.ReactNode][];
+	pagesHierarchy: [
+		string,
+		Parameters<RequestPageCreationSignature>[1],
+		() => { [key: string]: any }
+	][];
 	activePanel: string;
 }
 
@@ -20,7 +24,7 @@ export default class PanelNavigator extends React.Component<NavigatorProps, Navi
 		super(props);
 
 		this.state = {
-			pagePanelsHierarchy: [],
+			pagesHierarchy: [],
 			activePanel: null,
 		};
 
@@ -30,8 +34,11 @@ export default class PanelNavigator extends React.Component<NavigatorProps, Navi
 		this.saveChanges = this.saveChanges.bind(this);
 	}
 
-	requestPageCreation<T extends Partial<PageNavigation> & PageProps>(identifier: string, PageElement: React.ComponentType<Partial<PageNavigation> & PageProps>, contextProps?: T & { [key: string]: any }) {
-		if (this.state.pagePanelsHierarchy.find(([id]) => id === identifier)) {
+	requestPageCreation(identifier: string, PageElement: Parameters<RequestPageCreationSignature>[1], getContextProps?: () => { [key: string]: any }) {
+		const page = this.state.pagesHierarchy.find(([id]) => id === identifier);
+
+		if (page) {
+			page[2] = getContextProps;
 			return;
 		}
 
@@ -45,9 +52,9 @@ export default class PanelNavigator extends React.Component<NavigatorProps, Navi
 		);
 
 		this.setState((previousState) => {
-			const pagePanelsHierarchy = previousState.pagePanelsHierarchy;
-			pagePanelsHierarchy.push([identifier, PageComponent]);
-			return { pagePanelsHierarchy };
+			const pagesHierarchy = previousState.pagesHierarchy;
+			pagesHierarchy.push([identifier, PageComponent, getContextProps]);
+			return { pagesHierarchy };
 		});
 	}
 
@@ -58,9 +65,9 @@ export default class PanelNavigator extends React.Component<NavigatorProps, Navi
 
 	requestPageClosing() {
 		this.setState(previousState => {
-			const pagePanelsHierarchy = previousState.pagePanelsHierarchy;
-			pagePanelsHierarchy.pop();
-			return { pagePanelsHierarchy };
+			const pagesHierarchy = previousState.pagesHierarchy;
+			pagesHierarchy.pop();
+			return { pagesHierarchy };
 		});
 	}
 
@@ -116,7 +123,7 @@ export default class PanelNavigator extends React.Component<NavigatorProps, Navi
 					requestPageCreation: this.requestPageCreation
 				}}
 			>
-				<div className="panel-navigator" style={{ transform: `translate(-${this.state.pagePanelsHierarchy.length * 100}%)` }}>
+				<div className="panel-navigator" style={{ transform: `translate(-${this.state.pagesHierarchy.length * 100}%)` }}>
 					<div className="page" key="mainPanel">
 						{groups}
 					</div>
