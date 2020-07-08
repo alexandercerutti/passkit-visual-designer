@@ -1,11 +1,11 @@
 import * as React from "react";
 import "./style.less";
-import FieldPropertiesEditList from "./FieldPropertiesEditList";
 import FieldOptionsBar from "./FieldOptionsBar";
 import FieldPreview from "../FieldPreview";
 import { FieldProps } from "../../../../../passes/Areas/components/Field";
 import FieldsPropertiesEditPage from "../../FieldsPropertiesEditPage";
 import { PageNavigation } from "../../pages";
+import usePageFactory from "../../usePageFactory";
 
 interface FieldsDrawerElementProps extends Pick<PageNavigation, "requestPageCreation"> {
 	onFieldDelete(key: string): void;
@@ -16,29 +16,34 @@ interface FieldsDrawerElementProps extends Pick<PageNavigation, "requestPageCrea
 }
 
 export default function FieldsDrawerElement(props: FieldsDrawerElementProps) {
-	const [usedProperties, setUsedProperties] = React.useState([
-		"key", "value"
-	]);
+	const [fieldData, setFieldData] = React.useState(props.elementData);
+
+	const pageCreationHandler = usePageFactory(
+		FieldsPropertiesEditPage,
+		fieldData,
+		setFieldData
+	);
+
+	const onEditPropertiesHandler = React.useCallback(() => {
+		pageCreationHandler(fieldData.fieldKey, props.requestPageCreation);
+	}, [fieldData]);
 
 	return (
 		<div
 			className="field-edit-item"
-			data-key={props.elementData.fieldKey}
-			key={props.elementData.fieldKey}
+			data-key={fieldData.fieldKey}
+			key={fieldData.fieldKey}
 		>
-			{/* <FieldPropertiesEditList
-				usedProperties={usedProperties}
-			/> */}
 			<FieldPreview
-				previewData={props.elementData}
+				previewData={fieldData}
 				isFieldHidden={false}
+				onClick={onEditPropertiesHandler}
 			/>
 			<FieldOptionsBar
 				deleteField={props.onFieldDelete}
-				updateUsedProperties={setUsedProperties}
 				requestFieldOrderChange={props.onFieldOrderChange}
-				usedProperties={usedProperties}
-				fieldKey={props.elementData.fieldKey}
+				onPropsEditClick={onEditPropertiesHandler}
+				fieldKey={fieldData.fieldKey}
 				isUpperBoundary={props.isUpperBoundary}
 				isLowerBoundary={props.isLowerBoundary}
 			/>
