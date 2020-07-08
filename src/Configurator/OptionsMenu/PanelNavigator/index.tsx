@@ -42,18 +42,9 @@ export default class PanelNavigator extends React.Component<NavigatorProps, Navi
 			return;
 		}
 
-		const PageComponent = (
-			<PageElement
-				name={identifier}
-				requestPageCreation={this.requestPageCreation}
-				requestPageClosing={this.requestPageClosing}
-				{...(contextProps || {})}
-			/>
-		);
-
 		this.setState((previousState) => {
 			const pagesHierarchy = previousState.pagesHierarchy;
-			pagesHierarchy.push([identifier, PageComponent, getContextProps]);
+			pagesHierarchy.push([identifier, PageElement, getContextProps]);
 			return { pagesHierarchy };
 		});
 	}
@@ -82,10 +73,15 @@ export default class PanelNavigator extends React.Component<NavigatorProps, Navi
 	}
 
 	render() {
-		const pages = this.state.pagePanelsHierarchy.map(([_, page], index) => {
+		const pages = this.state.pagesHierarchy.map(([id, PageElement, getContextProps], index) => {
 			return (
 				<div className="page" key={`panel-depth${index}`}>
-					{page}
+					<PageElement
+						name={id}
+						requestPageCreation={this.requestPageCreation}
+						requestPageClosing={this.requestPageClosing}
+						{...getContextProps?.() || {}}
+					/>
 				</div>
 			);
 		});
