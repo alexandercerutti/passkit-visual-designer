@@ -31,7 +31,6 @@ export default function FieldPropertiesEditList(props: FieldPropertiesEditListPr
 					name={name}
 					placeholder={placeholder}
 					onValueChange={props.onValueChange}
-
 				/>
 			);
 		}

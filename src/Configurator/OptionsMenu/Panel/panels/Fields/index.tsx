@@ -5,20 +5,18 @@ import { FieldProps } from "../../../../../passes/Areas/components/Field";
 import { FieldsArrowIcon } from "./icons";
 import CapitalHeaderTitle from "../../../CapitalHeaderTitle";
 import FieldsPreviewPage from "../../../pages/FieldsPreviewPage";
+import usePageFactory from "../../../pages/usePageFactory";
 
 export interface FieldPanelProps extends PanelProps {
 	value?: FieldProps[];
 }
 
 export default function FieldPanel(props: FieldPanelProps) {
-	const { current: pageCreationClickHandler } = React.useRef(() => {
-		const { requestPageCreation } = props;
-		requestPageCreation(props.name, FieldsPreviewPage, getContextProps);
-	});
+	const { requestPageClosing, requestPageCreation, ...otherProps } = props;
+	const pageCreationHandler = usePageFactory(FieldsPreviewPage, otherProps, undefined);
 
-	const getContextProps = React.useCallback(() => {
-		const { requestPageClosing, requestPageCreation, ...otherProps } = props;
-		return otherProps;
+	const pageCreationClickHandler = React.useCallback(() => {
+		pageCreationHandler(props.name, props.requestPageCreation);
 	}, [props]);
 
 	return (
