@@ -4,7 +4,7 @@ import PageHeader from "../Header";
 import { PageProps } from "../pages";
 import FieldPreview from "../FieldsPreviewPage/FieldPreview";
 import { FieldProps } from "../../../../passes/Areas/components/Field";
-import FieldPropertiesEditList from "../FieldsPreviewPage/FieldsDrawerElement/FieldPropertiesEditList";
+import FieldPropertiesEditList from "./FieldPropertiesEditList";
 
 interface Props extends PageProps {
 	data: FieldProps;
