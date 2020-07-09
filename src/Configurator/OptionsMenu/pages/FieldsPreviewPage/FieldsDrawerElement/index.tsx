@@ -26,7 +26,7 @@ export default function FieldsDrawerElement(props: FieldsDrawerElementProps) {
 
 	const onEditPropertiesHandler = React.useCallback(() => {
 		pageCreationHandler(fieldData.fieldKey, props.requestPageCreation);
-	}, [fieldData]);
+	}, [pageCreationHandler]);
 
 	return (
 		<div
