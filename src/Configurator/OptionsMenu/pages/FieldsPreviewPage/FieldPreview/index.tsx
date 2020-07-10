@@ -16,7 +16,7 @@ export default function FieldPreview(props: Props) {
 	const [fieldKey, setFieldKey] = React.useState(!isPresetFieldKey ? props.previewData.fieldKey : "");
 
 	React.useEffect(() => {
-		if (fieldKey && fieldKey !== props.previewData.fieldKey) {
+		if (props.onFieldKeyChange && fieldKey !== props.previewData.fieldKey) {
 			props.onFieldKeyChange(fieldKey);
 		}
 	}, [fieldKey]);
@@ -34,13 +34,13 @@ export default function FieldPreview(props: Props) {
 		? (
 			<input
 				type="text"
-				onChange={(evt) => setFieldKey(evt.target.value)}
+				onChange={(evt) => setFieldKey(evt.target.value.replace(/\s+/, ""))}
 				value={fieldKey}
 				placeholder="field key"
 			/>
 		) : (
 			<span>
-				{isPresetFieldKey ? "not setted" : props.previewData?.fieldKey}
+				{isPresetFieldKey ? "not setted" : fieldKey}
 			</span>
 		);
 
