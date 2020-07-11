@@ -2,6 +2,7 @@ import * as React from "react";
 import "./style.less";
 import { FieldProperties } from "../../../../../passes/Areas/components/Field/fieldCommons";
 import { createClassName } from "../../../../../passes/utils";
+import { PKTextAlignment } from "../../../../../passes/constants";
 
 interface Props {
 	fieldUUID: string;
@@ -55,6 +56,16 @@ export default function FieldPreview(props: Props) {
 			</span>
 		);
 
+	const { textAlignment } = props.previewData ?? {};
+
+	const fieldStylesClassName = createClassName(["preview-main-box"], {
+		"align-left": textAlignment === PKTextAlignment.Left,
+		"align-right": textAlignment === PKTextAlignment.Right,
+		"align-center": textAlignment === PKTextAlignment.Center,
+		"align-natural": textAlignment === PKTextAlignment.Natural || !textAlignment,
+		// @TODO: style dates
+	});
+
 	return (
 		<div
 			className={FPClassName}
@@ -63,7 +74,7 @@ export default function FieldPreview(props: Props) {
 			<div className={previewKeyClassName}>
 				{fieldKeyRow}
 			</div>
-			<div className="preview-main-box">
+			<div className={fieldStylesClassName}>
 				<span className="label">{props.previewData?.label || "label"}</span>
 				<span className="value">{props.previewData?.value || "value"}</span>
 			</div>

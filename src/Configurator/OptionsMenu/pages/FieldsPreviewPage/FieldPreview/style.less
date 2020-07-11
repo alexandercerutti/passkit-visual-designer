@@ -71,6 +71,11 @@
 		margin: 20px auto 10px auto;
 		max-width: 100%;
 
+		&.align-right > * { text-align: right; }
+		&.align-left > * { text-align: left; }
+		&.align-center > * { text-align: center; }
+		&.align-natural > * { text-align: start; }
+
 		& span.label, & span.value {
 			color: @base-background-color;
 			overflow: hidden;
