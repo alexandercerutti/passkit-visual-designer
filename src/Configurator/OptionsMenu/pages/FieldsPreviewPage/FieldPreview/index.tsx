@@ -21,6 +21,15 @@ export default function FieldPreview(props: Props) {
 		}
 	}, [fieldKey]);
 
+	/** Effect to update the state value when props changes */
+
+	React.useEffect(() => {
+		const { fieldKey: propsFieldKey } = props.previewData;
+		if (propsFieldKey && propsFieldKey !== fieldKey) {
+			setFieldKey(propsFieldKey);
+		}
+	}, [props.previewData.fieldKey]);
+
 	const FPClassName = createClassName(["field-preview"], {
 		"hidden": props.isFieldHidden,
 		"editable": props.keyEditable
