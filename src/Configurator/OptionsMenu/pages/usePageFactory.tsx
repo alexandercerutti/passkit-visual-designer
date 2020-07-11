@@ -1,10 +1,13 @@
 import { RequestPageCreationSignature } from "./pages";
 import * as React from "react";
 
-interface ContextProps<T> {
-	data: T;
+type ContextProps<T extends Object> = Partial<{
+	[key in keyof T]: T[key];
+}> & {
 	onChange: Function;
 }
+
+type PAGE_COMPONENT_SIGNATURE = Parameters<RequestPageCreationSignature>[1];
 
 /**
  * This hooks provide a transparent way to create getContextProps
@@ -19,16 +22,16 @@ interface ContextProps<T> {
  * @param onChange
  */
 
-export default function usePageFactory<T>(
-	component: Parameters<RequestPageCreationSignature>[1],
-	initProps: ContextProps<T>["data"],
-	onChange: ContextProps<T>["onChange"]
+export default function usePageFactory<T extends PAGE_COMPONENT_SIGNATURE>(
+	component: T,
+	initProps: Partial<React.ComponentProps<T>>,
+	onChange: ContextProps<typeof initProps>["onChange"]
 ) {
-	const getContextProps = React.useCallback((): ContextProps<T> => {
+	const getContextProps = React.useCallback((): ContextProps<typeof initProps> => {
 		return {
-			data: initProps,
+			...initProps,
 			onChange: onChange ?? (() => { })
-		};
+		}
 	}, [initProps, onChange]);
 
 	const creationHandler = React.useCallback((key: string, requestFunction: RequestPageCreationSignature) => {
