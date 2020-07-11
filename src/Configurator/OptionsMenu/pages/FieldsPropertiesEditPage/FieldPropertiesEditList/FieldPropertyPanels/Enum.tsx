@@ -17,7 +17,7 @@ export default function FieldEnumPropertyPanel<T>(props: Props<T>) {
 	);
 
 	React.useEffect(() => {
-		if (selectedValue !== props.defaultValue) {
+		if (selectedValue !== (props.value || props.defaultValue)) {
 			props.onValueChange(props.name, selectedValue);
 		}
 	}, [selectedValue]);
