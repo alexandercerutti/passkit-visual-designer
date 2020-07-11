@@ -11,6 +11,7 @@ export default function FieldCheckboxPropertyPanel(props: Props) {
 		<div className="fieldprop-checkbox-panel">
 			<label htmlFor={props.name}>{props.name}</label>
 			<input
+				checked={props.value ?? false}
 				id={props.name}
 				type="checkbox"
 				onChange={(ev) => props.onValueChange(props.name, ev.currentTarget.checked)}

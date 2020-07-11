@@ -14,7 +14,7 @@ export default function FieldStringPropertyPanel(props: Props) {
 			<input
 				id={props.name}
 				type="text"
-				value={props.value}
+				value={props.value || ""}
 				placeholder={props.placeholder}
 				onChange={(ev) => props.onValueChange(props.name, ev.currentTarget.value)}
 			/>

@@ -5,13 +5,17 @@ import { FieldProperties } from "../../FieldsPreviewPage/FieldsDrawerElement/Fie
 import FieldStringPropertyPanel from "./FieldPropertyPanels/String";
 import FieldCheckboxPropertyPanel from "./FieldPropertyPanels/Checkbox";
 import FieldEnumPropertyPanel from "./FieldPropertyPanels/Enum";
+import { FieldProps } from "../../../../../passes/Areas/components/Field";
 
 interface FieldPropertiesEditListProps {
+	data: FieldProps;
 	onValueChange<T>(prop: string, value: T): void;
 }
 
 export default function FieldPropertiesEditList(props: FieldPropertiesEditListProps) {
 	const properties = FieldProperties.map(({ name, type, placeholder, defaultValue }) => {
+		const valueFromData = props.data[name];
+
 		if (isPanelTypeEnum(type)) {
 			return (
 				<FieldEnumPropertyPanel
@@ -19,6 +23,7 @@ export default function FieldPropertiesEditList(props: FieldPropertiesEditListPr
 					name={name}
 					options={type}
 					onValueChange={props.onValueChange}
+					value={valueFromData ?? defaultValue}
 					defaultValue={defaultValue}
 				/>
 			);
@@ -31,6 +36,7 @@ export default function FieldPropertiesEditList(props: FieldPropertiesEditListPr
 					name={name}
 					placeholder={placeholder}
 					onValueChange={props.onValueChange}
+					value={valueFromData}
 				/>
 			);
 		}
@@ -40,6 +46,7 @@ export default function FieldPropertiesEditList(props: FieldPropertiesEditListPr
 				<FieldCheckboxPropertyPanel
 					key={name}
 					name={name}
+					value={valueFromData}
 					onValueChange={props.onValueChange}
 				/>
 			);

@@ -31,6 +31,7 @@ export default function FieldsPropertiesEditPage(props: Props) {
 				previewData={data}
 			/>
 			<FieldPropertiesEditList
+				data={data}
 				onValueChange={(prop, value) => {
 					setData({
 						...data,

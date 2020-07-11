@@ -2,14 +2,14 @@ import * as React from "react";
 
 interface Props<E> {
 	name: string;
-	value?: keyof E;
+	value?: string;
 	options: E;
 	defaultValue?: string;
 	onValueChange<T>(prop: string, value: T): void;
 }
 
 export default function FieldEnumPropertyPanel<T>(props: Props<T>) {
-	const [selectedValue, changeSelectedValue] = React.useState<string>(props.defaultValue || null);
+	const [selectedValue, changeSelectedValue] = React.useState<string>(props.value || props.defaultValue || null);
 
 	const isDefaultValueAnOption = Boolean(
 		props.defaultValue &&
