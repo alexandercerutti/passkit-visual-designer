@@ -1,5 +1,5 @@
 import * as React from "react";
-import { TwitterPicker, RGBColor, ColorResult } from "react-color";
+import { TwitterPicker, RGBColor, ColorState } from "react-color";
 import { PanelProps } from "../..";
 import useContentSavingHandler from "../useContentSavingHandler";
 import CapitalHeaderTitle from "../../../CapitalHeaderTitle";
@@ -18,7 +18,7 @@ export default function ColorPanel(props: ColorPanelProps) {
 		"#0693e3", "#abb8c3", "#eb144c", "#f78da7", "#9900ef"
 	]);
 
-	const onColorChange = React.useRef(({ rgb, hex }: ColorResult) => {
+	const onColorChange = React.useRef(({ rgb, hex }: ColorState) => {
 		const colorInRecentlyUsedIndex = colorHistory.indexOf(hex);
 
 		if (colorInRecentlyUsedIndex === -1) {
@@ -37,7 +37,6 @@ export default function ColorPanel(props: ColorPanelProps) {
 			<CapitalHeaderTitle name={props.name} />
 			<TwitterPicker
 				triangle="hide"
-				// PR @types/react-color: https://github.com/DefinitelyTyped/DefinitelyTyped/pull/44867
 				className="color-selector"
 				color={color}
 				colors={colorHistory}
