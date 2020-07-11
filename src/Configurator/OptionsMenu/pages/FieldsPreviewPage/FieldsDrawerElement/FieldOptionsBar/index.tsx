@@ -4,10 +4,10 @@ import { DeleteFieldIcon, ListAddProp } from "./icons";
 import FieldOrderHandler, { Directions } from "./FieldOrderHandler";
 
 interface FieldOptionsProps {
-	deleteField(key: string): void;
+	deleteField(fieldUUID: string): void;
 	requestFieldOrderChange(of: number): void;
 	onPropsEditClick(): void;
-	fieldKey: string;
+	fieldUUID: string;
 	isUpperBoundary: boolean;
 	isLowerBoundary: boolean;
 }
@@ -23,7 +23,7 @@ export default function FieldOptionsBar(props: FieldOptionsProps) {
 	return (
 		<>
 			<div className="field-options-bar">
-				<div className="field-delete" onClick={() => props.deleteField(props.fieldKey)}>
+				<div className="field-delete" onClick={() => props.deleteField(props.fieldUUID)}>
 					<DeleteFieldIcon className="danger" />
 				</div>
 				<FieldOrderHandler

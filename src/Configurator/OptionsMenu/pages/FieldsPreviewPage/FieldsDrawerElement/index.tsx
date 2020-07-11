@@ -8,7 +8,9 @@ import { PageNavigation } from "../../pages";
 import usePageFactory from "../../usePageFactory";
 
 interface FieldsDrawerElementProps extends Pick<PageNavigation, "requestPageCreation"> {
+	fieldUUID: string;
 	onFieldDelete(key: string): void;
+	onFieldDataChange(fieldUUID: string, data: FieldProps): void;
 	onFieldOrderChange(of: number): void;
 	elementData: FieldProps;
 	isUpperBoundary: boolean;
@@ -20,21 +22,27 @@ export default function FieldsDrawerElement(props: FieldsDrawerElementProps) {
 
 	const pageCreationHandler = usePageFactory(
 		FieldsPropertiesEditPage,
-		fieldData,
+		{ data: fieldData, fieldUUID: props.fieldUUID },
 		setFieldData
 	);
 
 	const onEditPropertiesHandler = React.useCallback(() => {
-		pageCreationHandler(fieldData.fieldKey, props.requestPageCreation);
+		pageCreationHandler(props.fieldUUID, props.requestPageCreation);
 	}, [pageCreationHandler]);
+
+	React.useEffect(() => {
+		if (fieldData !== props.elementData) {
+			props.onFieldDataChange(props.fieldUUID, fieldData);
+		}
+	}, [fieldData]);
 
 	return (
 		<div
 			className="field-edit-item"
-			data-key={fieldData.fieldKey}
-			key={fieldData.fieldKey}
+			data-key={fieldData.fieldKey || props.fieldUUID}
 		>
 			<FieldPreview
+				fieldUUID={props.fieldUUID}
 				previewData={fieldData}
 				isFieldHidden={false}
 				onClick={onEditPropertiesHandler}
@@ -43,7 +51,7 @@ export default function FieldsDrawerElement(props: FieldsDrawerElementProps) {
 				deleteField={props.onFieldDelete}
 				requestFieldOrderChange={props.onFieldOrderChange}
 				onPropsEditClick={onEditPropertiesHandler}
-				fieldKey={fieldData.fieldKey}
+				fieldUUID={props.fieldUUID}
 				isUpperBoundary={props.isUpperBoundary}
 				isLowerBoundary={props.isLowerBoundary}
 			/>

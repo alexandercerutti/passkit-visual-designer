@@ -4,20 +4,22 @@ import { FieldProperties } from "../../../../../passes/Areas/components/Field/fi
 import { createClassName } from "../../../../../passes/utils";
 
 interface Props {
+	fieldUUID: string;
 	previewData: FieldProperties;
 	isFieldHidden?: boolean;
 	keyEditable?: boolean;
 	onClick?(): void;
-	onFieldKeyChange?(newValue: string): void;
+	onFieldKeyChange?(fieldUUID: string, newValue: string): void;
 }
 
 export default function FieldPreview(props: Props) {
-	const isPresetFieldKey = props.previewData.fieldKey.includes("::pkvd-new");
-	const [fieldKey, setFieldKey] = React.useState(!isPresetFieldKey ? props.previewData.fieldKey : "");
+	const [fieldKey, setFieldKey] = React.useState(props.previewData?.fieldKey ?? "");
+
+	/** Updating parent component */
 
 	React.useEffect(() => {
 		if (props.onFieldKeyChange && fieldKey !== props.previewData.fieldKey) {
-			props.onFieldKeyChange(fieldKey);
+			props.onFieldKeyChange(props.fieldUUID, fieldKey);
 		}
 	}, [fieldKey]);
 
@@ -36,7 +38,7 @@ export default function FieldPreview(props: Props) {
 	});
 
 	const previewKeyClassName = createClassName(["preview-field-key"], {
-		"none": isPresetFieldKey
+		"none": !fieldKey
 	});
 
 	const fieldKeyRow = props.keyEditable
@@ -49,7 +51,7 @@ export default function FieldPreview(props: Props) {
 			/>
 		) : (
 			<span>
-				{isPresetFieldKey ? "not setted" : fieldKey}
+				{!fieldKey ? "not setted" : fieldKey}
 			</span>
 		);
 
@@ -62,8 +64,8 @@ export default function FieldPreview(props: Props) {
 				{fieldKeyRow}
 			</div>
 			<div className="preview-main-box">
-				<span className="label">{props.previewData.label || "label"}</span>
-				<span className="value">{props.previewData.value || "value"}</span>
+				<span className="label">{props.previewData?.label || "label"}</span>
+				<span className="value">{props.previewData?.value || "value"}</span>
 			</div>
 		</div>
 	);

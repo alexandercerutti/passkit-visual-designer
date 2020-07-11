@@ -8,6 +8,7 @@ import FieldPropertiesEditList from "./FieldPropertiesEditList";
 
 interface Props extends PageProps {
 	data: FieldProps;
+	fieldUUID: string;
 	onChange(props: FieldProps): void;
 }
 
@@ -25,7 +26,8 @@ export default function FieldsPropertiesEditPage(props: Props) {
 			<PageHeader />
 			<FieldPreview
 				keyEditable
-				onFieldKeyChange={(fieldKey) => setData({ ...data, fieldKey })}
+				fieldUUID={props.fieldUUID}
+				onFieldKeyChange={(fieldUUID: string, fieldKey: string) => setData({ ...data, fieldKey })}
 				previewData={data}
 			/>
 			<FieldPropertiesEditList

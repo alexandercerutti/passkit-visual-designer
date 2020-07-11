@@ -1,4 +1,5 @@
 import * as React from "react";
+import { v1 as uuid } from "uuid";
 import "./style.less";
 import { FieldProps } from "../../../../passes/Areas/components/Field";
 import { FieldsAddIcon } from "./icons";
@@ -12,21 +13,27 @@ interface Props extends PageProps, PageNavigation {
 }
 
 export default function FieldsPreviewPage(props: Props) {
-	const [fields, setFields] = React.useState(props.value || []);
+	const [fields, setFields] = React.useState(
+		(props.value || []).map(data => ({
+			fieldUUID: uuid(),
+			...data
+		}))
+	);
 	const name = `${props.name.slice(0, 1).toUpperCase()}${props.name.slice(1)}`;
 
-	const onFieldDeleteHandler = (fieldKey: string) => {
-		const fieldWithKeyIndex = fields.findIndex(f => f.fieldKey === fieldKey);
+	const onFieldDeleteHandler = (fieldUUID: string) => {
+		const fieldWithKeyIndex = fields.findIndex(f => f.fieldUUID === fieldUUID);
 		const newFields = [...fields];
 		newFields.splice(fieldWithKeyIndex, 1);
 		setFields(newFields);
 	};
 
 	const onFieldAddHandler = () => {
-		// Defining a custom initial fieldKey that, we hope,
-		// shouldn't be used by anyone to identify their fields
-		const fieldKey = `::pkvd-new-${fields.length + 1}$`;
-		setFields([...fields, { fieldKey } as FieldProps]);
+		setFields([
+			...fields, {
+				fieldUUID: uuid()
+			} as FieldProps & { fieldUUID: string }
+		]);
 	}
 
 	const onFieldOrderChange = (fromIndex: number, of: number): void => {

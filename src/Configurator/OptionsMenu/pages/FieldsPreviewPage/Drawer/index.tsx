@@ -3,13 +3,12 @@ import "./style.less";
 import { FieldProps } from "../../../../../passes/Areas/components/Field";
 import { MoreFieldsBelowIcon } from "../icons";
 import FieldsDrawerElement from "../FieldsDrawerElement";
-import { AllFieldProperties } from "../FieldsDrawerElement/FieldProperties";
 import PageNavigationContext from "../../PageNavigationContext";
 
 interface Props {
-	fieldsData: FieldProps[];
-	onFieldDelete(fieldKey: string): void;
-	onFieldChange(data: AllFieldProperties): void;
+	fieldsData: (FieldProps & { fieldUUID: string })[];
+	onFieldDelete(fieldUUID: string): void;
+	onFieldChange(fieldUUID: string, data: FieldProps): void;
 	onFieldOrderChange(fromIndex: number, of: number): void;
 }
 
@@ -18,7 +17,7 @@ export default function Drawer(props: Props) {
 	const drawerRef = React.useRef<HTMLDivElement>();
 
 	const onListScrollHandler = React.useRef(({ currentTarget }: Partial<React.UIEvent<HTMLDivElement>>) => {
-		// Tollerance of 50px before showing the indicator
+		// Tollerance of 25px before showing the indicator
 		const didReachEndOfScroll = (
 			currentTarget.scrollHeight - currentTarget.scrollTop <= currentTarget.clientHeight + 25
 		);
@@ -34,20 +33,26 @@ export default function Drawer(props: Props) {
 		}
 	}, [props.fieldsData]);
 
-	const panels = props.fieldsData.map((field, index) => (
-		<PageNavigationContext.Consumer key={field.fieldKey}>
-			{({ requestPageCreation }) => (
-				<FieldsDrawerElement
-					elementData={field}
-					onFieldDelete={props.onFieldDelete}
-					onFieldOrderChange={(amount) => props.onFieldOrderChange(index, amount)}
-					requestPageCreation={requestPageCreation}
-					isUpperBoundary={index === 0}
-					isLowerBoundary={index === props.fieldsData.length - 1}
-				/>
-			)}
-		</PageNavigationContext.Consumer>
-	));
+	const panels = props.fieldsData.map((field, index) => {
+		const { fieldUUID, ...fieldProps } = field;
+
+		return (
+			<PageNavigationContext.Consumer key={fieldUUID}>
+				{({ requestPageCreation }) => (
+					<FieldsDrawerElement
+						fieldUUID={fieldUUID}
+						elementData={fieldProps}
+						onFieldDelete={props.onFieldDelete}
+						onFieldDataChange={props.onFieldChange}
+						onFieldOrderChange={(amount) => props.onFieldOrderChange(index, amount)}
+						requestPageCreation={requestPageCreation}
+						isUpperBoundary={index === 0}
+						isLowerBoundary={index === props.fieldsData.length - 1}
+					/>
+				)}
+			</PageNavigationContext.Consumer>
+		)
+	});
 
 	return (
 		<>
