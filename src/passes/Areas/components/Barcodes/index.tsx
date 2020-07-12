@@ -17,11 +17,11 @@ export interface BarcodeProps {
 	voided?: boolean;
 }
 
-export default (props: BarcodeProps) => {
+export default function Barcodes(props: BarcodeProps) {
 	const barcodeFormat = props.format || PKBarcodeFormat.None;
-	const component: JSX.Element = selectComponentFromFormat(barcodeFormat, props.fallbackShape);
+	const BarcodeComponent = selectComponentFromFormat(barcodeFormat, props.fallbackShape);
 
-	if (!component) {
+	if (!BarcodeComponent) {
 		return null;
 	}
 
@@ -32,7 +32,7 @@ export default (props: BarcodeProps) => {
 	return (
 		<div className={className}>
 			<div>
-				{component}
+				<BarcodeComponent />
 			</div>
 		</div>
 	);
@@ -49,18 +49,18 @@ export function isRectangularBarcode(kind: PKBarcodeFormat) {
 function selectComponentFromFormat(format: PKBarcodeFormat, fallbackFormat: "square" | "rect") {
 	switch (format) {
 		case PKBarcodeFormat.Aztec:
-			return <Aztec />;
+			return Aztec;
 		case PKBarcodeFormat.Code128:
-			return <Code128 />;
+			return Code128;
 		case PKBarcodeFormat.PDF417:
-			return <PDF417 />;
+			return PDF417;
 		case PKBarcodeFormat.QR:
-			return <QRCode />;
+			return QRCode;
 		default:
 			if (fallbackFormat === "square") {
-				return <EmptySquareCode />
+				return EmptySquareCode;
 			}
 
-			return <EmptyBarcode />
+			return EmptyBarcode;
 	}
 }
