@@ -15,10 +15,10 @@ export enum PKTransitType {
 }
 
 export enum PKTextAlignment {
-	"Left" = "PKTextAlignmentLeft",
-	"Center" = "PKTextAlignmentCenter",
-	"Right" = "PKTextAlignmentRight",
-	"Natural" = "PKTextAlignmentNatural",
+	Left = "PKTextAlignmentLeft",
+	Center = "PKTextAlignmentCenter",
+	Right = "PKTextAlignmentRight",
+	Natural = "PKTextAlignmentNatural",
 }
 
 export enum PKBarcodeFormat {
