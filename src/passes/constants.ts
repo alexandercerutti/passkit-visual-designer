@@ -23,15 +23,20 @@ export enum PKTextAlignment {
 
 export enum PKBarcodeFormat {
 	/** Apple-specific properties */
-	Code128 = "code128",
-	PDF417 = "pdf417",
-	QR = "qrcode",
-	Aztec = "actec",
-	None = "none",
+	Code128 = "PKBarcodeFormatCode128",
+	PDF417 = "PKBarcodeFormatPDF417",
+	QR = "PKBarcodeFormatQR",
+	Aztec = "PKBarcodeFormatAztec",
+
+	/**
+	 * @TODO: these should be removed or moved somewhere else
+	 */
+	/** Custom */
+	None = "PKBarcodeFormatNone",
 
 	/** Generic descriptors */
-	Square = "squared",
-	Rectangle = "rectangle"
+	Square = "PKBarcodeFormatSquare",
+	Rectangle = "PKBarcodeFormatRectangle"
 }
 
 export enum PKDataDetectorType {
