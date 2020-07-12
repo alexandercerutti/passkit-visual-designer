@@ -58,7 +58,7 @@ export namespace WalletPassFormat {
 	 * @see https://apple.co/305eJih
 	 */
 	export interface Barcodes {
-		altText?: string
+		altText?: string;
 		format: PKBarcodeFormat;
 		message: string;
 		messageEncoding: string;
