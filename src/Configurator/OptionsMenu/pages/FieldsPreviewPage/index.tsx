@@ -12,7 +12,93 @@ interface Props extends PageProps, PageNavigation {
 	value?: FieldProps[];
 }
 
-export default function FieldsPreviewPage(props: Props) {
+interface State {
+	fields: (FieldProps & { fieldUUID: string })[]
+}
+
+export default class FieldsPreviewPage extends React.Component<Props, State> {
+	private readonly pageName = `${this.props.name.slice(0, 1).toUpperCase()}${this.props.name.slice(1)}`;
+
+	constructor(props: Props) {
+		super(props);
+
+		this.state = {
+			fields: (props.value || []).map(data => ({
+				fieldUUID: uuid(),
+				...data
+			}))
+		};
+
+		this.onFieldAddHandler = this.onFieldAddHandler.bind(this);
+		this.onFieldDeleteHandler = this.onFieldDeleteHandler.bind(this);
+		this.onFieldOrderChange = this.onFieldOrderChange.bind(this);
+	}
+
+	onFieldDeleteHandler(fieldUUID: string) {
+		this.setState(({ fields }) => {
+			const fieldWithKeyIndex = fields.findIndex(f => f.fieldUUID === fieldUUID);
+			const newFields = [...fields];
+			newFields.splice(fieldWithKeyIndex, 1);
+
+			return { fields: newFields };
+		});
+	}
+
+	onFieldAddHandler() {
+		this.setState(({ fields }) => {
+			return {
+				fields: [
+					...fields,
+					{
+						fieldUUID: uuid()
+					} as FieldProps & { fieldUUID: string }
+				]
+			}
+		});
+	}
+
+	onFieldOrderChange(fromIndex: number, of: number): void {
+		this.setState(({ fields: previousFields }) => {
+			// Creating a copy of the array and swapping two elements
+			const nextFields = previousFields.slice(0);
+
+			nextFields[fromIndex] = [
+				nextFields[fromIndex + of],
+				nextFields[fromIndex + of] = nextFields[fromIndex]
+			][0];
+
+			return {
+				fields: nextFields
+			};
+		});
+	}
+
+	render() {
+		const { fields } = this.state;
+
+		const fullPageElement = (
+			this.state.fields.length &&
+			<Drawer
+				{...this.props}
+				fieldsData={fields}
+				onFieldDelete={this.onFieldDeleteHandler}
+				onFieldOrderChange={this.onFieldOrderChange}
+			/> ||
+			<DrawerPlaceholder />
+		);
+
+		return (
+			<div className="fields-preview-page">
+				<PageHeader name={this.pageName}>
+					<FieldsAddIcon className="add" onClick={this.onFieldAddHandler} />
+				</PageHeader>
+				{fullPageElement}
+			</div>
+		);
+	}
+}
+
+function FieldsPreviewPage1(props: Props) {
 	const [fields, setFields] = React.useState(
 		(props.value || []).map(data => ({
 			fieldUUID: uuid(),
