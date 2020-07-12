@@ -1,7 +1,7 @@
 import * as React from "react";
 import "./style.less";
 import FieldOptionsBar from "./FieldOptionsBar";
-import FieldPreview from "../FieldPreview";
+import FieldPreview from "../../FieldPreview";
 import { FieldProps } from "../../../../../passes/Areas/components/Field";
 import FieldsPropertiesEditPage from "../../FieldsPropertiesEditPage";
 import { PageNavigation } from "../../pages";

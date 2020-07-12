@@ -2,7 +2,7 @@ import * as React from "react";
 import "./style.less";
 import PageHeader from "../Header";
 import { PageProps } from "../pages";
-import FieldPreview from "../FieldsPreviewPage/FieldPreview";
+import FieldPreview from "../FieldPreview";
 import { FieldProps } from "../../../../passes/Areas/components/Field";
 import FieldPropertiesEditList from "./FieldPropertiesEditList";
 
