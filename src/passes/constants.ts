@@ -45,3 +45,15 @@ export enum PKDataDetectorType {
 	Address = "PKDataDetectorTypeAddress",
 	CalendarEvent = "PKDataDetectorTypeCalendarEvent"
 }
+
+export namespace WalletPassFormat {
+	/**
+	 * @see https://apple.co/305eJih
+	 */
+	export interface Barcodes {
+		altText?: string
+		format: PKBarcodeFormat;
+		message: string;
+		messageEncoding: string;
+	}
+}

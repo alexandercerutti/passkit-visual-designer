@@ -1,5 +1,5 @@
 import * as React from "react";
-import { PKBarcodeFormat } from "../../../constants";
+import { PKBarcodeFormat, WalletPassFormat } from "../../../constants";
 import QRCode from "./qr-code";
 import Code128 from "./code128";
 import PDF417 from "./pdf417";
@@ -8,10 +8,8 @@ import { EmptyBarcode, EmptySquareCode } from "./empty";
 import "./style.less";
 import { createClassName } from "../../../../utils";
 
-export interface BarcodeProps {
-	format: PKBarcodeFormat;
+interface BarcodeProps extends Partial<WalletPassFormat.Barcodes> {
 	fallbackShape: "square" | "rect";
-	message?: string;
 
 	// @TODO
 	voided?: boolean;
