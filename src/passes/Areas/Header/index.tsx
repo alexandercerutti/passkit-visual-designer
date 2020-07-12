@@ -5,7 +5,7 @@ import { onRegister, RegistrableComponent, useRegistrations } from "../useRegist
 import ImageField from "../components/ImageField";
 import { FieldProps } from "../components/Field";
 import { InlineFieldsRow } from "../FieldRow";
-import { createClassName } from "../../utils";
+import { createClassName } from "../../../utils";
 import { FieldKind } from "../../../model";
 
 interface HeaderProps extends Partial<RegistrableComponent> {

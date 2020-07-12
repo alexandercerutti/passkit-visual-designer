@@ -2,7 +2,7 @@ import * as React from "react";
 import "./style.less";
 import { PassKind } from "../model";
 import { PassCoreProps } from "../passes/PassCore";
-import { createClassName } from "../passes/utils";
+import { createClassName } from "../utils";
 import { NamedPassProps } from "./NamedPass";
 
 interface PassListProps {

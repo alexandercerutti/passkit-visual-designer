@@ -6,7 +6,7 @@ import PDF417 from "./pdf417";
 import Aztec from "./aztec";
 import { EmptyBarcode, EmptySquareCode } from "./empty";
 import "./style.less";
-import { createClassName } from "../../../utils";
+import { createClassName } from "../../../../utils";
 
 export interface BarcodeProps {
 	format: PKBarcodeFormat;

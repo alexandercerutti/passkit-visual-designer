@@ -1,6 +1,6 @@
 import * as React from "react";
 import { SelectableComponent } from "../../useRegistrations";
-import { createClassName } from "../../../utils";
+import { createClassName } from "../../../../utils";
 import useFallback from "../useFallback";
 import useClickEvent from "../useClickEvent";
 import "./style.less";
