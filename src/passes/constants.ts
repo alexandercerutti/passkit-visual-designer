@@ -46,6 +46,13 @@ export enum PKDataDetectorType {
 	CalendarEvent = "PKDataDetectorTypeCalendarEvent"
 }
 
+export enum PKNumberStyle {
+	Decimal = "PKNumberStyleDecimal",
+	Percent = "PKNumberStylePercent",
+	Scientific = "PKNumberStyleScientific",
+	SpellOut = "PKNumberStyleSpellOut"
+}
+
 export namespace WalletPassFormat {
 	/**
 	 * @see https://apple.co/305eJih
