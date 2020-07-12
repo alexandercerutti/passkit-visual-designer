@@ -32,6 +32,7 @@ export default class FieldsPreviewPage extends React.Component<Props, State> {
 		this.onFieldAddHandler = this.onFieldAddHandler.bind(this);
 		this.onFieldDeleteHandler = this.onFieldDeleteHandler.bind(this);
 		this.onFieldOrderChange = this.onFieldOrderChange.bind(this);
+		this.onFieldChangeHandler = this.onFieldChangeHandler.bind(this);
 	}
 
 	onFieldDeleteHandler(fieldUUID: string) {
@@ -73,6 +74,27 @@ export default class FieldsPreviewPage extends React.Component<Props, State> {
 		});
 	}
 
+	onFieldChangeHandler(fieldUUID: string, fieldProps: FieldProps) {
+		this.setState(({ fields: previousFields }) => {
+			const fieldIndex = previousFields.findIndex(f => f.fieldUUID === fieldUUID);
+
+			if (fieldIndex < 0) {
+				return null;
+			}
+
+			const fields = previousFields.slice(0);
+			fields.splice(
+				fieldIndex,
+				1,
+				Object.assign(fields[fieldIndex], fieldProps)
+			);
+
+			console.log("onFieldChange for", fieldProps, fieldUUID);
+
+			return { fields };
+		});
+	}
+
 	render() {
 		const { fields } = this.state;
 
@@ -81,6 +103,7 @@ export default class FieldsPreviewPage extends React.Component<Props, State> {
 			<Drawer
 				{...this.props}
 				fieldsData={fields}
+				onFieldChange={this.onFieldChangeHandler}
 				onFieldDelete={this.onFieldDeleteHandler}
 				onFieldOrderChange={this.onFieldOrderChange}
 			/> ||
