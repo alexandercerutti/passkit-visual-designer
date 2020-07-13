@@ -29,7 +29,8 @@ export enum PKBarcodeFormat {
 	Aztec = "PKBarcodeFormatAztec",
 
 	/**
-	 * @TODO: these should be removed or moved somewhere else
+	 * @TODO these should be removed or moved somewhere else
+	 * @TODO fix also styles for none and shapes
 	 */
 	/** Custom */
 	None = "PKBarcodeFormatNone",
