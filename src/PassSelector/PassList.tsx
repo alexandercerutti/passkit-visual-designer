@@ -44,7 +44,7 @@ export default function PassList(props: PassListPropsWithChildren): JSX.Element 
 
 	const className = createClassName([], {
 		"space-first": children.length > 2,
-		"element-first": children.length < 2,
+		"element-first": children.length <= 2,
 		"selection-active": props.selectedKind
 	});
 
