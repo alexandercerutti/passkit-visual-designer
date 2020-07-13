@@ -1,6 +1,6 @@
 import { PKDataDetectorType, PKTextAlignment, PKDateStyle } from "../../../../../passes/constants";
 
-type FieldProperty = {
+type FieldPropertyDetail = {
 	name: string,
 	type: typeof String | typeof Boolean | typeof PKTextAlignment | typeof PKDateStyle | typeof PKDataDetectorType,
 	placeholder?: string;
@@ -8,22 +8,7 @@ type FieldProperty = {
 	defaultValue?: string;
 };
 
-
-export interface AllFieldProperties {
-	key: string;
-	value: string;
-	label: string;
-	attributedValue: string;
-	changeMessage: string;
-	dataDetectorTypes: PKDataDetectorType;
-	textAlignment: PKTextAlignment;
-	dateStyle: PKDateStyle;
-	timeStyle: PKDateStyle;
-	ignoresTimeZone: boolean;
-	isRelative: boolean;
-}
-
-export const FieldProperties: FieldProperty[] = [
+export const FieldPropertiesDetails: FieldPropertyDetail[] = [
 	{
 		name: "value",
 		type: String,
