@@ -2,7 +2,7 @@ import * as React from "react";
 import "./style.less";
 import { FieldProps } from "../../../../../passes/Areas/components/Field";
 import { MoreFieldsBelowIcon } from "../icons";
-import FieldsDrawerElement from "../FieldsDrawerElement";
+import DrawerElement from "../DrawerElement";
 import PageNavigationContext from "../../PageNavigationContext";
 
 interface Props {
@@ -39,7 +39,7 @@ export default function Drawer(props: Props) {
 		return (
 			<PageNavigationContext.Consumer key={fieldUUID}>
 				{({ requestPageCreation }) => (
-					<FieldsDrawerElement
+					<DrawerElement
 						fieldUUID={fieldUUID}
 						elementData={fieldProps}
 						onFieldDelete={props.onFieldDelete}

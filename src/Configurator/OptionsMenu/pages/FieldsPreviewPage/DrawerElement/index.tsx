@@ -7,7 +7,7 @@ import FieldsPropertiesEditPage from "../../FieldsPropertiesEditPage";
 import { PageNavigation } from "../../pages";
 import usePageFactory from "../../usePageFactory";
 
-interface FieldsDrawerElementProps extends Pick<PageNavigation, "requestPageCreation"> {
+interface DrawerElementProps extends Pick<PageNavigation, "requestPageCreation"> {
 	fieldUUID: string;
 	onFieldDelete(key: string): void;
 	onFieldDataChange(fieldUUID: string, data: FieldProps): void;
@@ -17,7 +17,7 @@ interface FieldsDrawerElementProps extends Pick<PageNavigation, "requestPageCrea
 	isLowerBoundary: boolean;
 }
 
-export default function FieldsDrawerElement(props: FieldsDrawerElementProps) {
+export default function DrawerElement(props: DrawerElementProps) {
 	const [fieldData, setFieldData] = React.useState(props.elementData);
 
 	const pageCreationHandler = usePageFactory(
