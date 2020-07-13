@@ -2,18 +2,21 @@ import * as React from "react";
 import { composeLabelValueStylesFromProps, FieldProperties, FieldTypes } from "./fieldCommons";
 import { SelectableComponent } from "../../useRegistrations";
 
-type LabelProps = FieldProperties<FieldTypes.LABEL> & Partial<SelectableComponent<never>>;
+type LabelProps = Partial<SelectableComponent<never>> & {
+	fieldData: Partial<FieldProperties<FieldTypes.LABEL>>
+};
 
 export default function FieldLabel(props: LabelProps) {
-	const style = composeLabelValueStylesFromProps(props, "label");
+	const { fieldData, onClick } = props;
+	const style = composeLabelValueStylesFromProps(fieldData, "label");
 
 	return (
 		<span
 			className="label"
 			style={style}
-			onClick={props.onClick ?? null}
+			onClick={onClick ?? null}
 		>
-			{props.label || ""}
+			{fieldData.label || ""}
 		</span>
 	);
 }

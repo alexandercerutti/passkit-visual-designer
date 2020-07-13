@@ -1,7 +1,7 @@
 import * as React from "react";
 import { v1 as uuid } from "uuid";
 import "./style.less";
-import { FieldProps } from "../../../../passes/Areas/components/Field";
+import { PassFieldKeys } from "../../../../passes/constants";
 import { FieldsAddIcon } from "./icons";
 import Drawer from "./Drawer";
 import DrawerPlaceholder from "./DrawerPlaceholder";
@@ -9,11 +9,11 @@ import PageHeader from "../Header";
 import { PageProps, PageNavigation } from "../pages";
 
 interface Props extends PageProps, PageNavigation {
-	value?: FieldProps[];
+	value?: PassFieldKeys[];
 }
 
 interface State {
-	fields: (FieldProps & { fieldUUID: string })[]
+	fields: (PassFieldKeys & { fieldUUID: string })[]
 }
 
 export default class FieldsPreviewPage extends React.Component<Props, State> {
@@ -52,7 +52,7 @@ export default class FieldsPreviewPage extends React.Component<Props, State> {
 					...fields,
 					{
 						fieldUUID: uuid()
-					} as FieldProps & { fieldUUID: string }
+					} as PassFieldKeys & { fieldUUID: string }
 				]
 			}
 		});
@@ -74,7 +74,7 @@ export default class FieldsPreviewPage extends React.Component<Props, State> {
 		});
 	}
 
-	onFieldChangeHandler(fieldUUID: string, fieldProps: FieldProps) {
+	onFieldChangeHandler(fieldUUID: string, fieldProps: PassFieldKeys) {
 		this.setState(({ fields: previousFields }) => {
 			const fieldIndex = previousFields.findIndex(f => f.fieldUUID === fieldUUID);
 

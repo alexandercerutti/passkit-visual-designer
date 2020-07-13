@@ -64,3 +64,37 @@ export namespace WalletPassFormat {
 		messageEncoding: string;
 	}
 }
+
+export namespace PassFields {
+	/**
+	 * @see https://apple.co/3j0D0i5
+	 */
+
+	export interface AuxiliaryFields extends PassFieldKeys {
+		row?: 0 | 1;
+	}
+
+	export interface BackFields extends PassFieldKeys { }
+	export interface HeaderFields extends PassFieldKeys { }
+	export interface PrimaryFields extends PassFieldKeys { }
+	export interface SecondaryFields extends PassFieldKeys { }
+}
+
+/**
+ * @see https://apple.co/2ZqOVy8
+ */
+export interface PassFieldKeys {
+	key: string;
+	value: string | number;
+	attributedValue?: string;
+	changeMessage?: string;
+	currencyCode?: string;
+	dataDetectorTypes?: PKDataDetectorType;
+	dateStyle?: PKDateStyle;
+	ignoresTimeZone?: boolean;
+	isRelative?: boolean;
+	label?: string;
+	numberStyle?: PKNumberStyle;
+	textAlignment?: PKTextAlignment;
+	timeStyle?: PKDateStyle;
+}

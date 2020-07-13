@@ -1,14 +1,14 @@
 import * as React from "react";
 import "./style.less";
-import { FieldProps } from "../../../../../passes/Areas/components/Field";
+import { PassFieldKeys } from "../../../../../passes/constants";
 import { MoreFieldsBelowIcon } from "../icons";
 import DrawerElement from "../DrawerElement";
 import PageNavigationContext from "../../PageNavigationContext";
 
 interface Props {
-	fieldsData: (FieldProps & { fieldUUID: string })[];
+	fieldsData: (PassFieldKeys & { fieldUUID: string })[];
 	onFieldDelete(fieldUUID: string): void;
-	onFieldChange(fieldUUID: string, data: FieldProps): void;
+	onFieldChange(fieldUUID: string, data: PassFieldKeys): void;
 	onFieldOrderChange(fromIndex: number, of: number): void;
 }
 

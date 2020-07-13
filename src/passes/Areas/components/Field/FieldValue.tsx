@@ -3,14 +3,17 @@ import { PKDateStyle } from "../../../constants";
 import { composeLabelValueStylesFromProps, FieldProperties, FieldTypes } from "./fieldCommons";
 import { SelectableComponent } from "../../useRegistrations";
 
-type ValueProps = FieldProperties<FieldTypes.VALUE> & Partial<SelectableComponent<never>>;
+type ValueProps = Partial<SelectableComponent<never>> & {
+	fieldData: Partial<FieldProperties<FieldTypes.VALUE>>
+};
 
 /**
  * @TODO use svg text to allow it to resize manually
  */
 
 export default function FieldValue(props: ValueProps) {
-	const style = composeLabelValueStylesFromProps(props, "label");
+	const { fieldData } = props;
+	const style = composeLabelValueStylesFromProps(fieldData, "label");
 	const parsedValue = getValueFromProps(props);
 
 	return (
@@ -25,15 +28,16 @@ export default function FieldValue(props: ValueProps) {
 }
 
 function getValueFromProps(props: ValueProps) {
-	const valueAsDate = new Date(props.value);
+	const { fieldData: { value, dateStyle, timeStyle } } = props;
+	const valueAsDate = new Date(value);
 
 	const shouldShowDate = (
-		props.dateStyle !== undefined &&
-		props.dateStyle !== PKDateStyle.None
+		dateStyle !== undefined &&
+		dateStyle !== PKDateStyle.None
 	);
 	const shouldShowTime = (
-		props.timeStyle !== undefined &&
-		props.timeStyle !== PKDateStyle.None
+		timeStyle !== undefined &&
+		timeStyle !== PKDateStyle.None
 	);
 
 	if (isNaN(valueAsDate.getTime()) || !(shouldShowTime && shouldShowDate)) {
@@ -43,17 +47,17 @@ function getValueFromProps(props: ValueProps) {
 		 * We are returning directly the value
 		 * without performing any kind of parsing.
 		 */
-		return props.value;
+		return value;
 	}
 
 	const timeValues = [];
 
 	if (shouldShowDate) {
-		timeValues.push(getDateValueFromDateStyle(props.dateStyle, props.value));
+		timeValues.push(getDateValueFromDateStyle(dateStyle, value));
 	}
 
 	if (shouldShowTime) {
-		timeValues.push(getTimeValueFromTimeStyle(props.timeStyle, props.value));
+		timeValues.push(getTimeValueFromTimeStyle(timeStyle, value));
 	}
 
 	return timeValues.join(" ");

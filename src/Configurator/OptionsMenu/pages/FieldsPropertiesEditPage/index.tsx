@@ -3,13 +3,13 @@ import "./style.less";
 import PageHeader from "../Header";
 import { PageProps } from "../pages";
 import FieldPreview from "../FieldPreview";
-import { FieldProps } from "../../../../passes/Areas/components/Field";
+import { PassFieldKeys } from "../../../../passes/constants";
 import FieldPropertiesEditList from "./FieldPropertiesEditList";
 
 interface Props extends PageProps {
-	data: FieldProps;
+	data: PassFieldKeys;
 	fieldUUID: string;
-	onChange(props: FieldProps): void;
+	onChange(props: PassFieldKeys): void;
 }
 
 export default function FieldsPropertiesEditPage(props: Props) {
@@ -27,7 +27,7 @@ export default function FieldsPropertiesEditPage(props: Props) {
 			<FieldPreview
 				keyEditable
 				fieldUUID={props.fieldUUID}
-				onFieldKeyChange={(fieldUUID: string, fieldKey: string) => setData({ ...data, fieldKey })}
+				onFieldKeyChange={(fieldUUID: string, key: string) => setData({ ...data, key })}
 				previewData={data}
 			/>
 			<FieldPropertiesEditList

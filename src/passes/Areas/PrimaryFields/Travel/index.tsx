@@ -14,7 +14,7 @@ interface PFTravelProps extends PrimaryFieldsProps {
 }
 
 export default function PrimaryFields(props: PFTravelProps) {
-	const { register, fields, transitType, className: PFClassName } = props;
+	const { register, fields, transitType } = props;
 	const parentId = "PrimaryFields";
 
 	const [primaryFieldsClickHandler] = useRegistrations(register, [
@@ -28,11 +28,11 @@ export default function PrimaryFields(props: PFTravelProps) {
 			return (
 				<GhostField
 					key={id}
-					onClick={() => primaryFieldsClickHandler(fieldData?.fieldKey ?? null)}
-					{...fieldData}
+					onClick={() => primaryFieldsClickHandler(fieldData?.key ?? null)}
+					fieldData={fieldData}
 				>
-					<FieldLabel {...fieldData} />
-					<FieldValue {...fieldData} />
+					<FieldLabel fieldData={fieldData} />
+					<FieldValue fieldData={fieldData} />
 				</GhostField>
 			);
 		});

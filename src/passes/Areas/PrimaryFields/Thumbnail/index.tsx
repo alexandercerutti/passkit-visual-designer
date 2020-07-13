@@ -27,11 +27,11 @@ export default function ThumbnailPrimaryField(props: React.PropsWithChildren<PFT
 			return (
 				<Field
 					key={key}
-					onClick={() => primaryFieldsClickHandler(fieldData?.fieldKey ?? null)}
-					{...fieldData}
+					onClick={() => primaryFieldsClickHandler(fieldData?.key ?? null)}
+					fieldData={fieldData}
 				>
-					<FieldLabel {...fieldData} />
-					<FieldValue {...fieldData} />
+					<FieldLabel fieldData={fieldData} />
+					<FieldValue fieldData={fieldData} />
 				</Field>
 			);
 		});

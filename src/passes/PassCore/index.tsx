@@ -7,8 +7,7 @@ import { EventTicket } from "../EventTicket";
 import { Generic } from "../Generic";
 import { StoreCard } from "../StoreCard";
 import { PassAlternative } from "../../PassSelector";
-import { FieldProps } from "../Areas/components/Field";
-import { PKBarcodeFormat, PKTransitType } from "../constants";
+import { PKBarcodeFormat, PKTransitType, PassFields } from "../constants";
 import { InteractionContext } from "./interactionContext";
 
 export { Provider as InteractionProvider, Consumer as InteractionConsumer } from "./interactionContext";
@@ -16,11 +15,11 @@ export { Provider as InteractionProvider, Consumer as InteractionConsumer } from
 export interface PassProps {
 	registerAlternatives?(...alternatives: PassAlternative[]): void;
 
-	headerFields?: FieldProps[];
-	secondaryFields?: FieldProps[];
-	primaryFields?: FieldProps[];
-	auxiliaryFields?: FieldProps[];
-	backFields?: FieldProps[];
+	headerFields?: PassFields.HeaderFields[];
+	secondaryFields?: PassFields.SecondaryFields[];
+	primaryFields?: PassFields.PrimaryFields[];
+	auxiliaryFields?: PassFields.AuxiliaryFields[];
+	backFields?: PassFields.BackFields[];
 	barcode?: {
 		message?: string; // @TODO
 		format?: PKBarcodeFormat;

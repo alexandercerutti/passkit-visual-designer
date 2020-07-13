@@ -19,14 +19,15 @@ export default function StripPrimaryFields(props: React.PropsWithChildren<PFStri
 	]);
 
 	const data = getSafeFieldData(fields, 1)
-		.map(field => {
+		.map(data => {
 			return (
 				<GhostField
 					key="primaryField"
 					onClick={primaryFieldsClickHandler}
+					fieldData={data}
 				>
-					<FieldValue {...field} />
-					<FieldLabel {...field} />
+					<FieldValue fieldData={data} />
+					<FieldLabel fieldData={data} />
 				</GhostField>
 			);
 		})

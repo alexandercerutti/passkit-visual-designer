@@ -55,32 +55,43 @@ export function BoardingPass(props: BoardingPassProps) {
 					/**
 						{
 							label: "Data",
-							fieldKey: "departing_date",
+							key: "departing_date",
 							value: "10/04/1996",
 						}, {
 							label: "Ora",
-							fieldKey: "departing_time",
+							key: "departing_time",
 							value: "10:30",
 						}, {
 							label: "test",
-							fieldKey: "departing_time",
+							key: "departing_time",
 							value: "10:30",
 						}
 						*/
 					/>
 					<PrimaryFields
 						transitType={transitType}
-						fields={primaryFields}
+						// fields={primaryFields}
 						onClick={onFieldSelect}
 						register={registerField}
+						fields={[
+							{
+								key: "starting_point",
+								value: "ARN",
+								label: "stockholm-arlanda"
+							}, {
+								key: "finish_point",
+								value: "CPH",
+								label: "copenhagen t2"
+							}
+						]}
 
 					/**
 					{
-						fieldKey: "starting_point",
+						key: "starting_point",
 						value: "ARN",
 						label: "stockholm-arlanda"
 					}, {
-						fieldKey: "finish_point",
+						key: "finish_point",
 						value: "CPH",
 						label: "copenhagen t2"
 					}
@@ -89,24 +100,41 @@ export function BoardingPass(props: BoardingPassProps) {
 					/>
 					<FieldsRow
 						maximumElementsAmount={5}
-						elements={auxiliaryFields}
+						// elements={auxiliaryFields}
 						onClick={onFieldSelect}
 						register={registerField}
 						id="auxiliaryFields"
+						elements={[
+							{
+								key: "passenger",
+								label: "passeggero",
+								value: "Alexander Patrick Cerutti"
+							},
+							{
+								key: "flight",
+								label: "n. volo",
+								value: "FR1328"
+							},
+							{
+								key: "seq",
+								label: "sequenza",
+								value: "8"
+							}
+						]}
 
 					/**
-					 * 	{
-							fieldKey: "passenger",
+						{
+							key: "passenger",
 							label: "passeggero",
 							value: "Alexander Patrick Cerutti"
 						},
 						{
-							fieldKey: "flight",
+							key: "flight",
 							label: "n. volo",
 							value: "FR1328"
 						},
 						{
-							fieldKey: "seq",
+							key: "seq",
 							label: "sequenza",
 							value: "8"
 						}
@@ -120,19 +148,19 @@ export function BoardingPass(props: BoardingPassProps) {
 						id="secondaryFields"
 					/**
 						{
-							"fieldKey": "gateClose",
+							"key": "gateClose",
 							"label": "Il Gate Chiude",
 							"dateStyle": PKDateStyle.None,
 							"timeStyle": PKDateStyle.Short,
 							"value": "09:20"
 						},
 						{
-							"fieldKey": "queue",
+							"key": "queue",
 							"label": "Fila",
 							"value": "Priorità"
 						},
 						{
-							"fieldKey": "seat",
+							"key": "seat",
 							"label": "Posto*",
 							"value": "16C"
 						}

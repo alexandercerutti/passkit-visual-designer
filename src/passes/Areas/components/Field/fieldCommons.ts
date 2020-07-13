@@ -1,7 +1,7 @@
-import { PKTextAlignment, PKDataDetectorType, PKDateStyle } from "../../../constants";
-import { FieldProps } from ".";
+import { PKTextAlignment, PassFieldKeys } from "../../../constants";
+import { StylingProps } from "../../../../model";
 
-export function composeLabelValueStylesFromProps(props: Partial<FieldProps>, origin: "label" | "value"): React.CSSProperties {
+export function composeLabelValueStylesFromProps(props: Partial<FieldProperties>, origin: "label" | "value"): React.CSSProperties {
 	const textAlignment = props.textAlignment || PKTextAlignment.Natural;
 
 	return {
@@ -41,18 +41,9 @@ export const enum FieldTypes {
 	BOTH
 }
 
-export type FieldProperties<T extends FieldTypes = FieldTypes.BOTH> = {
-	className?: string;
-	style?: React.CSSProperties;
-	fieldKey: string;
-
-	// to be implemented
-	textAlignment?: PKTextAlignment;
-	dataDetectorTypes?: PKDataDetectorType;
-	changeMessage?: string; // check for @s
-	dateStyle?: PKDateStyle;
-	timeStyle?: PKDateStyle;
-} & (
+export type FieldProperties<T extends FieldTypes = FieldTypes.BOTH> =
+	Omit<PassFieldKeys, "value" | "label"> &
+	StylingProps & (
 		T extends FieldTypes.LABEL ? LabelSpecificProps :
 		T extends FieldTypes.VALUE ? ValueSpecificProps :
 		T extends FieldTypes.BOTH ? LabelSpecificProps & ValueSpecificProps : never

@@ -8,8 +8,8 @@
  * @param fallbackAmount
  */
 
-import { FieldProps } from ".";
+import { PassFieldKeys } from "../../../constants";
 
-export function getSafeFieldData(data: FieldProps[], amount: number) {
-	return (data?.length && data.slice(0, amount)) ?? new Array<FieldProps>(amount).fill({} as FieldProps);
+export function getSafeFieldData(data: PassFieldKeys[], amount: number) {
+	return (data?.length && data.slice(0, amount)) ?? new Array<PassFieldKeys>(amount).fill({} as PassFieldKeys);
 }

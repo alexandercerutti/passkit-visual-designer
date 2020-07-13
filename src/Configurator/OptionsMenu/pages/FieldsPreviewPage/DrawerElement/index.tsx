@@ -2,7 +2,7 @@ import * as React from "react";
 import "./style.less";
 import FieldOptionsBar from "./FieldOptionsBar";
 import FieldPreview from "../../FieldPreview";
-import { FieldProps } from "../../../../../passes/Areas/components/Field";
+import { PassFieldKeys } from "../../../../../passes/constants";
 import FieldsPropertiesEditPage from "../../FieldsPropertiesEditPage";
 import { PageNavigation } from "../../pages";
 import usePageFactory from "../../usePageFactory";
@@ -10,9 +10,9 @@ import usePageFactory from "../../usePageFactory";
 interface DrawerElementProps extends Pick<PageNavigation, "requestPageCreation"> {
 	fieldUUID: string;
 	onFieldDelete(key: string): void;
-	onFieldDataChange(fieldUUID: string, data: FieldProps): void;
+	onFieldDataChange(fieldUUID: string, data: PassFieldKeys): void;
 	onFieldOrderChange(of: number): void;
-	elementData: FieldProps;
+	elementData: PassFieldKeys;
 	isUpperBoundary: boolean;
 	isLowerBoundary: boolean;
 }
@@ -39,7 +39,7 @@ export default function DrawerElement(props: DrawerElementProps) {
 	return (
 		<div
 			className="field-edit-item"
-			data-key={fieldData.fieldKey || props.fieldUUID}
+			data-key={fieldData.key || props.fieldUUID}
 		>
 			<FieldPreview
 				fieldUUID={props.fieldUUID}

@@ -1,12 +1,11 @@
 import * as React from "react";
 import "./style.less";
-import { FieldProperties } from "../../../../passes/Areas/components/Field/fieldCommons";
 import { createClassName } from "../../../../utils";
-import { PKTextAlignment } from "../../../../passes/constants";
+import { PKTextAlignment, PassFieldKeys } from "../../../../passes/constants";
 
 interface Props {
 	fieldUUID: string;
-	previewData: FieldProperties;
+	previewData: PassFieldKeys;
 	isFieldHidden?: boolean;
 	keyEditable?: boolean;
 	onClick?(): void;
@@ -14,24 +13,24 @@ interface Props {
 }
 
 export default function FieldPreview(props: Props) {
-	const [fieldKey, setFieldKey] = React.useState(props.previewData?.fieldKey ?? "");
+	const [key, setKey] = React.useState(props.previewData?.key ?? "");
 
 	/** Updating parent component */
 
 	React.useEffect(() => {
-		if (props.onFieldKeyChange && fieldKey !== props.previewData.fieldKey) {
-			props.onFieldKeyChange(props.fieldUUID, fieldKey);
+		if (props.onFieldKeyChange && key !== props.previewData.key) {
+			props.onFieldKeyChange(props.fieldUUID, key);
 		}
-	}, [fieldKey]);
+	}, [key]);
 
 	/** Effect to update the state value when props changes */
 
 	React.useEffect(() => {
-		const { fieldKey: propsFieldKey } = props.previewData;
-		if (propsFieldKey && propsFieldKey !== fieldKey) {
-			setFieldKey(propsFieldKey);
+		const { key: fieldKey } = props.previewData;
+		if (fieldKey && fieldKey !== key) {
+			setKey(fieldKey);
 		}
-	}, [props.previewData.fieldKey]);
+	}, [props.previewData.key]);
 
 	const FPClassName = createClassName(["field-preview"], {
 		"hidden": props.isFieldHidden,
@@ -39,20 +38,20 @@ export default function FieldPreview(props: Props) {
 	});
 
 	const previewKeyClassName = createClassName(["preview-field-key"], {
-		"none": !fieldKey
+		"none": !key
 	});
 
 	const fieldKeyRow = props.keyEditable
 		? (
 			<input
 				type="text"
-				onChange={(evt) => setFieldKey(evt.target.value.replace(/\s+/, ""))}
-				value={fieldKey}
-				placeholder="field key"
+				onChange={(evt) => setKey(evt.target.value.replace(/\s+/, ""))}
+				value={key}
+				placeholder="field's key"
 			/>
 		) : (
 			<span>
-				{!fieldKey ? "not setted" : fieldKey}
+				{!key ? "not setted" : key}
 			</span>
 		);
 

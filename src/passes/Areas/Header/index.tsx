@@ -1,16 +1,15 @@
 import * as React from "react";
 import "./style.less";
 import TextField from "../components/TextField";
-import { onRegister, RegistrableComponent, useRegistrations } from "../useRegistrations";
+import { RegistrableComponent, useRegistrations } from "../useRegistrations";
 import ImageField from "../components/ImageField";
-import { FieldProps } from "../components/Field";
 import { InlineFieldsRow } from "../FieldRow";
 import { createClassName } from "../../../utils";
 import { FieldKind } from "../../../model";
+import { PassFieldKeys } from "../../constants";
 
 interface HeaderProps extends Partial<RegistrableComponent> {
-	register?: onRegister;
-	headerFields?: FieldProps[];
+	headerFields?: PassFieldKeys[];
 	logoText?: string;
 	logo?: string;
 	withSeparator?: boolean;

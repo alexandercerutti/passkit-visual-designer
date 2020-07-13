@@ -1,14 +1,14 @@
 import * as React from "react";
 import "./style.less";
 import { PanelProps } from "../..";
-import { FieldProps } from "../../../../../passes/Areas/components/Field";
+import { PassFieldKeys } from "../../../../../passes/constants";
 import { FieldsArrowIcon } from "./icons";
 import CapitalHeaderTitle from "../../../CapitalHeaderTitle";
 import FieldsPreviewPage from "../../../pages/FieldsPreviewPage";
 import usePageFactory from "../../../pages/usePageFactory";
 
 export interface FieldPanelProps extends PanelProps {
-	value?: FieldProps[];
+	value?: PassFieldKeys[];
 }
 
 export default function FieldPanel(props: FieldPanelProps) {

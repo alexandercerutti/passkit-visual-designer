@@ -1,7 +1,7 @@
 import { RegistrableComponent } from "../useRegistrations";
-import { FieldProps } from "../components/Field";
+import { PassFieldKeys } from "../../constants";
 
 export default interface PrimaryFieldsProps extends RegistrableComponent {
-	className?: string;
-	fields?: FieldProps[];
+	className?: string; // @TODO is this needed yet?
+	fields?: PassFieldKeys[];
 }

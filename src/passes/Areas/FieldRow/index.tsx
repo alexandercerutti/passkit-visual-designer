@@ -1,13 +1,14 @@
 import * as React from "react";
-import { Field, FieldProps, FieldLabel, FieldValue } from "../components/Field";
 import "./style.less";
+import { Field, FieldLabel, FieldValue } from "../components/Field";
 import { RegistrableComponent, useRegistrations } from "../useRegistrations";
 import { FieldKind } from "../../../model";
+import { PassFieldKeys } from "../../constants";
 
 interface RowProps extends RegistrableComponent {
 	id: string;
 	maximumElementsAmount: number;
-	elements: FieldProps[];
+	elements: PassFieldKeys[];
 }
 
 /**
@@ -37,15 +38,16 @@ export function InlineFieldsRow(props: RowProps) {
 
 	const mappedElements = mappableElements.map((data, index) => {
 		const fieldID = `${id}.${index}`;
+		// in order to not pass react key property
 
 		return (
 			<Field
 				key={fieldID}
-				onClick={() => fieldsClickHandler(data?.fieldKey ?? null)}
-				fieldKey={data.fieldKey}
+				onClick={() => fieldsClickHandler(data.key ?? null)}
+				fieldData={data}
 			>
-				<FieldLabel {...data} />
-				<FieldValue {...data} />
+				<FieldLabel fieldData={data} />
+				<FieldValue fieldData={data} />
 			</Field>
 		);
 	});
