@@ -13,7 +13,6 @@ export interface FieldPanelProps extends PanelProps {
 
 export default function FieldPanel(props: FieldPanelProps) {
 	const [fields, setFields] = React.useState(props.value || []);
-	// @TODO remove onValueChanged from otherProps
 	const pageCreationHandler = usePageFactory(FieldsPreviewPage, { value: fields }, setFields);
 
 	const pageCreationClickHandler = React.useCallback(() => {
