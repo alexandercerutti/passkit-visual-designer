@@ -10,6 +10,7 @@ import { PageProps, PageNavigation } from "../pages";
 
 interface Props extends PageProps, PageNavigation {
 	value?: PassFieldKeys[];
+	onChange(fieldData: PassFieldKeys[]): void;
 }
 
 interface State {
@@ -33,6 +34,12 @@ export default class FieldsPreviewPage extends React.Component<Props, State> {
 		this.onFieldDeleteHandler = this.onFieldDeleteHandler.bind(this);
 		this.onFieldOrderChange = this.onFieldOrderChange.bind(this);
 		this.onFieldChangeHandler = this.onFieldChangeHandler.bind(this);
+	}
+
+	componentDidUpdate(_: Props, prevState: State) {
+		if (prevState.fields !== this.state.fields) {
+			this.props.onChange(this.state.fields);
+		}
 	}
 
 	onFieldDeleteHandler(fieldUUID: string) {
@@ -101,6 +108,7 @@ export default class FieldsPreviewPage extends React.Component<Props, State> {
 		const fullPageElement = (
 			this.state.fields.length &&
 			<Drawer
+				// @TODO: not pass all props to drawer but pick them first
 				{...this.props}
 				fieldsData={fields}
 				onFieldChange={this.onFieldChangeHandler}

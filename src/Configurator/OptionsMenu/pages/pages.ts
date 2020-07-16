@@ -1,5 +1,6 @@
 export interface PageProps {
 	name: string;
+	onChange: Function;
 }
 
 export type RequestPageCreationSignature = (
