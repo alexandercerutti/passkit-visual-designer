@@ -13,7 +13,7 @@ interface Props {
 }
 
 export default function FieldPreview(props: Props) {
-	const [key, setKey] = React.useState(props.previewData?.key ?? "");
+	const [key, setKey] = React.useState(props.previewData?.key);
 
 	/** Updating parent component */
 
@@ -46,7 +46,7 @@ export default function FieldPreview(props: Props) {
 			<input
 				type="text"
 				onChange={(evt) => setKey(evt.target.value.replace(/\s+/, ""))}
-				value={key}
+				value={key || ""}
 				placeholder="field's key"
 			/>
 		) : (
