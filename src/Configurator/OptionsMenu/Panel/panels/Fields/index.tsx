@@ -7,11 +7,11 @@ import CapitalHeaderTitle from "../../../CapitalHeaderTitle";
 import FieldsPreviewPage from "../../../pages/FieldsPreviewPage";
 import usePageFactory from "../../../pages/usePageFactory";
 
-export interface FieldPanelProps extends PanelProps {
+interface Props extends PanelProps {
 	value?: PassFieldKeys[];
 }
 
-export default function FieldPanel(props: FieldPanelProps) {
+export default function FieldPanel(props: Props) {
 	const [fields, setFields] = React.useState(props.value || []);
 	const pageCreationHandler = usePageFactory(FieldsPreviewPage, { value: fields }, setFields);
 
