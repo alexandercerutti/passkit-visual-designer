@@ -26,7 +26,7 @@ export interface FieldDetails {
 }
 
 export default function Panel(props: PanelProps) {
-	const Panel = switchPanelKind(props);
+	const Panel = resolvePanelKind(props);
 
 	return (
 		<div className={`panel ${props.kind}`} data-name={props.name}>
@@ -35,7 +35,7 @@ export default function Panel(props: PanelProps) {
 	);
 }
 
-function switchPanelKind({ kind }: PanelProps): React.FunctionComponent<PanelProps> {
+function resolvePanelKind({ kind }: PanelProps): React.FunctionComponent<PanelProps> {
 	switch (kind) {
 
 		// Each panel should use memoization to its non-targeted value
