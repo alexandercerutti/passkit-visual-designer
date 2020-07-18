@@ -1,6 +1,6 @@
 import * as React from "react";
 import { UploadIcon } from "./icons";
-import { createClassName } from "../../../../../../../utils";
+import { createClassName } from "../../../../../../utils";
 
 interface DnDProps {
 	onFilesUploaded: (files: FileList) => void;

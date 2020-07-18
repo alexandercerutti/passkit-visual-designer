@@ -1,4 +1,4 @@
-import { FieldDetails } from "./OptionsMenu/Panel";
+import { FieldDetails } from "./OptionsMenu/pages/PanelsPage/Panel";
 import { FieldKind } from "../model";
 import { DataGroup } from "./OptionsMenu/pages/PanelsPage/PanelGroup";
 
