@@ -1,7 +1,7 @@
 import * as React from "react";
 import "./style.less";
 import { FieldDetails } from "./Panel";
-import PanelNavigator from "./PanelNavigator";
+import PagesNavigator from "./PagesNavigator";
 import { DataGroup } from "./pages/PanelsPage/PanelGroup";
 
 export type RegisteredFieldsMap = Map<DataGroup, FieldDetails[]>;
@@ -15,7 +15,7 @@ interface OptionsMenuProps {
 export default function OptionsMenu(props: OptionsMenuProps) {
 	return (
 		<div className="options-menu">
-			<PanelNavigator fields={props.registeredFields} />
+			<PagesNavigator fields={props.registeredFields} />
 		</div>
 	);
 }

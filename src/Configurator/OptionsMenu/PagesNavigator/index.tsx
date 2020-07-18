@@ -13,7 +13,7 @@ interface NavigatorProps {
 	fields: RegisteredFieldsMap;
 }
 
-export default class PanelNavigator extends React.Component<NavigatorProps, NavigatorState> implements PageNavigation {
+export default class PagesNavigator extends React.Component<NavigatorProps, NavigatorState> implements PageNavigation {
 	constructor(props: NavigatorProps) {
 		super(props);
 
@@ -79,7 +79,7 @@ export default class PanelNavigator extends React.Component<NavigatorProps, Navi
 					requestPageCreation: this.requestPageCreation
 				}}
 			>
-				<div className="panel-navigator" style={{ transform: `translate(-${this.state.pagesHierarchy.length * 100}%)` }}>
+				<div className="pages-navigator" style={{ transform: `translate(-${this.state.pagesHierarchy.length * 100}%)` }}>
 					<div className="page" key="panel-depth0">
 						<PanelsPage
 							onValueChange={this.saveChanges}
