@@ -1,6 +1,6 @@
 import { PageNavigation } from "../usePageFactory";
 import * as React from "react";
-import PanelGroup, { DataGroup } from "../../PanelGroup";
+import PanelGroup, { DataGroup } from "./PanelGroup";
 import Panel, { FieldDetails } from "../../Panel";
 import { RegisteredFieldsMap } from "../..";
 import PageNavigationContext from "../PageNavigationContext";

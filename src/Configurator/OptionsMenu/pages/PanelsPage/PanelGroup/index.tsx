@@ -1,6 +1,6 @@
 import * as React from "react";
 import "./style.less";
-import { createClassName } from "../../../utils";
+import { createClassName } from "../../../../../utils";
 import { TagIcon, ColorIcon, ImagesIcon, DataIcon } from "./icons";
 
 export enum DataGroup {

@@ -9,7 +9,7 @@ import { connect } from "react-redux";
 import { PassProps } from "../passes/PassCore";
 import { State } from "../store/state";
 import DefaultFields from "./staticFields";
-import { DataGroup } from "./OptionsMenu/PanelGroup";
+import { DataGroup } from "./OptionsMenu/pages/PanelsPage/PanelGroup";
 import { FieldSelectHandler } from "../passes/Areas/useRegistrations";
 
 interface ConfiguratorStore {
