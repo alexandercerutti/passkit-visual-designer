@@ -15,7 +15,10 @@ interface OptionsMenuProps {
 export default function OptionsMenu(props: OptionsMenuProps) {
 	return (
 		<div className="options-menu">
-			<PagesNavigator fields={props.registeredFields} />
+			<PagesNavigator
+				fields={props.registeredFields}
+				onValueChange={props.onValueChange}
+			/>
 		</div>
 	);
 }

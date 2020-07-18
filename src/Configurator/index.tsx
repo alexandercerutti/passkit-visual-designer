@@ -91,7 +91,9 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 	 * @param value
 	 */
 
-	onValueChange(key: string, value: any): boolean {
+	onValueChange<T>(key: string, value: T): boolean {
+		console.log("Panel with name", key, "tried to save", value);
+
 		// @TODO: validate the input
 		// @TODO: save to store
 		// @TODO: save to localForage
