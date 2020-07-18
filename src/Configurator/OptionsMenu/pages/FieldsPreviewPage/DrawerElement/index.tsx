@@ -10,7 +10,7 @@ interface DrawerElementProps extends Pick<PageNavigation, "requestPageCreation">
 	fieldUUID: string;
 	onFieldDelete(key: string): void;
 	onFieldDataChange(fieldUUID: string, data: PassFieldKeys): void;
-	onFieldOrderChange(of: number): void;
+	onFieldOrderChange(fieldUUID: string, of: number): void;
 	elementData: PassFieldKeys;
 	isUpperBoundary: boolean;
 	isLowerBoundary: boolean;

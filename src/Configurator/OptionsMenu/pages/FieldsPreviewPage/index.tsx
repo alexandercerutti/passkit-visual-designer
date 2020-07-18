@@ -76,8 +76,10 @@ export default class FieldsPreviewPage extends React.Component<Props, State> {
 		});
 	}
 
-	onFieldOrderChange(fromIndex: number, of: number): void {
+	onFieldOrderChange(fieldUUID: string, of: number): void {
 		this.setState(({ fields: previousFields, fieldsUUIDs: prevUUIDs }) => {
+			const fromIndex = prevUUIDs.findIndex(uuid => uuid === fieldUUID);
+
 			// Creating a copy of the array and swapping two elements
 			const nextFields = [...previousFields];
 			const nextUUIDs = [...prevUUIDs];

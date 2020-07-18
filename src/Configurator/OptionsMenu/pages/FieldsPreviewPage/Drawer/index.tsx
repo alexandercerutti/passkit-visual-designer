@@ -10,7 +10,7 @@ interface Props {
 	readonly fieldsUUIDs: string[];
 	onFieldDelete(fieldUUID: string): void;
 	onFieldChange(fieldUUID: string, data: PassFieldKeys): void;
-	onFieldOrderChange(fromIndex: number, of: number): void;
+	onFieldOrderChange(fieldUUID: string, of: number): void;
 }
 
 export default function Drawer(props: Props) {
@@ -45,7 +45,7 @@ export default function Drawer(props: Props) {
 						elementData={field}
 						onFieldDelete={props.onFieldDelete}
 						onFieldDataChange={props.onFieldChange}
-						onFieldOrderChange={(amount) => props.onFieldOrderChange(index, amount)}
+						onFieldOrderChange={props.onFieldOrderChange}
 						requestPageCreation={requestPageCreation}
 						isUpperBoundary={index === 0}
 						isLowerBoundary={index === props.fieldsData.length - 1}
