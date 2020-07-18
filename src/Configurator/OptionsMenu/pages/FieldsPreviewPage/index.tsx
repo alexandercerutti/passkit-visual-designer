@@ -5,7 +5,7 @@ import { PassFieldKeys } from "../../../../passes/constants";
 import { FieldsAddIcon } from "./icons";
 import Drawer from "./Drawer";
 import DrawerPlaceholder from "./DrawerPlaceholder";
-import PageHeader from "../Header";
+import PageHeader from "../components/Header";
 import { PageProps, PageNavigation } from "../usePageFactory";
 
 interface Props extends PageProps, PageNavigation {

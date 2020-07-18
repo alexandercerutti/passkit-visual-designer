@@ -1,8 +1,8 @@
 import * as React from "react";
 import "./style.less";
-import PageHeader from "../Header";
+import PageHeader from "../components/Header";
 import { PageProps } from "../usePageFactory";
-import FieldPreview from "../FieldPreview";
+import FieldPreview from "../components/FieldPreview";
 import { PassFieldKeys } from "../../../../passes/constants";
 import FieldPropertiesEditList from "./FieldPropertiesEditList";
 
