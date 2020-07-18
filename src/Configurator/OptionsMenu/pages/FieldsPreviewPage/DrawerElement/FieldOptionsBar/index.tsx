@@ -37,11 +37,6 @@ export default function FieldOptionsBar(props: FieldOptionsProps) {
 					<ListAddProp className="add" />
 				</div>
 			</div>
-			{/* 			<AvailablePropertiesMenu
-				className={!shouldShowAddMenu && "hidden" || ""}
-				appliedProperties={props.usedProperties}
-				onPropertySelect={onPropertySelectHandler.current}
-			/> */}
 		</>
 	);
 }
