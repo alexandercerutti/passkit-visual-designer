@@ -129,8 +129,6 @@ export default class FieldsPreviewPage extends React.Component<Props, State> {
 		const fullPageElement = (
 			this.state.fields.length &&
 			<Drawer
-				// @TODO: not pass all props to drawer but pick them first
-				{...this.props}
 				fieldsData={fields}
 				fieldsUUIDs={fieldsUUIDs}
 				onFieldChange={this.onFieldChangeHandler}
