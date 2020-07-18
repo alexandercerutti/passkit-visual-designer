@@ -1,14 +1,12 @@
 import * as React from "react";
 import "./style.less";
 import { RegisteredFieldsMap } from "..";
-import PanelGroup, { DataGroup } from "../PanelGroup";
-import Panel, { FieldDetails } from "../Panel";
+import PanelsPage from "../pages/PanelsPage";
 import PageNavigationContext from "../pages/PageNavigationContext";
 import { RequestPageCreationFunction, PageNavigation, ContextPropsGetter } from "../pages/usePageFactory";
 
 interface NavigatorState {
 	pagesHierarchy: Parameters<RequestPageCreationFunction>[];
-	activePanel: string;
 }
 
 interface NavigatorProps {
@@ -21,12 +19,10 @@ export default class PanelNavigator extends React.Component<NavigatorProps, Navi
 
 		this.state = {
 			pagesHierarchy: [],
-			activePanel: null,
 		};
 
 		this.requestPageCreation = this.requestPageCreation.bind(this);
 		this.requestPageClosing = this.requestPageClosing.bind(this);
-		this.selectOpenPanel = this.selectOpenPanel.bind(this);
 		this.saveChanges = this.saveChanges.bind(this);
 	}
 
@@ -62,16 +58,10 @@ export default class PanelNavigator extends React.Component<NavigatorProps, Navi
 		console.log("Panel with name", name, "tried to save", data);
 	}
 
-	selectOpenPanel(panelName: string) {
-		this.setState(previous => ({
-			activePanel: previous.activePanel !== panelName && panelName || null
-		}));
-	}
-
 	render() {
 		const pages = this.state.pagesHierarchy.map(([id, PageElement, getContextProps], index) => {
 			return (
-				<div className="page" key={`panel-depth${index}`}>
+				<div className="page" key={`panel-depth${index + 1}`}>
 					<PageElement
 						name={id}
 						requestPageCreation={this.requestPageCreation}
@@ -79,32 +69,6 @@ export default class PanelNavigator extends React.Component<NavigatorProps, Navi
 						{...getContextProps()}
 					/>
 				</div>
-			);
-		});
-
-		const groups = Array.from<[DataGroup, FieldDetails[]], JSX.Element>(this.props.fields.entries(), ([group, details]) => {
-			return (
-				<PanelGroup
-					group={group}
-					key={group}
-					isActive={group === this.state.activePanel}
-					setActive={this.selectOpenPanel}
-				>
-					{details.map((data => {
-						const { kind, name, ...otherData } = data;
-						return (
-							<Panel
-								name={name}
-								kind={kind}
-								data={otherData}
-								key={name}
-								requestPageCreation={this.requestPageCreation}
-								requestPageClosing={this.requestPageClosing}
-								onValueChange={this.saveChanges}
-							/>
-						);
-					}))}
-				</PanelGroup>
 			);
 		});
 
@@ -116,8 +80,11 @@ export default class PanelNavigator extends React.Component<NavigatorProps, Navi
 				}}
 			>
 				<div className="panel-navigator" style={{ transform: `translate(-${this.state.pagesHierarchy.length * 100}%)` }}>
-					<div className="page" key="mainPanel">
-						{groups}
+					<div className="page" key="panel-depth0">
+						<PanelsPage
+							onValueChange={this.saveChanges}
+							fields={this.props.fields}
+						/>
 					</div>
 					{pages}
 				</div>

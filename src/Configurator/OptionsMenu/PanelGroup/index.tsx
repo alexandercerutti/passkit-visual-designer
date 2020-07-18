@@ -20,7 +20,7 @@ const DataGroupIcons = new Map<DataGroup, React.FC<React.SVGProps<SVGSVGElement>
 interface GroupProps {
 	group: DataGroup;
 	isActive?: boolean;
-	setActive?: (name: string) => void;
+	setActive?: (name: DataGroup) => void;
 }
 
 export default function PanelGroup({ group, isActive, setActive, children }: React.PropsWithChildren<GroupProps>) {
