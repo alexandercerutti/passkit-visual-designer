@@ -24,7 +24,7 @@ export default function FieldPanel(props: FieldPanelProps) {
 			<div className="cta-edit" onClick={pageCreationClickHandler}>
 				<div className="col-left">
 					<CapitalHeaderTitle name={props.name} />
-					<em>{`${fields.length} fields for this area`}</em>
+					<span>{`${fields.length} fields for this area`}</span>
 				</div>
 				<FieldsArrowIcon />
 			</div>
