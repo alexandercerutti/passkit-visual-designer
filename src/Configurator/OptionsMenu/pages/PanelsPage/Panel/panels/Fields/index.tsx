@@ -1,11 +1,11 @@
 import * as React from "react";
 import "./style.less";
 import { PanelProps } from "../..";
-import { PassFieldKeys } from "../../../../../passes/constants";
+import { PassFieldKeys } from "../../../../../../../passes/constants";
 import { FieldsArrowIcon } from "./icons";
-import CapitalHeaderTitle from "../../../CapitalHeaderTitle";
-import FieldsPreviewPage from "../../../pages/FieldsPreviewPage";
-import usePageFactory from "../../../pages/usePageFactory";
+import CapitalHeaderTitle from "../../../../../CapitalHeaderTitle";
+import FieldsPreviewPage from "../../../../FieldsPreviewPage";
+import usePageFactory from "../../../../usePageFactory";
 
 interface Props extends PanelProps {
 	value?: PassFieldKeys[];

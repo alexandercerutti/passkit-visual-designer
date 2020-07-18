@@ -1,7 +1,7 @@
 import * as React from "react";
 import { PanelProps } from "../..";
 import useContentSavingHandler from "../useContentSavingHandler";
-import CapitalHeaderTitle from "../../../CapitalHeaderTitle";
+import CapitalHeaderTitle from "../../../../../CapitalHeaderTitle";
 import "./style.less";
 
 interface TextPanelProps extends PanelProps {

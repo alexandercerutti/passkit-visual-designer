@@ -2,7 +2,7 @@ import * as React from "react";
 import { TwitterPicker, RGBColor, ColorState } from "react-color";
 import { PanelProps } from "../..";
 import useContentSavingHandler from "../useContentSavingHandler";
-import CapitalHeaderTitle from "../../../CapitalHeaderTitle";
+import CapitalHeaderTitle from "../../../../../CapitalHeaderTitle";
 import "./style.less";
 
 interface ColorPanelProps extends PanelProps {

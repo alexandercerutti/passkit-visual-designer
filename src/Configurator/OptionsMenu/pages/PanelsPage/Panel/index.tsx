@@ -1,11 +1,11 @@
 import * as React from "react";
-import { FieldKind } from "../../../model";
+import { FieldKind } from "../../../../../model";
 import "./style.less";
 import TextPanel from "./panels/Text";
 import ColorPanel from "./panels/Color";
 import FieldPanel from "./panels/Fields";
 import ImagePanel from "./panels/Image";
-import { PageNavigation } from "../pages/usePageFactory";
+import { PageNavigation } from "../../usePageFactory";
 
 export interface PanelProps extends PageNavigation {
 	name: string;

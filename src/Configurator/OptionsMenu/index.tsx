@@ -1,6 +1,6 @@
 import * as React from "react";
 import "./style.less";
-import { FieldDetails } from "./Panel";
+import { FieldDetails } from "./pages/PanelsPage/Panel";
 import PagesNavigator from "./PagesNavigator";
 import { DataGroup } from "./pages/PanelsPage/PanelGroup";
 
