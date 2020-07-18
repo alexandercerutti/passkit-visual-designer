@@ -6,7 +6,7 @@ import { FieldsAddIcon } from "./icons";
 import Drawer from "./Drawer";
 import DrawerPlaceholder from "./DrawerPlaceholder";
 import PageHeader from "../Header";
-import { PageProps, PageNavigation } from "../pages";
+import { PageProps, PageNavigation } from "../usePageFactory";
 
 interface Props extends PageProps, PageNavigation {
 	value?: PassFieldKeys[];

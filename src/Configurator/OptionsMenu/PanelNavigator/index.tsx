@@ -3,15 +3,11 @@ import "./style.less";
 import { RegisteredFieldsMap } from "..";
 import PanelGroup, { DataGroup } from "../PanelGroup";
 import Panel, { FieldDetails } from "../Panel";
-import { PageNavigation, PageProps, RequestPageCreationSignature } from "../pages/pages";
 import PageNavigationContext from "../pages/PageNavigationContext";
+import { RequestPageCreationFunction, PageNavigation, ContextPropsGetter } from "../pages/usePageFactory";
 
 interface NavigatorState {
-	pagesHierarchy: [
-		string,
-		Parameters<RequestPageCreationSignature>[1],
-		() => { [key: string]: any }
-	][];
+	pagesHierarchy: Parameters<RequestPageCreationFunction>[];
 	activePanel: string;
 }
 
@@ -34,7 +30,7 @@ export default class PanelNavigator extends React.Component<NavigatorProps, Navi
 		this.saveChanges = this.saveChanges.bind(this);
 	}
 
-	requestPageCreation(identifier: string, PageElement: Parameters<RequestPageCreationSignature>[1], getContextProps?: () => { [key: string]: any }) {
+	requestPageCreation(identifier: string, PageElement: Parameters<RequestPageCreationFunction>[1], getContextProps?: ContextPropsGetter<React.ComponentProps<typeof PageElement>>) {
 		const page = this.state.pagesHierarchy.find(([id]) => id === identifier);
 
 		if (page) {
@@ -80,7 +76,7 @@ export default class PanelNavigator extends React.Component<NavigatorProps, Navi
 						name={id}
 						requestPageCreation={this.requestPageCreation}
 						requestPageClosing={this.requestPageClosing}
-						{...getContextProps?.() || {}}
+						{...getContextProps()}
 					/>
 				</div>
 			);

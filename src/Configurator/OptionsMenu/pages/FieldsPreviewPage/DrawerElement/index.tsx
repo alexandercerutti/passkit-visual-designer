@@ -4,8 +4,7 @@ import FieldOptionsBar from "./FieldOptionsBar";
 import FieldPreview from "../../FieldPreview";
 import { PassFieldKeys } from "../../../../../passes/constants";
 import FieldsPropertiesEditPage from "../../FieldsPropertiesEditPage";
-import { PageNavigation } from "../../pages";
-import usePageFactory from "../../usePageFactory";
+import usePageFactory, { PageNavigation } from "../../usePageFactory";
 
 interface DrawerElementProps extends Pick<PageNavigation, "requestPageCreation"> {
 	fieldUUID: string;

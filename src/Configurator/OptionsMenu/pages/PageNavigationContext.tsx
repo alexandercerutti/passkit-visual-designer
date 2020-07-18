@@ -1,5 +1,5 @@
 import * as React from "react";
-import { PageNavigation } from "./pages";
+import { PageNavigation } from "./usePageFactory";
 
 const noop = () => void 0;
 

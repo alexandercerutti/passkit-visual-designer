@@ -5,7 +5,7 @@ import TextPanel from "./panels/Text";
 import ColorPanel from "./panels/Color";
 import FieldPanel from "./panels/Fields";
 import ImagePanel from "./panels/Image";
-import { PageNavigation } from "../pages/pages";
+import { PageNavigation } from "../pages/usePageFactory";
 
 export interface PanelProps extends PageNavigation {
 	name: string;
