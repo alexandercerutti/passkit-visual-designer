@@ -14,7 +14,8 @@ interface Props extends PageProps, PageNavigation {
 }
 
 interface State {
-	fields: (PassFieldKeys & { fieldUUID: string })[]
+	fields: PassFieldKeys[];
+	fieldsUUIDs: string[];
 }
 
 export default class FieldsPreviewPage extends React.Component<Props, State> {
@@ -24,10 +25,8 @@ export default class FieldsPreviewPage extends React.Component<Props, State> {
 		super(props);
 
 		this.state = {
-			fields: (props.value || []).map(data => ({
-				fieldUUID: uuid(),
-				...data
-			}))
+			fields: props.value ?? [],
+			fieldsUUIDs: props.value?.map(_ => uuid()) ?? [],
 		};
 
 		this.onFieldAddHandler = this.onFieldAddHandler.bind(this);
@@ -43,53 +42,73 @@ export default class FieldsPreviewPage extends React.Component<Props, State> {
 	}
 
 	onFieldDeleteHandler(fieldUUID: string) {
-		this.setState(({ fields }) => {
-			const fieldWithKeyIndex = fields.findIndex(f => f.fieldUUID === fieldUUID);
-			const newFields = [...fields];
-			newFields.splice(fieldWithKeyIndex, 1);
+		this.setState(({ fields, fieldsUUIDs }) => {
+			const fieldIndex = fieldsUUIDs.findIndex(uuid => uuid === fieldUUID);
 
-			return { fields: newFields };
+			if (fieldIndex < 0) {
+				return null;
+			}
+
+			const newFields = [...fields];
+			const newUUIDs = [...fieldsUUIDs];
+			newFields.splice(fieldIndex, 1);
+			newUUIDs.splice(fieldIndex, 1);
+
+			return {
+				fields: newFields,
+				fieldsUUIDs: newUUIDs
+			};
 		});
 	}
 
 	onFieldAddHandler() {
-		this.setState(({ fields }) => {
+		this.setState(({ fields, fieldsUUIDs: uuids }) => {
 			return {
 				fields: [
 					...fields,
-					{
-						fieldUUID: uuid()
-					} as PassFieldKeys & { fieldUUID: string }
+					{} as PassFieldKeys
+				],
+				fieldsUUIDs: [
+					...uuids,
+					uuid()
 				]
 			}
 		});
 	}
 
 	onFieldOrderChange(fromIndex: number, of: number): void {
-		this.setState(({ fields: previousFields }) => {
+		this.setState(({ fields: previousFields, fieldsUUIDs: prevUUIDs }) => {
 			// Creating a copy of the array and swapping two elements
-			const nextFields = previousFields.slice(0);
+			const nextFields = [...previousFields];
+			const nextUUIDs = [...prevUUIDs];
 
 			nextFields[fromIndex] = [
 				nextFields[fromIndex + of],
 				nextFields[fromIndex + of] = nextFields[fromIndex]
 			][0];
 
+			nextUUIDs[fromIndex] = [
+				nextUUIDs[fromIndex + of],
+				nextUUIDs[fromIndex + of] = nextUUIDs[fromIndex]
+			][0];
+
 			return {
-				fields: nextFields
+				fields: nextFields,
+				fieldsUUIDs: nextUUIDs,
 			};
 		});
 	}
 
 	onFieldChangeHandler(fieldUUID: string, fieldProps: PassFieldKeys) {
-		this.setState(({ fields: previousFields }) => {
-			const fieldIndex = previousFields.findIndex(f => f.fieldUUID === fieldUUID);
+		this.setState(({ fields: previousFields, fieldsUUIDs }) => {
+			const fieldIndex = fieldsUUIDs.findIndex(uuid => uuid === fieldUUID);
 
 			if (fieldIndex < 0) {
 				return null;
 			}
 
-			const fields = previousFields.slice(0);
+			const fields = [...previousFields];
+			// Adding to fields itself with new props but removing its old version before
 			fields.splice(
 				fieldIndex,
 				1,
@@ -103,7 +122,7 @@ export default class FieldsPreviewPage extends React.Component<Props, State> {
 	}
 
 	render() {
-		const { fields } = this.state;
+		const { fields, fieldsUUIDs } = this.state;
 
 		const fullPageElement = (
 			this.state.fields.length &&
@@ -111,6 +130,7 @@ export default class FieldsPreviewPage extends React.Component<Props, State> {
 				// @TODO: not pass all props to drawer but pick them first
 				{...this.props}
 				fieldsData={fields}
+				fieldsUUIDs={fieldsUUIDs}
 				onFieldChange={this.onFieldChangeHandler}
 				onFieldDelete={this.onFieldDeleteHandler}
 				onFieldOrderChange={this.onFieldOrderChange}

@@ -6,7 +6,8 @@ import DrawerElement from "../DrawerElement";
 import PageNavigationContext from "../../PageNavigationContext";
 
 interface Props {
-	fieldsData: (PassFieldKeys & { fieldUUID: string })[];
+	readonly fieldsData: PassFieldKeys[];
+	readonly fieldsUUIDs: string[];
 	onFieldDelete(fieldUUID: string): void;
 	onFieldChange(fieldUUID: string, data: PassFieldKeys): void;
 	onFieldOrderChange(fromIndex: number, of: number): void;
@@ -34,14 +35,14 @@ export default function Drawer(props: Props) {
 	}, [props.fieldsData]);
 
 	const panels = props.fieldsData.map((field, index) => {
-		const { fieldUUID, ...fieldProps } = field;
+		const fieldUUID = props.fieldsUUIDs[index];
 
 		return (
 			<PageNavigationContext.Consumer key={fieldUUID}>
 				{({ requestPageCreation }) => (
 					<DrawerElement
 						fieldUUID={fieldUUID}
-						elementData={fieldProps}
+						elementData={field}
 						onFieldDelete={props.onFieldDelete}
 						onFieldDataChange={props.onFieldChange}
 						onFieldOrderChange={(amount) => props.onFieldOrderChange(index, amount)}
