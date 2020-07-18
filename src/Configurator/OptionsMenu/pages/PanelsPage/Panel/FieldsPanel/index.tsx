@@ -6,14 +6,15 @@ import { FieldsArrowIcon } from "./icons";
 import CapitalHeaderTitle from "../../../components/CapitalHeaderTitle";
 import FieldsPreviewPage from "../../../FieldsPreviewPage";
 import usePageFactory from "../../../usePageFactory";
+import useContentSavingHandler from "../useContentSavingHandler";
 
 interface Props extends PanelProps {
 	value?: PassFieldKeys[];
 }
 
 export default function FieldPanel(props: Props) {
-	const [fields, setFields] = React.useState(props.value || []);
-	const pageCreationHandler = usePageFactory(FieldsPreviewPage, { value: fields }, setFields);
+	const [fields, onFieldsChanged] = useContentSavingHandler(props.onValueChange, props.name, props.value || []);
+	const pageCreationHandler = usePageFactory(FieldsPreviewPage, { value: fields }, onFieldsChanged);
 
 	const pageCreationClickHandler = React.useCallback(() => {
 		pageCreationHandler(props.name, props.requestPageCreation);
