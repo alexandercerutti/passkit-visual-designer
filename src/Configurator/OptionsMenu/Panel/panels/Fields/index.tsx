@@ -20,14 +20,12 @@ export default function FieldPanel(props: FieldPanelProps) {
 	}, [props]);
 
 	return (
-		<>
-			<div className="cta-edit" onClick={pageCreationClickHandler}>
-				<div className="col-left">
-					<CapitalHeaderTitle name={props.name} />
-					<span>{`${fields.length} fields for this area`}</span>
-				</div>
-				<FieldsArrowIcon />
+		<div className="cta-edit" onClick={pageCreationClickHandler}>
+			<div className="col-left">
+				<CapitalHeaderTitle name={props.name} />
+				<span>{`${fields.length} fields for this area`}</span>
 			</div>
-		</>
+			<FieldsArrowIcon />
+		</div>
 	);
 }
