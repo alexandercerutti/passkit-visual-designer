@@ -14,7 +14,7 @@ interface PFTravelProps extends PrimaryFieldsProps {
 }
 
 export default function PrimaryFields(props: PFTravelProps) {
-	const { register, fields, transitType } = props;
+	const { register, fields, transitType, className: PFClassName } = props;
 	const parentId = "PrimaryFields";
 
 	const [primaryFieldsClickHandler] = useRegistrations(register, [
@@ -37,7 +37,7 @@ export default function PrimaryFields(props: PFTravelProps) {
 			);
 		});
 
-	const className = createClassName(["primary-container", "className"]);
+	const className = createClassName(["primary-container", PFClassName]);
 
 	return (
 		<div className={className}>

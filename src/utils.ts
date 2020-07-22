@@ -16,5 +16,5 @@ export function createClassName(staticClassNames: string[], candidates: Candidat
 	return [
 		...staticClassNames,
 		...keys.filter(key => Boolean(candidates[key]))
-	].join(" ");
+	].join(" ").trim();
 }
