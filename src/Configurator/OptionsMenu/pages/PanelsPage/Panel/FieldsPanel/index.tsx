@@ -1,7 +1,7 @@
 import * as React from "react";
 import "./style.less";
 import { PanelProps } from "..";
-import { PassFieldKeys } from "../../../../../../passes/constants";
+import { PassFieldKeys } from "../../../../../../Pass/constants";
 import { FieldsArrowIcon } from "./icons";
 import CapitalHeaderTitle from "../../../components/CapitalHeaderTitle";
 import FieldsPreviewPage from "../../../FieldsPreviewPage";

@@ -1,6 +1,6 @@
 import * as React from "react";
 import "./style.less";
-import { PKTextAlignment, PKDateStyle, PKDataDetectorType, PassFieldKeys } from "../../../../../passes/constants";
+import { PKTextAlignment, PKDateStyle, PKDataDetectorType, PassFieldKeys } from "../../../../../Pass/constants";
 import { FieldPropertiesDetails } from "../../FieldsPreviewPage/DrawerElement/FieldPropertiesDetails";
 import FieldStringPropertyPanel from "./FieldPropertyPanels/String";
 import FieldCheckboxPropertyPanel from "./FieldPropertyPanels/Checkbox";

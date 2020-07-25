@@ -1,9 +1,9 @@
 import { Action } from "redux";
-import { PassProps } from "../../passes/PassCore";
+import { PassMixedProps } from "../../Pass";
 
 export interface ConfiguratorAction extends Action<ConfigActions> {
-	key: keyof PassProps;
-	value: any;
+	key: keyof PassMixedProps;
+	value: number | string;
 }
 
 export enum ConfigActions {

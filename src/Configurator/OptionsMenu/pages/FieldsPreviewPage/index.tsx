@@ -1,7 +1,7 @@
 import * as React from "react";
 import { v1 as uuid } from "uuid";
 import "./style.less";
-import { PassFieldKeys } from "../../../../passes/constants";
+import { PassFieldKeys } from "../../../../Pass/constants";
 import { FieldsAddIcon } from "./icons";
 import Drawer from "./Drawer";
 import DrawerPlaceholder from "./DrawerPlaceholder";

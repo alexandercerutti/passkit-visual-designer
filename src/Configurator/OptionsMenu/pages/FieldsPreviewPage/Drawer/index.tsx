@@ -1,6 +1,6 @@
 import * as React from "react";
 import "./style.less";
-import { PassFieldKeys } from "../../../../../passes/constants";
+import { PassFieldKeys } from "../../../../../Pass/constants";
 import { MoreFieldsBelowIcon } from "../icons";
 import DrawerElement from "../DrawerElement";
 import PageNavigationContext from "../../PageNavigationContext";

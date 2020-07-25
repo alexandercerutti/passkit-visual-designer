@@ -6,7 +6,7 @@ import PassList from "./PassList";
 import { setPassKind, setPassProps } from "../store/actions";
 import { State } from "../store/state";
 import NamedPass from "./NamedPass";
-import { PassProps, PassCoreProps } from "../passes/PassCore";
+import { PassMixedProps, PassCoreProps } from "../Pass";
 import { withRouter, RouteComponentProps } from "react-router-dom";
 
 interface DispatchProps {
@@ -23,7 +23,7 @@ interface SelectorProps extends DispatchProps, StoreProps, RouteComponentProps<a
 
 export interface PassAlternative {
 	name: string;
-	specificProps: Partial<PassProps>;
+	specificProps: Partial<PassMixedProps>;
 }
 
 type PassAlternativesIndex = { [key in PassKind]: PassAlternative[] };

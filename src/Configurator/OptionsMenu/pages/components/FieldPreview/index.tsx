@@ -1,7 +1,7 @@
 import * as React from "react";
 import "./style.less";
 import { createClassName } from "../../../../../utils";
-import { PKTextAlignment, PassFieldKeys } from "../../../../../passes/constants";
+import { PKTextAlignment, PassFieldKeys } from "../../../../../Pass/constants";
 
 interface Props {
 	fieldUUID: string;

@@ -1,10 +1,11 @@
 import { PassKind } from "../../model";
 import { Action } from "redux";
-import { PassProps } from "../../passes/PassCore";
+import { PassMixedProps } from "../../Pass";
+import { WalletPassFormat } from "../../Pass/constants";
 
 export interface SelectionAction extends Action<PSActionTypes> {
 	kind?: PassKind;
-	props?: PassProps;
+	props?: Partial<WalletPassFormat>;
 }
 
 export enum PSActionTypes {
@@ -21,7 +22,7 @@ export function setPassKind(kind: PassKind): SelectionAction {
 	};
 }
 
-export function setPassProps(props: PassProps): SelectionAction {
+export function setPassProps(props: PassMixedProps): SelectionAction {
 	return {
 		type: PSActionTypes.SET_PROPS,
 		props

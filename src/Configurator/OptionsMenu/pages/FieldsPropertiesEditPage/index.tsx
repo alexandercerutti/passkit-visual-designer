@@ -3,7 +3,7 @@ import "./style.less";
 import PageHeader from "../components/Header";
 import { PageProps } from "../usePageFactory";
 import FieldPreview from "../components/FieldPreview";
-import { PassFieldKeys } from "../../../../passes/constants";
+import { PassFieldKeys } from "../../../../Pass/constants";
 import FieldPropertiesEditList from "./FieldPropertiesEditList";
 
 interface Props extends PageProps {

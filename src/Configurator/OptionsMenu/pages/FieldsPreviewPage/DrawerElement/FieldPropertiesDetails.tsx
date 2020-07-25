@@ -1,4 +1,4 @@
-import { PKDataDetectorType, PKTextAlignment, PKDateStyle } from "../../../../../passes/constants";
+import { PKDataDetectorType, PKTextAlignment, PKDateStyle } from "../../../../../Pass/constants";
 
 type FieldPropertyDetail = {
 	name: string,

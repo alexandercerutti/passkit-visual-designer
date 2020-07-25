@@ -2,7 +2,7 @@ import * as React from "react";
 import "./style.less";
 import FieldOptionsBar from "./FieldOptionsBar";
 import FieldPreview from "../../components/FieldPreview";
-import { PassFieldKeys } from "../../../../../passes/constants";
+import { PassFieldKeys } from "../../../../../Pass/constants";
 import FieldsPropertiesEditPage from "../../FieldsPropertiesEditPage";
 import usePageFactory, { PageNavigation } from "../../usePageFactory";
 

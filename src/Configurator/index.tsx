@@ -4,17 +4,17 @@ import Viewer from "./Viewer";
 import OptionsBar from "./OptionsBar";
 import OptionsMenu, { RegisteredFieldsMap } from "./OptionsMenu";
 import { FieldKind, PassKind } from "../model";
-import { InteractionContext } from "../passes/PassCore/interactionContext";
+import { InteractionContext } from "../Pass/interactionContext";
 import { connect } from "react-redux";
-import { PassProps } from "../passes/PassCore";
+import { PassMixedProps } from "../Pass";
 import { State } from "../store/state";
 import DefaultFields from "./staticFields";
 import { DataGroup } from "./OptionsMenu/pages/PanelsPage/PanelGroup";
-import { FieldSelectHandler } from "../passes/Areas/useRegistrations";
+import { FieldSelectHandler } from "../Pass/layouts/sections/useRegistrations";
 
 interface ConfiguratorStore {
 	kind: PassKind;
-	passProps: PassProps;
+	passProps: PassMixedProps;
 }
 
 interface ConfiguratorProps extends ConfiguratorStore { }

@@ -1,9 +1,9 @@
 import * as React from "react";
 import "./style.less";
-import Pass, { PassCoreProps, InteractionProvider } from "../../passes/PassCore";
+import Pass, { PassCoreProps, InteractionProvider } from "../../Pass";
 import { PassKind } from "../../model";
-import { PKTransitType } from "../../passes/constants";
-import { InteractionContext } from "../../passes/PassCore/interactionContext";
+import { PKTransitType } from "../../Pass/constants";
+import { InteractionContext } from "../../Pass/interactionContext";
 
 export interface ViewerProps extends PassCoreProps {
 	onVoidClick(e: React.MouseEvent): void;
