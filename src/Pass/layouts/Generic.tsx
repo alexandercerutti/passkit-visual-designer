@@ -8,8 +8,9 @@ import FieldsRow from "./sections/FieldRow";
 import Footer from "./sections/Footer";
 import { InteractionContext } from "../interactionContext";
 import useAlternativesRegistration from "../useAlternativesRegistration";
+import type { AlternativesRegistrationSignature } from "../useAlternativesRegistration";
 
-export interface GenericProps extends PassMixedProps { }
+export interface GenericProps extends PassMixedProps, AlternativesRegistrationSignature { }
 
 export function Generic(props: GenericProps): JSX.Element {
 	useAlternativesRegistration(props.registerAlternatives, {

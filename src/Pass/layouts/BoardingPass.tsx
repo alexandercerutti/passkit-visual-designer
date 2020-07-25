@@ -7,8 +7,9 @@ import FieldsRow from "./sections/FieldRow";
 import Footer from "./sections/Footer";
 import Barcode from "./components/Barcodes";
 import useAlternativesRegistration from "../useAlternativesRegistration";
+import type { AlternativesRegistrationSignature } from "../useAlternativesRegistration";
 
-export interface BoardingPassProps extends PassMixedProps { }
+export interface BoardingPassProps extends PassMixedProps, AlternativesRegistrationSignature { }
 
 export function BoardingPass(props: BoardingPassProps) {
 	useAlternativesRegistration(props.registerAlternatives, {

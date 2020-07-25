@@ -6,8 +6,9 @@ import FieldsRow from "./sections/FieldRow";
 import Footer from "./sections/Footer";
 import Barcodes from "./components/Barcodes";
 import useAlternativesRegistration from "../useAlternativesRegistration";
+import type { AlternativesRegistrationSignature } from "../useAlternativesRegistration";
 
-export interface StoreCardProps extends PassMixedProps { }
+export interface StoreCardProps extends PassMixedProps, AlternativesRegistrationSignature { }
 
 export function StoreCard(props: StoreCardProps): JSX.Element {
 	useAlternativesRegistration(props.registerAlternatives, {

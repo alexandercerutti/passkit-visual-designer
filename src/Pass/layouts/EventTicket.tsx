@@ -8,8 +8,9 @@ import Footer from "./sections/Footer";
 import Barcodes from "./components/Barcodes";
 import { InteractionContext } from "../interactionContext";
 import useAlternativesRegistration from "../useAlternativesRegistration";
+import type { AlternativesRegistrationSignature } from "../useAlternativesRegistration";
 
-export interface EventTicketProps extends PassMixedProps { }
+export interface EventTicketProps extends PassMixedProps, AlternativesRegistrationSignature { }
 
 type PrimaryFieldPropsKind = Parameters<(typeof StripPrimaryFields | typeof ThumbnailPrimaryField)>[0]
 

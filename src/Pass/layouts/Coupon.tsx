@@ -6,8 +6,9 @@ import FieldsRow from "./sections/FieldRow";
 import Barcode from "./components/Barcodes";
 import Footer from "./sections/Footer";
 import useAlternativesRegistration from "../useAlternativesRegistration";
+import type { AlternativesRegistrationSignature } from "../useAlternativesRegistration";
 
-export interface CouponProps extends PassMixedProps { }
+export interface CouponProps extends PassMixedProps, AlternativesRegistrationSignature { }
 
 export function Coupon(props: CouponProps): JSX.Element {
 	useAlternativesRegistration(props.registerAlternatives, {

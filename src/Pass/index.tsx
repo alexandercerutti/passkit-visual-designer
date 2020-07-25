@@ -13,8 +13,6 @@ import { InteractionContext } from "./interactionContext";
 export { Provider as InteractionProvider, Consumer as InteractionConsumer } from "./interactionContext";
 
 export interface PassMixedProps {
-	registerAlternatives?(...alternatives: PassAlternative[]): void;
-
 	headerFields?: PassFields.HeaderFields[];
 	secondaryFields?: PassFields.SecondaryFields[];
 	primaryFields?: PassFields.PrimaryFields[];
