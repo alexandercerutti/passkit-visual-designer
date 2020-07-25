@@ -6,7 +6,6 @@ import { Coupon } from "./layouts/Coupon";
 import { EventTicket } from "./layouts/EventTicket";
 import { Generic } from "./layouts/Generic";
 import { StoreCard } from "./layouts/StoreCard";
-import { PassAlternative } from "../PassSelector";
 import { PKTransitType, PassFields, WalletPassFormat } from "./constants";
 import { InteractionContext } from "./interactionContext";
 

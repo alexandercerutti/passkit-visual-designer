@@ -1,5 +1,10 @@
 import { useEffect } from "react";
-import { PassAlternative } from "../PassSelector";
+import { PassMixedProps } from ".";
+
+export interface PassAlternative {
+	name: string;
+	specificProps: Partial<PassMixedProps>;
+}
 
 export type RegisterAlternatives = (...alternatives: PassAlternative[]) => void;
 

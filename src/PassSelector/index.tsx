@@ -8,6 +8,7 @@ import { State } from "../store/state";
 import NamedPass from "./NamedPass";
 import { PassMixedProps, PassCoreProps } from "../Pass";
 import { withRouter, RouteComponentProps } from "react-router-dom";
+import type { PassAlternative } from "../Pass/useAlternativesRegistration";
 
 interface DispatchProps {
 	setPassKind: typeof setPassKind,
@@ -21,15 +22,10 @@ interface StoreProps {
 
 interface SelectorProps extends DispatchProps, StoreProps, RouteComponentProps<any> { }
 
-export interface PassAlternative {
-	name: string;
-	specificProps: Partial<PassMixedProps>;
-}
-
-type PassAlternativesIndex = { [key in PassKind]: PassAlternative[] };
+type PassKindsAlternatives = { [key in PassKind]?: PassAlternative[] };
 
 class PassSelector extends React.PureComponent<SelectorProps> {
-	private alternatives: PassAlternativesIndex = {} as PassAlternativesIndex;
+	private alternatives: PassKindsAlternatives = {};
 
 	private config = {
 		introText: "Select your pass model"
@@ -85,7 +81,7 @@ class PassSelector extends React.PureComponent<SelectorProps> {
 			);
 		});
 
-		const alternativesList = availableAlternatives.map((alternative: PassAlternative) => {
+		const alternativesList = availableAlternatives.map((alternative) => {
 			return (
 				<NamedPass
 					key={alternative.name}
