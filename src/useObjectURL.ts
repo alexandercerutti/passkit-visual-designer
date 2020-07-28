@@ -1,5 +1,13 @@
 import * as React from "react";
 
+/**
+ * Allows creating an ObjectURL from a Blob or raw data
+ * for any kind of data a Blob can accept.
+ *
+ * @param data
+ * @param bufferBlobOpts
+ */
+
 export default function useObjectURL(data: ArrayBuffer | Blob, bufferBlobOpts?: BlobPropertyBag) {
 	const [objectURL, setObjectURL] = React.useState<string>(undefined);
 
