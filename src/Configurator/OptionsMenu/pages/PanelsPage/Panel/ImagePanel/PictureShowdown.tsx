@@ -1,5 +1,6 @@
 import * as React from "react";
 import { EditIcon, DeleteIcon } from "./icons";
+import useObjectURL from "../../../../../../useObjectURL";
 
 interface PictureShowdownProps {
 	name: string;
@@ -8,22 +9,7 @@ interface PictureShowdownProps {
 }
 
 export default function PictureShowdown(props: PictureShowdownProps): JSX.Element {
-	const [lastRaw, setLastRaw] = React.useState<Blob>(props.pictureData);
-	const [pictureURL, setPictureURL] = React.useState<string>(URL.createObjectURL(props.pictureData));
-
-	React.useEffect(() => {
-		if (lastRaw !== props.pictureData) {
-			URL.revokeObjectURL(pictureURL);
-			setLastRaw(props.pictureData);
-			setPictureURL(URL.createObjectURL(props.pictureData));
-		}
-
-		if (!props.pictureData) {
-			props.onDelete();
-		}
-
-		return () => pictureURL && URL.revokeObjectURL(pictureURL);
-	});
+	const pictureURL = useObjectURL(props.pictureData);
 
 	return (
 		<div className="picture">

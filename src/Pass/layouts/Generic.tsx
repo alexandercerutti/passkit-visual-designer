@@ -9,6 +9,7 @@ import Footer from "./sections/Footer";
 import { InteractionContext } from "../interactionContext";
 import useAlternativesRegistration from "../useAlternativesRegistration";
 import type { AlternativesRegistrationSignature } from "../useAlternativesRegistration";
+import useObjectURL from "../../useObjectURL";
 
 export interface GenericProps extends PassMixedProps, AlternativesRegistrationSignature { }
 
@@ -29,7 +30,10 @@ export function Generic(props: GenericProps): JSX.Element {
 		}
 	});
 
-	const { secondaryFields, primaryFields, headerFields, auxiliaryFields, barcode, logoText, logo } = props;
+	const { secondaryFields, primaryFields, headerFields, auxiliaryFields, barcode, logoText, logo, thumbnailImage } = props;
+
+	const thumbnailImageURL = useObjectURL(thumbnailImage, { type: "image/*" });
+	const logoURL = useObjectURL(logo);
 
 	const isSquaredBarcode = isSquareBarcode(barcode?.format);
 
@@ -68,14 +72,14 @@ export function Generic(props: GenericProps): JSX.Element {
 					<PassHeader
 						withSeparator
 						headerFields={headerFields}
-						logo={logo}
+						logo={logoURL}
 						logoText={logoText}
 						onClick={onFieldSelect}
 						register={registerField}
 					/>
 					<ThumbnailPrimaryField
 						fields={primaryFields}
-						thumbnailSrc={props.thumbnailImage}
+						thumbnailSrc={thumbnailImageURL}
 						onClick={onFieldSelect}
 						register={registerField}
 					/>

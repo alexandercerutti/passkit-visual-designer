@@ -7,6 +7,7 @@ import Barcode from "./components/Barcodes";
 import Footer from "./sections/Footer";
 import useAlternativesRegistration from "../useAlternativesRegistration";
 import type { AlternativesRegistrationSignature } from "../useAlternativesRegistration";
+import useObjectURL from "../../useObjectURL";
 
 export interface CouponProps extends PassMixedProps, AlternativesRegistrationSignature { }
 
@@ -18,19 +19,22 @@ export function Coupon(props: CouponProps): JSX.Element {
 
 	const { secondaryFields, primaryFields, headerFields, auxiliaryFields, barcode, stripImage, logo, logoText } = props;
 
+	const stripImageURL = useObjectURL(stripImage, { type: "image/*" });
+	const logoURL = useObjectURL(logo);
+
 	return (
 		<InteractionConsumer>
 			{({ onFieldSelect, registerField }) => (
 				<>
 					<PassHeader
 						headerFields={headerFields}
-						logo={logo}
+						logo={logoURL}
 						logoText={logoText}
 						onClick={onFieldSelect}
 						register={registerField}
 					/>
 					<StripPrimaryFields
-						stripSrc={stripImage}
+						stripSrc={stripImageURL}
 						fields={primaryFields}
 						onClick={onFieldSelect}
 						register={registerField}

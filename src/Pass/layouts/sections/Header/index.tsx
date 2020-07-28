@@ -11,26 +11,11 @@ import { PassFieldKeys } from "../../../constants";
 interface HeaderProps extends Partial<RegistrableComponent> {
 	headerFields?: PassFieldKeys[];
 	logoText?: string;
-	logo?: ArrayBuffer;
+	logo?: string;
 	withSeparator?: boolean;
 }
 
 export function PassHeader(props: HeaderProps) {
-	const [logoURI, setLogoURI] = React.useState<string>(undefined);
-
-	// @TODO refactor by using or configurator ObjectURL (if possible)
-	// or perform url creation in parent(s)
-	React.useEffect(() => {
-		if (props.logo?.byteLength) {
-			const url = URL.createObjectURL(new Blob([props.logo], { type: "image/*" }));
-			setLogoURI(url);
-		}
-
-		URL.revokeObjectURL(logoURI);
-
-		return () => URL.revokeObjectURL(logoURI);
-	}, [props.logo]);
-
 	/**
 	 * The Field row will register itself
 	 * with the ID we pass to it.
@@ -60,7 +45,7 @@ export function PassHeader(props: HeaderProps) {
 	return (
 		<div className={className}>
 			<ImageField
-				src={logoURI}
+				src={props.logo}
 				// width={"30px"}
 				onClick={() => logoClickHandler(null)}
 			/>

@@ -7,6 +7,7 @@ import Footer from "./sections/Footer";
 import Barcodes from "./components/Barcodes";
 import useAlternativesRegistration from "../useAlternativesRegistration";
 import type { AlternativesRegistrationSignature } from "../useAlternativesRegistration";
+import useObjectURL from "../../useObjectURL";
 
 export interface StoreCardProps extends PassMixedProps, AlternativesRegistrationSignature { }
 
@@ -16,21 +17,24 @@ export function StoreCard(props: StoreCardProps): JSX.Element {
 		specificProps: {}
 	});
 
-	const { secondaryFields, primaryFields, headerFields, auxiliaryFields, barcode, logo, logoText } = props;
+	const { secondaryFields, primaryFields, headerFields, auxiliaryFields, barcode, logo, logoText, stripImage } = props;
+
+	const stripImageURL = useObjectURL(stripImage, { type: "image/*" });
+	const logoURL = useObjectURL(logo);
 
 	return (
 		<InteractionConsumer>
 			{({ onFieldSelect, registerField }) => (
 				<>
 					<PassHeader
-						logo={logo}
+						logo={logoURL}
 						logoText={logoText}
 						headerFields={headerFields}
 						onClick={onFieldSelect}
 						register={registerField}
 					/>
 					<StripPrimaryFields
-						stripSrc={props.stripImage}
+						stripSrc={stripImageURL}
 						fields={primaryFields}
 						onClick={onFieldSelect}
 						register={registerField}

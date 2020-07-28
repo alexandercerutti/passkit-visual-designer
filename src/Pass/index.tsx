@@ -21,11 +21,11 @@ export interface PassMixedProps {
 	transitType?: PKTransitType;
 	logoText?: string;
 
-	logo?: string;
-	backgroundImage?: string;
-	thumbnailImage?: string;
-	stripImage?: string;
-	appLogo?: string;
+	logo?: ArrayBuffer;
+	backgroundImage?: ArrayBuffer;
+	thumbnailImage?: ArrayBuffer;
+	stripImage?: ArrayBuffer;
+	appLogo?: ArrayBuffer;
 }
 
 export interface PassCoreProps extends PassMixedProps, Partial<InteractionContext> {

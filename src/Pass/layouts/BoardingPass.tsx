@@ -8,6 +8,7 @@ import Footer from "./sections/Footer";
 import Barcode from "./components/Barcodes";
 import useAlternativesRegistration from "../useAlternativesRegistration";
 import type { AlternativesRegistrationSignature } from "../useAlternativesRegistration";
+import useObjectURL from "../../useObjectURL";
 
 export interface BoardingPassProps extends PassMixedProps, AlternativesRegistrationSignature { }
 
@@ -41,13 +42,15 @@ export function BoardingPass(props: BoardingPassProps) {
 
 	const { secondaryFields, primaryFields, headerFields, auxiliaryFields, barcode, transitType, logo, logoText } = props;
 
+	const logoURL = useObjectURL(logo);
+
 	return (
 		<InteractionConsumer>
 			{({ onFieldSelect, registerField }) => (
 				<>
 					<PassHeader
 						withSeparator
-						logo={logo}
+						logo={logoURL}
 						logoText={logoText || undefined}
 						headerFields={headerFields}
 						onClick={onFieldSelect}

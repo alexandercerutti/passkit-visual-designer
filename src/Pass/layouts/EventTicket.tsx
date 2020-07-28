@@ -9,6 +9,7 @@ import Barcodes from "./components/Barcodes";
 import { InteractionContext } from "../interactionContext";
 import useAlternativesRegistration from "../useAlternativesRegistration";
 import type { AlternativesRegistrationSignature } from "../useAlternativesRegistration";
+import useObjectURL from "../../useObjectURL";
 
 export interface EventTicketProps extends PassMixedProps, AlternativesRegistrationSignature { }
 
@@ -27,7 +28,11 @@ export function EventTicket(props: EventTicketProps): JSX.Element {
 		},
 	});
 
-	const { secondaryFields, primaryFields, headerFields, auxiliaryFields, barcode, logoText, logo } = props;
+	const { secondaryFields, primaryFields, headerFields, auxiliaryFields, barcode, logoText, logo, stripImage, thumbnailImage } = props;
+
+	const stripImageURL = useObjectURL(stripImage, { type: "image/*" });
+	const thumbnailImageURL = useObjectURL(thumbnailImage, { type: "image/*" });
+	const logoURL = useObjectURL(logo);
 
 	let FieldsFragment: (interaction: InteractionContext) => React.ReactElement<PrimaryFieldPropsKind>;
 
@@ -74,7 +79,7 @@ export function EventTicket(props: EventTicketProps): JSX.Element {
 		FieldsFragment = ({ onFieldSelect, registerField }) => (
 			<>
 				<StripPrimaryFields
-					stripSrc={props.stripImage}
+					stripSrc={stripImageURL}
 					fields={primaryFields}
 					onClick={onFieldSelect}
 					register={registerField}
@@ -94,7 +99,7 @@ export function EventTicket(props: EventTicketProps): JSX.Element {
 	} else if (props.hasOwnProperty("backgroundImage")) {
 		FieldsFragment = ({ onFieldSelect, registerField }) => (
 			<ThumbnailPrimaryField
-				thumbnailSrc={props.thumbnailImage}
+				thumbnailSrc={thumbnailImageURL}
 				fields={primaryFields}
 				onClick={onFieldSelect}
 				register={registerField}
@@ -119,7 +124,7 @@ export function EventTicket(props: EventTicketProps): JSX.Element {
 					<PassHeader
 						headerFields={headerFields}
 						logoText={logoText}
-						logo={logo}
+						logo={logoURL}
 						onClick={onFieldSelect}
 						register={registerField}
 					/>
