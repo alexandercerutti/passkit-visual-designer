@@ -1,11 +1,11 @@
 import * as React from "react";
 import "./style.less";
-import Pass, { PassCoreProps, InteractionProvider } from "../../Pass";
+import Pass, { PassProps, InteractionProvider } from "../../Pass";
 import { PassKind } from "../../model";
 import { PKTransitType } from "../../Pass/constants";
 import { InteractionContext } from "../../Pass/interactionContext";
 
-export interface ViewerProps extends PassCoreProps {
+export interface ViewerProps extends PassProps {
 	onVoidClick(e: React.MouseEvent): void;
 }
 
@@ -38,7 +38,7 @@ export default function Viewer(props: ViewerProps) {
  */
 
 function organizeViewerProps({ registerField, onFieldSelect, ...passProps }: ViewerProps): {
-	passProps: PassCoreProps,
+	passProps: PassProps,
 	registrationProps: InteractionContext
 } {
 	return {

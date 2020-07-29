@@ -1,5 +1,5 @@
 import * as React from "react";
-import Pass, { PassCoreProps } from "../Pass";
+import Pass, { PassProps } from "../Pass";
 import type { AlternativesRegistrationSignature } from "../Pass/useAlternativesRegistration";
 
 /**
@@ -11,7 +11,7 @@ import type { AlternativesRegistrationSignature } from "../Pass/useAlternativesR
  * @param props
  */
 
-export interface NamedPassProps extends PassCoreProps, AlternativesRegistrationSignature {
+export interface NamedPassProps extends PassProps, AlternativesRegistrationSignature {
 	name: string;
 }
 

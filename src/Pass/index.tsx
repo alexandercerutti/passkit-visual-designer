@@ -12,6 +12,7 @@ import { InteractionContext } from "./interactionContext";
 export { Provider as InteractionProvider, Consumer as InteractionConsumer } from "./interactionContext";
 
 export interface PassMixedProps {
+	kind?: PassKind;
 	headerFields?: PassFields.HeaderFields[];
 	secondaryFields?: PassFields.SecondaryFields[];
 	primaryFields?: PassFields.PrimaryFields[];
@@ -28,9 +29,7 @@ export interface PassMixedProps {
 	appLogo?: ArrayBuffer;
 }
 
-export interface PassCoreProps extends PassMixedProps, Partial<InteractionContext> {
-	kind: PassKind;
-}
+export interface PassProps extends PassMixedProps, Partial<InteractionContext> { }
 
 const PassKindsMap = new Map<PassKind, React.FunctionComponent<PassMixedProps>>([
 	[PassKind.BOARDING_PASS, BoardingPass],
@@ -40,7 +39,7 @@ const PassKindsMap = new Map<PassKind, React.FunctionComponent<PassMixedProps>>(
 	[PassKind.STORE, StoreCard]
 ]);
 
-export default function Pass(props: PassCoreProps) {
+export default function Pass(props: PassProps) {
 	const { kind, ...newProps } = props;
 	const PassComponent = PassKindsMap.get(kind);
 

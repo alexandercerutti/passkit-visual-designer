@@ -6,7 +6,7 @@ import PassList from "./PassList";
 import { setPassKind, setPassProps } from "../store/actions";
 import { State } from "../store/state";
 import NamedPass from "./NamedPass";
-import { PassMixedProps, PassCoreProps } from "../Pass";
+import { PassProps } from "../Pass";
 import { withRouter, RouteComponentProps } from "react-router-dom";
 import type { PassAlternative } from "../Pass/useAlternativesRegistration";
 
@@ -17,7 +17,6 @@ interface DispatchProps {
 
 interface StoreProps {
 	selectedPassKind: PassKind;
-	passProps: PassProps;
 }
 
 interface SelectorProps extends DispatchProps, StoreProps, RouteComponentProps<any> { }
@@ -53,15 +52,15 @@ class PassSelector extends React.PureComponent<SelectorProps> {
 		console.log("Registering alternatives for", kind, alternatives);
 	}
 
-	onPassSelect(passProps: PassCoreProps) {
+	onPassSelect(passProps: PassProps) {
 		console.log("Performed selection of", passProps.kind);
 
 		this.props.setPassKind(passProps.kind);
 	}
 
-	onAlternativeSelection(passProps: PassCoreProps) {
-		const propsWithoutKind: PassProps = (({ kind, ...props }) => ({ ...props }))(passProps);
-		this.props.setPassProps(propsWithoutKind);
+	onAlternativeSelection(passProps: PassProps) {
+		const { kind, ...props } = passProps;
+		this.props.setPassProps(props);
 
 		this.props.history.push("/creator");
 	}

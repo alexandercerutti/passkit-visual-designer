@@ -1,12 +1,12 @@
 import * as React from "react";
 import "./style.less";
 import { PassKind } from "../model";
-import { PassCoreProps } from "../Pass";
+import { PassProps } from "../Pass";
 import { createClassName } from "../utils";
 import { NamedPassProps } from "./NamedPass";
 
 interface PassListProps {
-	onPassSelect: (passProps: PassCoreProps) => void;
+	onPassSelect: (passProps: PassProps) => void;
 	requiresAttention?: boolean;
 	selectedKind?: PassKind;
 }
@@ -15,7 +15,7 @@ type PassListPropsWithChildren = React.PropsWithChildren<PassListProps>;
 
 export default function PassList(props: PassListPropsWithChildren): JSX.Element {
 	const selectionTray = React.useRef<HTMLDivElement>(null);
-	const { current: onPassClickHandlerRef } = React.useRef((event: React.MouseEvent, clickProps: PassCoreProps) => {
+	const { current: onPassClickHandlerRef } = React.useRef((event: React.MouseEvent, clickProps: PassProps) => {
 		event.stopPropagation();
 		props.onPassSelect({ ...clickProps });
 	});
