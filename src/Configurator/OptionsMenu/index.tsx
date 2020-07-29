@@ -9,7 +9,7 @@ export type RegisteredFieldsMap = Map<DataGroup, FieldDetails[]>;
 interface OptionsMenuProps {
 	selection?: string;
 	registeredFields: RegisteredFieldsMap;
-	onValueChange(key: string, value: any): boolean;
+	onValueChange(key: string, value: any): Promise<boolean>;
 }
 
 export default function OptionsMenu(props: OptionsMenuProps) {

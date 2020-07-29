@@ -1,24 +1,13 @@
-import { PassKind } from "../model";
-import { PassProps } from "../passes/PassCore";
+import { PassMixedProps } from "../Pass";
 
 export interface State {
-	selectedPass: {
-		kind: PassKind;
-		props: PassProps;
-	},
-	passContent: PassProps & {
-		background?: any;
-		strip?: any;
-		thumbnail?: any;
-		logo?: any;
-		icon?: any;
+	pass: Partial<PassMixedProps>,
+	media: {
+
 	}
 }
 
 export const initialState: State = {
-	selectedPass: {
-		kind: null,
-		props: null,
-	},
-	passContent: null
+	pass: {},
+	media: {}
 }

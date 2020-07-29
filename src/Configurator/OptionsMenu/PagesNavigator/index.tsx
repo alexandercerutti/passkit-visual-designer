@@ -11,7 +11,7 @@ interface NavigatorState {
 
 interface NavigatorProps {
 	fields: RegisteredFieldsMap;
-	onValueChange(key: string, value: any): boolean;
+	onValueChange(key: string, value: any): Promise<boolean>;
 }
 
 export default class PagesNavigator extends React.Component<NavigatorProps, NavigatorState> implements PageNavigation {

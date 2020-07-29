@@ -1,5 +1,7 @@
 import * as React from "react";
 import "./style.less";
+import { RouteComponentProps, withRouter } from "react-router-dom";
+import { changePassPropValue } from "../store/actions";
 import Viewer from "./Viewer";
 import OptionsBar from "./OptionsBar";
 import OptionsMenu, { RegisteredFieldsMap } from "./OptionsMenu";
@@ -12,12 +14,16 @@ import DefaultFields from "./staticFields";
 import { DataGroup } from "./OptionsMenu/pages/PanelsPage/PanelGroup";
 import { FieldSelectHandler } from "../Pass/layouts/sections/useRegistrations";
 
+interface DispatchProps {
+	changePassPropValue: typeof changePassPropValue;
+}
+
 interface ConfiguratorStore {
 	kind: PassKind;
 	passProps: PassMixedProps;
 }
 
-interface ConfiguratorProps extends ConfiguratorStore { }
+interface ConfiguratorProps extends ConfiguratorStore, DispatchProps, RouteComponentProps<any> { }
 interface ConfiguratorState {
 	selectedFieldId?: string;
 	registeredFields: RegisteredFieldsMap;
@@ -91,12 +97,19 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 	 * @param value
 	 */
 
-	onValueChange<T>(key: string, value: T): boolean {
+	async onValueChange<T extends Object | string>(key: keyof PassMixedProps, value: T): Promise<boolean> {
 		console.log("Panel with name", key, "tried to save", value);
 
-		// @TODO: validate the input
-		// @TODO: save to store
-		// @TODO: save to localForage
+		let valueToStore: any = value;
+
+		if (value instanceof Blob) {
+			valueToStore = await value.arrayBuffer();
+		}
+
+		this.props.changePassPropValue(key, valueToStore);
+
+		// @TODO: validate the input?
+		// @TODO: save to localForage - through a middleware? Dunno yet
 
 		// @TODO: return false if cannot validate the input
 		return true;
@@ -158,9 +171,17 @@ function convertFieldKindToDataGroup(kind: FieldKind): DataGroup {
 	return undefined
 }
 
-export default connect(
-	(state: State): ConfiguratorStore => ({
-		kind: state.selectedPass.kind,
-		passProps: state.passContent
-	}),
-)(Configurator);
+export default withRouter(connect(
+	(state: State): ConfiguratorStore => {
+		const {
+			pass: { kind, ...passProps },
+			media
+		} = state;
+
+		return {
+			kind,
+			passProps: Object.assign({}, passProps, media),
+		};
+	},
+	{ changePassPropValue }
+)(Configurator));
