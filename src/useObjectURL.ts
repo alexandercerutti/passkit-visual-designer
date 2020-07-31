@@ -12,8 +12,13 @@ export default function useObjectURL(data: ArrayBuffer | Blob, bufferBlobOpts?: 
 	const [objectURL, setObjectURL] = React.useState<string>(undefined);
 
 	React.useEffect(() => {
-		const blob = data instanceof Blob ? data : new Blob([data], bufferBlobOpts);
-		const newObjectURL = URL.createObjectURL(blob);
+		let newObjectURL: string = undefined;
+
+		if (data) {
+			const blob = data instanceof Blob ? data : new Blob([data], bufferBlobOpts);
+			newObjectURL = URL.createObjectURL(blob);
+		}
+
 		setObjectURL(newObjectURL);
 
 		if (objectURL) {
