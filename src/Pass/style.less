@@ -8,6 +8,7 @@
 	height: 350px;
 	position: relative;
 	transition: box-shadow .5s;
+	overflow: hidden; /* for background */
 
 	&:hover {
 		box-shadow: 0px 3px 10px #000;
@@ -25,5 +26,25 @@
 		display: flex;
 		flex-direction: column;
 		align-items: flex-start;
+	}
+
+	/** Background Image **/
+
+	&.bg-image {
+		background: none;
+
+		&::before {
+			content: "";
+			position: absolute;
+			top: 0px;
+			left: 0;
+			right: 0;
+			z-index: -1;
+			bottom: 0;
+			background-image: url(http://localhost:8000/background@2x.png);
+			background-size: cover;
+			background-position: bottom center;
+			filter: blur(6px);
+		}
 	}
 }
