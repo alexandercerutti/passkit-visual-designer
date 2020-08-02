@@ -22,7 +22,10 @@ export default function ImagePanel(props: ImagePanelProps) {
 					pictureData={file}
 					onDelete={onChosenFileChangedHandlerRef}
 				/>
-				: <UploadArea onFileUpload={onChosenFileChangedHandlerRef} />
+				: <UploadArea
+					areaIdentifier={props.name}
+					onFileUpload={onChosenFileChangedHandlerRef}
+				/>
 			}
 		</>
 	);

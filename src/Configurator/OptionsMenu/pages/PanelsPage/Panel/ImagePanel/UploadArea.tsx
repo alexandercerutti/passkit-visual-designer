@@ -2,6 +2,7 @@ import * as React from "react";
 import DragAndDropArea from "./DragAndDropArea";
 
 interface UploadAreaProps {
+	areaIdentifier: string;
 	onFileUpload: (file: File) => void;
 }
 
@@ -19,10 +20,12 @@ export default function UploadArea(props: UploadAreaProps): JSX.Element {
 		inputFileHandlerRef.current(event.target.files);
 	});
 
+	const id = `fileUpload-${props.areaIdentifier}`;
+
 	return (
 		<>
-			<input type="file" id="fileUpload" hidden onChange={onChangeHandlerRef.current} />
-			<label htmlFor="fileUpload">
+			<input type="file" id={id} hidden onChange={onChangeHandlerRef.current} />
+			<label htmlFor={id}>
 				<DragAndDropArea onFilesUploaded={inputFileHandlerRef.current} />
 			</label>
 		</>
