@@ -4,8 +4,11 @@
 	align-items: center;
 	border: 1px dashed #000; // development only or advanced mode
 	flex-grow: 1;
+	min-width: 0; // for ellipsis truncating
 
-	&.logo-text {
-		flex-grow: 2;
+	& span {
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		overflow: hidden;
 	}
 }

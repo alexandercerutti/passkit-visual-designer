@@ -18,7 +18,7 @@ export default function TextField(props: TextFieldProps) {
 
 		return (
 			<div className={className}>
-				{content}
+				<span>{content}</span>
 			</div>
 		);
 	}, [content]));
