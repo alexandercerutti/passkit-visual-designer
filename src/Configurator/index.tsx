@@ -136,7 +136,7 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 			<div id="configurator">
 				<div className="screen">
 					<Viewer
-						{...this.props}
+						{...this.props.passProps}
 						onFieldSelect={this.onFieldSelect}
 						registerField={this.registerField}
 						onVoidClick={this.onVoidClick}
@@ -145,6 +145,7 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 				</div>
 				<div className="config-panel">
 					<OptionsMenu
+						data={this.props.passProps}
 						selection={this.state.selectedFieldId}
 						registeredFields={this.state.registeredFields}
 						onValueChange={this.onValueChange}

@@ -4,6 +4,7 @@ import { RegisteredFieldsMap } from "..";
 import PanelsPage from "../pages/PanelsPage";
 import PageNavigationContext from "../pages/PageNavigationContext";
 import { RequestPageCreationFunction, PageNavigation, ContextPropsGetter } from "../pages/usePageFactory";
+import { PassMixedProps } from "../../../Pass";
 
 interface NavigatorState {
 	pagesHierarchy: Parameters<RequestPageCreationFunction>[];
@@ -11,6 +12,7 @@ interface NavigatorState {
 
 interface NavigatorProps {
 	fields: RegisteredFieldsMap;
+	data: PassMixedProps;
 	onValueChange(key: string, value: any): Promise<boolean>;
 }
 
@@ -80,6 +82,7 @@ export default class PagesNavigator extends React.Component<NavigatorProps, Navi
 						<PanelsPage
 							onValueChange={this.props.onValueChange}
 							fields={this.props.fields}
+							data={this.props.data}
 						/>
 					</div>
 					{pages}

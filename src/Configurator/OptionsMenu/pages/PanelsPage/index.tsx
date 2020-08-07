@@ -4,9 +4,11 @@ import PanelGroup, { DataGroup } from "./PanelGroup";
 import Panel, { FieldDetails } from "./Panel";
 import { RegisteredFieldsMap } from "../..";
 import PageNavigationContext from "../PageNavigationContext";
+import { PassMixedProps } from "../../../../Pass";
 
 interface Props extends Partial<PageNavigation> {
 	fields: RegisteredFieldsMap;
+	data: PassMixedProps;
 	onValueChange<T>(name: string, data: T): void;
 }
 
@@ -37,6 +39,7 @@ export default function PanelsPage(props: Props) {
 									name={name}
 									kind={kind}
 									data={otherData}
+									value={props.data?.[name]}
 									onValueChange={props.onValueChange}
 									{...navProps}
 								/>
