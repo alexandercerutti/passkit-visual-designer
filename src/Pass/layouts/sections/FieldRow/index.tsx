@@ -31,7 +31,7 @@ export function InlineFieldsRow(props: RowProps) {
 		[FieldKind.FIELDS, id]
 	]);
 
-	const elementsWithProps = elements.filter(e => Object.keys(e).length);
+	const elementsWithProps = elements.filter(e => Object.keys(e).length && (e.value || e.label));
 
 	const mappableElements = (
 		elementsWithProps.length &&
