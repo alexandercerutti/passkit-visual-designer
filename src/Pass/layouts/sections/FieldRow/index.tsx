@@ -31,26 +31,23 @@ export function InlineFieldsRow(props: RowProps) {
 		[FieldKind.FIELDS, id]
 	]);
 
+	const elementsWithProps = elements.filter(e => Object.keys(e).length);
+
 	const mappableElements = (
-		elements.length &&
-		props.elements.slice(0, maximumElementsAmount || elements.length)
+		elementsWithProps.length &&
+		elementsWithProps.slice(0, maximumElementsAmount || elements.length)
 	) || [{}] as RowProps["elements"];
 
-	const mappedElements = mappableElements.map((data, index) => {
-		const fieldID = `${id}.${index}`;
-		// in order to not pass react key property
-
-		return (
-			<Field
-				key={fieldID}
-				onClick={() => fieldsClickHandler(data.key ?? null)}
-				fieldData={data}
-			>
-				<FieldLabel fieldData={data} />
-				<FieldValue fieldData={data} />
-			</Field>
-		);
-	});
+	const mappedElements = mappableElements.map((data, index) => (
+		<Field
+			key={`${id}.${index}`}
+			onClick={() => fieldsClickHandler(data.key ?? null)}
+			fieldData={data}
+		>
+			<FieldLabel fieldData={data} />
+			<FieldValue fieldData={data} />
+		</Field>
+	));
 
 	return (
 		<>
