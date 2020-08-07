@@ -31,6 +31,7 @@ export default function TextPanel(props: TextPanelProps) {
 				placeholder={props.name}
 				onBlur={(event) => onBlurEventRef(event.target.value)}
 				onKeyDown={onKeyDownEventRef.current}
+				onChange={(event) => onBlurEventRef(event.target.value)}
 				defaultValue={content}
 			/>
 		</>
