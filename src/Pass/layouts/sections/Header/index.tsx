@@ -3,7 +3,7 @@ import "./style.less";
 import TextField from "../../components/TextField";
 import { RegistrableComponent, useRegistrations } from "../useRegistrations";
 import ImageField from "../../components/ImageField";
-import { InlineFieldsRow } from "../FieldRow";
+import FieldsRow from "../FieldRow";
 import { createClassName } from "../../../../utils";
 import { FieldKind } from "../../../../model";
 import { PassFieldKeys } from "../../../constants";
@@ -25,36 +25,29 @@ export function PassHeader(props: HeaderProps) {
 		[FieldKind.TEXT, "logoText"]
 	]);
 
-	/**
-	 * Taking only the first three headers
-	 * as per Apple maximum number of header fields
-	 */
-	const headerFields = (
-		<InlineFieldsRow
-			elements={props.headerFields}
-			maximumElementsAmount={3}
-			id="headerFields"
-			register={props.register}
-		/>
-	);
-
 	const className = createClassName(["header-container"], {
 		"separator": props.withSeparator
 	});
 
 	return (
 		<div className={className}>
-			<ImageField
-				src={props.logo}
-				// width={"30px"}
-				onClick={() => logoClickHandler(null)}
-			/>
-			<TextField
-				className="logo-text"
-				content={props.logoText || ""}
-				onClick={() => logoTextClickHandler(null)}
-			/>
-			{headerFields}
+			<div className="inner">
+				<ImageField
+					src={props.logo}
+					onClick={() => logoClickHandler(null)}
+				/>
+				<TextField
+					className="logo-text"
+					content={props.logoText || ""}
+					onClick={() => logoTextClickHandler(null)}
+				/>
+				<FieldsRow
+					elements={props.headerFields}
+					maximumElementsAmount={3}
+					id="headerFields"
+					register={props.register}
+				/>
+			</div>
 		</div>
 	);
 }

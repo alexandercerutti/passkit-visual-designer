@@ -9,29 +9,80 @@
 	flex-wrap: wrap;
 	overflow: hidden;
 	margin-bottom: 15px;
+	max-height: 35px;
 
-	& > .empty {
-		height: 22px;
+	/**
+	 * The desired behavior would be to make .inner
+	 * to nest elements (like .fields-row) after
+	 * making its element wrapping on itself,
+	 * but it seems there is not a way to specify the order...
+	 * So, for now we won't make exceeding items wrap
+	 * in .inner but just overflow
+	 */
 
-		&:first-child, &:last-child {
-			width: 40px;
-			flex-grow: 0;
+	& .inner {
+		display: inline-flex;
+		flex: auto;
+		align-items: center;
+
+		& > *:not(:last-child) {
+			margin-right: @fieldsSpacing;
 		}
 
-		&:first-child {
-			border-top-left-radius: 2px;
-			border-bottom-left-radius: 2px;
+		& > .image-field {
+			display: flex;
+
+			& > img {
+				max-height: 25px;
+			}
 		}
 
-		&:last-child {
-			border-top-right-radius: 2px;
-			border-bottom-right-radius: 2px;
+		& > .empty {
+			height: 22px;
+
+			&:first-child {
+				border-top-left-radius: 2px;
+				border-bottom-left-radius: 2px;
+
+				// to give the element a static size
+				flex-grow: 0;
+				flex-basis: 50px;
+			}
+
+			&:nth-child(2) {
+				flex-grow: 2;
+			}
 		}
 
-	}
+		/**
+		 * Known issue: when not all fields can fit, they
+		 * will, on purpose, get wrapped but fields row will
+		 * still try to take space they deserve (maybe it can
+		 * solved with flex-basis: content, but it is pretty
+		 * unsupported yet).
+		 */
 
-	& > *:not(:last-child) {
-		margin-right: @fieldsSpacing;
+		& .fields-row {
+			margin-top: 0;
+			justify-content: flex-end;
+			width: auto;
+			flex-shrink: 1;
+			flex-grow: 1;
+
+			& .field:not(:last-child) {
+				margin-right: @fieldsSpacing;
+			}
+
+			& .empty {
+				border-radius: 0;
+				border-top-right-radius: 2px;
+				border-bottom-right-radius: 2px;
+
+				// to give the element a static size
+				flex-grow: 0;
+				flex-basis: 50px;
+			}
+		}
 	}
 
 	&.separator {
