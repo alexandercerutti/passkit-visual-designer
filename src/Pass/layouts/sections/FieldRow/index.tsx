@@ -68,7 +68,7 @@ export function InlineFieldsRow(props: RowProps) {
 
 export default function FieldsRow(props: RowProps) {
 	return (
-		<div className="text-fields-row">
+		<div className="fields-row">
 			<InlineFieldsRow {...props} />
 		</div>
 	);
