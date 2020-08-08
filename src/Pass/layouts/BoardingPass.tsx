@@ -40,7 +40,16 @@ export function BoardingPass(props: BoardingPassProps) {
 		}
 	});
 
-	const { secondaryFields, primaryFields, headerFields, auxiliaryFields, barcode, transitType, logo, logoText } = props;
+	const {
+		secondaryFields = [],
+		primaryFields = [],
+		headerFields = [],
+		auxiliaryFields = [],
+		barcode,
+		transitType,
+		logo,
+		logoText
+	} = props;
 
 	const logoURL = useObjectURL(logo);
 
@@ -51,7 +60,7 @@ export function BoardingPass(props: BoardingPassProps) {
 					<PassHeader
 						withSeparator
 						logo={logoURL}
-						logoText={logoText || undefined}
+						logoText={logoText}
 						headerFields={headerFields}
 						onClick={onFieldSelect}
 						register={registerField}

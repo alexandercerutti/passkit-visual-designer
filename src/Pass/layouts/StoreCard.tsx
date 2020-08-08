@@ -17,7 +17,16 @@ export function StoreCard(props: StoreCardProps): JSX.Element {
 		specificProps: {}
 	});
 
-	const { secondaryFields, primaryFields, headerFields, auxiliaryFields, barcode, logo, logoText, stripImage } = props;
+	const {
+		secondaryFields = [],
+		primaryFields = [],
+		headerFields = [],
+		auxiliaryFields = [],
+		barcode,
+		logo,
+		logoText,
+		stripImage
+	} = props;
 
 	const stripImageURL = useObjectURL(stripImage, { type: "image/*" });
 	const logoURL = useObjectURL(logo);
@@ -46,7 +55,7 @@ export function StoreCard(props: StoreCardProps): JSX.Element {
 						// get rendered in two columns. We don't have
 						// an example of a coupon / store card with
 						// more than two fields.
-						elements={[...(secondaryFields || []), ...(auxiliaryFields || [])]}
+						elements={[...secondaryFields, ...auxiliaryFields]}
 						// @TODO - Coupons can have up to 4 fields if
 						// barcode is a square barcode
 						maximumElementsAmount={-1}

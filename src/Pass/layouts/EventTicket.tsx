@@ -28,7 +28,17 @@ export function EventTicket(props: EventTicketProps): JSX.Element {
 		},
 	});
 
-	const { secondaryFields, primaryFields, headerFields, auxiliaryFields, barcode, logoText, logo, stripImage, thumbnailImage } = props;
+	const {
+		secondaryFields = [],
+		primaryFields = [],
+		headerFields = [],
+		auxiliaryFields = [],
+		barcode,
+		logoText,
+		logo,
+		stripImage,
+		thumbnailImage
+	} = props;
 
 	const stripImageURL = useObjectURL(stripImage, { type: "image/*" });
 	const thumbnailImageURL = useObjectURL(thumbnailImage, { type: "image/*" });

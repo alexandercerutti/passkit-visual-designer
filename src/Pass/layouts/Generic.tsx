@@ -30,7 +30,16 @@ export function Generic(props: GenericProps): JSX.Element {
 		}
 	});
 
-	const { secondaryFields, primaryFields, headerFields, auxiliaryFields, barcode, logoText, logo, thumbnailImage } = props;
+	const {
+		secondaryFields = [],
+		primaryFields = [],
+		headerFields = [],
+		auxiliaryFields = [],
+		barcode,
+		logoText,
+		logo,
+		thumbnailImage
+	} = props;
 
 	const thumbnailImageURL = useObjectURL(thumbnailImage, { type: "image/*" });
 	const logoURL = useObjectURL(logo);
@@ -40,7 +49,7 @@ export function Generic(props: GenericProps): JSX.Element {
 	const MiddleFragment = ({ onFieldSelect, registerField }: InteractionContext) => isSquaredBarcode &&
 		(
 			<FieldsRow
-				elements={[...(secondaryFields || []), ...(auxiliaryFields || [])]}
+				elements={[...secondaryFields, ...auxiliaryFields]}
 				maximumElementsAmount={4}
 				onClick={onFieldSelect}
 				register={registerField}
