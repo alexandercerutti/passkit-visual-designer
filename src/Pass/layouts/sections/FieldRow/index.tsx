@@ -4,11 +4,13 @@ import { Field, FieldLabel, FieldValue } from "../../components/Field";
 import { RegistrableComponent, useRegistrations } from "../useRegistrations";
 import { FieldKind } from "../../../../model";
 import { PassFieldKeys } from "../../../constants";
+import { createClassName } from "../../../../utils";
 
 interface RowProps extends RegistrableComponent {
 	id: string;
 	maximumElementsAmount: number;
 	elements: PassFieldKeys[];
+	className?: string;
 }
 
 /**
@@ -25,7 +27,7 @@ interface RowProps extends RegistrableComponent {
  */
 
 export default function FieldsRow(props: RowProps) {
-	const { maximumElementsAmount = 0, register, id, elements = [] } = props;
+	const { maximumElementsAmount = 0, register, id, elements = [], className: externalClassName } = props;
 
 	const [fieldsClickHandler] = useRegistrations(register, [
 		[FieldKind.FIELDS, id]
@@ -49,8 +51,10 @@ export default function FieldsRow(props: RowProps) {
 		</Field>
 	));
 
+	const className = createClassName(["fields-row", externalClassName]);
+
 	return (
-		<div className="fields-row">
+		<div className={className}>
 			{mappedElements}
 		</div>
 	);

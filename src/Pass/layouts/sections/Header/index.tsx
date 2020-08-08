@@ -29,6 +29,15 @@ export function PassHeader(props: HeaderProps) {
 		"separator": props.withSeparator
 	});
 
+	/**
+	 * This is to make fallback growing and be visible
+	 * We need to have at least one element that have value or label
+	 */
+	const canGrowRowCN = !(
+		props.headerFields.length ||
+		props.headerFields.some(field => field.value || field.label)
+	) && "can-grow" || "";
+
 	return (
 		<div className={className}>
 			<div className="inner">
@@ -46,6 +55,7 @@ export function PassHeader(props: HeaderProps) {
 					maximumElementsAmount={3}
 					id="headerFields"
 					register={props.register}
+					className={canGrowRowCN}
 				/>
 			</div>
 		</div>
