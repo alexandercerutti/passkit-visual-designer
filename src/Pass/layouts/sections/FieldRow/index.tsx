@@ -24,7 +24,7 @@ interface RowProps extends RegistrableComponent {
  * @param props
  */
 
-export function InlineFieldsRow(props: RowProps) {
+export default function FieldsRow(props: RowProps) {
 	const { maximumElementsAmount = 0, register, id, elements = [] } = props;
 
 	const [fieldsClickHandler] = useRegistrations(register, [
@@ -50,23 +50,8 @@ export function InlineFieldsRow(props: RowProps) {
 	));
 
 	return (
-		<>
-			{mappedElements}
-		</>
-	);
-}
-
-/**
- * TextFields-only row, wrapped in a
- * flex element.
- *
- * @param props
- */
-
-export default function FieldsRow(props: RowProps) {
-	return (
 		<div className="fields-row">
-			<InlineFieldsRow {...props} />
+			{mappedElements}
 		</div>
 	);
 }
