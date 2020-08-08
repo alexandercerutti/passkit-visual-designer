@@ -13,7 +13,7 @@ interface PFThumbnailProps extends PrimaryFieldsProps {
 
 export default function ThumbnailPrimaryField(props: React.PropsWithChildren<PFThumbnailProps>) {
 	const { register, fields, thumbnailSrc, children } = props;
-	const parentId = "PrimaryFields";
+	const parentId = "primaryFields";
 
 	const [primaryFieldsClickHandler, thumbnailClickHandler] = useRegistrations(register, [
 		[FieldKind.FIELDS, parentId],
