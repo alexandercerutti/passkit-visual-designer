@@ -10,6 +10,6 @@
 
 import { PassFieldKeys } from "../../../constants";
 
-export function getSafeFieldData(data: PassFieldKeys[], amount: number) {
-	return (data?.length && data.slice(0, amount)) ?? new Array<PassFieldKeys>(amount).fill({} as PassFieldKeys);
+export function getSafeFieldData(data: PassFieldKeys[] = [], amount: number = 1) {
+	return (data.length && data.slice(0, amount)) || new Array<PassFieldKeys>(amount).fill({} as PassFieldKeys);
 }
