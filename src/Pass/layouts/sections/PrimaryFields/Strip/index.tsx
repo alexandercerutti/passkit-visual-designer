@@ -1,5 +1,5 @@
 import * as React from "react";
-import { getSafeFieldData } from "../../../components/Field/getSafeFieldData";
+import { getFilteredFieldData } from "../../../components/Field/getFilteredFieldData";
 import ImageField from "../../../components/ImageField";
 import PrimaryFieldsProps from "../primaryFieldsProps";
 import { FieldValue, FieldLabel, GhostField } from "../../../components/Field";
@@ -18,7 +18,7 @@ export default function StripPrimaryFields(props: React.PropsWithChildren<PFStri
 		[FieldKind.IMAGE, "Strip"]
 	]);
 
-	const data = getSafeFieldData(fields, 1)
+	const data = getFilteredFieldData(fields, 1, 1)
 		.map(data => {
 			return (
 				<GhostField

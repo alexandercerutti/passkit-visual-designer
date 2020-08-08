@@ -1,6 +1,6 @@
 import * as React from "react";
 import PrimaryFieldsProps from "../primaryFieldsProps";
-import { getSafeFieldData } from "../../../components/Field/getSafeFieldData";
+import { getFilteredFieldData } from "../../../components/Field/getFilteredFieldData";
 import { GhostField, FieldLabel, FieldValue } from "../../../components/Field";
 import { createClassName } from "../../../../../utils";
 import { PKTransitType } from "../../../../constants";
@@ -21,7 +21,7 @@ export default function PrimaryFields(props: PFTravelProps) {
 		[FieldKind.FIELDS, parentId]
 	]);
 
-	const [from, to] = getSafeFieldData(fields, 2)
+	const [from, to] = getFilteredFieldData(fields, 2, 2)
 		.map((fieldData, index) => {
 			const id = `${parentId}.${index}`;
 

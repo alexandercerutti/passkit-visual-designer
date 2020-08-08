@@ -1,6 +1,6 @@
 import * as React from "react";
 import "./style.less";
-import { getSafeFieldData } from "../../../components/Field/getSafeFieldData";
+import { getFilteredFieldData } from "../../../components/Field/getFilteredFieldData";
 import { Field, FieldLabel, FieldValue } from "../../../components/Field";
 import ImageField from "../../../components/ImageField";
 import PrimaryFieldsProps from "../primaryFieldsProps";
@@ -20,7 +20,7 @@ export default function ThumbnailPrimaryField(props: React.PropsWithChildren<PFT
 		[FieldKind.IMAGE, "Thumbnail"]
 	]);
 
-	const data = getSafeFieldData(fields, 1)
+	const data = getFilteredFieldData(fields, 1, 1)
 		.map((fieldData, index) => {
 			const key = `${parentId}.${index}`;
 

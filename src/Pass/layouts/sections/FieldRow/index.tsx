@@ -5,6 +5,7 @@ import { RegistrableComponent, useRegistrations } from "../useRegistrations";
 import { FieldKind } from "../../../../model";
 import { PassFieldKeys } from "../../../constants";
 import { createClassName } from "../../../../utils";
+import { getFilteredFieldData } from "../../components/Field/getFilteredFieldData";
 
 interface RowProps extends RegistrableComponent {
 	id: string;
@@ -33,23 +34,18 @@ export default function FieldsRow(props: RowProps) {
 		[FieldKind.FIELDS, id]
 	]);
 
-	const elementsWithProps = elements.filter(e => Object.keys(e).length && (e.value || e.label));
-
-	const mappableElements = (
-		elementsWithProps.length &&
-		elementsWithProps.slice(0, maximumElementsAmount || elements.length)
-	) || [{}] as RowProps["elements"];
-
-	const mappedElements = mappableElements.map((data, index) => (
-		<Field
-			key={`${id}.${index}`}
-			onClick={() => fieldsClickHandler(data.key ?? null)}
-			fieldData={data}
-		>
-			<FieldLabel fieldData={data} />
-			<FieldValue fieldData={data} />
-		</Field>
-	));
+	/** Forcing one or we'd get too much fields as fallback */
+	const mappedElements = getFilteredFieldData(elements, 1, maximumElementsAmount)
+		.map((data, index) => (
+			<Field
+				key={`${id}.${index}`}
+				onClick={() => fieldsClickHandler(data.key ?? null)}
+				fieldData={data}
+			>
+				<FieldLabel fieldData={data} />
+				<FieldValue fieldData={data} />
+			</Field>
+		));
 
 	const className = createClassName(["fields-row", externalClassName]);
 
