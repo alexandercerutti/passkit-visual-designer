@@ -34,7 +34,7 @@ export function PassHeader(props: HeaderProps) {
 	 * We need to have at least one element that have value or label
 	 */
 	const canGrowRowCN = !(
-		props.headerFields.length ||
+		props.headerFields.length &&
 		props.headerFields.some(field => field.value || field.label)
 	) && "can-grow" || "";
 
