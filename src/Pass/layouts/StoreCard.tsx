@@ -39,13 +39,6 @@ export function StoreCard(props: StoreCardProps): JSX.Element {
 						onClick={onFieldSelect}
 						register={registerField}
 					/>
-					{/*
-						{
-							fieldKey: "starting_point",
-							value: "21,75 USD",
-							label: "remaining balance"
-						}
-					*/}
 					<FieldsRow
 						id="secondary-auxiliary"
 						// @TODO: this component, as is,
@@ -60,23 +53,6 @@ export function StoreCard(props: StoreCardProps): JSX.Element {
 						onClick={onFieldSelect}
 						register={registerField}
 					/>
-					{/* {
-						"fieldKey": "deal",
-						"label": "Deal of the Day",
-						"value": "Lemons"
-					}, {
-						"fieldKey": "deal",
-						"label": "Deal of the Day",
-						"value": "Lemons"
-					}, {
-						"fieldKey": "deal",
-						"label": "Deal of the Day",
-						"value": "Lemons"
-					}, {
-						"fieldKey": "deal",
-						"label": "Deal of the Day",
-						"value": "Lemons"
-					} */}
 					<Footer>
 						<Barcodes format={barcode?.format} fallbackShape="rect" />
 					</Footer>

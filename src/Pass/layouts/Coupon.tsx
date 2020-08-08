@@ -39,13 +39,6 @@ export function Coupon(props: CouponProps): JSX.Element {
 						onClick={onFieldSelect}
 						register={registerField}
 					/>
-					{/*
-						{
-							fieldKey: "starting_point",
-							value: "21,75 USD",
-							label: "remaining balance"
-						}
-					*/}
 					<FieldsRow
 						// @TODO: this component, as is,
 						// might not be fully correct because 4 fields
@@ -60,23 +53,6 @@ export function Coupon(props: CouponProps): JSX.Element {
 						register={registerField}
 						id="secondary-auxiliary"
 					/>
-					{/* {
-					"fieldKey": "deal",
-					"label": "Deal of the Day",
-					"value": "Lemons"
-				}, {
-					"fieldKey": "deal",
-					"label": "Deal of the Day",
-					"value": "Lemons"
-				}, {
-					"fieldKey": "deal",
-					"label": "Deal of the Day",
-					"value": "Lemons"
-				}, {
-					"fieldKey": "deal",
-					"label": "Deal of the Day",
-					"value": "Lemons"
-				} */}
 					<Footer>
 						<Barcode
 							format={barcode?.format}
