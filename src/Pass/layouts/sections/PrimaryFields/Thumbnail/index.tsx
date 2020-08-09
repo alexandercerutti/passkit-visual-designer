@@ -17,7 +17,7 @@ export default function ThumbnailPrimaryField(props: React.PropsWithChildren<PFT
 
 	const [primaryFieldsClickHandler, thumbnailClickHandler] = useRegistrations(register, [
 		[FieldKind.FIELDS, parentId],
-		[FieldKind.IMAGE, "Thumbnail"]
+		[FieldKind.IMAGE, "thumbnailImage"]
 	]);
 
 	const data = getFilteredFieldData(fields, 1, 1)

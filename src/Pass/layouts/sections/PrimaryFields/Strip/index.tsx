@@ -15,7 +15,7 @@ export default function StripPrimaryFields(props: React.PropsWithChildren<PFStri
 	const { register, fields, stripSrc } = props;
 	const [primaryFieldsClickHandler, stripImageClickHandler] = useRegistrations(register, [
 		[FieldKind.FIELDS, "primaryFields"],
-		[FieldKind.IMAGE, "Strip"]
+		[FieldKind.IMAGE, "stripImage"]
 	]);
 
 	const data = getFilteredFieldData(fields, 1, 1)
