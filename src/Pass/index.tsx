@@ -8,6 +8,7 @@ import { Generic } from "./layouts/Generic";
 import { StoreCard } from "./layouts/StoreCard";
 import { PKTransitType, PassFields, WalletPassFormat } from "./constants";
 import { InteractionContext } from "./interactionContext";
+import useObjectURL from "../useObjectURL";
 
 export { Provider as InteractionProvider, Consumer as InteractionConsumer } from "./interactionContext";
 
@@ -31,7 +32,19 @@ export interface PassMixedProps {
 
 export interface PassProps extends PassMixedProps, Partial<InteractionContext> { }
 
-const PassKindsMap = new Map<PassKind, React.FunctionComponent<PassMixedProps>>([
+/**
+ * Remapping some media
+ */
+type RemappableProps = "logo" | "backgroundImage" | "thumbnailImage" | "stripImage" | "appLogo";
+export type PassPropsRemappedMedia = Partial<Omit<PassMixedProps, RemappableProps> & {
+	logo: string;
+	backgroundImage: string;
+	thumbnailImage: string;
+	stripImage: string;
+	appLogo: string;
+}>;
+
+const PassKindsMap = new Map<PassKind, React.FunctionComponent<PassPropsRemappedMedia>>([
 	[PassKind.BOARDING_PASS, BoardingPass],
 	[PassKind.COUPON, Coupon],
 	[PassKind.EVENT, EventTicket],
@@ -40,13 +53,21 @@ const PassKindsMap = new Map<PassKind, React.FunctionComponent<PassMixedProps>>(
 ]);
 
 export default function Pass(props: PassProps) {
-	const { kind, ...newProps } = props;
+	const { kind, logo, backgroundImage, stripImage, appLogo, thumbnailImage, ...newProps } = props;
 	const PassComponent = PassKindsMap.get(kind);
+
+	const remappedProps: Partial<PassPropsRemappedMedia> = {
+		logo: useObjectURL(logo),
+		backgroundImage: useObjectURL(backgroundImage),
+		stripImage: useObjectURL(stripImage, { type: "image/*" }),
+		appLogo: useObjectURL(appLogo),
+		thumbnailImage: useObjectURL(thumbnailImage, { type: "image/*" }),
+	};
 
 	return (
 		<div className="pass" data-kind={kind}>
 			<div className="content">
-				<PassComponent {...newProps} />
+				<PassComponent {...newProps} {...remappedProps} />
 			</div>
 		</div>
 	);

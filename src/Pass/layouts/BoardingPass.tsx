@@ -1,5 +1,5 @@
 import * as React from "react";
-import { PassMixedProps, InteractionConsumer } from "..";
+import { InteractionConsumer, PassPropsRemappedMedia } from "..";
 import { PassHeader } from "./sections/Header";
 import { PKTransitType } from "../constants";
 import PrimaryFields from "./sections/PrimaryFields/Travel";
@@ -8,9 +8,8 @@ import Footer from "./sections/Footer";
 import Barcode from "./components/Barcodes";
 import useAlternativesRegistration from "../useAlternativesRegistration";
 import type { AlternativesRegistrationSignature } from "../useAlternativesRegistration";
-import useObjectURL from "../../useObjectURL";
 
-export interface BoardingPassProps extends PassMixedProps, AlternativesRegistrationSignature { }
+type BoardingPassProps = PassPropsRemappedMedia & AlternativesRegistrationSignature;
 
 export function BoardingPass(props: BoardingPassProps) {
 	useAlternativesRegistration(props.registerAlternatives, {
@@ -51,15 +50,13 @@ export function BoardingPass(props: BoardingPassProps) {
 		logoText
 	} = props;
 
-	const logoURL = useObjectURL(logo);
-
 	return (
 		<InteractionConsumer>
 			{({ onFieldSelect, registerField }) => (
 				<>
 					<PassHeader
 						withSeparator
-						logo={logoURL}
+						logo={logo}
 						logoText={logoText}
 						headerFields={headerFields}
 						onClick={onFieldSelect}

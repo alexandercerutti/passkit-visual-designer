@@ -1,5 +1,5 @@
 import * as React from "react";
-import { PassMixedProps, InteractionConsumer } from "..";
+import { InteractionConsumer, PassPropsRemappedMedia } from "..";
 import { PassHeader } from "./sections/Header";
 import ThumbnailPrimaryField from "./sections/PrimaryFields/Thumbnail";
 import { PKBarcodeFormat } from "../constants";
@@ -9,9 +9,8 @@ import Footer from "./sections/Footer";
 import { InteractionContext } from "../interactionContext";
 import useAlternativesRegistration from "../useAlternativesRegistration";
 import type { AlternativesRegistrationSignature } from "../useAlternativesRegistration";
-import useObjectURL from "../../useObjectURL";
 
-export interface GenericProps extends PassMixedProps, AlternativesRegistrationSignature { }
+type GenericProps = PassPropsRemappedMedia & AlternativesRegistrationSignature;
 
 export function Generic(props: GenericProps): JSX.Element {
 	useAlternativesRegistration(props.registerAlternatives, {
@@ -40,9 +39,6 @@ export function Generic(props: GenericProps): JSX.Element {
 		logo,
 		thumbnailImage
 	} = props;
-
-	const thumbnailImageURL = useObjectURL(thumbnailImage, { type: "image/*" });
-	const logoURL = useObjectURL(logo);
 
 	const isSquaredBarcode = isSquareBarcode(barcode?.format);
 
@@ -81,14 +77,14 @@ export function Generic(props: GenericProps): JSX.Element {
 					<PassHeader
 						withSeparator
 						headerFields={headerFields}
-						logo={logoURL}
+						logo={logo}
 						logoText={logoText}
 						onClick={onFieldSelect}
 						register={registerField}
 					/>
 					<ThumbnailPrimaryField
 						fields={primaryFields}
-						thumbnailSrc={thumbnailImageURL}
+						thumbnailSrc={thumbnailImage}
 						onClick={onFieldSelect}
 						register={registerField}
 					/>

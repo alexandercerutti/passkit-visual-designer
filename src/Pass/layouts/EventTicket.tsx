@@ -1,5 +1,5 @@
 import * as React from "react";
-import { PassMixedProps, InteractionConsumer } from "..";
+import { InteractionConsumer, PassPropsRemappedMedia } from "..";
 import { PassHeader } from "./sections/Header";
 import ThumbnailPrimaryField from "./sections/PrimaryFields/Thumbnail";
 import FieldsRow from "./sections/FieldRow";
@@ -9,9 +9,8 @@ import Barcodes from "./components/Barcodes";
 import { InteractionContext } from "../interactionContext";
 import useAlternativesRegistration from "../useAlternativesRegistration";
 import type { AlternativesRegistrationSignature } from "../useAlternativesRegistration";
-import useObjectURL from "../../useObjectURL";
 
-export interface EventTicketProps extends PassMixedProps, AlternativesRegistrationSignature { }
+type EventTicketProps = PassPropsRemappedMedia & AlternativesRegistrationSignature;
 
 type PrimaryFieldPropsKind = Parameters<(typeof StripPrimaryFields | typeof ThumbnailPrimaryField)>[0]
 
@@ -40,10 +39,6 @@ export function EventTicket(props: EventTicketProps): JSX.Element {
 		thumbnailImage
 	} = props;
 
-	const stripImageURL = useObjectURL(stripImage, { type: "image/*" });
-	const thumbnailImageURL = useObjectURL(thumbnailImage, { type: "image/*" });
-	const logoURL = useObjectURL(logo);
-
 	let FieldsFragment: (interaction: InteractionContext) => React.ReactElement<PrimaryFieldPropsKind>;
 
 	const SecondaryFieldRow = ({ onFieldSelect, registerField }: InteractionContext) => (
@@ -61,7 +56,7 @@ export function EventTicket(props: EventTicketProps): JSX.Element {
 		FieldsFragment = ({ onFieldSelect, registerField }) => (
 			<>
 				<StripPrimaryFields
-					stripSrc={stripImageURL}
+					stripSrc={stripImage}
 					fields={primaryFields}
 					onClick={onFieldSelect}
 					register={registerField}
@@ -72,7 +67,7 @@ export function EventTicket(props: EventTicketProps): JSX.Element {
 	} else if (props.hasOwnProperty("backgroundImage")) {
 		FieldsFragment = ({ onFieldSelect, registerField }) => (
 			<ThumbnailPrimaryField
-				thumbnailSrc={thumbnailImageURL}
+				thumbnailSrc={thumbnailImage}
 				fields={primaryFields}
 				onClick={onFieldSelect}
 				register={registerField}
@@ -89,7 +84,7 @@ export function EventTicket(props: EventTicketProps): JSX.Element {
 					<PassHeader
 						headerFields={headerFields}
 						logoText={logoText}
-						logo={logoURL}
+						logo={logo}
 						onClick={onFieldSelect}
 						register={registerField}
 					/>

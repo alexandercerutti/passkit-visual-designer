@@ -1,5 +1,5 @@
 import * as React from "react";
-import { PassMixedProps, InteractionConsumer } from "..";
+import { InteractionConsumer, PassPropsRemappedMedia } from "..";
 import { PassHeader } from "./sections/Header";
 import StripPrimaryFields from "./sections/PrimaryFields/Strip";
 import FieldsRow from "./sections/FieldRow";
@@ -7,9 +7,8 @@ import Barcode from "./components/Barcodes";
 import Footer from "./sections/Footer";
 import useAlternativesRegistration from "../useAlternativesRegistration";
 import type { AlternativesRegistrationSignature } from "../useAlternativesRegistration";
-import useObjectURL from "../../useObjectURL";
 
-export interface CouponProps extends PassMixedProps, AlternativesRegistrationSignature { }
+type CouponProps = PassPropsRemappedMedia & AlternativesRegistrationSignature;
 
 export function Coupon(props: CouponProps): JSX.Element {
 	useAlternativesRegistration(props.registerAlternatives, {
@@ -28,22 +27,19 @@ export function Coupon(props: CouponProps): JSX.Element {
 		logoText
 	} = props;
 
-	const stripImageURL = useObjectURL(stripImage, { type: "image/*" });
-	const logoURL = useObjectURL(logo);
-
 	return (
 		<InteractionConsumer>
 			{({ onFieldSelect, registerField }) => (
 				<>
 					<PassHeader
 						headerFields={headerFields}
-						logo={logoURL}
+						logo={logo}
 						logoText={logoText}
 						onClick={onFieldSelect}
 						register={registerField}
 					/>
 					<StripPrimaryFields
-						stripSrc={stripImageURL}
+						stripSrc={stripImage}
 						fields={primaryFields}
 						onClick={onFieldSelect}
 						register={registerField}
