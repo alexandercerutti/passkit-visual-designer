@@ -6,10 +6,10 @@ import { Coupon } from "./layouts/Coupon";
 import { EventTicket } from "./layouts/EventTicket";
 import { Generic } from "./layouts/Generic";
 import { StoreCard } from "./layouts/StoreCard";
-import { PKTransitType, PassFields, WalletPassFormat } from "./constants";
+import { PKTransitType, PassFields, WalletPassFormat, DEFAULT_BACKGROUND_COLOR, DEFAULT_FOREGROUND_COLOR, DEFAULT_LABEL_COLOR } from "./constants";
 import { InteractionContext } from "./interactionContext";
 import useObjectURL from "../useObjectURL";
-import changeBackground from "./changeBackground";
+import changeCSSCustomProperty from "./changeCSSCustomProperty";
 import { createClassName } from "../utils";
 
 export { Provider as InteractionProvider, Consumer as InteractionConsumer } from "./interactionContext";
@@ -58,7 +58,7 @@ const PassKindsMap = new Map<PassKind, React.FunctionComponent<PassPropsRemapped
 ]);
 
 export default function Pass(props: PassProps) {
-	const { kind, logo, backgroundColor, backgroundImage, stripImage, appLogo, thumbnailImage, ...newProps } = props;
+	const { kind, logo, backgroundColor, backgroundImage, foregroundColor, labelColor, stripImage, appLogo, thumbnailImage, ...newProps } = props;
 	const PassComponent = PassKindsMap.get(kind);
 
 	const remappedProps: Partial<PassPropsRemappedMedia> = {
@@ -69,7 +69,9 @@ export default function Pass(props: PassProps) {
 		thumbnailImage: useObjectURL(thumbnailImage, { type: "image/*" }),
 	};
 
-	changeBackground(remappedProps.backgroundImage || backgroundColor);
+	changeCSSCustomProperty("--pass-background", remappedProps.backgroundImage || backgroundColor, DEFAULT_BACKGROUND_COLOR);
+	changeCSSCustomProperty("--pass-foreground-color", foregroundColor, DEFAULT_FOREGROUND_COLOR);
+	changeCSSCustomProperty("--pass-label-color", labelColor, DEFAULT_LABEL_COLOR);
 
 	/** To avoid blur effect if no background is available */
 	const className = createClassName(["pass"], {

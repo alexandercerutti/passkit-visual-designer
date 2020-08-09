@@ -1,3 +1,7 @@
+export const DEFAULT_BACKGROUND_COLOR = "#e6e6e6";
+export const DEFAULT_FOREGROUND_COLOR = "#000";
+export const DEFAULT_LABEL_COLOR = "#000";
+
 export enum PKDateStyle {
 	None = "PKDateStyleNone", /** ??? */
 	Short = "PKDateStyleShort", /** “11/23/37” or “3:30 PM”. */

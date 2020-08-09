@@ -15,14 +15,7 @@ interface RowProps extends RegistrableComponent {
 }
 
 /**
- * Sparse TextField set, without
- * any wrapper. Made for parent
- * elements that are already
- * flex.
- *
- * Well, actually you are not a
- * row but who am I to judge you?
- * ¯\_(ツ)_/¯
+ * Container for Apple Wallet Fields
  *
  * @param props
  */

@@ -5,7 +5,7 @@ interface BoardingIconProps {
 	className?: string;
 	width: number;
 	height: number;
-	fill: string;
+	fill?: string;
 	style?: React.CSSProperties;
 }
 
@@ -63,5 +63,13 @@ const PKTransitIconsMap: { [K in PKTransitType]: React.ComponentType<BoardingIco
 
 export function PKTransitIcon({ type, ...props }: BoardingIconProps & { type: PKTransitType }) {
 	const WrappedIcon = PKTransitIconsMap[type];
-	return <WrappedIcon {...props} width={25} height={25} className="icon" />
+	return (
+		<WrappedIcon
+			fill={"var(--pass-label-color)"}
+			width={25}
+			height={25}
+			className="icon"
+			{...props}
+		/>
+	);
 }
