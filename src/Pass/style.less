@@ -1,7 +1,5 @@
-@base-pass-background-color: #e6e6e6;
 
 .pass {
-	background-color: @base-pass-background-color;
 	border-radius: 7px;
 	width: 100%;
 
@@ -38,21 +36,20 @@
 
 	/** Background Image **/
 
-	&.bg-image {
-		background: none;
+	&::after {
+		content: "";
+		position: absolute;
+		top: 0px;
+		left: 0;
+		right: 0;
+		z-index: -1;
+		bottom: 0;
+		background: var(--pass-background);
+		background-size: cover;
+		background-position: bottom center;
+	}
 
-		&::before {
-			content: "";
-			position: absolute;
-			top: 0px;
-			left: 0;
-			right: 0;
-			z-index: -1;
-			bottom: 0;
-			background-image: url(http://localhost:8000/background@2x.png);
-			background-size: cover;
-			background-position: bottom center;
-			filter: blur(6px);
-		}
+	&.bg-image::after {
+		filter: blur(6px);
 	}
 }

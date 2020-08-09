@@ -9,6 +9,8 @@ import { StoreCard } from "./layouts/StoreCard";
 import { PKTransitType, PassFields, WalletPassFormat } from "./constants";
 import { InteractionContext } from "./interactionContext";
 import useObjectURL from "../useObjectURL";
+import changeBackground from "./changeBackground";
+import { createClassName } from "../utils";
 
 export { Provider as InteractionProvider, Consumer as InteractionConsumer } from "./interactionContext";
 
@@ -22,6 +24,9 @@ export interface PassMixedProps {
 	barcode?: Partial<WalletPassFormat.Barcodes>; // @TODO check if an array should be used instead
 	transitType?: PKTransitType;
 	logoText?: string;
+	backgroundColor?: string;
+	foregroundColor?: string;
+	labelColor?: string;
 
 	logo?: ArrayBuffer;
 	backgroundImage?: ArrayBuffer;
@@ -53,7 +58,7 @@ const PassKindsMap = new Map<PassKind, React.FunctionComponent<PassPropsRemapped
 ]);
 
 export default function Pass(props: PassProps) {
-	const { kind, logo, backgroundImage, stripImage, appLogo, thumbnailImage, ...newProps } = props;
+	const { kind, logo, backgroundColor, backgroundImage, stripImage, appLogo, thumbnailImage, ...newProps } = props;
 	const PassComponent = PassKindsMap.get(kind);
 
 	const remappedProps: Partial<PassPropsRemappedMedia> = {
@@ -64,8 +69,15 @@ export default function Pass(props: PassProps) {
 		thumbnailImage: useObjectURL(thumbnailImage, { type: "image/*" }),
 	};
 
+	changeBackground(remappedProps.backgroundImage || backgroundColor);
+
+	/** To avoid blur effect if no background is available */
+	const className = createClassName(["pass"], {
+		"bg-image": Boolean(remappedProps.backgroundImage)
+	});
+
 	return (
-		<div className="pass" data-kind={kind}>
+		<div className={className} data-kind={kind}>
 			<div className="content">
 				<PassComponent {...newProps} {...remappedProps} />
 			</div>
