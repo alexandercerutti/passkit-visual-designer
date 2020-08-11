@@ -10,7 +10,7 @@ export interface SelectionAction extends Action<ActionTypes> {
 
 export interface SinglePropSettingAction extends Action<ConfigActions> {
 	key: keyof PassMixedProps;
-	value: number | string;
+	value: any;
 }
 
 export enum ConfigActions {

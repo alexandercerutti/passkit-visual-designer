@@ -1,5 +1,5 @@
 import * as React from "react";
-import { InteractionConsumer, PassPropsRemappedMedia } from "..";
+import { InteractionConsumer, PassMixedProps } from "..";
 import { PassHeader } from "./sections/Header";
 import StripPrimaryFields from "./sections/PrimaryFields/Strip";
 import FieldsRow from "./sections/FieldRow";
@@ -8,7 +8,7 @@ import Barcodes from "./components/Barcodes";
 import useAlternativesRegistration from "../useAlternativesRegistration";
 import type { AlternativesRegistrationSignature } from "../useAlternativesRegistration";
 
-type StoreCardProps = PassPropsRemappedMedia & AlternativesRegistrationSignature;
+type StoreCardProps = PassMixedProps & AlternativesRegistrationSignature;
 
 export function StoreCard(props: StoreCardProps): JSX.Element {
 	useAlternativesRegistration(props.registerAlternatives, {

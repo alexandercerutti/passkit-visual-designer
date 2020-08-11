@@ -1,5 +1,5 @@
 import * as React from "react";
-import { InteractionConsumer, PassPropsRemappedMedia } from "..";
+import { InteractionConsumer, PassMixedProps } from "..";
 import { PassHeader } from "./sections/Header";
 import { PKTransitType } from "../constants";
 import PrimaryFields from "./sections/PrimaryFields/Travel";
@@ -9,7 +9,7 @@ import Barcode from "./components/Barcodes";
 import useAlternativesRegistration from "../useAlternativesRegistration";
 import type { AlternativesRegistrationSignature } from "../useAlternativesRegistration";
 
-type BoardingPassProps = PassPropsRemappedMedia & AlternativesRegistrationSignature;
+type BoardingPassProps = PassMixedProps & AlternativesRegistrationSignature;
 
 export function BoardingPass(props: BoardingPassProps) {
 	useAlternativesRegistration(props.registerAlternatives, {

@@ -28,28 +28,17 @@ export interface PassMixedProps {
 	foregroundColor?: string;
 	labelColor?: string;
 
-	logo?: ArrayBuffer;
-	backgroundImage?: ArrayBuffer;
-	thumbnailImage?: ArrayBuffer;
-	stripImage?: ArrayBuffer;
-	appLogo?: ArrayBuffer;
+	// URLs from redux middlewares
+	logo?: string;
+	backgroundImage?: string;
+	thumbnailImage?: string;
+	stripImage?: string;
+	appLogo?: string;
 }
 
 export interface PassProps extends PassMixedProps, Partial<InteractionContext> { }
 
-/**
- * Remapping some media
- */
-type RemappableProps = "logo" | "backgroundImage" | "thumbnailImage" | "stripImage" | "appLogo";
-export type PassPropsRemappedMedia = Partial<Omit<PassMixedProps, RemappableProps> & {
-	logo: string;
-	backgroundImage: string;
-	thumbnailImage: string;
-	stripImage: string;
-	appLogo: string;
-}>;
-
-const PassKindsMap = new Map<PassKind, React.FunctionComponent<PassPropsRemappedMedia>>([
+const PassKindsMap = new Map<PassKind, React.FunctionComponent<PassMixedProps>>([
 	[PassKind.BOARDING_PASS, BoardingPass],
 	[PassKind.COUPON, Coupon],
 	[PassKind.EVENT, EventTicket],
@@ -58,30 +47,22 @@ const PassKindsMap = new Map<PassKind, React.FunctionComponent<PassPropsRemapped
 ]);
 
 export default function Pass(props: PassProps) {
-	const { kind, logo, backgroundColor, backgroundImage, foregroundColor, labelColor, stripImage, appLogo, thumbnailImage, ...newProps } = props;
+	const { kind, backgroundColor, backgroundImage, foregroundColor, labelColor, ...newProps } = props;
 	const PassComponent = PassKindsMap.get(kind);
 
-	const remappedProps: Partial<PassPropsRemappedMedia> = {
-		logo: useObjectURL(logo),
-		backgroundImage: useObjectURL(backgroundImage),
-		stripImage: useObjectURL(stripImage, { type: "image/*" }),
-		appLogo: useObjectURL(appLogo),
-		thumbnailImage: useObjectURL(thumbnailImage, { type: "image/*" }),
-	};
-
-	changeCSSCustomProperty("--pass-background", remappedProps.backgroundImage || backgroundColor, DEFAULT_BACKGROUND_COLOR);
+	changeCSSCustomProperty("--pass-background", backgroundImage || backgroundColor, DEFAULT_BACKGROUND_COLOR);
 	changeCSSCustomProperty("--pass-foreground-color", foregroundColor, DEFAULT_FOREGROUND_COLOR);
 	changeCSSCustomProperty("--pass-label-color", labelColor, DEFAULT_LABEL_COLOR);
 
 	/** To avoid blur effect if no background is available */
 	const className = createClassName(["pass"], {
-		"bg-image": Boolean(remappedProps.backgroundImage)
+		"bg-image": Boolean(backgroundImage)
 	});
 
 	return (
 		<div className={className} data-kind={kind}>
 			<div className="content">
-				<PassComponent {...newProps} {...remappedProps} />
+				<PassComponent {...newProps} />
 			</div>
 		</div>
 	);

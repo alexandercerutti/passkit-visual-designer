@@ -1,5 +1,5 @@
 import * as React from "react";
-import { InteractionConsumer, PassPropsRemappedMedia } from "..";
+import { InteractionConsumer, PassMixedProps } from "..";
 import { PassHeader } from "./sections/Header";
 import StripPrimaryFields from "./sections/PrimaryFields/Strip";
 import FieldsRow from "./sections/FieldRow";
@@ -8,7 +8,7 @@ import Footer from "./sections/Footer";
 import useAlternativesRegistration from "../useAlternativesRegistration";
 import type { AlternativesRegistrationSignature } from "../useAlternativesRegistration";
 
-type CouponProps = PassPropsRemappedMedia & AlternativesRegistrationSignature;
+type CouponProps = PassMixedProps & AlternativesRegistrationSignature;
 
 export function Coupon(props: CouponProps): JSX.Element {
 	useAlternativesRegistration(props.registerAlternatives, {

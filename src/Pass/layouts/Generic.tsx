@@ -1,5 +1,5 @@
 import * as React from "react";
-import { InteractionConsumer, PassPropsRemappedMedia } from "..";
+import { InteractionConsumer, PassMixedProps } from "..";
 import { PassHeader } from "./sections/Header";
 import ThumbnailPrimaryField from "./sections/PrimaryFields/Thumbnail";
 import { PKBarcodeFormat } from "../constants";
@@ -10,7 +10,7 @@ import { InteractionContext } from "../interactionContext";
 import useAlternativesRegistration from "../useAlternativesRegistration";
 import type { AlternativesRegistrationSignature } from "../useAlternativesRegistration";
 
-type GenericProps = PassPropsRemappedMedia & AlternativesRegistrationSignature;
+type GenericProps = PassMixedProps & AlternativesRegistrationSignature;
 
 export function Generic(props: GenericProps): JSX.Element {
 	useAlternativesRegistration(props.registerAlternatives, {

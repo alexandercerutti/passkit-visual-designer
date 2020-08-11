@@ -1,5 +1,5 @@
 import * as React from "react";
-import { InteractionConsumer, PassPropsRemappedMedia } from "..";
+import { InteractionConsumer, PassMixedProps } from "..";
 import { PassHeader } from "./sections/Header";
 import ThumbnailPrimaryField from "./sections/PrimaryFields/Thumbnail";
 import FieldsRow from "./sections/FieldRow";
@@ -10,7 +10,7 @@ import { InteractionContext } from "../interactionContext";
 import useAlternativesRegistration from "../useAlternativesRegistration";
 import type { AlternativesRegistrationSignature } from "../useAlternativesRegistration";
 
-type EventTicketProps = PassPropsRemappedMedia & AlternativesRegistrationSignature;
+type EventTicketProps = PassMixedProps & AlternativesRegistrationSignature;
 
 type PrimaryFieldPropsKind = Parameters<(typeof StripPrimaryFields | typeof ThumbnailPrimaryField)>[0]
 
