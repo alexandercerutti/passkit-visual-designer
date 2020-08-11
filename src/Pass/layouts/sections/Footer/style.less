@@ -1,3 +1,6 @@
+@footer-picture-row-height: 18px;
+@footer-picture-row-margins: 10px 0 5px 0;
+
 .footer {
 	display: flex;
 /* 	align-items: center;*/
@@ -13,9 +16,19 @@
 
 	& .empty {
 		width: 100%;
-		height: 18px;
+		height: @footer-picture-row-height;
 		flex-grow: 0;
-		margin: 10px 0 5px 0;
+		margin: @footer-picture-row-margins;
 		border-radius: 2px;
+	}
+
+	& .image-field {
+		display: flex;
+		margin: @footer-picture-row-margins;
+		justify-content: center;
+
+		& > img {
+			width: 50px;
+		}
 	}
 }
