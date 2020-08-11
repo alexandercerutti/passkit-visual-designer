@@ -1,5 +1,5 @@
 import * as React from "react";
-import { InteractionConsumer, PassMixedProps } from "..";
+import { PassMixedProps } from "..";
 import { PassHeader } from "./sections/Header";
 import StripPrimaryFields from "./sections/PrimaryFields/Strip";
 import FieldsRow from "./sections/FieldRow";
@@ -7,6 +7,7 @@ import Footer from "./sections/Footer";
 import Barcodes from "./components/Barcodes";
 import useAlternativesRegistration from "../useAlternativesRegistration";
 import type { AlternativesRegistrationSignature } from "../useAlternativesRegistration";
+import InteractionContext from "../InteractionContext";
 
 type StoreCardProps = PassMixedProps & AlternativesRegistrationSignature;
 
@@ -28,7 +29,7 @@ export function StoreCard(props: StoreCardProps): JSX.Element {
 	} = props;
 
 	return (
-		<InteractionConsumer>
+		<InteractionContext.Consumer>
 			{({ onFieldSelect, registerField }) => (
 				<>
 					<PassHeader
@@ -63,6 +64,6 @@ export function StoreCard(props: StoreCardProps): JSX.Element {
 					</Footer>
 				</>
 			)}
-		</InteractionConsumer>
+		</InteractionContext.Consumer>
 	);
 }

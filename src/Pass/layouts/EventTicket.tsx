@@ -1,12 +1,12 @@
 import * as React from "react";
-import { InteractionConsumer, PassMixedProps } from "..";
+import { PassMixedProps } from "..";
 import { PassHeader } from "./sections/Header";
 import ThumbnailPrimaryField from "./sections/PrimaryFields/Thumbnail";
 import FieldsRow from "./sections/FieldRow";
 import StripPrimaryFields from "./sections/PrimaryFields/Strip";
 import Footer from "./sections/Footer";
 import Barcodes from "./components/Barcodes";
-import { InteractionContext } from "../interactionContext";
+import InteractionContext, { InteractionContextMethods } from "../InteractionContext";
 import useAlternativesRegistration from "../useAlternativesRegistration";
 import type { AlternativesRegistrationSignature } from "../useAlternativesRegistration";
 
@@ -39,9 +39,9 @@ export function EventTicket(props: EventTicketProps): JSX.Element {
 		thumbnailImage
 	} = props;
 
-	let FieldsFragment: (interaction: InteractionContext) => React.ReactElement<PrimaryFieldPropsKind>;
+	let FieldsFragment: (interaction: InteractionContextMethods) => React.ReactElement<PrimaryFieldPropsKind>;
 
-	const SecondaryFieldRow = ({ onFieldSelect, registerField }: InteractionContext) => (
+	const SecondaryFieldRow = ({ onFieldSelect, registerField }: InteractionContextMethods) => (
 		<FieldsRow
 			elements={secondaryFields}
 			maximumElementsAmount={4}
@@ -78,7 +78,7 @@ export function EventTicket(props: EventTicketProps): JSX.Element {
 	}
 
 	return (
-		<InteractionConsumer>
+		<InteractionContext.Consumer>
 			{({ onFieldSelect, registerField }) => (
 				<>
 					<PassHeader
@@ -104,6 +104,6 @@ export function EventTicket(props: EventTicketProps): JSX.Element {
 					</Footer>
 				</>
 			)}
-		</InteractionConsumer>
+		</InteractionContext.Consumer>
 	);
 }

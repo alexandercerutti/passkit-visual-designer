@@ -6,7 +6,7 @@ import Viewer from "./Viewer";
 import OptionsBar from "./OptionsBar";
 import OptionsMenu, { RegisteredFieldsMap } from "./OptionsMenu";
 import { FieldKind, PassKind } from "../model";
-import { InteractionContext } from "../Pass/interactionContext";
+import { InteractionContextMethods } from "../Pass/InteractionContext";
 import { connect } from "react-redux";
 import { PassMixedProps } from "../Pass";
 import { State } from "../store/state";
@@ -29,7 +29,7 @@ interface ConfiguratorState {
 	registeredFields: RegisteredFieldsMap;
 }
 
-class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState> implements InteractionContext {
+class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState> implements InteractionContextMethods {
 	constructor(props: ConfiguratorProps) {
 		super(props);
 

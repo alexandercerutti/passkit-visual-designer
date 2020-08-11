@@ -1,9 +1,9 @@
 import * as React from "react";
 import "./style.less";
-import Pass, { PassProps, InteractionProvider } from "../../Pass";
+import Pass, { PassProps } from "../../Pass";
 import { PassKind } from "../../model";
 import { PKTransitType } from "../../Pass/constants";
-import { InteractionContext } from "../../Pass/interactionContext";
+import InteractionContext, { InteractionContextMethods } from "../../Pass/InteractionContext";
 
 export interface ViewerProps extends PassProps {
 	onVoidClick(e: React.MouseEvent): void;
@@ -14,7 +14,7 @@ export default function Viewer(props: ViewerProps) {
 
 	return (
 		<div className="viewer" onClick={(e) => props.onVoidClick(e)}>
-			<InteractionProvider value={registrationProps}>
+			<InteractionContext.Provider value={registrationProps}>
 				{
 					/**
 					 * @TODO Replace with pass props once the redirect with
@@ -26,7 +26,7 @@ export default function Viewer(props: ViewerProps) {
 					{...passProps}
 					kind={PassKind.BOARDING_PASS}
 				/>
-			</InteractionProvider>
+			</InteractionContext.Provider>
 		</div>
 	);
 }
@@ -39,7 +39,7 @@ export default function Viewer(props: ViewerProps) {
 
 function organizeViewerProps({ registerField, onFieldSelect, ...passProps }: ViewerProps): {
 	passProps: PassProps,
-	registrationProps: InteractionContext
+	registrationProps: InteractionContextMethods
 } {
 	return {
 		passProps,

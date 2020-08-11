@@ -1,12 +1,12 @@
 import * as React from "react";
-import { InteractionConsumer, PassMixedProps } from "..";
+import { PassMixedProps } from "..";
 import { PassHeader } from "./sections/Header";
 import ThumbnailPrimaryField from "./sections/PrimaryFields/Thumbnail";
 import { PKBarcodeFormat } from "../constants";
 import Barcodes, { isSquareBarcode } from "./components/Barcodes";
 import FieldsRow from "./sections/FieldRow";
 import Footer from "./sections/Footer";
-import { InteractionContext } from "../interactionContext";
+import InteractionContext, { InteractionContextMethods } from "../InteractionContext";
 import useAlternativesRegistration from "../useAlternativesRegistration";
 import type { AlternativesRegistrationSignature } from "../useAlternativesRegistration";
 
@@ -42,7 +42,7 @@ export function Generic(props: GenericProps): JSX.Element {
 
 	const isSquaredBarcode = isSquareBarcode(barcode?.format);
 
-	const MiddleFragment = ({ onFieldSelect, registerField }: InteractionContext) => isSquaredBarcode &&
+	const MiddleFragment = ({ onFieldSelect, registerField }: InteractionContextMethods) => isSquaredBarcode &&
 		(
 			<FieldsRow
 				elements={[...secondaryFields, ...auxiliaryFields]}
@@ -71,7 +71,7 @@ export function Generic(props: GenericProps): JSX.Element {
 		);
 
 	return (
-		<InteractionConsumer>
+		<InteractionContext.Consumer>
 			{({ onFieldSelect, registerField }) => (
 				<>
 					<PassHeader
@@ -97,6 +97,6 @@ export function Generic(props: GenericProps): JSX.Element {
 					</Footer>
 				</>
 			)}
-		</InteractionConsumer>
+		</InteractionContext.Consumer>
 	);
 }

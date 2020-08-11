@@ -6,9 +6,9 @@ import { onComponentSelection, onRegister } from "./layouts/sections/useRegistra
  * passes the registration and interaction functions
  */
 
-export interface InteractionContext {
+export interface InteractionContextMethods {
 	onFieldSelect?: onComponentSelection;
 	registerField?: onRegister;
 }
 
-export const { Provider, Consumer } = React.createContext<InteractionContext>({});
+export default React.createContext<InteractionContextMethods>({});

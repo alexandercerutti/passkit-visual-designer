@@ -1,5 +1,5 @@
 import * as React from "react";
-import { InteractionConsumer, PassMixedProps } from "..";
+import { PassMixedProps } from "..";
 import { PassHeader } from "./sections/Header";
 import { PKTransitType } from "../constants";
 import PrimaryFields from "./sections/PrimaryFields/Travel";
@@ -8,6 +8,7 @@ import Footer from "./sections/Footer";
 import Barcode from "./components/Barcodes";
 import useAlternativesRegistration from "../useAlternativesRegistration";
 import type { AlternativesRegistrationSignature } from "../useAlternativesRegistration";
+import InteractionContext from "../InteractionContext";
 
 type BoardingPassProps = PassMixedProps & AlternativesRegistrationSignature;
 
@@ -51,7 +52,7 @@ export function BoardingPass(props: BoardingPassProps) {
 	} = props;
 
 	return (
-		<InteractionConsumer>
+		<InteractionContext.Consumer>
 			{({ onFieldSelect, registerField }) => (
 				<>
 					<PassHeader
@@ -90,6 +91,6 @@ export function BoardingPass(props: BoardingPassProps) {
 					</Footer>
 				</>
 			)}
-		</InteractionConsumer>
+		</InteractionContext.Consumer>
 	);
 }

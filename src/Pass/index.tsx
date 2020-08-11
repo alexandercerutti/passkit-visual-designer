@@ -7,12 +7,11 @@ import { EventTicket } from "./layouts/EventTicket";
 import { Generic } from "./layouts/Generic";
 import { StoreCard } from "./layouts/StoreCard";
 import { PKTransitType, PassFields, WalletPassFormat, DEFAULT_BACKGROUND_COLOR, DEFAULT_FOREGROUND_COLOR, DEFAULT_LABEL_COLOR } from "./constants";
-import { InteractionContext } from "./interactionContext";
-import useObjectURL from "../useObjectURL";
+import { InteractionContextMethods } from "./InteractionContext";
 import changeCSSCustomProperty from "./changeCSSCustomProperty";
 import { createClassName } from "../utils";
 
-export { Provider as InteractionProvider, Consumer as InteractionConsumer } from "./interactionContext";
+export { default as InteractionContext } from "./InteractionContext";
 
 export interface PassMixedProps {
 	kind?: PassKind;
@@ -36,7 +35,7 @@ export interface PassMixedProps {
 	appLogo?: string;
 }
 
-export interface PassProps extends PassMixedProps, Partial<InteractionContext> { }
+export interface PassProps extends PassMixedProps, Partial<InteractionContextMethods> { }
 
 const PassKindsMap = new Map<PassKind, React.FunctionComponent<PassMixedProps>>([
 	[PassKind.BOARDING_PASS, BoardingPass],

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { InteractionConsumer, PassMixedProps } from "..";
+import { PassMixedProps } from "..";
 import { PassHeader } from "./sections/Header";
 import StripPrimaryFields from "./sections/PrimaryFields/Strip";
 import FieldsRow from "./sections/FieldRow";
@@ -7,6 +7,7 @@ import Barcode from "./components/Barcodes";
 import Footer from "./sections/Footer";
 import useAlternativesRegistration from "../useAlternativesRegistration";
 import type { AlternativesRegistrationSignature } from "../useAlternativesRegistration";
+import InteractionContext from "../InteractionContext";
 
 type CouponProps = PassMixedProps & AlternativesRegistrationSignature;
 
@@ -28,7 +29,7 @@ export function Coupon(props: CouponProps): JSX.Element {
 	} = props;
 
 	return (
-		<InteractionConsumer>
+		<InteractionContext.Consumer>
 			{({ onFieldSelect, registerField }) => (
 				<>
 					<PassHeader
@@ -66,6 +67,6 @@ export function Coupon(props: CouponProps): JSX.Element {
 					</Footer>
 				</>
 			)}
-		</InteractionConsumer>
+		</InteractionContext.Consumer>
 	);
 }
