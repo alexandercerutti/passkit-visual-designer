@@ -33,6 +33,7 @@ export interface PassMixedProps {
 	thumbnailImage?: string;
 	stripImage?: string;
 	appLogo?: string;
+	footerImage?: string;
 }
 
 export interface PassProps extends PassMixedProps, Partial<InteractionContextMethods> { }

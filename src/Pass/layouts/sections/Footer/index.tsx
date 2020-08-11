@@ -14,7 +14,7 @@ export default function Footer(props: React.PropsWithChildren<FooterProps>) {
 
 	if (props.allowFooterImage) {
 		const [footerClickHandler] = useRegistrations(props.register, [
-			[FieldKind.IMAGE, "Footer Image"]
+			[FieldKind.IMAGE, "footerImage"]
 		]);
 
 		footerImage = (

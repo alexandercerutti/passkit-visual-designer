@@ -50,7 +50,8 @@ export function BoardingPass(props: BoardingPassProps) {
 		barcode,
 		transitType,
 		logo,
-		logoText
+		logoText,
+		footerImage,
 	} = props;
 
 	const context = React.useContext(InteractionContext);
@@ -92,7 +93,11 @@ export function BoardingPass(props: BoardingPassProps) {
 				register={registerField}
 				id="secondaryFields"
 			/>
-			<Footer allowFooterImage register={registerField}>
+			<Footer
+				allowFooterImage
+				register={registerField}
+				src={footerImage}
+			>
 				<Barcode
 					format={barcode?.format}
 					fallbackShape="rect"
