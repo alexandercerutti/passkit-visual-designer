@@ -9,6 +9,8 @@ import Barcodes from "./components/Barcodes";
 import InteractionContext, { InteractionContextMethods } from "../InteractionContext";
 import useAlternativesRegistration from "../useAlternativesRegistration";
 import type { AlternativesRegistrationSignature } from "../useAlternativesRegistration";
+import { useRegistrations } from "./sections/useRegistrations";
+import { FieldKind } from "../../model";
 
 type EventTicketProps = PassMixedProps & AlternativesRegistrationSignature;
 
@@ -39,7 +41,7 @@ export function EventTicket(props: EventTicketProps): JSX.Element {
 		thumbnailImage
 	} = props;
 
-	let FieldsFragment: (interaction: InteractionContextMethods) => React.ReactElement<PrimaryFieldPropsKind>;
+	let fieldsFragment: React.ReactElement<PrimaryFieldPropsKind>;
 
 	const SecondaryFieldRow = ({ onFieldSelect, registerField }: InteractionContextMethods) => (
 		<FieldsRow
@@ -51,9 +53,12 @@ export function EventTicket(props: EventTicketProps): JSX.Element {
 		/>
 	);
 
+	const context = React.useContext(InteractionContext);
+	const { onFieldSelect, registerField } = context;
+
 	/** We fallback to strip image model if none of the required property is available */
 	if (props.hasOwnProperty("stripImage") || !props.hasOwnProperty("backgroundImage")) {
-		FieldsFragment = ({ onFieldSelect, registerField }) => (
+		fieldsFragment = (
 			<>
 				<StripPrimaryFields
 					stripSrc={stripImage}
@@ -65,7 +70,13 @@ export function EventTicket(props: EventTicketProps): JSX.Element {
 			</>
 		);
 	} else if (props.hasOwnProperty("backgroundImage")) {
-		FieldsFragment = ({ onFieldSelect, registerField }) => (
+		if (Object.keys(context).length) {
+			useRegistrations(context.registerField, [
+				[FieldKind.IMAGE, "backgroundImage"]
+			]);
+		}
+
+		fieldsFragment = (
 			<ThumbnailPrimaryField
 				thumbnailSrc={thumbnailImage}
 				fields={primaryFields}
@@ -78,32 +89,28 @@ export function EventTicket(props: EventTicketProps): JSX.Element {
 	}
 
 	return (
-		<InteractionContext.Consumer>
-			{({ onFieldSelect, registerField }) => (
-				<>
-					<PassHeader
-						headerFields={headerFields}
-						logoText={logoText}
-						logo={logo}
-						onClick={onFieldSelect}
-						register={registerField}
-					/>
-					{FieldsFragment({ onFieldSelect, registerField })}
-					<FieldsRow
-						id="auxiliaryFields"
-						maximumElementsAmount={4}
-						elements={auxiliaryFields}
-						onClick={onFieldSelect}
-						register={registerField}
-					/>
-					<Footer>
-						<Barcodes
-							format={barcode?.format}
-							fallbackShape="square"
-						/>
-					</Footer>
-				</>
-			)}
-		</InteractionContext.Consumer>
+		<>
+			<PassHeader
+				headerFields={headerFields}
+				logoText={logoText}
+				logo={logo}
+				onClick={onFieldSelect}
+				register={registerField}
+			/>
+			{fieldsFragment}
+			<FieldsRow
+				id="auxiliaryFields"
+				maximumElementsAmount={4}
+				elements={auxiliaryFields}
+				onClick={onFieldSelect}
+				register={registerField}
+			/>
+			<Footer>
+				<Barcodes
+					format={barcode?.format}
+					fallbackShape="square"
+				/>
+			</Footer>
+		</>
 	);
 }

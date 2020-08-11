@@ -9,6 +9,8 @@ import Barcode from "./components/Barcodes";
 import useAlternativesRegistration from "../useAlternativesRegistration";
 import type { AlternativesRegistrationSignature } from "../useAlternativesRegistration";
 import InteractionContext from "../InteractionContext";
+import { useRegistrations } from "./sections/useRegistrations";
+import { FieldKind } from "../../model";
 
 type BoardingPassProps = PassMixedProps & AlternativesRegistrationSignature;
 
@@ -51,46 +53,51 @@ export function BoardingPass(props: BoardingPassProps) {
 		logoText
 	} = props;
 
+	const context = React.useContext(InteractionContext);
+	const { onFieldSelect, registerField } = context;
+
+	if (Object.keys(context).length) {
+		useRegistrations(context.registerField, [
+			[FieldKind.IMAGE, "backgroundImage"]
+		]);
+	}
+
 	return (
-		<InteractionContext.Consumer>
-			{({ onFieldSelect, registerField }) => (
-				<>
-					<PassHeader
-						withSeparator
-						logo={logo}
-						logoText={logoText}
-						headerFields={headerFields}
-						onClick={onFieldSelect}
-						register={registerField}
-					/>
-					<PrimaryFields
-						transitType={transitType}
-						fields={primaryFields}
-						onClick={onFieldSelect}
-						register={registerField}
-					/>
-					<FieldsRow
-						maximumElementsAmount={5}
-						elements={auxiliaryFields}
-						onClick={onFieldSelect}
-						register={registerField}
-						id="auxiliaryFields"
-					/>
-					<FieldsRow
-						maximumElementsAmount={4}
-						elements={secondaryFields}
-						onClick={onFieldSelect}
-						register={registerField}
-						id="secondaryFields"
-					/>
-					<Footer allowFooterImage register={registerField}>
-						<Barcode
-							format={barcode?.format}
-							fallbackShape="rect"
-						/>
-					</Footer>
-				</>
-			)}
-		</InteractionContext.Consumer>
+		<>
+			<PassHeader
+				withSeparator
+				logo={logo}
+				logoText={logoText}
+				headerFields={headerFields}
+				onClick={onFieldSelect}
+				register={registerField}
+			/>
+			<PrimaryFields
+				transitType={transitType}
+				fields={primaryFields}
+				onClick={onFieldSelect}
+				register={registerField}
+			/>
+			<FieldsRow
+				maximumElementsAmount={5}
+				elements={auxiliaryFields}
+				onClick={onFieldSelect}
+				register={registerField}
+				id="auxiliaryFields"
+			/>
+			<FieldsRow
+				maximumElementsAmount={4}
+				elements={secondaryFields}
+				onClick={onFieldSelect}
+				register={registerField}
+				id="secondaryFields"
+			/>
+			<Footer allowFooterImage register={registerField}>
+				<Barcode
+					format={barcode?.format}
+					fallbackShape="rect"
+				/>
+			</Footer>
+		</>
 	);
 }

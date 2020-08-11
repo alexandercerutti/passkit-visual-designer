@@ -9,6 +9,8 @@ import Footer from "./sections/Footer";
 import InteractionContext, { InteractionContextMethods } from "../InteractionContext";
 import useAlternativesRegistration from "../useAlternativesRegistration";
 import type { AlternativesRegistrationSignature } from "../useAlternativesRegistration";
+import { useRegistrations } from "./sections/useRegistrations";
+import { FieldKind } from "../../model";
 
 type GenericProps = PassMixedProps & AlternativesRegistrationSignature;
 
@@ -40,9 +42,18 @@ export function Generic(props: GenericProps): JSX.Element {
 		thumbnailImage
 	} = props;
 
+	const context = React.useContext(InteractionContext);
+	const { onFieldSelect, registerField } = context;
+
+	if (Object.keys(context).length) {
+		useRegistrations(context.registerField, [
+			[FieldKind.IMAGE, "backgroundImage"]
+		]);
+	}
+
 	const isSquaredBarcode = isSquareBarcode(barcode?.format);
 
-	const MiddleFragment = ({ onFieldSelect, registerField }: InteractionContextMethods) => isSquaredBarcode &&
+	const middleFragment = isSquaredBarcode &&
 		(
 			<FieldsRow
 				elements={[...secondaryFields, ...auxiliaryFields]}
@@ -71,32 +82,28 @@ export function Generic(props: GenericProps): JSX.Element {
 		);
 
 	return (
-		<InteractionContext.Consumer>
-			{({ onFieldSelect, registerField }) => (
-				<>
-					<PassHeader
-						withSeparator
-						headerFields={headerFields}
-						logo={logo}
-						logoText={logoText}
-						onClick={onFieldSelect}
-						register={registerField}
-					/>
-					<ThumbnailPrimaryField
-						fields={primaryFields}
-						thumbnailSrc={thumbnailImage}
-						onClick={onFieldSelect}
-						register={registerField}
-					/>
-					{MiddleFragment({ onFieldSelect, registerField })}
-					<Footer>
-						<Barcodes
-							fallbackShape={isSquaredBarcode ? "square" : "rect"}
-							format={barcode?.format}
-						/>
-					</Footer>
-				</>
-			)}
-		</InteractionContext.Consumer>
+		<>
+			<PassHeader
+				withSeparator
+				headerFields={headerFields}
+				logo={logo}
+				logoText={logoText}
+				onClick={onFieldSelect}
+				register={registerField}
+			/>
+			<ThumbnailPrimaryField
+				fields={primaryFields}
+				thumbnailSrc={thumbnailImage}
+				onClick={onFieldSelect}
+				register={registerField}
+			/>
+			{middleFragment}
+			<Footer>
+				<Barcodes
+					fallbackShape={isSquaredBarcode ? "square" : "rect"}
+					format={barcode?.format}
+				/>
+			</Footer>
+		</>
 	);
 }

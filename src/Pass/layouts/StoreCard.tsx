@@ -8,6 +8,8 @@ import Barcodes from "./components/Barcodes";
 import useAlternativesRegistration from "../useAlternativesRegistration";
 import type { AlternativesRegistrationSignature } from "../useAlternativesRegistration";
 import InteractionContext from "../InteractionContext";
+import { useRegistrations } from "./sections/useRegistrations";
+import { FieldKind } from "../../model";
 
 type StoreCardProps = PassMixedProps & AlternativesRegistrationSignature;
 
@@ -28,42 +30,47 @@ export function StoreCard(props: StoreCardProps): JSX.Element {
 		stripImage
 	} = props;
 
+	const context = React.useContext(InteractionContext);
+	const { onFieldSelect, registerField } = context;
+
+	if (Object.keys(context).length) {
+		useRegistrations(context.registerField, [
+			[FieldKind.IMAGE, "backgroundImage"]
+		]);
+	}
+
 	return (
-		<InteractionContext.Consumer>
-			{({ onFieldSelect, registerField }) => (
-				<>
-					<PassHeader
-						logo={logo}
-						logoText={logoText}
-						headerFields={headerFields}
-						onClick={onFieldSelect}
-						register={registerField}
-					/>
-					<StripPrimaryFields
-						stripSrc={stripImage}
-						fields={primaryFields}
-						onClick={onFieldSelect}
-						register={registerField}
-					/>
-					<FieldsRow
-						id="secondary-auxiliary"
-						// @TODO: this component, as is,
-						// might not be fully correct because 4 fields
-						// get rendered in two columns. We don't have
-						// an example of a coupon / store card with
-						// more than two fields.
-						elements={[...secondaryFields, ...auxiliaryFields]}
-						// @TODO - Coupons can have up to 4 fields if
-						// barcode is a square barcode
-						maximumElementsAmount={-1}
-						onClick={onFieldSelect}
-						register={registerField}
-					/>
-					<Footer>
-						<Barcodes format={barcode?.format} fallbackShape="rect" />
-					</Footer>
-				</>
-			)}
-		</InteractionContext.Consumer>
+		<>
+			<PassHeader
+				logo={logo}
+				logoText={logoText}
+				headerFields={headerFields}
+				onClick={onFieldSelect}
+				register={registerField}
+			/>
+			<StripPrimaryFields
+				stripSrc={stripImage}
+				fields={primaryFields}
+				onClick={onFieldSelect}
+				register={registerField}
+			/>
+			<FieldsRow
+				id="secondary-auxiliary"
+				// @TODO: this component, as is,
+				// might not be fully correct because 4 fields
+				// get rendered in two columns. We don't have
+				// an example of a coupon / store card with
+				// more than two fields.
+				elements={[...secondaryFields, ...auxiliaryFields]}
+				// @TODO - Coupons can have up to 4 fields if
+				// barcode is a square barcode
+				maximumElementsAmount={-1}
+				onClick={onFieldSelect}
+				register={registerField}
+			/>
+			<Footer>
+				<Barcodes format={barcode?.format} fallbackShape="rect" />
+			</Footer>
+		</>
 	);
 }
