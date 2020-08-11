@@ -47,7 +47,12 @@ const PassKindsMap = new Map<PassKind, React.FunctionComponent<PassMixedProps>>(
 ]);
 
 export default function Pass(props: PassProps) {
-	const { kind, backgroundColor, backgroundImage, foregroundColor, labelColor, ...newProps } = props;
+	const { kind, backgroundColor, foregroundColor, labelColor, ...newProps } = props;
+	// We want to keep backgroundImage and others in passes layouts but
+	// also exclude the others above and use backgroundImage here to set
+	// the Background
+	const { backgroundImage } = props;
+
 	const PassComponent = PassKindsMap.get(kind);
 
 	changeCSSCustomProperty("--pass-background", backgroundImage || backgroundColor, DEFAULT_BACKGROUND_COLOR);
