@@ -32,24 +32,24 @@
 		display: flex;
 		flex-direction: column;
 		align-items: flex-start;
-	}
 
-	/** Background Image **/
+		/** Background Image **/
 
-	&::after {
-		content: "";
-		position: absolute;
-		top: 0px;
-		left: 0;
-		right: 0;
-		z-index: -1;
-		bottom: 0;
-		background: var(--pass-background);
-		background-size: cover;
-		background-position: bottom center;
-	}
+		&::after {
+			content: "";
+			position: absolute;
+			top: 0px;
+			left: 0;
+			right: 0;
+			z-index: -1;
+			bottom: 0;
+			background: var(--pass-background);
+			background-size: cover;
+			background-position: bottom center;
+		}
 
-	&.bg-image::after {
-		filter: blur(6px);
+		&.bg-image::after {
+			filter: blur(6px);
+		}
 	}
 }

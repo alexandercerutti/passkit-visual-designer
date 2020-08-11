@@ -60,13 +60,13 @@ export default function Pass(props: PassProps) {
 	changeCSSCustomProperty("--pass-label-color", labelColor, DEFAULT_LABEL_COLOR);
 
 	/** To avoid blur effect if no background is available */
-	const className = createClassName(["pass"], {
+	const contentClassName = createClassName(["content"], {
 		"bg-image": Boolean(backgroundImage)
 	});
 
 	return (
-		<div className={className} data-kind={kind}>
-			<div className="content">
+		<div className="pass" data-kind={kind}>
+			<div className={contentClassName}>
 				<PassComponent {...newProps} />
 			</div>
 		</div>
