@@ -5,7 +5,6 @@ import { SinglePropSettingAction, ConfigActions } from "./actions";
 const URLPassProps = ["logo", "backgroundImage", "stripImage", "thumbnailImage", "appIcon"];
 
 export default function URLMiddleware(store: MiddlewareAPI<Dispatch, State>) {
-	const currentStore = store.getState();
 	return (next: Dispatch<AnyAction>) => (action: SinglePropSettingAction) => {
 		if (action.type !== ConfigActions.CHANGE_VALUE) {
 			return next(action);
@@ -14,6 +13,8 @@ export default function URLMiddleware(store: MiddlewareAPI<Dispatch, State>) {
 		if (!action.key || !URLPassProps.includes(action.key)) {
 			return next(action);
 		}
+
+		const currentStore = store.getState();
 
 		if (!currentStore.media[action.key]) {
 			const newAction = Object.assign({}, action, {
