@@ -123,8 +123,8 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 	 * @param e
 	 */
 
-	onVoidClick(e: React.MouseEvent) {
-		if (e.target !== e.currentTarget) {
+	onVoidClick(e?: React.MouseEvent): void {
+		if (e && e.target !== e.currentTarget) {
 			return;
 		}
 
@@ -149,6 +149,7 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 						selection={this.state.selectedFieldId}
 						registeredFields={this.state.registeredFields}
 						onValueChange={this.onValueChange}
+						cancelFieldSelection={this.onVoidClick}
 					/>
 				</div>
 			</div>
