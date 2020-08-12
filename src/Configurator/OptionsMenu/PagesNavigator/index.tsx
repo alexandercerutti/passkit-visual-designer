@@ -31,7 +31,8 @@ export default class PagesNavigator extends React.Component<NavigatorProps, Navi
 	}
 
 	componentDidUpdate(prevProps: NavigatorProps) {
-		if (this.props.selectedFieldID && prevProps.selectedFieldID !== this.props.selectedFieldID) {
+		const isCurrentPageSelected = this.state.pagesHierarchy[this.state.pagesHierarchy.length - 1]?.[0] === this.props.selectedFieldID;
+		if (this.props.selectedFieldID && prevProps.selectedFieldID !== this.props.selectedFieldID && !isCurrentPageSelected) {
 			this.requestPageClosing();
 			return;
 		}
