@@ -10,6 +10,7 @@ interface TextPanelProps extends PanelProps {
 
 export default function TextPanel(props: TextPanelProps) {
 	const [content, onBlurEventRef] = useContentSavingHandler(props.onValueChange, props.name, props.value);
+	const inputRef = React.useRef<HTMLInputElement>();
 
 	const onKeyDownEventRef = React.useRef(({ key, currentTarget }: React.KeyboardEvent<HTMLInputElement>) => {
 		key === "Enter" && currentTarget.blur();
@@ -20,6 +21,10 @@ export default function TextPanel(props: TextPanelProps) {
 		<span className="required" />
 	) || null;
 
+	if (props.isSelected) {
+		inputRef.current?.focus();
+	}
+
 	return (
 		<>
 			<label htmlFor={props.name}>
@@ -27,6 +32,7 @@ export default function TextPanel(props: TextPanelProps) {
 				{required}
 			</label>
 			<input
+				ref={inputRef}
 				id={props.name}
 				placeholder={props.name}
 				onBlur={(event) => onBlurEventRef(event.target.value)}

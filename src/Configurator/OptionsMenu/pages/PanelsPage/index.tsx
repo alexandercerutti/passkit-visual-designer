@@ -7,6 +7,7 @@ import PageNavigationContext from "../PageNavigationContext";
 import { PassMixedProps } from "../../../../Pass";
 
 interface Props extends Partial<PageNavigation> {
+	selectedFieldID: string;
 	fields: RegisteredFieldsMap;
 	data: PassMixedProps;
 	onValueChange<T>(name: string, data: T): void;
@@ -20,6 +21,24 @@ export default function PanelsPage(props: Props) {
 			currentActivePanel !== group && group || null
 		);
 	});
+
+	React.useEffect(() => {
+		if (!props.selectedFieldID) {
+			// We don't want to close data menu if we come back
+			// from an auto-navigated page
+			return;
+		}
+
+		const isDataActive = (
+			props.fields
+				.get(DataGroup.DATA)
+				.map(entry => entry.name)
+				.includes(props.selectedFieldID) &&
+			DataGroup.DATA
+		);
+
+		setActivePanel(isDataActive);
+	}, [props.selectedFieldID]);
 
 	const groups = Array.from<[DataGroup, FieldDetails[]], JSX.Element>(props.fields.entries(), ([group, details]) => {
 		return (
@@ -41,6 +60,7 @@ export default function PanelsPage(props: Props) {
 									data={otherData}
 									value={props.data?.[name]}
 									onValueChange={props.onValueChange}
+									isSelected={props.selectedFieldID === name}
 									{...navProps}
 								/>
 							);

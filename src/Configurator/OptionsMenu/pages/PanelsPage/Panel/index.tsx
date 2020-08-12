@@ -12,6 +12,7 @@ export interface PanelProps extends PageNavigation {
 	kind: FieldKind;
 	data: Omit<FieldDetails, "kind" | "name">;
 	value?: any; // will be overridden by single panels
+	isSelected?: boolean;
 	onValueChange<T>(name: string, data: T): void;
 }
 

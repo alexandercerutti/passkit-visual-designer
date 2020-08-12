@@ -20,6 +20,12 @@ export default function FieldPanel(props: Props) {
 		pageCreationHandler(props.name, props.requestPageCreation);
 	}, [props]);
 
+	if (props.isSelected) {
+		setTimeout(() => {
+			pageCreationHandler(props.name, props.requestPageCreation)
+		}, 500);
+	}
+
 	return (
 		<div className="cta-edit" onClick={pageCreationClickHandler}>
 			<div className="col-left">

@@ -12,7 +12,7 @@ export default function PageHeader(props: React.PropsWithChildren<Props>) {
 		<PageNavigationContext.Consumer>
 			{({ requestPageClosing }) => (
 				<header>
-					<div className="back" onClick={requestPageClosing}>
+					<div className="back" onClick={() => requestPageClosing(true)}>
 						<FieldsArrowIcon />
 						<span>Back</span>
 					</div>

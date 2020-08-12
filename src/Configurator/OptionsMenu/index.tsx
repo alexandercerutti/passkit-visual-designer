@@ -12,12 +12,15 @@ interface OptionsMenuProps {
 	registeredFields: RegisteredFieldsMap;
 	data: PassMixedProps;
 	onValueChange(key: string, value: any): Promise<boolean>;
+	cancelFieldSelection(): void;
 }
 
 export default function OptionsMenu(props: OptionsMenuProps) {
 	return (
 		<div className="options-menu">
 			<PagesNavigator
+				selectedFieldID={props.selection}
+				cancelFieldSelection={props.cancelFieldSelection}
 				fields={props.registeredFields}
 				onValueChange={props.onValueChange}
 				data={props.data}

@@ -11,8 +11,10 @@ interface NavigatorState {
 }
 
 interface NavigatorProps {
+	selectedFieldID?: string;
 	fields: RegisteredFieldsMap;
 	data: PassMixedProps;
+	cancelFieldSelection(): void;
 	onValueChange(key: string, value: any): Promise<boolean>;
 }
 
@@ -26,6 +28,13 @@ export default class PagesNavigator extends React.Component<NavigatorProps, Navi
 
 		this.requestPageCreation = this.requestPageCreation.bind(this);
 		this.requestPageClosing = this.requestPageClosing.bind(this);
+	}
+
+	componentDidUpdate(prevProps: NavigatorProps) {
+		if (this.props.selectedFieldID && prevProps.selectedFieldID !== this.props.selectedFieldID) {
+			this.requestPageClosing();
+			return;
+		}
 	}
 
 	requestPageCreation(identifier: string, PageElement: Parameters<RequestPageCreationFunction>[1], getContextProps?: ContextPropsGetter<React.ComponentProps<typeof PageElement>>) {
@@ -48,7 +57,11 @@ export default class PagesNavigator extends React.Component<NavigatorProps, Navi
 	 * with a MacOS-like fullscreen app closing
 	 */
 
-	requestPageClosing() {
+	requestPageClosing(cancelSelection: boolean = false) {
+		if (cancelSelection) {
+			this.props.cancelFieldSelection();
+		}
+
 		this.setState(previousState => {
 			const pagesHierarchy = previousState.pagesHierarchy;
 			pagesHierarchy.pop();
@@ -80,6 +93,7 @@ export default class PagesNavigator extends React.Component<NavigatorProps, Navi
 				<div className="pages-navigator" style={{ transform: `translate(-${this.state.pagesHierarchy.length * 100}%)` }}>
 					<div className="page" key="panel-depth0">
 						<PanelsPage
+							selectedFieldID={this.props.selectedFieldID}
 							onValueChange={this.props.onValueChange}
 							fields={this.props.fields}
 							data={this.props.data}

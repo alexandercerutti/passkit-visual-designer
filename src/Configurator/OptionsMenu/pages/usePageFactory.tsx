@@ -22,7 +22,7 @@ export type RequestPageCreationFunction = (
 
 export interface PageNavigation {
 	requestPageCreation: RequestPageCreationFunction;
-	requestPageClosing(): void;
+	requestPageClosing(cancelSelection?: boolean): void;
 }
 
 type PAGE_COMPONENT_SIGNATURE = Parameters<RequestPageCreationFunction>[1];
@@ -62,7 +62,7 @@ export default function usePageFactory<T extends PAGE_COMPONENT_SIGNATURE>(
 	}, [initProps, onChange]);
 
 	const creationHandler = React.useCallback((key: string, requestFunction: RequestPageCreationFunction) => {
-		requestFunction(key, component, getContextProps)
+		requestFunction(key, component, getContextProps);
 	}, [initProps, getContextProps]);
 
 	return creationHandler;
