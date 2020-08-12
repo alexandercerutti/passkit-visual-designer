@@ -55,6 +55,11 @@ class PassSelector extends React.PureComponent<SelectorProps> {
 	onPassSelect(passProps: PassProps) {
 		console.log("Performed selection of", passProps.kind);
 
+		if (this.props.selectedPassKind === passProps.kind) {
+			this.props.setPassKind(undefined);
+			return;
+		}
+
 		this.props.setPassKind(passProps.kind);
 	}
 
