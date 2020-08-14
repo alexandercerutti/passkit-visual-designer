@@ -23,6 +23,14 @@
 
 	&.show-back {
 		transform: rotateY(180deg);
+
+		& .content {
+			z-index: -1;
+		}
+
+		& .back-fields {
+			z-index: 99
+		}
 	}
 
 	&:hover {
