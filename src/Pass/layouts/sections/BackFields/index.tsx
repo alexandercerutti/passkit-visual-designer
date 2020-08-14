@@ -19,6 +19,7 @@ export default function Backfields(props: Props) {
 				elements={props.data}
 				register={context.registerField}
 				onClick={context.onFieldSelect}
+				className={!validFieldsAmount.length && "expand" || ""}
 			/>
 		</div>
 	);

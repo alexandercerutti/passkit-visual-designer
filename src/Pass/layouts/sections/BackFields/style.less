@@ -23,10 +23,37 @@
 		width: 100%;
 		min-height: initial;
 		max-height: initial;
+		margin-top: initial;
 		background-color: #1c1c1e;
 		border-radius: 7px;
 		padding-left: 10px;
 		justify-content: flex-start;
+
+		&.expand {
+			height: 100%;
+
+			&::before {
+				content: "Set BackFields to make something to appear here like magic. ✨";
+				display: flex;
+				align-items: center;
+				color: #9c9ba0;
+				text-align: center;
+				line-height: 25px;
+				font-size: 14px;
+				position: absolute;
+				top: 0;
+				right: 0;
+				left: 0;
+				bottom: 0;
+				padding: 20px;
+				pointer-events: none;
+			}
+		}
+
+		& .empty {
+			background-color: initial;
+			height: 100% !important;
+		}
 
 		& .field {
 			padding: 7px 0px;
