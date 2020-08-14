@@ -25,6 +25,7 @@ export default function Viewer(props: ViewerProps) {
 					transitType={PKTransitType.Boat}
 					{...passProps}
 					kind={PassKind.BOARDING_PASS}
+					showBack={props.showBack}
 				/>
 			</InteractionContext.Provider>
 		</div>

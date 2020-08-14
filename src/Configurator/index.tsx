@@ -27,6 +27,7 @@ interface ConfiguratorProps extends ConfiguratorStore, DispatchProps, RouteCompo
 interface ConfiguratorState {
 	selectedFieldId?: string;
 	registeredFields: RegisteredFieldsMap;
+	shouldShowPassBack: boolean;
 }
 
 class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState> implements InteractionContextMethods {
@@ -37,10 +38,12 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 		this.onFieldSelect = this.onFieldSelect.bind(this);
 		this.onVoidClick = this.onVoidClick.bind(this);
 		this.onValueChange = this.onValueChange.bind(this);
+		this.rotatePass = this.rotatePass.bind(this);
 
 		this.state = {
 			selectedFieldId: null,
 			registeredFields: new Map(DefaultFields),
+			shouldShowPassBack: false,
 		};
 	}
 
@@ -131,6 +134,12 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 		this.setState({ selectedFieldId: null });
 	}
 
+	rotatePass() {
+		this.setState((previous) => ({
+			shouldShowPassBack: !previous.shouldShowPassBack
+		}));
+	}
+
 	render() {
 		return (
 			<div id="configurator">
@@ -140,8 +149,11 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 						onFieldSelect={this.onFieldSelect}
 						registerField={this.registerField}
 						onVoidClick={this.onVoidClick}
+						showBack={this.state.shouldShowPassBack}
 					/>
-					<OptionsBar />
+					<OptionsBar
+						rotatePass={this.rotatePass}
+					/>
 				</div>
 				<div className="config-panel">
 					<OptionsMenu

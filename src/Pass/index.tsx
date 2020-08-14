@@ -37,7 +37,9 @@ export interface PassMixedProps {
 	footerImage?: string;
 }
 
-export interface PassProps extends PassMixedProps, Partial<InteractionContextMethods> { }
+export interface PassProps extends PassMixedProps, Partial<InteractionContextMethods> {
+	showBack?: boolean;
+}
 
 const PassKindsMap = new Map<PassKind, React.FunctionComponent<PassMixedProps>>([
 	[PassKind.BOARDING_PASS, BoardingPass],
@@ -67,8 +69,12 @@ export default function Pass(props: PassProps) {
 		"bg-image": Boolean(backgroundImage)
 	});
 
+	const passClassName = createClassName(["pass"], {
+		"show-back": props.showBack
+	});
+
 	return (
-		<div className="pass" data-kind={kind}>
+		<div className={passClassName} data-kind={kind}>
 			<div className={contentClassName}>
 				<PassComponent {...newProps} />
 			</div>
