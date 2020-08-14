@@ -1,0 +1,53 @@
+@import "../../../../App/common.less";
+
+.back-fields {
+	.scrollableWithoutScrollbars(y);
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	left: 0;
+	background-color: #010101; /* Like Apple Wallet iOS 13 in dark mode */
+	padding: 10px;
+	border-radius: 7px;
+
+	/* For backflip */
+	transform: rotateY(180deg);
+	backface-visibility: hidden;
+
+	display: flex;
+	align-items: flex-start;
+
+	& > .fields-row {
+		flex-direction: column;
+		width: 100%;
+		min-height: initial;
+		max-height: initial;
+		background-color: #1c1c1e;
+		border-radius: 7px;
+		padding-left: 10px;
+		justify-content: flex-start;
+
+		& .field {
+			padding: 7px 0px;
+
+			&:not(:last-child) {
+				border-bottom: 1px solid #323234;
+			}
+
+			& .label {
+				min-height: 16px;
+				color: #9c9ba0;
+				text-transform: initial;
+				padding-right: 7px;
+			}
+
+			& .value {
+				min-height: 16px;
+				color: #9c9ba0;
+				padding-right: 7px;
+				white-space: pre-wrap; /* New lines, here I come! */
+			}
+		}
+	}
+}

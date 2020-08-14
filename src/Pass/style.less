@@ -13,8 +13,17 @@
 	height: 369.59px;
 
 	position: relative;
-	transition: box-shadow .5s;
-	overflow: hidden; /* for background */
+	transition:
+		box-shadow .5s,
+		transform 1s;
+
+	/* For backflip */
+	transform-origin: center;
+	transform-style: preserve-3d;
+
+	&.show-back {
+		transform: rotateY(180deg);
+	}
 
 	&:hover {
 		box-shadow: 0px 3px 10px #000;
@@ -32,8 +41,14 @@
 		display: flex;
 		flex-direction: column;
 		align-items: flex-start;
+		border-radius: 7px;
+
+		/* For Backflip */
+		position: absolute;
+		backface-visibility: hidden;
 
 		/** Background Image **/
+		overflow: hidden;
 
 		&::after {
 			content: "";
@@ -63,6 +78,7 @@
 		top: 112px;
 		border-radius: 50%;
 		z-index: 999;
+		transition: opacity .5s;
 	}
 
 	&::before {
@@ -73,6 +89,12 @@
 	&::after {
 		right: -6px;
 		background: linear-gradient(to right, #333 0%,#333 70%);
+	}
+
+	&.show-back {
+		&::before, &::after {
+			opacity: 0;
+		}
 	}
 }
 

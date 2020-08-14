@@ -10,6 +10,7 @@ import { PKTransitType, PassFields, WalletPassFormat, DEFAULT_BACKGROUND_COLOR, 
 import { InteractionContextMethods } from "./InteractionContext";
 import changeCSSCustomProperty from "./changeCSSCustomProperty";
 import { createClassName } from "../utils";
+import Backfields from "./layouts/sections/BackFields";
 
 export { default as InteractionContext } from "./InteractionContext";
 
@@ -69,6 +70,8 @@ export default function Pass(props: PassProps) {
 			<div className={contentClassName}>
 				<PassComponent {...newProps} />
 			</div>
+			<Backfields
+			/>
 		</div>
 	);
 }
