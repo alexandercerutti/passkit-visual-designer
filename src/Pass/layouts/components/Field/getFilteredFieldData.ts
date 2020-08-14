@@ -23,7 +23,7 @@ export function getFilteredFieldData(data: PassFieldKeys[] = [], minAmount: numb
 
 	const showableFields = data
 		.filter(({ value, label }) => value || label)
-		.slice(0, maxAmount);
+		.slice(0, maxAmount > 0 && maxAmount || undefined);
 
 	if (!showableFields.length) {
 		return createFilledPassFieldKeysArray(minAmount);
