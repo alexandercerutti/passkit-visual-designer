@@ -56,9 +56,11 @@ export default function Pass(props: PassProps) {
 
 	const PassComponent = PassKindsMap.get(kind);
 
-	changeCSSCustomProperty("--pass-background", backgroundImage || backgroundColor, DEFAULT_BACKGROUND_COLOR);
-	changeCSSCustomProperty("--pass-foreground-color", foregroundColor, DEFAULT_FOREGROUND_COLOR);
-	changeCSSCustomProperty("--pass-label-color", labelColor, DEFAULT_LABEL_COLOR);
+	React.useEffect(() => {
+		changeCSSCustomProperty("--pass-background", backgroundImage || backgroundColor, DEFAULT_BACKGROUND_COLOR);
+		changeCSSCustomProperty("--pass-foreground-color", foregroundColor, DEFAULT_FOREGROUND_COLOR);
+		changeCSSCustomProperty("--pass-label-color", labelColor, DEFAULT_LABEL_COLOR);
+	}, [backgroundColor, backgroundImage, foregroundColor, labelColor]);
 
 	/** To avoid blur effect if no background is available */
 	const contentClassName = createClassName(["content"], {
