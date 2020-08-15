@@ -4,16 +4,22 @@ import Pass, { PassProps } from "../../Pass";
 import { PassKind } from "../../model";
 import { PKTransitType } from "../../Pass/constants";
 import InteractionContext, { InteractionContextMethods } from "../../Pass/InteractionContext";
+import { createClassName } from "../../utils";
 
 export interface ViewerProps extends PassProps {
+	showEmpty: boolean;
 	onVoidClick(e: React.MouseEvent): void;
 }
 
 export default function Viewer(props: ViewerProps) {
 	const { passProps, registrationProps } = organizeViewerProps(props);
 
+	const viewerCN = createClassName(["viewer"], {
+		"no-empty": !props.showEmpty
+	});
+
 	return (
-		<div className="viewer" onClick={(e) => props.onVoidClick(e)}>
+		<div className={viewerCN} onClick={(e) => props.onVoidClick(e)}>
 			<InteractionContext.Provider value={registrationProps}>
 				{
 					/**

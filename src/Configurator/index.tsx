@@ -28,6 +28,7 @@ interface ConfiguratorState {
 	selectedFieldId?: string;
 	registeredFields: RegisteredFieldsMap;
 	shouldShowPassBack: boolean;
+	emptyFieldsVisible: boolean;
 }
 
 class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState> implements InteractionContextMethods {
@@ -39,11 +40,13 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 		this.onVoidClick = this.onVoidClick.bind(this);
 		this.onValueChange = this.onValueChange.bind(this);
 		this.rotatePass = this.rotatePass.bind(this);
+		this.toggleEmptyVisibility = this.toggleEmptyVisibility.bind(this);
 
 		this.state = {
 			selectedFieldId: null,
 			registeredFields: new Map(DefaultFields),
 			shouldShowPassBack: false,
+			emptyFieldsVisible: true,
 		};
 	}
 
@@ -140,6 +143,12 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 		}));
 	}
 
+	toggleEmptyVisibility() {
+		this.setState((previous) => ({
+			emptyFieldsVisible: !previous.emptyFieldsVisible
+		}));
+	}
+
 	render() {
 		return (
 			<div id="configurator">
@@ -150,9 +159,12 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 						registerField={this.registerField}
 						onVoidClick={this.onVoidClick}
 						showBack={this.state.shouldShowPassBack}
+						showEmpty={this.state.emptyFieldsVisible}
 					/>
 					<OptionsBar
 						rotatePass={this.rotatePass}
+						isEmptyVisible={this.state.emptyFieldsVisible}
+						toggleEmptyVisibility={this.toggleEmptyVisibility}
 					/>
 				</div>
 				<div className="config-panel">
