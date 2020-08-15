@@ -21,6 +21,15 @@
 
 	& svg {
 		cursor: pointer;
+		transition: fill .5s;
+
+		& > * {
+			transition: fill .5s;
+		}
+
+		&:hover, &:hover > * {
+			fill: darken(#e6e6e6, 25%);
+		}
 	}
 }
 
