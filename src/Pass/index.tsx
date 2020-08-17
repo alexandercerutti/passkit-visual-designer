@@ -69,16 +69,19 @@ export default function Pass(props: PassProps) {
 		"bg-image": Boolean(backgroundImage)
 	});
 
-	const passClassName = createClassName(["pass"], {
+	const passCardClassName = createClassName(["card"], {
 		"show-back": props.showBack
 	});
 
 	return (
-		<div className={passClassName} data-kind={kind}>
-			<div className={contentClassName}>
-				<PassComponent {...newProps} />
+		<div className="pass" data-kind={kind}>
+			<div className="decorations"></div>
+			<div className={passCardClassName}>
+				<div className={contentClassName}>
+					<PassComponent {...newProps} />
+				</div>
+				<Backfields data={backFields} />
 			</div>
-			<Backfields data={backFields} />
 		</div>
 	);
 }

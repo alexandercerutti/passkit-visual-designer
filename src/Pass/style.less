@@ -13,25 +13,7 @@
 	height: 369.59px;
 
 	position: relative;
-	transition:
-		box-shadow .5s,
-		transform 1s;
-
-	/* For backflip */
-	transform-origin: center;
-	transform-style: preserve-3d;
-
-	&.show-back {
-		transform: rotateY(180deg);
-
-		& .content {
-			z-index: -1;
-		}
-
-		& .back-fields {
-			z-index: 99
-		}
-	}
+	transition: box-shadow .5s;
 
 	&:hover {
 		box-shadow: 0px 3px 10px #000;
@@ -41,115 +23,157 @@
 		margin-right: 30px;
 	}
 
-	& > .content {
+	& .decorations {
+		overflow: hidden;
+		position: absolute;
+		top: 0;
+		right: 0;
+		left: 0;
+		bottom: 0;
+		z-index: 1;
+		pointer-events: none;
+	}
+
+	& .card {
+		display: flex;
 		width: 100%;
 		height: 100%;
-		padding: 10px;
-		box-sizing: border-box;
-		display: flex;
-		flex-direction: column;
-		align-items: flex-start;
-		border-radius: 7px;
 
-		/* For Backflip */
-		position: absolute;
-		backface-visibility: hidden;
+		/* For backflip */
+		transition: transform 1s;
+		transform-origin: center;
+		transform-style: preserve-3d;
 
-		/** Background Image **/
-		overflow: hidden;
+		&.show-back {
+			transform: rotateY(180deg);
 
-		&::after {
-			content: "";
-			position: absolute;
-			top: 0px;
-			left: 0;
-			right: 0;
-			z-index: -1;
-			bottom: 0;
-			background: var(--pass-background);
-			background-size: cover;
-			background-position: bottom center;
+			& > .content {
+				z-index: -1;
+			}
+
+			& > .back-fields {
+				z-index: 99
+			}
 		}
 
-		&.bg-image::after {
-			filter: blur(6px);
+		& > .content {
+			width: 100%;
+			height: 100%;
+			padding: 10px;
+			box-sizing: border-box;
+			display: flex;
+			flex-direction: column;
+			align-items: flex-start;
+			border-radius: 7px;
+
+			/* For Backflip */
+			position: absolute;
+			backface-visibility: hidden;
+
+			/** Background Image **/
+			overflow: hidden;
+
+			&::after {
+				content: "";
+				position: absolute;
+				top: 0px;
+				left: 0;
+				right: 0;
+				z-index: -1;
+				bottom: 0;
+				background: var(--pass-background);
+				background-size: cover;
+				background-position: bottom center;
+			}
+
+			&.bg-image::after {
+				filter: blur(6px);
+			}
 		}
 	}
 }
 
 .pass[data-kind="boardingPass"] {
-	&::before, &::after {
-		content: "";
-		width: 10px;
-		height: 10px;
-		position: absolute;
-		top: 112px;
-		border-radius: 50%;
-		z-index: 999;
-		transition: opacity .5s;
-	}
-
-	&::before {
-		left: -6px;
-		background: linear-gradient(to left, #333 0%,#333 70%);
-	}
-
-	&::after {
-		right: -6px;
-		background: linear-gradient(to right, #333 0%,#333 70%);
-	}
-
-	&.show-back {
+	& .decorations {
 		&::before, &::after {
-			opacity: 0;
+			content: "";
+			width: 10px;
+			height: 10px;
+			position: absolute;
+			top: 112px;
+			border-radius: 50%;
+			z-index: 999;
+			transition: opacity .5s;
+		}
+
+		&::before {
+			left: -6px;
+			background: linear-gradient(to left, #333 0%,#333 70%);
+		}
+
+		&::after {
+			right: -6px;
+			background: linear-gradient(to right, #333 0%,#333 70%);
 		}
 	}
 }
 
 .pass[data-kind="eventTicket"] {
-	& .content {
-		padding-top: 15px;
+	& .card {
+		& .content {
+			padding-top: 15px;
+		}
 	}
 
-	&::before {
-		content: "";
-		width: 40px;
-		height: 28px;
-		position: absolute;
-		top: -19px;
-		left: calc(50% - 20px);
-		background: linear-gradient(to top, #333 25%, #000 100%);
-		border-radius: 50%;
-		z-index: 999;
+	& .decorations {
+		&::before {
+			content: "";
+			width: 40px;
+			height: 28px;
+			position: absolute;
+			top: -19px;
+			left: calc(50% - 20px);
+			background: linear-gradient(to top, #333 25%, #000 100%);
+			border-radius: 50%;
+			z-index: 999;
+		}
 	}
 }
 
 .pass[data-kind="coupon"] {
 	border-radius: 0px;
 
-	&::before, &::after {
-		content: "";
-		width: 100%;
-		height: 6px;
-		position: absolute;
-		background-size: 7px 5px;
-		background-repeat: repeat-x;
-		background-color: var(--pass-background);
+	& .card {
+		& .content {
+			border-radius: unset;
+		}
 	}
 
-	&::before {
-		top: -3px;
-		background-image:
-			linear-gradient(140deg, #333 50%, transparent 50%),
-			linear-gradient(220deg, #333 50%, transparent 50%);
-		background-position: top left, top left;
-	}
+	& .decorations {
+		&::before, &::after {
+			content: "";
+			width: 100%;
+			height: 6px;
+			position: absolute;
+			background-size: 7px 5px;
+			background-repeat: repeat-x;
+			background-color: var(--pass-background);
+		}
 
-	&::after {
-		bottom: -3px;
-		background-image:
-			linear-gradient(40deg, #212121 50%, transparent 50%),
-			linear-gradient(-40deg, #212121 50%, transparent 50%);
-		background-position: bottom left, bottom left;
+		&::before {
+			top: -3px;
+			background-image:
+				linear-gradient(140deg, #333 50%, transparent 50%),
+				linear-gradient(220deg, #333 50%, transparent 50%);
+			background-position: top left, top left;
+		}
+
+		&::after {
+			bottom: -3px;
+			background-image:
+				linear-gradient(40deg, #222222 50%, transparent 50%),
+				linear-gradient(-40deg, #222222 50%, transparent 50%);
+			background-position: bottom left, bottom left;
+		}
 	}
 }
