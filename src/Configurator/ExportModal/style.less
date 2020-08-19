@@ -1,0 +1,55 @@
+.export-modal {
+	position: absolute;
+	top: 30px;
+	left: 30px;
+	right: 30px;
+	bottom: 30px;
+	display: flex;
+	flex-direction: column;
+	background-color: #1c1c1c;
+	color: #e6e6e6;
+	z-index: 999;
+	border-radius: 7px;
+	padding: 10px;
+
+	box-shadow: 1px 1px 10px 0px #1c1c1c;
+
+	&::before {
+		content: "";
+		background-color: rgba(0,0,0,0.6);
+		position: fixed;
+		top: 0;
+		right: 0;
+		left: 0;
+		bottom: 0;
+		z-index: -1;
+	}
+
+	& h2 {
+		margin: 10px 0 0 0;
+		font-size: 2em;
+	}
+
+	& p {
+		text-align: justify;
+	}
+
+	& .tabs {
+		margin: 0px -10px;
+		padding: 0px 5px;
+		display: flex;
+		flex-direction: row;
+		border-bottom: 1px solid #e6e6e6;
+
+		& .tab {
+			padding: 5px;
+			position: relative;
+
+			&.active {
+				border-bottom: 1px solid orange;
+				bottom: -1px;
+				margin-top: -1px;
+			}
+		}
+	}
+}
