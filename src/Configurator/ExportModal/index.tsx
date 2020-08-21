@@ -26,13 +26,16 @@ export default function ExportModal() {
 	));
 
 	return (
-		<div className="export-modal">
-			<h2>Great!</h2>
-			<p>Your model is now being exported. Here below you can see some open source libraries examples to generate programmatically passes with your mock data compiled. Enjoy!</p>
-			<div className="tabs">
-				{partnerTabs}
+		<div id="export-modal">
+			<div id="modal-content">
+				<h2>Great!</h2>
+				<p>Your model is now being exported. Here below you can see some open source libraries examples to generate programmatically passes with your mock data compiled. Enjoy!</p>
+				<div className="tabs">
+					{partnerTabs}
+				</div>
+				<div className="partner-example"></div>
 			</div>
-			<div className="partner-example"></div>
+			<div id="close-overlay"></div>
 		</div>
 	);
 }
