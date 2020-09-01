@@ -28,7 +28,7 @@ export default function ExportModal() {
 	return (
 		<div id="export-modal">
 			<div id="modal-content">
-				<h2>Great!</h2>
+				<h2>Great <span>Pass</span>!</h2>
 				<p>Your model is now being exported. Here below you can see some open source libraries examples to generate programmatically passes with your mock data compiled. Enjoy!</p>
 				<div className="tabs">
 					{partnerTabs}
