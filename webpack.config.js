@@ -42,6 +42,13 @@ module.exports = {
 				loader: "less-loader"
 			}]
 		}, {
+			test: /\.css$/,
+			use: [{
+				loader: "style-loader",
+			}, {
+				loader: "css-loader"
+			}]
+		}, {
 			test: /\.otf$/,
 			loader: "file-loader"
 		}]

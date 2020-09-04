@@ -82,8 +82,8 @@
 		}
 
 		& .tabs {
-			margin: 0 -10px;
-			padding: 0 5px;
+			margin: 0 -30px;
+			padding: 0 28px;
 			display: flex;
 			flex-direction: row;
 			border-bottom: 1px solid #e6e6e6;
@@ -101,6 +101,20 @@
 					bottom: -1px;
 					margin-top: -1px;
 				}
+			}
+		}
+
+		& pre {
+			margin-left: -15px;
+			margin-right: -15px;
+		}
+
+		& code[class*="language-"], & pre[class*="language-"] {
+			text-shadow: none;
+			border-radius: 3px;
+
+			& .token.operator {
+				background: none;
 			}
 		}
 	}
