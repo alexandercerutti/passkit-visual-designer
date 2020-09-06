@@ -37,6 +37,8 @@
 			position: relative;
 
 			&:hover {
+				cursor: wait;
+
 				&, & > span {
 					letter-spacing: 20px;
 					text-shadow: 0 1px 8px #000;
@@ -122,11 +124,13 @@
 
 @keyframes brue-rotate {
 	from {
+		cursor: initial;
 		color: #ff0000;
 		filter: hue-rotate(0deg);
 	}
 
 	to {
+		cursor: initial;
 		color: #ff0000;
 		filter: hue-rotate(360deg);
 	}
