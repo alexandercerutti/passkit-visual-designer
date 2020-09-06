@@ -7,6 +7,7 @@ import "prismjs/themes/prism.css";
 import "prismjs/themes/prism-tomorrow.css";
 import { createClassName } from "../../utils";
 import { replaceAllBlock } from "./transformers";
+import ModalCloseIcon from "./icons";
 
 /**
  * This modal must receive some data to generate, for each "partner"
@@ -66,6 +67,11 @@ export default function ExportModal(props: Props) {
 	return (
 		<div id="export-modal">
 			<div id="modal-content">
+				<ModalCloseIcon
+					width={22}
+					height={22}
+					onClick={() => props.closeModal()}
+				/>
 				<h2>Great <span>Pass</span>!</h2>
 				<p>Your model is now being exported. Here below you can see some open source libraries examples to generate programmatically passes with your mock data compiled. Enjoy!</p>
 				<div className="tabs">
