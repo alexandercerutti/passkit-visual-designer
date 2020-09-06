@@ -25,6 +25,7 @@ interface Partner {
 
 interface Props {
 	partners: Partner[];
+	closeModal(): void;
 }
 
 export default function ExportModal(props: Props) {
@@ -79,7 +80,7 @@ export default function ExportModal(props: Props) {
 					</pre>
 				</div>
 			</div>
-			<div id="close-overlay"></div>
+			<div id="close-overlay" onClick={() => props.closeModal()}></div>
 		</div>
 	);
 }

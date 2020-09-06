@@ -16,6 +16,7 @@ interface NavigatorProps {
 	data: PassMixedProps;
 	cancelFieldSelection(): void;
 	onValueChange(key: string, value: any): Promise<boolean>;
+	showExportModal(): void;
 }
 
 export default class PagesNavigator extends React.Component<NavigatorProps, NavigatorState> implements PageNavigation {

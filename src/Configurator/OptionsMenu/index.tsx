@@ -13,6 +13,7 @@ interface OptionsMenuProps {
 	data: PassMixedProps;
 	onValueChange(key: string, value: any): Promise<boolean>;
 	cancelFieldSelection(): void;
+	showExportModal(): void;
 }
 
 export default function OptionsMenu(props: OptionsMenuProps) {
@@ -24,6 +25,7 @@ export default function OptionsMenu(props: OptionsMenuProps) {
 				fields={props.registeredFields}
 				onValueChange={props.onValueChange}
 				data={props.data}
+				showExportModal={props.showExportModal}
 			/>
 		</div>
 	);

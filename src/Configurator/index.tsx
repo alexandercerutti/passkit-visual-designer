@@ -29,6 +29,7 @@ interface ConfiguratorState {
 	registeredFields: RegisteredFieldsMap;
 	shouldShowPassBack: boolean;
 	emptyFieldsVisible: boolean;
+	showExportModal: boolean;
 }
 
 class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState> implements InteractionContextMethods {
@@ -41,12 +42,14 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 		this.onValueChange = this.onValueChange.bind(this);
 		this.rotatePass = this.rotatePass.bind(this);
 		this.toggleEmptyVisibility = this.toggleEmptyVisibility.bind(this);
+		this.toggleExportModal = this.toggleExportModal.bind(this);
 
 		this.state = {
 			selectedFieldId: null,
 			registeredFields: new Map(DefaultFields),
 			shouldShowPassBack: false,
 			emptyFieldsVisible: true,
+			showExportModal: false,
 		};
 	}
 
@@ -149,6 +152,12 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 		}));
 	}
 
+	toggleExportModal() {
+		this.setState((previous) => ({
+			showExportModal: !previous.showExportModal
+		}));
+	}
+
 	render() {
 		return (
 			<div id="configurator">
@@ -174,6 +183,7 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 						registeredFields={this.state.registeredFields}
 						onValueChange={this.onValueChange}
 						cancelFieldSelection={this.onVoidClick}
+						showExportModal={this.toggleExportModal}
 					/>
 				</div>
 			</div>
