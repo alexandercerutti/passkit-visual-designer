@@ -7,6 +7,7 @@ import "prismjs/themes/prism.css";
 import "prismjs/themes/prism-tomorrow.css";
 import { createClassName } from "../../utils";
 import { replaceAllBlock } from "./transformers";
+import { PassMixedProps } from "../../Pass";
 import ModalCloseIcon from "./icons";
 
 /**
@@ -26,6 +27,7 @@ interface Partner {
 
 interface Props {
 	partners: Partner[];
+	dataBank: PassMixedProps;
 	closeModal(): void;
 }
 
@@ -57,10 +59,7 @@ export default function ExportModal(props: Props) {
 
 	const { template, lang } = props.partners[activePartnerTab];
 
-	const partnerFilledContent = replaceAllBlock(template, {
-		description: "capocchium",
-		serialNumber: undefined
-	});
+	const partnerFilledContent = replaceAllBlock(template, props.dataBank || {});
 
 	const codeLanguage = `language-${lang}`;
 
