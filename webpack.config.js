@@ -1,9 +1,10 @@
 const path = require("path");
+const { DefinePlugin } = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const forkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 
 module.exports = {
-	mode: "development",
+	mode: process.env.NODE_ENV === "dev" ? "development" : "production",
 	target: "web",
 	entry: "./src/public/index.tsx",
 	output: {
@@ -68,6 +69,9 @@ module.exports = {
 			template: "./src/public/index.html",
 			filename: "./index.html"
 		}),
-		new forkTsCheckerWebpackPlugin({ checkSyntacticErrors: true })
+		new forkTsCheckerWebpackPlugin({ checkSyntacticErrors: true }),
+		new DefinePlugin({
+			isDevelopment: process.env.NODE_ENV === "dev"
+		}),
 	]
 };

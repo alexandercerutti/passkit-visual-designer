@@ -11,6 +11,9 @@ export interface ViewerProps extends PassProps {
 	onVoidClick(e: React.MouseEvent): void;
 }
 
+// Webpack valorized
+declare const isDevelopment: boolean;
+
 export default function Viewer(props: ViewerProps) {
 	const { passProps, registrationProps } = organizeViewerProps(props);
 
@@ -18,21 +21,24 @@ export default function Viewer(props: ViewerProps) {
 		"no-empty": !props.showEmpty
 	});
 
+	/**
+	 * @TODO add a redirect to pass selection if we are not in development.
+	 */
+	const passComponentProps = isDevelopment || !Object.keys(passProps).length
+		? {
+			...passProps,
+			transitType: PKTransitType.Boat,
+			kind: PassKind.BOARDING_PASS,
+			showBack: props.showBack,
+		} : {
+			...passProps,
+			showBack: props.showBack,
+		}
+
 	return (
 		<div className={viewerCN} onClick={(e) => props.onVoidClick(e)}>
 			<InteractionContext.Provider value={registrationProps}>
-				{
-					/**
-					 * @TODO Replace with pass props once the redirect with
-					 * no props will be ready or this will crash
-					 */
-				}
-				<Pass
-					transitType={PKTransitType.Boat}
-					{...passProps}
-					kind={PassKind.BOARDING_PASS}
-					showBack={props.showBack}
-				/>
+				<Pass {...passComponentProps} />
 			</InteractionContext.Provider>
 		</div>
 	);
