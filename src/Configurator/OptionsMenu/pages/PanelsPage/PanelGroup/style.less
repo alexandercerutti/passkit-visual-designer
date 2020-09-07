@@ -1,5 +1,6 @@
 @import "../../../../../App/common.less";
 @menuheight: 70px;
+@menuexpandheight: 60%;
 
 .menu-group {
 	display: flex;
@@ -22,7 +23,7 @@
 		transition:
 			border-left .5s ease-in-out,
 			border-bottom .5s ease-in-out;
-    	border-left: 0px solid #444;
+		border-left: 0px solid #444;
 
 		& > h3 {
 			font-weight: 300;
@@ -40,7 +41,7 @@
 	}
 
 	&.open {
-		height: 72%;
+		height: @menuexpandheight;
 		padding-bottom: 12px;
 
 		& > .intro {

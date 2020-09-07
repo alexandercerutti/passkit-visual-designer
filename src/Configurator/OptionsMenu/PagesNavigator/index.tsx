@@ -5,6 +5,7 @@ import PanelsPage from "../pages/PanelsPage";
 import PageNavigationContext from "../pages/PageNavigationContext";
 import { RequestPageCreationFunction, PageNavigation, ContextPropsGetter } from "../pages/usePageFactory";
 import { PassMixedProps } from "../../../Pass";
+import { ShareIcon } from "../pages/PanelsPage/PanelGroup/icons";
 
 interface NavigatorState {
 	pagesHierarchy: Parameters<RequestPageCreationFunction>[];
@@ -100,6 +101,12 @@ export default class PagesNavigator extends React.Component<NavigatorProps, Navi
 							fields={this.props.fields}
 							data={this.props.data}
 						/>
+						<div className="menu-group" style={{ marginTop: "auto" }}>
+							<div className="intro" onClick={() => this.props.showExportModal()}>
+								<h3>Export</h3>
+								<ShareIcon className="icon" width="25px" height="25px" />
+							</div>
+						</div>
 					</div>
 					{pages}
 				</div>

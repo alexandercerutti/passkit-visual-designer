@@ -13,6 +13,7 @@ import { State } from "../store/state";
 import DefaultFields from "./staticFields";
 import { DataGroup } from "./OptionsMenu/pages/PanelsPage/PanelGroup";
 import { FieldSelectHandler } from "../Pass/layouts/sections/useRegistrations";
+import ExportModal from "./ExportModal";
 
 interface DispatchProps {
 	changePassPropValue: typeof changePassPropValue;
@@ -186,6 +187,17 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 						showExportModal={this.toggleExportModal}
 					/>
 				</div>
+				{this.state.showExportModal &&
+					<ExportModal
+						partners={[{
+							name: "Passkit-generator",
+							lang: "javascript",
+							template: `var x = {\n\tdescription: <!PKVD:inline description !>,\n\tserialNumber: <!PKVD:inline serialNumber !>\n}`
+						}]}
+						dataBank={this.props.passProps}
+						closeModal={this.toggleExportModal}
+					/>
+				}
 			</div>
 		);
 	}
