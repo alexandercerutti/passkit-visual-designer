@@ -27,6 +27,9 @@ export interface PassMixedProps {
 	backgroundColor?: string;
 	foregroundColor?: string;
 	labelColor?: string;
+	description?: string;
+	passTeamIdentifier?: string;
+	serialNumber?: string;
 
 	// URLs from redux middlewares
 	logo?: string;
