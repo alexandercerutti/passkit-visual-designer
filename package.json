@@ -41,6 +41,7 @@
 		"webpack-dev-server": "^3.11.0"
 	},
 	"dependencies": {
+		"date-fns": "^2.16.1",
 		"prismjs": "^1.21.0",
 		"react": "^16.8.6",
 		"react-color": "^2.18.0",

@@ -2,14 +2,15 @@ import * as React from "react";
 import { PKDateStyle } from "../../../constants";
 import { composeLabelValueStylesFromProps, FieldProperties, FieldTypes } from "./fieldCommons";
 import { SelectableComponent } from "../../sections/useRegistrations";
+import format from "date-fns/format";
 
 type ValueProps = Partial<SelectableComponent<never>> & {
 	fieldData: Partial<FieldProperties<FieldTypes.VALUE>>
 };
 
 /**
- * @TODO use svg text to allow it to resize manually
- */
+* @TODO use svg text to allow it to resize manually?
+*/
 
 export default function FieldValue(props: ValueProps) {
 	const { fieldData } = props;
@@ -40,7 +41,7 @@ function getValueFromProps(props: ValueProps) {
 		timeStyle !== PKDateStyle.None
 	);
 
-	if (isNaN(valueAsDate.getTime()) || !(shouldShowTime && shouldShowDate)) {
+	if (isNaN(valueAsDate.getTime()) || (!shouldShowTime && !shouldShowDate)) {
 		/**
 		 * Date parsing failed ("Invalid date").
 		 * Or it doesn't have to be parsed as date
@@ -53,11 +54,11 @@ function getValueFromProps(props: ValueProps) {
 	const timeValues = [];
 
 	if (shouldShowDate) {
-		timeValues.push(getDateValueFromDateStyle(dateStyle, value));
+		timeValues.push(getDateValueFromDateStyle(dateStyle, valueAsDate));
 	}
 
 	if (shouldShowTime) {
-		timeValues.push(getTimeValueFromTimeStyle(timeStyle, value));
+		timeValues.push(getTimeValueFromTimeStyle(timeStyle, valueAsDate));
 	}
 
 	return timeValues.join(" ");
@@ -66,17 +67,13 @@ function getValueFromProps(props: ValueProps) {
 function getDateValueFromDateStyle(dateStyle: PKDateStyle, value: Date) {
 	switch (dateStyle) {
 		case PKDateStyle.Short:
-			// @TODO: Parse Date as short
-			return value;
+			return format(value, "P");
 		case PKDateStyle.Medium:
-			// @TODO: Parse Date as medium
-			return value;
+			return format(value, "MMM dd, yyyy");
 		case PKDateStyle.Long:
-			// @TODO: Parse Date as long
-			return value;
+			return format(value, "MMMM dd, yyyy");
 		case PKDateStyle.Full:
-			// @TODO: Parse Date as full
-			return value;
+			return format(value, "PPPP G");
 		default:
 			return value;
 	}
@@ -85,17 +82,15 @@ function getDateValueFromDateStyle(dateStyle: PKDateStyle, value: Date) {
 function getTimeValueFromTimeStyle(timeStyle: PKDateStyle, value: Date) {
 	switch (timeStyle) {
 		case PKDateStyle.Short:
-			// @TODO: Parse Date as short
-			return value;
+			return format(value, "p");
 		case PKDateStyle.Medium:
-			// @TODO: Parse Date as medium
-			return value;
+			return format(value, "pp");
 		case PKDateStyle.Long:
-			// @TODO: Parse Date as long
-			return value;
+			// @TODO Timezone format (PST, GMT) should be added here
+			return format(value, "h:mm:ss a");
 		case PKDateStyle.Full:
-			// @TODO: Parse Date as full
-			return value;
+			// @TODO Timezone format (PST, GMT) as extended string should be added here
+			return format(value, "h:mm:ss a OOOO");
 		default:
 			return value;
 	}
