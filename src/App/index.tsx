@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Route } from "react-router-dom";
+import { Route, Redirect } from "react-router-dom";
 import PassSelector from "../PassSelector";
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware, compose } from "redux";
@@ -8,6 +8,9 @@ import SmoothRouter from "./SmoothRouter";
 import Configurator from "../Configurator";
 import { PKTextAlignment } from "../Pass/constants";
 import URLMiddleware from "../store/urlMiddleware";
+
+// Webpack valorized
+declare const isDevelopment: boolean;
 
 const composeEnhancers = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -122,7 +125,10 @@ export default function App(): JSX.Element {
 					<PassSelector />
 				</Route>
 				<Route path="/creator">
-					<Configurator />
+					{() => !(isDevelopment || store.getState()?.pass?.kind)
+						? <Redirect to="/select" />
+						: <Configurator />
+					}
 				</Route>
 				<Route component={null} />
 			</SmoothRouter>

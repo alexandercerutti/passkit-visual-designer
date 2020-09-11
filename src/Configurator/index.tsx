@@ -14,6 +14,7 @@ import DefaultFields from "./staticFields";
 import { DataGroup } from "./OptionsMenu/pages/PanelsPage/PanelGroup";
 import { FieldSelectHandler } from "../Pass/layouts/sections/useRegistrations";
 import ExportModal from "./ExportModal";
+import { PKTransitType } from "../Pass/constants";
 
 interface DispatchProps {
 	changePassPropValue: typeof changePassPropValue;
@@ -225,6 +226,15 @@ export default withRouter(connect(
 			pass: { kind, ...passProps },
 			media
 		} = state;
+
+		if (!kind && isDevelopment) {
+			return {
+				passProps: Object.assign({
+					transitType: PKTransitType.Boat,
+					kind: PassKind.BOARDING_PASS
+				}, passProps, media)
+			};
+		}
 
 		return {
 			kind,
