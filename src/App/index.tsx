@@ -2,24 +2,26 @@ import * as React from "react";
 import { Route, Redirect } from "react-router-dom";
 import PassSelector from "../PassSelector";
 import { Provider } from "react-redux";
-import { createStore, applyMiddleware, compose } from "redux";
+import { createStore, applyMiddleware } from "redux";
 import reducers from "../store/reducers";
 import SmoothRouter from "./SmoothRouter";
 import Configurator from "../Configurator";
+import { composeWithDevTools } from "redux-devtools-extension";
 import { PKTextAlignment } from "../Pass/constants";
 import URLMiddleware from "../store/urlMiddleware";
 
 // Webpack valorized
 declare const isDevelopment: boolean;
 
-const composeEnhancers = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const store = createStore(reducers,
+	// preloadedState,
+	composeWithDevTools(
+		applyMiddleware(URLMiddleware),
+		// applyMiddleware(PassKindMiddleware)
+	)
+);
 
 export default function App(): JSX.Element {
-	const { current: store } = React.useRef(createStore(reducers,
-		composeEnhancers(
-			applyMiddleware(URLMiddleware)
-		)
-	));
 	/* 		{
 				media: { */
 	/*logoText: "blablabla",*/
