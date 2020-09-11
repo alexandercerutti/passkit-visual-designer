@@ -29,7 +29,7 @@ export default function URLMiddleware(store: MiddlewareAPI<Dispatch, State>) {
 			return next(action);
 		}
 
-		next(Object.assign({}, action, {
+		return next(Object.assign({}, action, {
 			value: currentStore.media[action.key]
 		}));
 	}
