@@ -7,7 +7,7 @@ const URLPassProps = ["logo", "backgroundImage", "stripImage", "thumbnailImage",
 
 export default function URLMiddleware(store: MiddlewareAPI<Dispatch, State>) {
 	return (next: Dispatch<AnyAction>) => (action: SinglePropSettingAction) => {
-		if (action.type !== ConfigActions.CHANGE_VALUE) {
+		if (action.type !== ConfigActions.SET_SINGLE_PROP) {
 			return next(action);
 		}
 

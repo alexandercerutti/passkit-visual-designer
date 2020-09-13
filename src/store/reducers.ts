@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
 import { State, initialState } from "./state";
-import { SelectionAction, ActionTypes, SinglePropSettingAction, ConfigActions } from "./actions";
+import { SinglePropSettingAction, ConfigActions } from "./actions";
 
 /**
  * Reducer for actions in PassSelector
@@ -9,18 +9,25 @@ import { SelectionAction, ActionTypes, SinglePropSettingAction, ConfigActions } 
  * @param action
  */
 
-function pass(state = initialState.pass, action: SelectionAction): State["pass"] {
+function pass(state = initialState.pass, action: SinglePropSettingAction): State["pass"] {
 	switch (action.type) {
-		case ActionTypes.SET_PASS_KIND: {
+		case ConfigActions.SET_PASS_KIND: {
 			return {
 				...state,
-				kind: action.kind,
+				[action.key]: action.value,
 			};
 		}
-		case ActionTypes.SET_PROPS: {
+
+		case ConfigActions.SET_SINGLE_PROP: {
+			// Array buffers that come from URLMiddleware as blobs must not be
+			// stored here but in media
+			if (typeof action.value === "string" && action.value.includes("blob:")) {
+				return state;
+			}
+
 			return {
 				...state,
-				...action.props
+				[action.key]: action.value
 			};
 		}
 
@@ -32,7 +39,11 @@ function pass(state = initialState.pass, action: SelectionAction): State["pass"]
 
 export function media(state = initialState.media, action: SinglePropSettingAction): State["media"] {
 	switch (action.type) {
-		case ConfigActions.CHANGE_VALUE: {
+		case ConfigActions.SET_SINGLE_PROP: {
+			if (typeof action.value !== "string" || !action.value.includes("blob:")) {
+				return state;
+			}
+
 			return {
 				...state,
 				[action.key]: action.value

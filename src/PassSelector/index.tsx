@@ -120,6 +120,12 @@ class PassSelector extends React.PureComponent<SelectorProps> {
 }
 
 export default withRouter(connect(
-	({ pass }: State) => ({ selectedPassKind: pass.kind }),
+	({ pass }: State) => {
+		const PassKeys = Object.keys(pass);
+		const passKinds = Object.values(PassKind) as string[];
+		const selectedPassKind = PassKeys.find(key => passKinds.includes(key));
+
+		return { selectedPassKind };
+	},
 	{ setPassKind, setPassProps }
 )(PassSelector));

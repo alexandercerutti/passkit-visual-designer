@@ -8,6 +8,7 @@ import SmoothRouter from "./SmoothRouter";
 import Configurator from "../Configurator";
 import { composeWithDevTools } from "redux-devtools-extension";
 import { PKTextAlignment } from "../Pass/constants";
+import thunk from "redux-thunk";
 import URLMiddleware from "../store/urlMiddleware";
 
 // Webpack valorized
@@ -17,7 +18,7 @@ const store = createStore(reducers,
 	// preloadedState,
 	composeWithDevTools(
 		applyMiddleware(URLMiddleware),
-		// applyMiddleware(PassKindMiddleware)
+		applyMiddleware(thunk),
 	)
 );
 
