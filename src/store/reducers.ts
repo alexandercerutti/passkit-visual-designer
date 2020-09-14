@@ -11,13 +11,6 @@ import { SinglePropSettingAction, ConfigActions } from "./actions";
 
 function pass(state = initialState.pass, action: SinglePropSettingAction): State["pass"] {
 	switch (action.type) {
-		case ConfigActions.SET_PASS_KIND: {
-			return {
-				...state,
-				[action.key]: action.value,
-			};
-		}
-
 		case ConfigActions.SET_SINGLE_PROP: {
 			// Array buffers that come from URLMiddleware as blobs must not be
 			// stored here but in media

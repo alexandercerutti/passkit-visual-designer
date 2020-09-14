@@ -21,7 +21,6 @@ interface DispatchProps {
 }
 
 interface ConfiguratorStore {
-	kind: PassKind;
 	passProps: PassMixedProps;
 }
 
@@ -220,25 +219,20 @@ function convertFieldKindToDataGroup(kind: FieldKind): DataGroup {
 	return undefined
 }
 
+// Webpack defined
+declare const isDevelopment: boolean;
+
 export default withRouter(connect(
 	(state: State): ConfiguratorStore => {
-		const {
-			pass: { kind, ...passProps },
-			media
-		} = state;
+		const { pass, media } = state;
 
-		if (!kind && isDevelopment) {
-			return {
-				passProps: Object.assign({
-					transitType: PKTransitType.Boat,
-					kind: PassKind.BOARDING_PASS
-				}, passProps, media)
-			};
-		}
+		const fallbackDevelopmentPassMetadata = !pass.kind && isDevelopment && {
+			transitType: PKTransitType.Boat,
+			kind: PassKind.BOARDING_PASS
+		} || {};
 
 		return {
-			kind,
-			passProps: Object.assign({}, passProps, media),
+			passProps: Object.assign(fallbackDevelopmentPassMetadata, pass, media),
 		};
 	},
 	{ changePassPropValue }

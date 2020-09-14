@@ -16,12 +16,8 @@ export enum ConfigActions {
 
 // Action Creators
 
-export function setPassKind(kind: PassKind): SinglePropSettingAction {
-	return {
-		type: ConfigActions.SET_PASS_KIND,
-		key: kind,
-		value: {}
-	};
+export function setPassKind(kind: PassKind) {
+	return changePassPropValue("kind", kind);
 }
 
 export function setPassProps(props: PassMixedProps): ThunkAction<any, any, any, SinglePropSettingAction> {
