@@ -12,6 +12,13 @@ import { SinglePropSettingAction, ConfigActions } from "./actions";
 function pass(state = initialState.pass, action: SinglePropSettingAction): State["pass"] {
 	switch (action.type) {
 		case ConfigActions.SET_SINGLE_PROP: {
+			if (!action.value && state[action.key]) {
+				const stateCopy = { ...state };
+				delete stateCopy[action.key];
+
+				return stateCopy;
+			}
+
 			// Array buffers that come from URLMiddleware as blobs must not be
 			// stored here but in media
 			if (typeof action.value === "string" && action.value.includes("blob:")) {
@@ -33,6 +40,13 @@ function pass(state = initialState.pass, action: SinglePropSettingAction): State
 export function media(state = initialState.media, action: SinglePropSettingAction): State["media"] {
 	switch (action.type) {
 		case ConfigActions.SET_SINGLE_PROP: {
+			if (!action.value && state[action.key]) {
+				const stateCopy = { ...state };
+				delete stateCopy[action.key];
+
+				return stateCopy;
+			}
+
 			if (typeof action.value !== "string" || !action.value.includes("blob:")) {
 				return state;
 			}
