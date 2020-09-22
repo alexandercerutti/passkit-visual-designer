@@ -3,9 +3,9 @@ import { Action } from "redux";
 import { PassMixedProps } from "../Pass";
 import { ThunkAction } from "redux-thunk";
 
-export interface SinglePropSettingAction extends Action<ConfigActions> {
+export interface SinglePropSettingAction<T = any> extends Action<ConfigActions> {
 	key: keyof PassMixedProps;
-	value: any;
+	value: T;
 }
 
 export enum ConfigActions {

@@ -47,6 +47,8 @@ export interface PassMixedProps {
 	storeCard?: Partial<WalletPassFormat.StoreCard>;
 }
 
+export type MediaProps = Pick<PassMixedProps, "backgroundImage" | "footerImage" | "logo" | "thumbnailImage" | "stripImage">;
+
 export interface PassProps extends PassMixedProps, Partial<InteractionContextMethods> {
 	showBack?: boolean;
 }

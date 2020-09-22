@@ -8,7 +8,7 @@ import OptionsMenu, { RegisteredFieldsMap } from "./OptionsMenu";
 import { FieldKind, PassKind } from "../model";
 import { InteractionContextMethods } from "../Pass/InteractionContext";
 import { connect } from "react-redux";
-import { PassMixedProps } from "../Pass";
+import { PassMixedProps, MediaProps } from "../Pass";
 import { State } from "../store/state";
 import DefaultFields from "./staticFields";
 import { DataGroup } from "./OptionsMenu/pages/PanelsPage/PanelGroup";
@@ -22,6 +22,7 @@ interface DispatchProps {
 
 interface ConfiguratorStore {
 	passProps: PassMixedProps;
+	mediaBuffers: Partial<Record<keyof MediaProps, ArrayBuffer>>;
 }
 
 interface ConfiguratorProps extends ConfiguratorStore, DispatchProps, RouteComponentProps<any> { }
@@ -224,7 +225,7 @@ declare const isDevelopment: boolean;
 
 export default withRouter(connect(
 	(state: State): ConfiguratorStore => {
-		const { pass, media } = state;
+		const { pass, media, rawMedia: mediaBuffers } = state;
 
 		const fallbackDevelopmentPassMetadata = !pass.kind && isDevelopment && {
 			transitType: PKTransitType.Boat,
@@ -233,6 +234,7 @@ export default withRouter(connect(
 
 		return {
 			passProps: Object.assign(fallbackDevelopmentPassMetadata, pass, media),
+			mediaBuffers
 		};
 	},
 	{ changePassPropValue }
