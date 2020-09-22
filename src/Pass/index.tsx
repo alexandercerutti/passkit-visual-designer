@@ -30,6 +30,10 @@ export interface PassMixedProps {
 	description?: string;
 	passTeamIdentifier?: string;
 	serialNumber?: string;
+	organizationName?: string;
+	passTypeIdentifier?: string;
+	teamIdentifier?: string;
+	formatVersion?: 1;
 
 	// URLs from redux middlewares
 	logo?: string;

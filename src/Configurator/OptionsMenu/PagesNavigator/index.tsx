@@ -17,7 +17,7 @@ interface NavigatorProps {
 	data: PassMixedProps;
 	cancelFieldSelection(): void;
 	onValueChange(key: string, value: any): Promise<boolean>;
-	showExportModal(): void;
+	requestExport(): void;
 }
 
 export default class PagesNavigator extends React.Component<NavigatorProps, NavigatorState> implements PageNavigation {
@@ -101,8 +101,8 @@ export default class PagesNavigator extends React.Component<NavigatorProps, Navi
 							fields={this.props.fields}
 							data={this.props.data}
 						/>
-						<div className="menu-group" style={{ marginTop: "auto" }}>
-							<div className="intro" onClick={() => this.props.showExportModal()}>
+						<div className="menu-group" style={{ marginTop: "auto", pointerEvents: this.props.requestExport ? "auto" : "none" }}>
+							<div className="intro" onClick={() => this.props.requestExport?.()}>
 								<h3>Export</h3>
 								<ShareIcon className="icon" width="25px" height="25px" />
 							</div>

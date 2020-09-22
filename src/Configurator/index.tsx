@@ -15,6 +15,7 @@ import { DataGroup } from "./OptionsMenu/pages/PanelsPage/PanelGroup";
 import { FieldSelectHandler } from "../Pass/layouts/sections/useRegistrations";
 import ExportModal from "./ExportModal";
 import { PKTransitType } from "../Pass/constants";
+import JSZip from "jszip";
 
 interface DispatchProps {
 	changePassPropValue: typeof changePassPropValue;
@@ -32,6 +33,7 @@ interface ConfiguratorState {
 	shouldShowPassBack: boolean;
 	emptyFieldsVisible: boolean;
 	showExportModal: boolean;
+	canBeExported: boolean;
 }
 
 class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState> implements InteractionContextMethods {
@@ -45,6 +47,7 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 		this.rotatePass = this.rotatePass.bind(this);
 		this.toggleEmptyVisibility = this.toggleEmptyVisibility.bind(this);
 		this.toggleExportModal = this.toggleExportModal.bind(this);
+		this.requestExport = this.requestExport.bind(this);
 
 		this.state = {
 			selectedFieldId: null,
@@ -52,6 +55,21 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 			shouldShowPassBack: false,
 			emptyFieldsVisible: true,
 			showExportModal: false,
+			canBeExported: false,
+		};
+	}
+
+	static getDerivedStateFromProps(props: ConfiguratorProps) {
+		const { description, organizationName, passTypeIdentifier, teamIdentifier } = props?.passProps ?? {};
+
+		if (!(description && organizationName && passTypeIdentifier && teamIdentifier)) {
+			return {
+				canBeExported: false
+			};
+		}
+
+		return {
+			canBeExported: true
 		};
 	}
 
@@ -160,6 +178,65 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 		}));
 	}
 
+	async requestExport() {
+		// @TODO: check requirements for exporting
+		// so all the basic fields and so on.
+
+		this.toggleExportModal();
+
+		const zip = new JSZip();
+
+		/**
+		 * Creating physical files
+		 */
+
+		const mediaKeys = Object.keys(this.props.mediaBuffers) as (keyof PassMixedProps)[];
+
+		for (let i = mediaKeys.length, prop: string; prop = mediaKeys[--i];) {
+			const content = this.props.mediaBuffers[prop];
+			zip.file(`${prop}.png`, content);
+		}
+
+		/**
+		 * Adding properties to pass.json
+		 */
+
+		const passJsonKeysExcludedKeys: (keyof PassMixedProps)[] = [
+			...mediaKeys,
+			"headerFields", "auxiliaryFields", "primaryFields", "secondaryFields", "backFields",
+			"transitType",
+			"boardingPass", "coupon", "storeCard", "generic", "eventTicket",
+		];
+
+		const passJsonKeys = (Object.keys(this.props.passProps) as (keyof PassMixedProps)[])
+			.filter(prop => !passJsonKeysExcludedKeys.includes(prop));
+
+		const passJSONObject = passJsonKeys.reduce<PassMixedProps>((acc, current) => ({
+			...acc,
+			[current]: this.props.passProps[current]
+		}), {
+			formatVersion: 1
+		});
+
+		const passJSONString = JSON.stringify(passJSONObject);
+		zip.file("pass.json", passJSONString, { binary: false });
+
+		console.log(zip);
+
+		const templateFile = await zip.generateAsync({ type: "blob" });
+		const fileURL = URL.createObjectURL(templateFile);
+
+		var ahref = document.createElement("a");
+		ahref.setAttribute("download", "your template.zip");
+		ahref.href = fileURL;
+		ahref.click();
+
+		setTimeout(() => {
+			console.log("destroying URL ref");
+			URL.revokeObjectURL(fileURL);
+		}, 10000);
+	}
+
 	render() {
 		return (
 			<div id="configurator">
@@ -185,7 +262,7 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 						registeredFields={this.state.registeredFields}
 						onValueChange={this.onValueChange}
 						cancelFieldSelection={this.onVoidClick}
-						showExportModal={this.toggleExportModal}
+						requestExport={this.state.canBeExported && this.requestExport || null}
 					/>
 				</div>
 				{this.state.showExportModal &&
