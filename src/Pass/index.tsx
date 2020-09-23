@@ -40,11 +40,11 @@ export interface PassMixedProps {
 	backgroundImage?: string;
 	thumbnailImage?: string;
 	stripImage?: string;
-	appLogo?: string;
+	icon?: string;
 	footerImage?: string;
 }
 
-export type MediaProps = Pick<PassMixedProps, "backgroundImage" | "footerImage" | "logo" | "thumbnailImage" | "stripImage">;
+export type MediaProps = Pick<PassMixedProps, "backgroundImage" | "footerImage" | "logo" | "thumbnailImage" | "stripImage" | "icon">;
 
 export interface PassProps extends PassMixedProps, Partial<InteractionContextMethods> {
 	showBack?: boolean;

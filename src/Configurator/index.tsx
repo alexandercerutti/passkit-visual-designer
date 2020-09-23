@@ -207,7 +207,7 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 
 		const {
 			headerFields, auxiliaryFields, primaryFields, secondaryFields, backFields, transitType,
-			kind, logo, backgroundImage, thumbnailImage, stripImage, appLogo, footerImage, ...topLevelProps
+			kind, logo, backgroundImage, thumbnailImage, stripImage, icon, footerImage, ...topLevelProps
 		} = this.props.passProps;
 
 		const passJSONObject = {

@@ -3,7 +3,7 @@ import { Dispatch, AnyAction, MiddlewareAPI } from "redux";
 import { SinglePropSettingAction, ConfigActions } from "./actions";
 
 // @IDEA treat all ArrayBuffers as to be stored as URL?
-const URLPassProps = ["logo", "backgroundImage", "stripImage", "thumbnailImage", "appIcon", "footerImage"];
+const URLPassProps = ["logo", "backgroundImage", "stripImage", "thumbnailImage", "icon", "footerImage"];
 
 export default function URLMiddleware(store: MiddlewareAPI<Dispatch, State>) {
 	return (next: Dispatch<AnyAction>) => (action: SinglePropSettingAction<ArrayBuffer>) => {

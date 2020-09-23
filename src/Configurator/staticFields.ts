@@ -55,7 +55,7 @@ const StaticFields: Array<[DataGroup, FieldDetails[]]> = [
 		}, */
 	]],
 	[DataGroup.IMAGES, [{
-		name: "appIcon",
+		name: "icon",
 		kind: FieldKind.IMAGE,
 	}]],
 	[DataGroup.COLORS, [{
