@@ -234,10 +234,9 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 		ahref.href = fileURL;
 		ahref.click();
 
-		setTimeout(() => {
-			console.log("destroying URL ref");
-			URL.revokeObjectURL(fileURL);
-		}, 10000);
+		// @TODO discuss if a setTimeout is needed here
+		// to delay url destroy.
+		URL.revokeObjectURL(fileURL);
 	}
 
 	render() {
