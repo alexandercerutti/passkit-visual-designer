@@ -184,16 +184,17 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 
 		this.toggleExportModal();
 
+		const { mediaBuffers, passProps } = this.props;
 		const zip = new JSZip();
 
 		/**
 		 * Creating physical files
 		 */
 
-		const mediaKeys = Object.keys(this.props.mediaBuffers) as (keyof PassMixedProps)[];
+		const mediaKeys = Object.keys(mediaBuffers) as (keyof PassMixedProps)[];
 
 		for (let i = mediaKeys.length, prop: string; prop = mediaKeys[--i];) {
-			const content = this.props.mediaBuffers[prop];
+			const content = mediaBuffers[prop];
 			zip.file(`${prop.replace(/image/ig, "")}.png`, content);
 		}
 
@@ -208,7 +209,7 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 		const {
 			headerFields, auxiliaryFields, primaryFields, secondaryFields, backFields, transitType,
 			kind, logo, backgroundImage, thumbnailImage, stripImage, icon, footerImage, ...topLevelProps
-		} = this.props.passProps;
+		} = passProps;
 
 		const passJSONObject = {
 			...topLevelProps,
