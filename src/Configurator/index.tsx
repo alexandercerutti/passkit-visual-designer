@@ -229,7 +229,7 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 		const templateFile = await zip.generateAsync({ type: "blob" });
 		const fileURL = URL.createObjectURL(templateFile);
 
-		var ahref = document.createElement("a");
+		const ahref = document.createElement("a");
 		ahref.setAttribute("download", "your template.zip");
 		ahref.href = fileURL;
 		ahref.click();
