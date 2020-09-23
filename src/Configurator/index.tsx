@@ -194,34 +194,37 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 
 		for (let i = mediaKeys.length, prop: string; prop = mediaKeys[--i];) {
 			const content = this.props.mediaBuffers[prop];
-			zip.file(`${prop}.png`, content);
+			zip.file(`${prop.replace(/image/ig, "")}.png`, content);
 		}
 
 		/**
 		 * Adding properties to pass.json
+		 * But first... let me take a selfie! 🤳✌
+		 *
+		 * JK, first we are excluding the ones we want to handle
+		 * separately or completely exclude.
 		 */
 
-		const passJsonKeysExcludedKeys: (keyof PassMixedProps)[] = [
-			...mediaKeys,
-			"headerFields", "auxiliaryFields", "primaryFields", "secondaryFields", "backFields",
-			"transitType",
-			"boardingPass", "coupon", "storeCard", "generic", "eventTicket",
-		];
+		const {
+			headerFields, auxiliaryFields, primaryFields, secondaryFields, backFields, transitType,
+			kind, logo, backgroundImage, thumbnailImage, stripImage, appLogo, footerImage, ...topLevelProps
+		} = this.props.passProps;
 
-		const passJsonKeys = (Object.keys(this.props.passProps) as (keyof PassMixedProps)[])
-			.filter(prop => !passJsonKeysExcludedKeys.includes(prop));
-
-		const passJSONObject = passJsonKeys.reduce<PassMixedProps>((acc, current) => ({
-			...acc,
-			[current]: this.props.passProps[current]
-		}), {
-			formatVersion: 1
-		});
+		const passJSONObject = {
+			...topLevelProps,
+			formatVersion: 1,
+			[kind]: {
+				headerFields,
+				auxiliaryFields,
+				primaryFields,
+				secondaryFields,
+				backFields,
+				transitType
+			}
+		};
 
 		const passJSONString = JSON.stringify(passJSONObject);
 		zip.file("pass.json", passJSONString, { binary: false });
-
-		console.log(zip);
 
 		const templateFile = await zip.generateAsync({ type: "blob" });
 		const fileURL = URL.createObjectURL(templateFile);

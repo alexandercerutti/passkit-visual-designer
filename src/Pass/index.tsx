@@ -42,13 +42,6 @@ export interface PassMixedProps {
 	stripImage?: string;
 	appLogo?: string;
 	footerImage?: string;
-
-	// PassKinds
-	boardingPass?: Partial<WalletPassFormat.BoardingPass>;
-	coupon?: Partial<WalletPassFormat.Coupon>;
-	eventTicket?: Partial<WalletPassFormat.EventTicket>;
-	generic?: Partial<WalletPassFormat.Generic>;
-	storeCard?: Partial<WalletPassFormat.StoreCard>;
 }
 
 export type MediaProps = Pick<PassMixedProps, "backgroundImage" | "footerImage" | "logo" | "thumbnailImage" | "stripImage">;
