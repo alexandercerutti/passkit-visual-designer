@@ -61,8 +61,9 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 
 	static getDerivedStateFromProps(props: ConfiguratorProps) {
 		const { description, organizationName, passTypeIdentifier, teamIdentifier } = props?.passProps ?? {};
+		const { icon } = props?.mediaBuffers;
 
-		if (!(description && organizationName && passTypeIdentifier && teamIdentifier)) {
+		if (!(description && organizationName && passTypeIdentifier && teamIdentifier && icon)) {
 			return {
 				canBeExported: false
 			};
