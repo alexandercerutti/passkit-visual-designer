@@ -2,8 +2,12 @@ import { PassKind } from "../model";
 import { Action } from "redux";
 import { PassMixedProps } from "../Pass";
 import { ThunkAction } from "redux-thunk";
+import { State } from "./state";
 
 export type PassProps = keyof PassMixedProps;
+export type ProjectOptions = State["projectOptions"];
+export type POKeys = keyof ProjectOptions;
+export type POValues = ProjectOptions[POKeys];
 
 export interface SinglePropSettingAction<K extends string, V = any> extends Action<ConfigActions> {
 	key: K;
@@ -11,12 +15,21 @@ export interface SinglePropSettingAction<K extends string, V = any> extends Acti
 }
 
 export enum ConfigActions {
+	SET_PROJECT_OPT = "setProjectOption",
 	SET_SINGLE_PROP = "changeSingleProp",
 	SET_PASS_KIND = "setPassKind",
 	SET_PROPS = "setProps"
 }
 
 // Action Creators
+
+export function setProjectOption(key: POKeys, value: POValues): SinglePropSettingAction<POKeys, POValues> {
+	return {
+		type: ConfigActions.SET_PROJECT_OPT,
+		key,
+		value,
+	};
+}
 
 export function setPassKind(kind: PassKind) {
 	return changePassPropValue("kind", kind);

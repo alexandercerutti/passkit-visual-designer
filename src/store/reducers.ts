@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
 import { State, initialState } from "./state";
-import { SinglePropSettingAction, ConfigActions } from "./actions";
+import { SinglePropSettingAction, ConfigActions, PassProps, ProjectOptions, POKeys, POValues } from "./actions";
 
 /**
  * Reducer for actions in PassSelector
@@ -89,6 +89,20 @@ export function rawMedia(state = initialState.rawMedia, action: SinglePropSettin
 	}
 }
 
+export function projectOptions(state = initialState.projectOptions, action: SinglePropSettingAction<POKeys, POValues>): ProjectOptions {
+	if (!action.value) {
+		const stateCopy = { ...state };
+
+		delete stateCopy[action.key];
+		return stateCopy;
+	}
+
+	return {
+		...state,
+		[action.key]: action.value
+	};
+}
+
 function isMedia(value: any) {
 	return (
 		value instanceof Array &&
@@ -101,5 +115,6 @@ function isMedia(value: any) {
 export default combineReducers<State>({
 	pass,
 	media,
-	rawMedia
+	rawMedia,
+	projectOptions,
 });
