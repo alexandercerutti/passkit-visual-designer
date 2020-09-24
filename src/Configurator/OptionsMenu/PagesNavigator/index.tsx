@@ -6,6 +6,7 @@ import PageNavigationContext from "../pages/PageNavigationContext";
 import { RequestPageCreationFunction, PageNavigation, ContextPropsGetter } from "../pages/usePageFactory";
 import { PassMixedProps } from "../../../Pass";
 import { ShareIcon } from "../pages/PanelsPage/PanelGroup/icons";
+import { createClassName } from "../../../utils";
 
 interface NavigatorState {
 	pagesHierarchy: Parameters<RequestPageCreationFunction>[];
@@ -86,6 +87,10 @@ export default class PagesNavigator extends React.Component<NavigatorProps, Navi
 			);
 		});
 
+		const exportButtonClassName = createClassName(["menu-group"], {
+			disabled: !this.props.requestExport
+		});
+
 		return (
 			<PageNavigationContext.Provider
 				value={{
@@ -101,7 +106,7 @@ export default class PagesNavigator extends React.Component<NavigatorProps, Navi
 							fields={this.props.fields}
 							data={this.props.data}
 						/>
-						<div className="menu-group" style={{ marginTop: "auto", pointerEvents: this.props.requestExport ? "auto" : "none" }}>
+						<div className={exportButtonClassName} style={{ marginTop: "auto" }}>
 							<div className="intro" onClick={() => this.props.requestExport?.()}>
 								<h3>Export</h3>
 								<ShareIcon className="icon" width="25px" height="25px" />

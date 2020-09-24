@@ -62,4 +62,18 @@
 		background-color: #282828;
 		.scrollableWithoutScrollbars(y);
 	}
+
+	&.disabled {
+		pointer-events: none;
+
+		& .intro {
+			& h3 {
+				color: #464646;
+			}
+
+			& svg {
+				fill: #464646;
+			}
+		}
+	}
 }
