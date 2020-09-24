@@ -20,4 +20,41 @@
 			pointer-events: none;
 		}
 	}
+
+	& > .project-title-box {
+		position: absolute;
+		top: 30px;
+		left: 30px;
+		width: 200px;
+
+		& input {
+			width: 100%;
+			font-size: 1.3em;
+			background-color: transparent;
+			border: none;
+			outline: none;
+			padding: 5px;
+			color: #e6e6e6;
+			box-sizing: border-box;
+
+			&::selection {
+				background-color: #1c1c1c;
+				color: #e6e6e6;
+			}
+		}
+
+		&::before {
+			border-bottom: 0.5px solid #525252;
+			width: 0px;
+			content: "";
+			position: absolute;
+			height: 100%;
+			pointer-events: none;
+			transition: width .5s ease-in-out;
+		}
+
+		&:focus-within::before {
+			width: 100%;
+		}
+	}
 }

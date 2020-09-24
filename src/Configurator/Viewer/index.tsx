@@ -7,6 +7,8 @@ import { createClassName } from "../../utils";
 export interface ViewerProps extends PassProps {
 	showEmpty: boolean;
 	onVoidClick(e: React.MouseEvent): void;
+	projectTitle?: string;
+	changeProjectTitle(title: string): void;
 }
 
 export default function Viewer(props: ViewerProps) {
@@ -16,8 +18,32 @@ export default function Viewer(props: ViewerProps) {
 		"no-empty": !props.showEmpty
 	});
 
+	const projectTitleOnFocusHandler = React.useRef(({ currentTarget }: React.FocusEvent<HTMLInputElement>) => {
+		// To select all the text in the input - figma style
+		currentTarget.select();
+	});
+
+	const projectTitleOnKeyDownHandler = React.useRef(({ key, currentTarget }: React.KeyboardEvent<HTMLInputElement>) => {
+		key === "Enter" && currentTarget.blur();
+	});
+
+	const projectTitleOnBlurHandler = React.useRef(({ currentTarget }: React.ChangeEvent<HTMLInputElement>) => {
+		const { value } = currentTarget;
+		props.changeProjectTitle(value || undefined);
+	});
+
 	return (
 		<div className={viewerCN} onClick={(e) => props.onVoidClick(e)}>
+			<div className="project-title-box">
+				<input
+					type="text"
+					defaultValue={props.projectTitle || ""}
+					placeholder="Untitled Project"
+					onFocus={projectTitleOnFocusHandler.current}
+					onKeyDown={projectTitleOnKeyDownHandler.current}
+					onBlur={projectTitleOnBlurHandler.current}
+				/>
+			</div>
 			<InteractionContext.Provider value={registrationProps}>
 				<Pass
 					{...passProps}

@@ -1,7 +1,7 @@
 import * as React from "react";
 import "./style.less";
 import { RouteComponentProps, withRouter } from "react-router-dom";
-import { changePassPropValue } from "../store/actions";
+import { changePassPropValue, setProjectOption, ProjectOptions } from "../store/actions";
 import Viewer from "./Viewer";
 import OptionsBar from "./OptionsBar";
 import OptionsMenu, { RegisteredFieldsMap } from "./OptionsMenu";
@@ -19,11 +19,13 @@ import JSZip from "jszip";
 
 interface DispatchProps {
 	changePassPropValue: typeof changePassPropValue;
+	setProjectOption: typeof setProjectOption;
 }
 
 interface ConfiguratorStore {
 	passProps: PassMixedProps;
 	mediaBuffers: Partial<Record<keyof MediaProps, ArrayBuffer>>;
+	projectOptions: ProjectOptions;
 }
 
 interface ConfiguratorProps extends ConfiguratorStore, DispatchProps, RouteComponentProps<any> { }
@@ -48,6 +50,7 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 		this.toggleEmptyVisibility = this.toggleEmptyVisibility.bind(this);
 		this.toggleExportModal = this.toggleExportModal.bind(this);
 		this.requestExport = this.requestExport.bind(this);
+		this.changeProjectTitle = this.changeProjectTitle.bind(this);
 
 		this.state = {
 			selectedFieldId: null,
@@ -179,6 +182,10 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 		}));
 	}
 
+	changeProjectTitle(title: string) {
+		this.props.setProjectOption("title", title);
+	}
+
 	async requestExport() {
 		// @TODO: check requirements for exporting
 		// so all the basic fields and so on.
@@ -232,7 +239,7 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 		const fileURL = URL.createObjectURL(templateFile);
 
 		Object.assign(document.createElement("a"), {
-			download: "your template.zip",
+			download: `${this.props.projectOptions.title ?? "untitled project"}.zip`,
 			href: fileURL
 		}).click();
 
@@ -252,6 +259,8 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 						onVoidClick={this.onVoidClick}
 						showBack={this.state.shouldShowPassBack}
 						showEmpty={this.state.emptyFieldsVisible}
+						projectTitle={this.props.projectOptions?.title}
+						changeProjectTitle={this.changeProjectTitle}
 					/>
 					<OptionsBar
 						rotatePass={this.rotatePass}
@@ -306,7 +315,7 @@ declare const isDevelopment: boolean;
 
 export default withRouter(connect(
 	(state: State): ConfiguratorStore => {
-		const { pass, media, rawMedia: mediaBuffers } = state;
+		const { pass, media, rawMedia: mediaBuffers, projectOptions } = state;
 
 		const fallbackDevelopmentPassMetadata = !pass.kind && isDevelopment && {
 			transitType: PKTransitType.Boat,
@@ -315,8 +324,9 @@ export default withRouter(connect(
 
 		return {
 			passProps: Object.assign(fallbackDevelopmentPassMetadata, pass, media),
-			mediaBuffers
+			mediaBuffers,
+			projectOptions
 		};
 	},
-	{ changePassPropValue }
+	{ changePassPropValue, setProjectOption }
 )(Configurator));
