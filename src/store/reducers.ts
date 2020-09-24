@@ -9,7 +9,7 @@ import { SinglePropSettingAction, ConfigActions } from "./actions";
  * @param action
  */
 
-function pass(state = initialState.pass, action: SinglePropSettingAction): State["pass"] {
+function pass(state = initialState.pass, action: SinglePropSettingAction<PassProps>): State["pass"] {
 	switch (action.type) {
 		case ConfigActions.SET_SINGLE_PROP: {
 			if (!action.value && state[action.key]) {
@@ -37,7 +37,7 @@ function pass(state = initialState.pass, action: SinglePropSettingAction): State
 	}
 }
 
-export function media(state = initialState.media, action: SinglePropSettingAction): State["media"] {
+export function media(state = initialState.media, action: SinglePropSettingAction<PassProps>): State["media"] {
 	switch (action.type) {
 		case ConfigActions.SET_SINGLE_PROP: {
 			if (!action.value && state[action.key]) {
@@ -63,7 +63,7 @@ export function media(state = initialState.media, action: SinglePropSettingActio
 	}
 }
 
-export function rawMedia(state = initialState.rawMedia, action: SinglePropSettingAction<[string, ArrayBuffer]>): State["rawMedia"] {
+export function rawMedia(state = initialState.rawMedia, action: SinglePropSettingAction<PassProps, [string, ArrayBuffer]>): State["rawMedia"] {
 	switch (action.type) {
 		case ConfigActions.SET_SINGLE_PROP: {
 			if (!action.value && state[action.key]) {

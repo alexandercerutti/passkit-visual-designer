@@ -3,9 +3,11 @@ import { Action } from "redux";
 import { PassMixedProps } from "../Pass";
 import { ThunkAction } from "redux-thunk";
 
-export interface SinglePropSettingAction<T = any> extends Action<ConfigActions> {
-	key: keyof PassMixedProps;
-	value: T;
+export type PassProps = keyof PassMixedProps;
+
+export interface SinglePropSettingAction<K extends string, V = any> extends Action<ConfigActions> {
+	key: K;
+	value: V;
 }
 
 export enum ConfigActions {
@@ -20,7 +22,7 @@ export function setPassKind(kind: PassKind) {
 	return changePassPropValue("kind", kind);
 }
 
-export function setPassProps(props: PassMixedProps): ThunkAction<any, any, any, SinglePropSettingAction> {
+export function setPassProps(props: PassMixedProps): ThunkAction<any, any, any, SinglePropSettingAction<PassProps>> {
 	return (dispatch) => {
 		const keys = Object.keys(props) as (keyof PassMixedProps)[];
 		for (let i = keys.length, key: keyof PassMixedProps; key = keys[--i];) {
@@ -32,7 +34,7 @@ export function setPassProps(props: PassMixedProps): ThunkAction<any, any, any, 
 	};
 }
 
-export function changePassPropValue(key: SinglePropSettingAction["key"], value: SinglePropSettingAction["value"]): SinglePropSettingAction {
+export function changePassPropValue(key: SinglePropSettingAction<PassProps>["key"], value: SinglePropSettingAction<PassProps>["value"]): SinglePropSettingAction<PassProps> {
 	return {
 		type: ConfigActions.SET_SINGLE_PROP,
 		key,
