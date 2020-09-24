@@ -26,6 +26,8 @@
 		top: 30px;
 		left: 30px;
 		width: 200px;
+		opacity: 0;
+		animation: appearance .5s ease-in-out 2s forwards;
 
 		& input {
 			width: 100%;
@@ -57,4 +59,9 @@
 			width: 100%;
 		}
 	}
+}
+
+@keyframes appearance {
+	from { opacity: 0; }
+	to { opacity: 1; }
 }
