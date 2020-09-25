@@ -30,14 +30,7 @@ export function Coupon(props: CouponProps): JSX.Element {
 		logoText
 	} = props;
 
-	const context = React.useContext(InteractionContext);
-	const { onFieldSelect, registerField } = context;
-
-	if (Object.keys(context).length) {
-		useRegistrations(context.registerField, [
-			[FieldKind.IMAGE, "backgroundImage"]
-		]);
-	}
+	const { onFieldSelect, registerField } = React.useContext(InteractionContext);
 
 	return (
 		<>
