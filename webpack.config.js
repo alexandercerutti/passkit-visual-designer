@@ -69,7 +69,7 @@ module.exports = {
 			template: "./src/public/index.html",
 			filename: "./index.html"
 		}),
-		new forkTsCheckerWebpackPlugin({ checkSyntacticErrors: true }),
+		new forkTsCheckerWebpackPlugin(),
 		new DefinePlugin({
 			isDevelopment: process.env.NODE_ENV === "dev"
 		}),
