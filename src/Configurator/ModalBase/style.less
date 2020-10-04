@@ -1,0 +1,34 @@
+#modal {
+	z-index: 999;
+	opacity: 0;
+	animation-name: opacity-in-out;
+	animation-duration: .5s;
+	animation-timing-function: ease-in-out;
+	animation-fill-mode: forwards;
+
+	& > #close-underlay {
+		background-color: rgba(33, 33, 33, 0.5);
+		position: fixed;
+		top: 0;
+		right: 0;
+		left: 0;
+		bottom: 0;
+		cursor: pointer;
+		box-shadow: inset 0 0px 3000px 20px #000;
+		filter: blur(10px);
+	}
+
+	& > #modal-content {
+		opacity: 0;
+		animation-name: opacity-in-out;
+		animation-delay: .2s;
+		animation-timing-function: ease-in-out;
+		animation-fill-mode: forwards;
+		animation-duration: .5s;
+	}
+}
+
+@keyframes opacity-in-out {
+	from { opacity: 0; }
+	to { opacity: 1; }
+}

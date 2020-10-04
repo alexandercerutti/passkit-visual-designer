@@ -9,6 +9,7 @@ import { createClassName } from "../../utils";
 import { replaceAllBlock } from "./transformers";
 import { PassMixedProps } from "../../Pass";
 import ModalCloseIcon from "./icons";
+import Modal, { ModalProps } from "../ModalBase";
 
 /**
  * This modal must receive some data to generate, for each "partner"
@@ -25,10 +26,9 @@ interface Partner {
 	template: string;
 }
 
-interface Props {
+interface Props extends ModalProps {
 	partners: Partner[];
 	dataBank: PassMixedProps;
-	closeModal(): void;
 }
 
 export default function ExportModal(props: Props) {
@@ -64,28 +64,25 @@ export default function ExportModal(props: Props) {
 	const codeLanguage = `language-${lang}`;
 
 	return (
-		<div id="export-modal">
-			<div id="modal-content">
-				<ModalCloseIcon
-					width={22}
-					height={22}
-					onClick={() => props.closeModal()}
-				/>
-				<h2>Great <span>Pass</span>!</h2>
-				<p>Your model is now being exported. Here below you can see some open source libraries examples to generate programmatically passes with your mock data compiled. Enjoy!</p>
-				<div className="tabs">
-					{partnerTabs}
-				</div>
-				<div className="partner-example">
-					<pre className={`line-numbers ${codeLanguage}`}>
-						<code
-							ref={codeRef}
-							dangerouslySetInnerHTML={{ __html: Prism.highlight(partnerFilledContent, Prism.languages[lang], lang) }}
-						/>
-					</pre>
-				</div>
+		<Modal closeModal={props.closeModal}>
+			<ModalCloseIcon
+				width={22}
+				height={22}
+				onClick={() => props.closeModal()}
+			/>
+			<h2>Great <span>Pass</span>!</h2>
+			<p>Your model is now being exported. Here below you can see some open source libraries examples to generate programmatically passes with your mock data compiled. Enjoy!</p>
+			<div className="tabs">
+				{partnerTabs}
 			</div>
-			<div id="close-overlay" onClick={() => props.closeModal()}></div>
-		</div>
+			<div className="partner-example">
+				<pre className={`line-numbers ${codeLanguage}`}>
+					<code
+						ref={codeRef}
+						dangerouslySetInnerHTML={{ __html: Prism.highlight(partnerFilledContent, Prism.languages[lang], lang) }}
+					/>
+				</pre>
+			</div>
+		</Modal>
 	);
 }
