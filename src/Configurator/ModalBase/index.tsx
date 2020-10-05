@@ -7,9 +7,10 @@ import "./style.less";
 
 export interface ModalProps {
 	closeModal(): void;
+	contentClassName: string;
 }
 
-export default function Modal({ children, closeModal }: React.PropsWithChildren<ModalProps>) {
+export default function Modal({ children, closeModal, contentClassName }: React.PropsWithChildren<ModalProps>) {
 	const onKeyDownEventRef = React.useRef(({ key }: KeyboardEvent) =>
 		key === "Escape" && closeModal()
 	);
@@ -21,7 +22,7 @@ export default function Modal({ children, closeModal }: React.PropsWithChildren<
 
 	return (
 		<div id="modal">
-			<div id="modal-content">
+			<div id="modal-content" className={contentClassName}>
 				{children}
 			</div>
 			<div id="close-underlay" onClick={() => closeModal?.()} />

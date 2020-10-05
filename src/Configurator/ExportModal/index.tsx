@@ -26,7 +26,7 @@ interface Partner {
 	template: string;
 }
 
-interface Props extends ModalProps {
+interface Props extends Omit<ModalProps, "contentClassName"> {
 	partners: Partner[];
 	dataBank: PassMixedProps;
 }
@@ -64,7 +64,10 @@ export default function ExportModal(props: Props) {
 	const codeLanguage = `language-${lang}`;
 
 	return (
-		<Modal closeModal={props.closeModal}>
+		<Modal
+			closeModal={props.closeModal}
+			contentClassName="export"
+		>
 			<ModalCloseIcon
 				width={22}
 				height={22}
