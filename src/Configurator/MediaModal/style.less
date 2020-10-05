@@ -1,0 +1,45 @@
+#modal {
+
+	& > #modal-content.media-collection {
+		display: flex;
+
+		z-index: 10;
+		position: absolute;
+		top: 18%;
+		left: 8%;
+		right: 8%;
+		bottom: 18%;
+		color: #e6e6e6;
+
+		& > * {
+			background-color: #191919;
+			display: flex;
+			box-shadow: 0 0 5px 0px #3c3c3c;
+		}
+
+		#pass-preview {
+			border-top-left-radius: 3px;
+			border-bottom-left-radius: 3px;
+			margin-right: 15px;
+			flex-grow: 1;
+			align-items: center;
+			justify-content: center;
+		}
+
+		#media-collector {
+			flex-basis: 0; // to allow grid resizing through margins
+			flex-grow: 2;
+			border-top-right-radius: 3px;
+			border-bottom-right-radius: 3px;
+			flex-direction: column;
+
+			& > header {
+				height: 60px;
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				padding: 0 10px;
+			}
+		}
+	}
+}
