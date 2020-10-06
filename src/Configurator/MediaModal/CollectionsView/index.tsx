@@ -12,8 +12,8 @@ interface Props {
 }
 
 export default function CollectionsView(props: Props) {
-	const collectionsElements = props.collections?.map((coll, index, array) => (
-		<div className="collection" onClick={props.selectCollection}>
+	const collectionsElements = props.collections?.map((coll) => (
+		<div className="collection" key={coll.name} onClick={props.selectCollection}>
 			<div className="preview">
 				<img src={coll.srcset[0] || ""} />
 				<img src={coll.srcset[1] || coll.srcset[coll.srcset.length - 1]} />
