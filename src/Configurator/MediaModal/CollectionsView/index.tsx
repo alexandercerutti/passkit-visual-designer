@@ -15,9 +15,15 @@ export default function CollectionsView(props: Props) {
 	const collectionsElements = props.collections?.map((coll) => (
 		<div className="collection" key={coll.name} onClick={props.selectCollection}>
 			<div className="preview">
-				<img src={coll.srcset[0] || ""} />
-				<img src={coll.srcset[1] || coll.srcset[coll.srcset.length - 1]} />
-				<img src={coll.srcset[2] || coll.srcset[coll.srcset.length - 1]} />
+				<div className="clipper">
+					<img src={coll.srcset[0] || ""} />
+				</div>
+				<div className="clipper">
+					<img src={coll.srcset[1] || coll.srcset[coll.srcset.length - 1]} />
+				</div>
+				<div className="clipper">
+					<img src={coll.srcset[2] || coll.srcset[coll.srcset.length - 1]} />
+				</div>
 			</div>
 			<span>{coll.name}</span>
 		</div>
@@ -30,7 +36,7 @@ export default function CollectionsView(props: Props) {
 			{collectionsElements}
 			<div className="collection">
 				<div className="create-new" />
-				<span>Add Collection</span>
+				<span>Add collection</span>
 			</div>
 		</div>
 	);
