@@ -21,6 +21,7 @@
 			position: relative;
 			width: 130px + @clips-offset * @clips;
 			height: 120px;
+			cursor: pointer;
 
 			& .clipper {
 				.clipper-shifter(@clips + 1);
@@ -29,6 +30,29 @@
 				width: 130px;
 				height: 100px;
 				overflow: hidden;
+			}
+
+			& .empty-slot {
+				border: 1px dashed #5c5c5c;
+				border-radius: 2px;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				width: 100%;
+				height: 100%;
+
+				& span.fade-blink {
+					opacity: 1;
+					animation-name: fade-blinking;
+					animation-duration: 1s;
+					animation-timing-function: ease-in-out;
+					animation-direction: alternate-reverse;
+					animation-iteration-count: infinite;
+				}
+			}
+
+			@keyframes fade-blinking {
+				to { opacity: 0; }
 			}
 		}
 
