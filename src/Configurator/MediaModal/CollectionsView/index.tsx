@@ -9,7 +9,8 @@ interface Collection {
 
 interface Props {
 	collections: Collection[];
-	selectCollection?(): void;
+	selectCollection?(name: string): void;
+	editCollection?(name: string): void;
 }
 
 export default function CollectionsView(props: Props) {
@@ -47,13 +48,13 @@ export default function CollectionsView(props: Props) {
 		}
 
 		return (
-			<div className="collection" key={`${coll.name}-collection${index}`} onClick={props.selectCollection}>
+			<div className="collection" key={`${coll.name}-collection${index}`} onClick={() => props.selectCollection(coll.name)}>
 				<div className="preview">
 					{previewContent}
 				</div>
 				<span>
 					{coll.srcset.length && coll.name || "no-name"}
-					<EditIcon />
+					<EditIcon onClick={() => props.editCollection?.(coll.name)} />
 				</span>
 			</div>
 		)
