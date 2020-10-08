@@ -1,5 +1,5 @@
 import * as React from "react";
-import { PlusIcon } from "../icons";
+import { PlusIcon, EditIcon } from "../icons";
 import "./style.less";
 
 interface Collection {
@@ -51,7 +51,10 @@ export default function CollectionsView(props: Props) {
 				<div className="preview">
 					{previewContent}
 				</div>
-				<span>{coll.srcset.length && coll.name || ""}</span>
+				<span>
+					{coll.srcset.length && coll.name || "no-name"}
+					<EditIcon />
+				</span>
 			</div>
 		)
 	});

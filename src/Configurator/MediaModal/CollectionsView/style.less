@@ -15,7 +15,6 @@
 	& .collection {
 		display: flex;
 		flex-direction: column;
-		align-items: center;
 		justify-content: center;
 
 		& .preview {
@@ -59,6 +58,23 @@
 
 		& span {
 			margin-top: 10px;
+			min-height: 20px;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+
+			& svg {
+				width: 15px;
+				height: 15px;
+				opacity: 0;
+				transition: opacity .3s ease-in-out;
+				fill: #e6e6e6;
+				cursor: pointer;
+			}
+		}
+
+		&:hover span svg {
+			opacity: 1;
 		}
 
 		& .create-new {
@@ -76,6 +92,10 @@
 				width: 40px;
 				height: 40px;
 				fill: @placeholder-color;
+			}
+
+			& span {
+				align-self: center;
 			}
 		}
 	}

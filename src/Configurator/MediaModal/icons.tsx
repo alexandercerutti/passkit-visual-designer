@@ -10,3 +10,14 @@ export function PlusIcon(props: React.SVGProps<SVGSVGElement>) {
 		</svg>
 	);
 }
+
+// edit by Markus from the Noun Project (edited)
+// https://thenounproject.com/term/edit/3126120
+
+export function EditIcon(props: React.SVGProps<SVGSVGElement>) {
+	return (
+		<svg viewBox="0 0 70 70" {...props}>
+			<path d="M9.44 43.24L50.22 2.46a2.45 2.45 0 013.46 0l13.85 13.86a2.45 2.45 0 010 3.47L26.77 60.56zM1.85 64A3.4 3.4 0 006 68.16l17.49-4.29L6.14 46.54z" />
+		</svg>
+	);
+}
