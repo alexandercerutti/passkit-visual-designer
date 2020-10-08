@@ -1,4 +1,5 @@
 import * as React from "react";
+import { PlusIcon } from "../icons";
 import "./style.less";
 
 interface Collection {
@@ -61,7 +62,9 @@ export default function CollectionsView(props: Props) {
 		<div id="collection-view" style={{ gridTemplateRows: `repeat(${amountOfRows}, 1fr)` }}>
 			{collectionsElements}
 			<div className="collection">
-				<div className="create-new" />
+				<div className="create-new">
+					<PlusIcon />
+				</div>
 				<span>Add collection</span>
 			</div>
 		</div>

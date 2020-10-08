@@ -1,6 +1,7 @@
 @clips-offset: 10px;
 @clips: 2;
 @grid-gap: 10px;
+@placeholder-color: #5c5c5c;
 
 #collection-view {
 	display: grid;
@@ -33,7 +34,7 @@
 			}
 
 			& .empty-slot {
-				border: 1px dashed #5c5c5c;
+				border: 1px dashed @placeholder-color;
 				border-radius: 2px;
 				display: flex;
 				justify-content: center;
@@ -64,8 +65,18 @@
 			width: 130px + @clips-offset * @clips;
 			height: 100%;
 			min-height: 100px;
-			border: 1px dashed #5c5c5c;
+			border: 1px dashed @placeholder-color;
 			border-radius: 2px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			cursor: pointer;
+
+			& svg {
+				width: 40px;
+				height: 40px;
+				fill: @placeholder-color;
+			}
 		}
 	}
 }
