@@ -1,16 +1,12 @@
 import * as React from "react";
+import { Collection } from "..";
 import { PlusIcon, EditIcon } from "../icons";
 import "./style.less";
 
-interface Collection {
-	name: string;
-	srcset: string[];
-}
-
 interface Props {
 	collections: Collection[];
-	selectCollection?(name: string): void;
-	editCollection?(name: string): void;
+	onCollectionUse?(name: string): void;
+	onCollectionEdit?(name: string): void;
 }
 
 export default function CollectionsView(props: Props) {
@@ -48,13 +44,13 @@ export default function CollectionsView(props: Props) {
 		}
 
 		return (
-			<div className="collection" key={`${coll.name}-collection${index}`} onClick={() => props.selectCollection(coll.name)}>
+			<div className="collection" key={`${coll.name}-collection${index}`} onClick={() => props.onCollectionUse(coll.name)}>
 				<div className="preview">
 					{previewContent}
 				</div>
 				<span>
 					{coll.srcset.length && coll.name || "no-name"}
-					<EditIcon onClick={() => props.editCollection?.(coll.name)} />
+					<EditIcon onClick={() => props.onCollectionEdit?.(coll.name)} />
 				</span>
 			</div>
 		)

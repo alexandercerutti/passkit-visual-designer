@@ -5,8 +5,15 @@ import Pass from "../../Pass";
 import Modal, { ModalProps } from "../ModalBase";
 import CollectionsView from "./CollectionsView";
 
+export interface Collection {
+	name: string;
+	srcset: string[];
+}
+
 interface Props extends Omit<ModalProps, "contentClassName"> {
 	mediaName: string;
+	collections: Collection[];
+	updateCollections?(collections: Collection[]): void;
 }
 
 export default class MediaModal extends React.Component<Props> {
