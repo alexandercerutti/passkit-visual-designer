@@ -35,12 +35,9 @@ export default class MediaModal extends React.Component<Props> {
 						<span>it</span>
 					</header>
 					<CollectionsView
-						collections={[{
-							name: "Background 1",
-							srcset: [
-
-							]
-						}]}
+						collections={this.props.collections}
+						onCollectionEdit={(name) => console.log("onEdit", name)}
+						onCollectionUse={(name) => console.log("onUse", name)}
 					/>
 				</div>
 			</Modal>
