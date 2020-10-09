@@ -19,6 +19,17 @@ interface Props extends Omit<ModalProps, "contentClassName"> {
 export default class MediaModal extends React.Component<Props> {
 	constructor(props: Props) {
 		super(props);
+
+		this.onCollectionUse = this.onCollectionUse.bind(this);
+		this.onCollectionEdit = this.onCollectionEdit.bind(this);
+	}
+
+	onCollectionEdit(name: string) {
+		console.log("onEdit", name);
+	}
+
+	onCollectionUse(name: string) {
+		console.log("onUse", name);
 	}
 
 	render() {
@@ -36,8 +47,8 @@ export default class MediaModal extends React.Component<Props> {
 					</header>
 					<CollectionsView
 						collections={this.props.collections}
-						onCollectionEdit={(name) => console.log("onEdit", name)}
-						onCollectionUse={(name) => console.log("onUse", name)}
+						onCollectionEdit={this.onCollectionEdit}
+						onCollectionUse={this.onCollectionUse}
 					/>
 				</div>
 			</Modal>
