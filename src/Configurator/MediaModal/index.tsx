@@ -4,6 +4,7 @@ import { PassKind } from "../../model";
 import Pass from "../../Pass";
 import Modal, { ModalProps } from "../ModalBase";
 import CollectionsView from "./CollectionsView";
+import { CSSTransition, SwitchTransition } from "react-transition-group";
 
 export interface Collection {
 	name: string;
@@ -16,16 +17,28 @@ interface Props extends Omit<ModalProps, "contentClassName"> {
 	updateCollections?(collections: Collection[]): void;
 }
 
-export default class MediaModal extends React.Component<Props> {
+interface State {
+	editingCollection: string;
+}
+
+export default class MediaModal extends React.Component<Props, State> {
 	constructor(props: Props) {
 		super(props);
 
 		this.onCollectionUse = this.onCollectionUse.bind(this);
 		this.onCollectionEdit = this.onCollectionEdit.bind(this);
+
+		this.state = {
+			editingCollection: "",
+		};
 	}
 
 	onCollectionEdit(name: string) {
 		console.log("onEdit", name);
+
+		this.setState({
+			editingCollection: name,
+		});
 	}
 
 	onCollectionUse(name: string) {
@@ -45,11 +58,24 @@ export default class MediaModal extends React.Component<Props> {
 						<span>{this.props.mediaName}</span>
 						<span>it</span>
 					</header>
-					<CollectionsView
-						collections={this.props.collections}
-						onCollectionEdit={this.onCollectionEdit}
-						onCollectionUse={this.onCollectionUse}
-					/>
+					<SwitchTransition mode="out-in">
+						<CSSTransition
+							timeout={500}
+							key={this.state.editingCollection}
+							classNames="fade"
+						>
+							{!this.state.editingCollection
+								?
+								<CollectionsView
+									collections={this.props.collections}
+									onCollectionEdit={this.onCollectionEdit}
+									onCollectionUse={this.onCollectionUse}
+								/>
+								:
+								<div></div>
+							}
+						</CSSTransition>
+					</SwitchTransition>
 				</div>
 			</Modal>
 		);
