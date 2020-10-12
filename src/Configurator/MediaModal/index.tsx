@@ -5,6 +5,7 @@ import Pass from "../../Pass";
 import Modal, { ModalProps } from "../ModalBase";
 import CollectionsView from "./CollectionsView";
 import { CSSTransition, SwitchTransition } from "react-transition-group";
+import CollectionEditor from "./CollectionEditor";
 
 export interface Collection {
 	name: string;
@@ -72,7 +73,11 @@ export default class MediaModal extends React.Component<Props, State> {
 									onCollectionUse={this.onCollectionUse}
 								/>
 								:
-								<div></div>
+								<CollectionEditor
+									collection={this.props.collections.find(c => c.name === this.state.editingCollection)}
+									onBack={() => this.onCollectionEdit("")}
+									onCollectionChange={() => { }}
+								/>
 							}
 						</CSSTransition>
 					</SwitchTransition>
