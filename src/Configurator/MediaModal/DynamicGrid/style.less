@@ -1,0 +1,14 @@
+@grid-gap: 10px;
+
+#grid {
+	display: grid;
+	/**
+	 * grid-template-rows and grid-template-columns
+	 * must be dynamic and based on (amount of elements + 1) / 3
+	 */
+	column-gap: @grid-gap;
+	row-gap: @grid-gap;
+	margin: 0 20px;
+
+	//overflow: scroll; // @TODO replace with no scrollbars and overflow indicator
+}

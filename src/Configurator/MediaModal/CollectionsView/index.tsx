@@ -1,5 +1,6 @@
 import * as React from "react";
 import { Collection } from "..";
+import DynamicGrid from "../DynamicGrid";
 import { PlusIcon, EditIcon } from "../icons";
 import "./style.less";
 
@@ -56,10 +57,12 @@ export default function CollectionsView(props: Props) {
 		)
 	});
 
-	const amountOfRows = Math.ceil((props.collections.length + 1) / 3);
-
 	return (
-		<div id="collection-view" style={{ gridTemplateRows: `repeat(${amountOfRows}, 1fr)` }}>
+		<DynamicGrid
+			elementsAmount={collectionsElements.length}
+			className="collection-view"
+			wrapLimit={3}
+		>
 			{collectionsElements}
 			<div className="collection">
 				<div className="create-new">
@@ -67,6 +70,6 @@ export default function CollectionsView(props: Props) {
 				</div>
 				<span>Add collection</span>
 			</div>
-		</div>
+		</DynamicGrid>
 	);
 }
