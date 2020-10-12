@@ -1,7 +1,8 @@
 import * as React from "react";
 import { Collection } from "..";
+import AddElementButton from "../AddElementButton";
 import DynamicGrid from "../DynamicGrid";
-import { PlusIcon, EditIcon } from "../icons";
+import { EditIcon } from "../icons";
 import "./style.less";
 
 interface Props {
@@ -65,10 +66,10 @@ export default function CollectionsView(props: Props) {
 		>
 			{collectionsElements}
 			<div className="collection">
-				<div className="create-new">
-					<PlusIcon />
-				</div>
-				<span>Add collection</span>
+				<AddElementButton
+					caption="Add collection"
+					onClick={() => { }}
+				/>
 			</div>
 		</DynamicGrid>
 	);
