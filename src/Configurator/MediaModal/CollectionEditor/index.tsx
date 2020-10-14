@@ -7,7 +7,7 @@ import "./style.less";
 interface Props {
 	collection: Collection;
 	onBack(): void;
-	onCollectionChange(): void;
+	onCollectionChange(collection: Collection): void;
 }
 
 export default function CollectionEditor(props: Props) {
