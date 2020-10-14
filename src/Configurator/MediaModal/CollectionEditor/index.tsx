@@ -11,12 +11,20 @@ interface Props {
 }
 
 export default function CollectionEditor(props: Props) {
+	const onKeyDownEventRef = React.useRef(({ key, currentTarget }: React.KeyboardEvent<HTMLInputElement>) => {
+		if (key === "Enter") {
+			currentTarget.blur();
+			props.onCollectionChange({ name: "building", srcset: [] });
+		}
+	});
+
 	const collectionItems = props.collection.srcset.map((url, index) => {
 		return (
 			<div className="item" key={`${url}-${index}`}>
-				<div className="preview">
+				<div className="clipper">
 					<img src={url} />
 				</div>
+				<input type="text" onKeyDown={onKeyDownEventRef.current} />
 			</div>
 		);
 	});
