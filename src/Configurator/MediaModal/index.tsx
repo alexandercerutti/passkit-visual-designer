@@ -73,11 +73,16 @@ export default class MediaModal extends React.Component<Props, State> {
 									onCollectionUse={this.onCollectionUse}
 								/>
 								:
-								<CollectionEditor
-									collection={this.props.collections.find(c => c.name === this.state.editingCollection)}
-									onBack={() => this.onCollectionEdit("")}
-									onCollectionChange={() => { }}
-								/>
+								<>
+									<CollectionEditor
+										collection={this.props.collections.find(c => c.name === this.state.editingCollection)}
+										onBack={() => this.onCollectionEdit("")}
+										onCollectionChange={(collection: Collection) => { console.log(collection) }}
+									/>
+									<footer>
+										Hint: add a new resolution to collection by drag and drop
+									</footer>
+								</>
 							}
 						</CSSTransition>
 					</SwitchTransition>
