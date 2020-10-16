@@ -14,11 +14,10 @@ export default function CollectionEditor(props: Props) {
 	const onKeyDownEventRef = React.useRef(({ key, currentTarget }: React.KeyboardEvent<HTMLInputElement>) => {
 		if (key === "Enter") {
 			currentTarget.blur();
-			onBlurEventRef.current({ currentTarget });
 		}
 	});
 
-	const onBlurEventRef = React.useRef(({ currentTarget }: Partial<React.FocusEvent<HTMLInputElement>>) => {
+	const onBlurEventRef = React.useRef(({ currentTarget }: React.FocusEvent<HTMLInputElement>) => {
 		props.onCollectionChange({ name: currentTarget.value, srcset: [] });
 	});
 
