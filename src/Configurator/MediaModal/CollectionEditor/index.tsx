@@ -14,8 +14,12 @@ export default function CollectionEditor(props: Props) {
 	const onKeyDownEventRef = React.useRef(({ key, currentTarget }: React.KeyboardEvent<HTMLInputElement>) => {
 		if (key === "Enter") {
 			currentTarget.blur();
-			props.onCollectionChange({ name: "building", srcset: [] });
+			onBlurEventRef.current({ currentTarget });
 		}
+	});
+
+	const onBlurEventRef = React.useRef(({ currentTarget }: Partial<React.FocusEvent<HTMLInputElement>>) => {
+		props.onCollectionChange({ name: currentTarget.value, srcset: [] });
 	});
 
 	const collectionItems = props.collection.srcset.map((url, index) => {
@@ -24,7 +28,12 @@ export default function CollectionEditor(props: Props) {
 				<div className="clipper">
 					<img src={url} />
 				</div>
-				<input type="text" onKeyDown={onKeyDownEventRef.current} />
+				<input
+					type="text"
+					onKeyDown={onKeyDownEventRef.current}
+					onBlur={onBlurEventRef.current}
+					defaultValue={props.collection.name}
+				/>
 			</div>
 		);
 	});
