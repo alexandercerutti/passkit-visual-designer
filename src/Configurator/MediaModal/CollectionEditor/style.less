@@ -1,6 +1,8 @@
 @placeholder-color: #5c5c5c;
 
 .collection-editor {
+	flex-grow: 2;
+
 	& .item {
 		display: flex;
 		flex-direction: column;
@@ -8,23 +10,44 @@
 		align-items: center;
 
 		& .clipper {
-			width: 130px;
-			height: 100px;
+			width: 162px;
+			height: 120px;
 			overflow: hidden;
 		}
 
 		& input {
-			margin-top: 10px;
+			padding: 7px 0;
 			border: 0;
 			outline: none;
-			border-bottom: 1px solid #e6e6e6;
+			border-bottom: 1px solid #313131;
+			transition: border-bottom .5s ease-in-out;
 			text-align: center;
 			background: transparent;
 			color: #e6e6e6;
+			border-radius: 0;
+			font-size: 15px;
+			width: 100%;
+
+			&:focus {
+				border-bottom-color: #e6e6e6;
+			}
 		}
 
 		& .add-element-btn {
-			width: 130px;
+			width: 100%;
+			min-width: 130px;
 		}
 	}
+}
+
+.collection-editor ~ footer {
+	flex-grow: 1;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 9pt;
+	color: #616161;
+	border-top: 0.5px solid #292929;
+	margin-top: 15px;
+	height: 10px;
 }
