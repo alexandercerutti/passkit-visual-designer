@@ -34,11 +34,11 @@ export default class MediaModal extends React.Component<Props, State> {
 		};
 	}
 
-	onCollectionEdit(name: string) {
+	onCollectionEdit(name?: string) {
 		console.log("onEdit", name);
 
 		this.setState({
-			editingCollection: name,
+			editingCollection: name || "",
 		});
 	}
 
@@ -56,7 +56,17 @@ export default class MediaModal extends React.Component<Props, State> {
 				</div>
 				<div id="media-collector">
 					<header>
-						<span>{this.props.mediaName}</span>
+						<span>
+							{
+								this.state.editingCollection
+									?
+									<button onClick={() => this.onCollectionEdit()} >
+										Back
+									</button>
+									: null
+							}
+							{this.props.mediaName}
+						</span>
 						<span>it</span>
 					</header>
 					<SwitchTransition mode="out-in">
