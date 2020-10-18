@@ -47,6 +47,36 @@
 				overflow: hidden;
 			}
 
+			& .edit-icon {
+				opacity: 0;
+				transition: opacity .3s ease-in-out;
+				position: absolute;
+				z-index: 4;
+				background-color: rgba(0, 0, 0, 0.5);
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+
+				& > svg {
+					width: 35px;
+					height: 35px;
+					fill: #e6e6e6;
+					cursor: pointer;
+				}
+
+				&:not(.showable) {
+					pointer-events: none;
+				}
+			}
+
+			&:hover .edit-icon.showable {
+				opacity: 1;
+			}
+
 			& .empty-slot {
 				border: 1px dashed @placeholder-color;
 				border-radius: 2px;
@@ -78,19 +108,6 @@
 			justify-content: space-between;
 			align-items: center;
 			align-self: normal;
-
-			& svg {
-				width: 15px;
-				height: 15px;
-				opacity: 0;
-				transition: opacity .3s ease-in-out;
-				fill: #e6e6e6;
-				cursor: pointer;
-			}
-		}
-
-		&:hover span svg {
-			opacity: 1;
 		}
 
 		& .add-element-btn {
@@ -98,6 +115,12 @@
 		}
 	}
 }
+
+/**
+ * 3 | 0 => 2 / 0 / 0
+ * 3 | 1 => 1 / 10 / 10
+ * 3 | 2 => 0 / 20 / 20
+ */
 
 .clipper-shifter(@loops-amount; @counter: 0;) when (@counter <= @loops-amount) {
 	@childN: @counter + 1;

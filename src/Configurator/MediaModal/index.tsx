@@ -19,6 +19,7 @@ interface Props extends Omit<ModalProps, "contentClassName"> {
 }
 
 interface State {
+	isEditMode: boolean;
 	editingCollection: string;
 }
 
@@ -30,6 +31,7 @@ export default class MediaModal extends React.Component<Props, State> {
 		this.onCollectionEdit = this.onCollectionEdit.bind(this);
 
 		this.state = {
+			isEditMode: false,
 			editingCollection: "",
 		};
 	}
@@ -44,6 +46,12 @@ export default class MediaModal extends React.Component<Props, State> {
 
 	onCollectionUse(name: string) {
 		console.log("onUse", name);
+	}
+
+	toggleEditMode() {
+		this.setState(prev => ({
+			isEditMode: !prev.isEditMode
+		}));
 	}
 
 	render() {
@@ -68,6 +76,9 @@ export default class MediaModal extends React.Component<Props, State> {
 							{this.props.mediaName}
 						</span>
 						<span>it</span>
+						<span onClick={() => this.props.collections.length && this.toggleEditMode()} className={`edit-button ${!this.props.collections.length && "disabled" || ""}`}>
+							{this.state.isEditMode ? "Done" : "Edit"}
+						</span>
 					</header>
 					<SwitchTransition mode="out-in">
 						<CSSTransition
@@ -79,6 +90,7 @@ export default class MediaModal extends React.Component<Props, State> {
 								?
 								<CollectionsView
 									collections={this.props.collections}
+									isEditMode={this.state.isEditMode}
 									onCollectionEdit={this.onCollectionEdit}
 									onCollectionUse={this.onCollectionUse}
 								/>

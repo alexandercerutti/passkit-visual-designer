@@ -7,6 +7,7 @@ import "./style.less";
 
 interface Props {
 	collections: Collection[];
+	isEditMode: boolean;
 	onCollectionUse?(name: string): void;
 	onCollectionEdit?(name: string): void;
 }
@@ -47,13 +48,13 @@ export default function CollectionsView(props: Props) {
 
 		return (
 			<div className="collection" key={`${coll.name}-collection${index}`}>
-				<div className="preview" onClick={() => props[coll.srcset.length ? "onCollectionUse" : "onCollectionEdit"](coll.name || "")}>
+				<div className="preview" onClick={() => props[coll.srcset.length && !props.isEditMode ? "onCollectionUse" : "onCollectionEdit"](coll.name || "")}>
 					{previewContent}
+					<div className={`edit-icon ${props.isEditMode && "showable" || ""}`}>
+						<EditIcon onClick={() => props.onCollectionEdit?.(coll.name)} />
+					</div>
 				</div>
-				<span>
-					{coll.srcset.length && coll.name || "no-name"}
-					<EditIcon onClick={() => props.onCollectionEdit?.(coll.name)} />
-				</span>
+				<span>{coll.srcset.length && coll.name || "no-name"}</span>
 			</div>
 		)
 	});
