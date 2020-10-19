@@ -48,11 +48,10 @@
 			}
 
 			& .edit-icon {
-				opacity: 0;
 				transition: opacity .3s ease-in-out;
 				position: absolute;
 				z-index: 4;
-				background-color: rgba(0, 0, 0, 0.5);
+				background-color: rgba(25, 25, 25, 0.6);
 				top: 0;
 				left: 0;
 				right: 0;
@@ -70,11 +69,8 @@
 
 				&:not(.showable) {
 					pointer-events: none;
+					opacity: 0;
 				}
-			}
-
-			&:hover .edit-icon.showable {
-				opacity: 1;
 			}
 
 			& .empty-slot {
