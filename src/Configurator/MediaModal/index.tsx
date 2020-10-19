@@ -65,10 +65,9 @@ export default class MediaModal extends React.Component<Props, State> {
 				</div>
 				<div id="media-collector">
 					<header>
-						<nav>
+						<nav onClick={() => this.state.editingCollection && this.onCollectionEdit()}>
 							<ArrowIcon
 								className={`back${this.state.editingCollection && " visible" || ""}`}
-								onClick={() => this.onCollectionEdit()}
 							/>
 							<span>{this.props.mediaName}</span>
 						</nav>
