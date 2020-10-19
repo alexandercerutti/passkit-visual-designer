@@ -51,12 +51,12 @@ export default function CollectionsView(props: Props) {
 				<div className="preview" onClick={() => props[coll.srcset.length && !props.isEditMode ? "onCollectionUse" : "onCollectionEdit"](coll.name || "")}>
 					{previewContent}
 					<div className={`edit-icon ${props.isEditMode && "showable" || ""}`}>
-						<EditIcon onClick={() => props.onCollectionEdit?.(coll.name)} />
+						<EditIcon />
 					</div>
 				</div>
 				<span>{coll.srcset.length && coll.name || "no-name"}</span>
 			</div>
-		)
+		);
 	});
 
 	return (
