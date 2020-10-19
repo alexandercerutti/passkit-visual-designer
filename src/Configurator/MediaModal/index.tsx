@@ -6,6 +6,7 @@ import Modal, { ModalProps } from "../ModalBase";
 import CollectionsView from "./CollectionsView";
 import { CSSTransition, SwitchTransition } from "react-transition-group";
 import CollectionEditor from "./CollectionEditor";
+import { ArrowIcon } from "./icons";
 
 export interface Collection {
 	name: string;
@@ -64,17 +65,13 @@ export default class MediaModal extends React.Component<Props, State> {
 				</div>
 				<div id="media-collector">
 					<header>
-						<span>
-							{
-								this.state.editingCollection
-									?
-									<button onClick={() => this.onCollectionEdit()} >
-										Back
-									</button>
-									: null
-							}
-							{this.props.mediaName}
-						</span>
+						<nav>
+							<ArrowIcon
+								className={`back${this.state.editingCollection && " visible" || ""}`}
+								onClick={() => this.onCollectionEdit()}
+							/>
+							<span>{this.props.mediaName}</span>
+						</nav>
 						<span>it</span>
 						{
 							!this.state.editingCollection &&

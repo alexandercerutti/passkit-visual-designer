@@ -40,6 +40,27 @@
 				align-items: center;
 				padding: 0 10px;
 
+				& nav {
+					display: flex;
+					justify-content: space-around;
+					flex-direction: row;
+
+					& svg.back {
+						transition: all .5s ease-in-out;
+						opacity: 1;
+						width: 25px;
+						transform: rotate(180deg);
+						fill: #e6e6e6;
+						height: 20px;
+						cursor: pointer;
+					}
+
+					& .back:not(.visible) {
+						opacity: 0;
+						width: 0;
+					}
+				}
+
 				& .edit-button {
 					&.disabled {
 						pointer-events: none;
