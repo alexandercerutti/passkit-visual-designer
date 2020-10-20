@@ -1,3 +1,4 @@
+@import "../../../App/common.less";
 @grid-gap: 10px;
 
 #grid {
@@ -9,6 +10,7 @@
 	column-gap: @grid-gap;
 	row-gap: @grid-gap;
 	margin: 0 20px;
+	justify-items: center;
 
-	//overflow: scroll; // @TODO replace with no scrollbars and overflow indicator
+	.scrollableWithoutScrollbars(y);
 }
