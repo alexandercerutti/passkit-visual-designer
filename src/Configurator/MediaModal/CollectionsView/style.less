@@ -1,4 +1,5 @@
-@clips-offset: 10px;
+@clips-h-offset: 15px;
+@clips-v-offset: 10px;
 @clips: 2;
 @grid-gap: 10px;
 @placeholder-color: #5c5c5c;
@@ -34,7 +35,7 @@
 
 		& .preview {
 			position: relative;
-			width: 130px + @clips-offset * @clips;
+			width: 140px + @clips-v-offset * @clips;
 			height: 120px;
 			cursor: pointer;
 
@@ -112,7 +113,7 @@
 		}
 
 		& .add-element-btn {
-			width: 130px + @clips-offset * @clips;
+			width: 130px + @clips-h-offset * @clips;
 		}
 	}
 }
@@ -128,8 +129,8 @@
 
 	&:nth-child(@{childN}) {
 		z-index: @loops-amount - @counter - 1;
-		left: @clips-offset * @counter;
-		bottom: @clips-offset * @counter;
+		left: @clips-h-offset * @counter;
+		bottom: @clips-v-offset * @counter;
 	}
 
 	.clipper-shifter(@loops-amount, @counter + 1);
