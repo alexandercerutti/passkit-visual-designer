@@ -13,3 +13,36 @@
 		width: 0;
 	}
 }
+
+.withImagesTrasparencyBackground(@setPositionRelative: false) {
+	@chess-color: #FFFFFF20;
+
+	& when (@setPositionRelative = true) {
+		position: relative;
+	}
+
+	/**
+	* Transparent-background images filler
+	*/
+	&::before {
+		content: "";
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		z-index: 0;
+		background-image:
+			linear-gradient(45deg, @chess-color 25%, transparent 25%),
+			linear-gradient(-45deg, @chess-color 25%, transparent 25%),
+			linear-gradient(45deg, transparent 75%, @chess-color 75%),
+			linear-gradient(-45deg, transparent 75%, @chess-color 75%);
+		background-size: 20px 20px;
+		background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+	}
+
+	& > img {
+		position: relative;
+		z-index: 1 !important;
+	}
+}
