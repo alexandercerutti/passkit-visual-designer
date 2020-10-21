@@ -36,6 +36,7 @@ interface ConfiguratorState {
 	emptyFieldsVisible: boolean;
 	showExportModal: boolean;
 	canBeExported: boolean;
+	showMediaModal: boolean;
 }
 
 class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState> implements InteractionContextMethods {
@@ -51,6 +52,7 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 		this.toggleExportModal = this.toggleExportModal.bind(this);
 		this.requestExport = this.requestExport.bind(this);
 		this.changeProjectTitle = this.changeProjectTitle.bind(this);
+		this.toggleMediaModal = this.toggleMediaModal.bind(this);
 
 		this.state = {
 			selectedFieldId: null,
@@ -59,6 +61,7 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 			emptyFieldsVisible: true,
 			showExportModal: false,
 			canBeExported: false,
+			showMediaModal: false,
 		};
 	}
 
@@ -179,6 +182,12 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 	toggleExportModal() {
 		this.setState((previous) => ({
 			showExportModal: !previous.showExportModal
+		}));
+	}
+
+	toggleMediaModal() {
+		this.setState((previous) => ({
+			showMediaModal: !previous.showMediaModal
 		}));
 	}
 
