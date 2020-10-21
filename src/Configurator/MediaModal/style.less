@@ -47,6 +47,25 @@
 					justify-content: space-around;
 					flex-direction: row;
 
+					&.allow-back-nav {
+						cursor: pointer;
+
+						& .back ~ span {
+							margin-left: 5px;
+						}
+					}
+
+					&:not(.allow-back-nav) .back {
+						opacity: 0;
+						transition-delay: .5s, 0s;
+						margin-left: -25px;
+
+						& ~ span {
+							transition-delay: 0.5ss;
+							margin-left: 0;
+						}
+					}
+
 					& svg.back {
 						transition: all .5s ease-in-out,
 									opacity .5s ease-in-out .5s;
@@ -55,21 +74,10 @@
 						transform: rotate(180deg);
 						fill: #e6e6e6;
 						height: 20px;
-						cursor: pointer;
-					}
-
-					& .back:not(.visible) {
-						opacity: 0;
-						width: 0;
 
 						& ~ span {
-							transition-delay: 0.3s;
+							transition: margin-left .5s ease-in-out .3s;
 						}
-					}
-
-					& .back.visible ~ span {
-						margin-left: 5px;
-						transition: margin-left .5s ease-in-out;
 					}
 				}
 
