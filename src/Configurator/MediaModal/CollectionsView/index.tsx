@@ -1,7 +1,6 @@
 import * as React from "react";
 import { Collection } from "..";
 import AddElementButton from "../AddElementButton";
-import DynamicGrid from "../DynamicGrid";
 import { EditIcon } from "../icons";
 import "./style.less";
 
@@ -60,11 +59,7 @@ export default function CollectionsView(props: Props) {
 	});
 
 	return (
-		<DynamicGrid
-			elementsAmount={collectionsElements.length}
-			className="collection-view"
-			wrapLimit={3}
-		>
+		<div id="grid" className="collection-view">
 			{collectionsElements}
 			<div className="collection">
 				<AddElementButton
@@ -72,6 +67,6 @@ export default function CollectionsView(props: Props) {
 					onClick={() => { }}
 				/>
 			</div>
-		</DynamicGrid>
+		</div>
 	);
 }

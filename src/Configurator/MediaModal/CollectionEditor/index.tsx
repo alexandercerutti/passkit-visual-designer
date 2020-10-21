@@ -1,7 +1,6 @@
 import * as React from "react";
 import { Collection } from "..";
 import AddElementButton from "../AddElementButton";
-import DynamicGrid from "../DynamicGrid";
 import "./style.less";
 
 interface Props {
@@ -38,11 +37,7 @@ export default function CollectionEditor(props: Props) {
 	});
 
 	return (
-		<DynamicGrid
-			elementsAmount={props.collection.srcset?.length ?? 0}
-			wrapLimit={3}
-			className="collection-editor"
-		>
+		<div id="grid" className="collection-editor">
 			{collectionItems}
 			<div className="item">
 				<AddElementButton
@@ -50,6 +45,6 @@ export default function CollectionEditor(props: Props) {
 					onClick={() => void 0}
 				/>
 			</div>
-		</DynamicGrid>
+		</div>
 	);
 }

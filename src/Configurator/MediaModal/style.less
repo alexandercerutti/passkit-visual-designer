@@ -1,5 +1,7 @@
-#modal {
+@import "../../App/common.less";
+@grid-gap: 10px;
 
+#modal {
 	& > #modal-content.media-collection {
 		display: flex;
 
@@ -83,6 +85,17 @@
 					min-width: 40px;
 					text-align: right;
 				}
+			}
+
+			& > #grid {
+				display: grid;
+				column-gap: @grid-gap;
+				row-gap: @grid-gap;
+				margin: 0 20px;
+				justify-items: center;
+				grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+
+				.scrollableWithoutScrollbars(y);
 			}
 		}
 	}
