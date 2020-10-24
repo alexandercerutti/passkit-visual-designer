@@ -15,10 +15,10 @@ export interface SinglePropSettingAction<K extends string, V = any> extends Acti
 }
 
 export enum ConfigActions {
-	SET_PROJECT_OPT = "setProjectOption",
-	SET_SINGLE_PROP = "changeSingleProp",
-	SET_PASS_KIND = "setPassKind",
-	SET_PROPS = "setProps"
+	SET_PROJECT_OPT = "SET_PROJECT_OPTION",
+	SET_SINGLE_PROP = "CHANGE_SINGLE_PROP",
+	SET_PASS_KIND = "SET_PASS_KIND",
+	SET_PROPS = "SET_PROPS",
 }
 
 // Action Creators
