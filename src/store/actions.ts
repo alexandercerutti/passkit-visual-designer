@@ -1,13 +1,40 @@
 import { PassKind } from "../model";
 import { Action } from "redux";
-import { PassMixedProps } from "../Pass";
+import { MediaProps, PassMixedProps } from "../Pass";
 import { ThunkAction } from "redux-thunk";
-import { State } from "./state";
+import { IdentifiedCollections, IdentifiedResolutions, MediaCollection, State } from "./state";
 
 export type PassProps = keyof PassMixedProps;
 export type ProjectOptions = State["projectOptions"];
 export type POKeys = keyof ProjectOptions;
 export type POValues = ProjectOptions[POKeys];
+
+export const CollectionEditActionName = 0b0001;
+export const CollectionEditActionResolutions = 0b0010;
+export const CollectionEditActionAll = 0b0011;
+
+export interface MediaCollectionAction extends Action<ConfigActions.EDIT_COLLECTION> {
+	mediaName: keyof MediaProps,
+	collectionID: string;
+	collection: MediaCollection,
+	editHints: number,
+}
+
+export function editCollection(mediaName: keyof MediaProps, collectionID: string, collection: MediaCollection | null, editHints: number): MediaCollectionAction {
+	return {
+		type: ConfigActions.EDIT_COLLECTION,
+		mediaName,
+		collectionID,
+		collection,
+		editHints
+	};
+}
+
+export interface MediaEditAction extends Action<ConfigActions.EDIT_MEDIA> {
+	mediaLanguage: string;
+	mediaName: keyof MediaProps;
+	collection: MediaCollection;
+}
 
 export interface SinglePropSettingAction<K extends string, V = any> extends Action<ConfigActions> {
 	key: K;
@@ -19,6 +46,15 @@ export enum ConfigActions {
 	SET_SINGLE_PROP = "CHANGE_SINGLE_PROP",
 	SET_PASS_KIND = "SET_PASS_KIND",
 	SET_PROPS = "SET_PROPS",
+
+	/**
+	 * Media collection actions types
+	 */
+
+	EDIT_COLLECTION = "EDIT_COLLECTIONS",
+
+	/** This is an action that is returned from URLMiddleware after processing */
+	EDIT_MEDIA = "EDIT_MEDIA"
 }
 
 // Action Creators
