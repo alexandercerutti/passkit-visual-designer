@@ -1,13 +1,18 @@
 import { PassMixedProps, MediaProps } from "../Pass";
 
-/**
- * string is optional because we generate the
- * url in redux middleware
- */
-export type ResolutionTuple = [ArrayBuffer, string?];
+export type MediaSet = {
+	[K in keyof MediaProps]: CollectionSet;
+}
 
-export type IdentifiedCollections = {
+export type CollectionSet = {
 	[collectionID: string]: MediaCollection;
+} & {
+	activeCollectionID: string;
+}
+
+export interface MediaCollection {
+	name: string;
+	resolutions: IdentifiedResolutions;
 };
 
 export type IdentifiedResolutions = {
@@ -17,17 +22,16 @@ export type IdentifiedResolutions = {
 	}
 };
 
-export interface MediaCollection {
-	name: string;
-	resolutions: IdentifiedResolutions;
-}
+/**
+ * string is optional because we generate the
+ * url in redux middleware
+ */
+export type ResolutionTuple = [ArrayBuffer, string?];
 
 export interface State {
 	pass: Partial<PassMixedProps>;
 	media: {
-		[languageOrDefault: string]: {
-			[K in keyof MediaProps]: IdentifiedCollections;
-		}
+		[languageOrDefault: string]: MediaSet;
 	};
 	rawMedia: Partial<Record<keyof MediaProps, ArrayBuffer>>;
 	projectOptions: {

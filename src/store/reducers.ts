@@ -43,7 +43,7 @@ export function media(state = initialState.media, action: MediaEditAction): Stat
 			const newState = { ...state };
 
 			const selectedLanguage = (newState[action.mediaLanguage] || (newState[action.mediaLanguage] = {}));
-			const selectedMediaCollections = (selectedLanguage[action.mediaName] || (selectedLanguage[action.mediaName] = {}));
+			const selectedMediaCollections = (selectedLanguage[action.mediaName] || (selectedLanguage[action.mediaName] = { activeCollectionID: null }));
 
 			Object.assign(selectedMediaCollections, {
 				[action.collectionID]: action.collection

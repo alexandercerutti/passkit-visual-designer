@@ -2,7 +2,7 @@ import { PassKind } from "../model";
 import { Action } from "redux";
 import { MediaProps, PassMixedProps } from "../Pass";
 import { ThunkAction } from "redux-thunk";
-import { IdentifiedCollections, IdentifiedResolutions, MediaCollection, State } from "./state";
+import { MediaCollection, State } from "./state";
 
 export type PassProps = keyof PassMixedProps;
 export type ProjectOptions = State["projectOptions"];
@@ -30,11 +30,28 @@ export function editCollection(mediaName: keyof MediaProps, collectionID: string
 	};
 }
 
+/**
+ * This is the action called by the middleware
+ */
+
 export interface MediaEditAction extends Action<ConfigActions.EDIT_MEDIA> {
 	mediaLanguage: string;
 	mediaName: keyof MediaProps;
 	collection: MediaCollection;
 	collectionID: string;
+}
+
+export interface ActiveCollectionSetAction extends Action<ConfigActions.SET_MEDIA_USAGE> {
+	mediaName: string;
+	collectionID: string;
+}
+
+export function setMediaActiveCollection(mediaName: keyof MediaProps, collectionID: string): ActiveCollectionSetAction {
+	return {
+		type: ConfigActions.SET_MEDIA_USAGE,
+		mediaName,
+		collectionID
+	};
 }
 
 export interface SinglePropSettingAction<K extends string, V = any> extends Action<ConfigActions> {
@@ -53,6 +70,7 @@ export enum ConfigActions {
 	 */
 
 	EDIT_COLLECTION = "EDIT_COLLECTIONS",
+	SET_MEDIA_USAGE = "SET_MEDIA_USAGE",
 
 	/** This is an action that is returned from URLMiddleware after processing */
 	EDIT_MEDIA = "EDIT_MEDIA"
