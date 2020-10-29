@@ -118,6 +118,7 @@ export default function URLMiddleware(store: MiddlewareAPI<Dispatch, State>) {
 			type: ConfigActions.EDIT_MEDIA,
 			collection: finalCollection,
 			mediaLanguage: activeMediaLanguage,
+			collectionID: action.collectionID,
 			mediaName: action.mediaName
 		});
 	}

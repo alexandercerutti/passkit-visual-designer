@@ -34,6 +34,7 @@ export interface MediaEditAction extends Action<ConfigActions.EDIT_MEDIA> {
 	mediaLanguage: string;
 	mediaName: keyof MediaProps;
 	collection: MediaCollection;
+	collectionID: string;
 }
 
 export interface SinglePropSettingAction<K extends string, V = any> extends Action<ConfigActions> {
