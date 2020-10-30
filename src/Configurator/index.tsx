@@ -1,15 +1,15 @@
 import * as React from "react";
 import "./style.less";
 import { RouteComponentProps, withRouter } from "react-router-dom";
-import { changePassPropValue, setProjectOption, ProjectOptions } from "../store/actions";
+import { changePassPropValue, setProjectOption, ProjectOptions, setMediaActiveCollection, editCollection } from "../store/actions";
 import Viewer from "./Viewer";
 import OptionsBar from "./OptionsBar";
 import OptionsMenu, { RegisteredFieldsMap } from "./OptionsMenu";
 import { FieldKind, PassKind } from "../model";
 import { InteractionContextMethods } from "../Pass/InteractionContext";
 import { connect } from "react-redux";
-import { PassMixedProps, MediaProps } from "../Pass";
-import { State } from "../store/state";
+import { PassMixedProps } from "../Pass";
+import { LocalizedMediaGroup, State } from "../store/state";
 import DefaultFields from "./staticFields";
 import { DataGroup } from "./OptionsMenu/pages/PanelsPage/PanelGroup";
 import { FieldSelectHandler } from "../Pass/layouts/sections/useRegistrations";
@@ -20,11 +20,13 @@ import JSZip from "jszip";
 interface DispatchProps {
 	changePassPropValue: typeof changePassPropValue;
 	setProjectOption: typeof setProjectOption;
+	setMediaActiveCollection: typeof setMediaActiveCollection;
+	editCollection: typeof editCollection;
 }
 
 interface ConfiguratorStore {
 	passProps: PassMixedProps;
-	mediaBuffers: Partial<Record<keyof MediaProps, ArrayBuffer>>;
+	media: LocalizedMediaGroup;
 	projectOptions: ProjectOptions;
 }
 
@@ -67,9 +69,8 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 
 	static getDerivedStateFromProps(props: ConfiguratorProps) {
 		const { description, organizationName, passTypeIdentifier, teamIdentifier } = props?.passProps ?? {};
-		const { icon } = props?.mediaBuffers;
 
-		if (!(description && organizationName && passTypeIdentifier && teamIdentifier && icon)) {
+		if (!(description && organizationName && passTypeIdentifier && teamIdentifier)) {
 			return {
 				canBeExported: false
 			};
@@ -201,18 +202,38 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 
 		this.toggleExportModal();
 
-		const { mediaBuffers, passProps } = this.props;
+		const { passProps, media } = this.props;
 		const zip = new JSZip();
 
 		/**
 		 * Creating physical files
 		 */
 
-		const mediaKeys = Object.keys(mediaBuffers) as (keyof PassMixedProps)[];
+		const languagesMap = new Map(Object.entries(media));
 
-		for (let i = mediaKeys.length, prop: string; prop = mediaKeys[--i];) {
-			const content = mediaBuffers[prop];
-			zip.file(`${prop.replace(/image/ig, "")}.png`, content);
+		for (const [lang, mediaSet] of languagesMap) {
+
+			/**
+			 * if lang is "default", we insert the
+			 * files in root folder
+			 */
+
+			const folderPath = `${lang !== "default" && `${lang}.lproj/` || ""}`;
+
+			for (const mediaName in mediaSet) {
+				const currentMedia = mediaSet[mediaName];
+				const mediaPath = `${folderPath}${mediaName.replace(/image/ig, "")}`;
+
+				if (currentMedia.activeCollectionID) {
+					const { resolutions } = currentMedia[currentMedia.activeCollectionID];
+
+					for (const res in resolutions) {
+						const { name, content: [buffer] } = resolutions[res];
+						const fileName = `${mediaPath}${name === mediaPath || name === "1x" ? "" : name}.png`
+						zip.file(fileName, buffer);
+					}
+				}
+			}
 		}
 
 		/**
@@ -324,7 +345,7 @@ declare const isDevelopment: boolean;
 
 export default withRouter(connect(
 	(state: State): ConfiguratorStore => {
-		const { pass, media, rawMedia: mediaBuffers, projectOptions } = state;
+		const { pass, media, projectOptions } = state;
 
 		const fallbackDevelopmentPassMetadata = !pass.kind && isDevelopment && {
 			transitType: PKTransitType.Boat,
@@ -332,10 +353,10 @@ export default withRouter(connect(
 		} || {};
 
 		return {
-			passProps: Object.assign(fallbackDevelopmentPassMetadata, pass, media),
-			mediaBuffers,
+			passProps: Object.assign(fallbackDevelopmentPassMetadata, pass),
+			media,
 			projectOptions
 		};
 	},
-	{ changePassPropValue, setProjectOption }
+	{ changePassPropValue, setProjectOption, setMediaActiveCollection, editCollection }
 )(Configurator));

@@ -1,5 +1,9 @@
 import { PassMixedProps, MediaProps } from "../Pass";
 
+export type LocalizedMediaGroup = {
+	[languageOrDefault: string]: MediaSet;
+};
+
 export type MediaSet = {
 	[K in keyof MediaProps]: CollectionSet;
 }
@@ -30,9 +34,7 @@ export type ResolutionTuple = [ArrayBuffer, string?];
 
 export interface State {
 	pass: Partial<PassMixedProps>;
-	media: {
-		[languageOrDefault: string]: MediaSet;
-	};
+	media: LocalizedMediaGroup;
 	rawMedia: Partial<Record<keyof MediaProps, ArrayBuffer>>;
 	projectOptions: {
 		title?: string,
