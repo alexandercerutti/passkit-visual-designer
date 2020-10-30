@@ -35,7 +35,6 @@ export type ResolutionTuple = [ArrayBuffer, string?];
 export interface State {
 	pass: Partial<PassMixedProps>;
 	media: LocalizedMediaGroup;
-	rawMedia: Partial<Record<keyof MediaProps, ArrayBuffer>>;
 	projectOptions: {
 		title?: string,
 		activeMediaLanguage: string;
@@ -45,7 +44,6 @@ export interface State {
 export const initialState: State = {
 	pass: {},
 	media: {},
-	rawMedia: {},
 	projectOptions: {
 		activeMediaLanguage: "default"
 	},

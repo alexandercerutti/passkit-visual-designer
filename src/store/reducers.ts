@@ -19,12 +19,6 @@ function pass(state = initialState.pass, action: SinglePropSettingAction<PassPro
 				return stateCopy;
 			}
 
-			/* 			// Array buffers that come from URLMiddleware as blobs must not be
-						// stored here but in media
-						if (isMedia(action.value)) {
-							return state;
-						} */
-
 			return {
 				...state,
 				[action.key]: action.value
@@ -58,32 +52,6 @@ export function media(state = initialState.media, action: MediaEditAction): Stat
 	}
 }
 
-export function rawMedia(state = initialState.rawMedia, action: SinglePropSettingAction<PassProps, [string, ArrayBuffer]>): State["rawMedia"] {
-	/* switch (action.type) {
-		case ConfigActions.SET_SINGLE_PROP: {
-			if (!action.value && state[action.key]) {
-				const stateCopy = { ...state };
-				delete stateCopy[action.key];
-
-				return stateCopy;
-			}
-
-			if (!isMedia(action.value)) {
-				return state;
-			}
-
-			return {
-				...state,
-				[action.key]: action.value[1]
-			};
-		}
-
-		default: {
-			return state;
-		}
-	} */
-}
-
 export function projectOptions(state = initialState.projectOptions, action: SinglePropSettingAction<POKeys, POValues>): ProjectOptions {
 	if (!action.value) {
 		const stateCopy = { ...state };
@@ -110,6 +78,5 @@ export function projectOptions(state = initialState.projectOptions, action: Sing
 export default combineReducers<State>({
 	pass,
 	media,
-	rawMedia,
 	projectOptions,
 });
