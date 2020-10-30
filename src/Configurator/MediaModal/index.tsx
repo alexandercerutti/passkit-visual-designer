@@ -7,16 +7,13 @@ import CollectionsView from "./CollectionsView";
 import { CSSTransition, SwitchTransition } from "react-transition-group";
 import CollectionEditor from "./CollectionEditor";
 import { ArrowIcon } from "./icons";
-
-export interface Collection {
-	name: string;
-	srcset: string[];
-}
+import { CollectionSet, IdentifiedResolutions, MediaCollection } from "../../store/state";
 
 interface Props extends Omit<ModalProps, "contentClassName"> {
 	mediaName: string;
-	collections: Collection[];
-	updateCollections?(collections: Collection[]): void;
+	collections: CollectionSet;
+	useCollection?(collectionID: string): void;
+	updateCollections?(collections: CollectionSet): void;
 }
 
 interface State {
@@ -97,9 +94,9 @@ export default class MediaModal extends React.Component<Props, State> {
 								:
 								<>
 									<CollectionEditor
-										collection={this.props.collections.find(c => c.name === this.state.editingCollection)}
+										collection={this.props.collections[this.state.editingCollection].resolutions}
 										onBack={() => this.onCollectionEdit("")}
-										onCollectionChange={(collection: Collection) => { console.log(collection) }}
+										onCollectionChange={(collection: MediaCollection) => { console.log(collection) }}
 									/>
 									<footer>
 										Hint: add a new resolution to collection by drag and drop

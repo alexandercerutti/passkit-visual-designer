@@ -1,4 +1,4 @@
-import { MediaCollection, State } from "./state";
+import { IdentifiedResolutions, MediaCollection, State } from "./state";
 import { Dispatch, AnyAction, MiddlewareAPI } from "redux";
 import { CollectionEditActionName, CollectionEditActionResolutions, ConfigActions, MediaCollectionAction, MediaEditAction } from "./actions";
 
@@ -15,7 +15,7 @@ export default function URLMiddleware(store: MiddlewareAPI<Dispatch, State>) {
 		const resolutionsToBeCreated: [string, ArrayBuffer][] = [];
 
 		let finalCollection: MediaCollection = {
-			name: selectedMedia[action.collectionID].name,
+			name: selectedMedia[action.collectionID]?.name,
 			resolutions: {},
 		};
 
@@ -111,6 +111,11 @@ export default function URLMiddleware(store: MiddlewareAPI<Dispatch, State>) {
 		for (const [id, buffer] of resolutionsToBeCreated) {
 			const bufferURL = URL.createObjectURL(new Blob([buffer], { type: "image/*" }));
 
+			if (!finalCollection.resolutions[id]) {
+				finalCollection.resolutions[id] = {} as Partial<IdentifiedResolutions>[0];
+			}
+
+			finalCollection.resolutions[id].name = "";
 			finalCollection.resolutions[id].content = [buffer, bufferURL];
 		}
 

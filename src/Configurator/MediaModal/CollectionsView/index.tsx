@@ -1,30 +1,52 @@
 import * as React from "react";
-import { Collection } from "..";
+import { CollectionSet } from "../../../store/state";
 import AddElementButton from "../AddElementButton";
 import { EditIcon } from "../icons";
 import "./style.less";
 
 interface Props {
-	collections: Collection[];
+	collections: CollectionSet;
 	isEditMode: boolean;
 	onCollectionUse?(name: string): void;
 	onCollectionEdit?(name: string): void;
 }
 
 export default function CollectionsView(props: Props) {
-	const collectionsElements = props.collections?.map((coll, index) => {
-		let previewContent: React.ReactFragment;
+	const collectionEditClickHandler = React.useCallback((collectionId) => {
+		const hasResolutions = Object.keys(props.collections[collectionId].resolutions).length;
 
-		if (coll.srcset.length) {
-			const trimmedSet = coll.srcset.slice(0, 3);
-			const fallbackElement = trimmedSet[trimmedSet.length - 1];
+		if (hasResolutions && !props.isEditMode) {
+			props.onCollectionUse(collectionId);
+		} else {
+			props.onCollectionEdit(collectionId);
+		}
+	}, [props.collections, props.isEditMode]);
+
+	const collectionsElements = Object.entries(props.collections).map(([collID, collection], index) => {
+		let previewContent: React.ReactFragment;
+		const resolutionsIDs = Object.keys(collection.resolutions);
+
+		if (resolutionsIDs.length) {
+			const trimmedSet = resolutionsIDs.slice(0, 3);
+			const fallbackElementURL = collection.resolutions[trimmedSet[trimmedSet.length - 1]].content[1];
+
+			/**
+			 * Creating a sized array of resolutions.
+			 * splicing from 0 to resolutions amount to not
+			 * remove undefined unused spaces.
+			 */
+
 			const previewSet = Array<string>(3).fill(undefined);
-			previewSet.splice(0, Math.min(3, coll.srcset.length), ...trimmedSet);
+			previewSet.splice(
+				0,
+				Math.min(3, resolutionsIDs.length),
+				...trimmedSet.map(key => collection.resolutions[key].content[1])
+			);
 
 			const clippers = previewSet.map((url, index) => {
-				const src = url || fallbackElement;
+				const src = url || fallbackElementURL;
 				return (
-					<div className="clipper" key={`${coll.name}-clipper${index}`}>
+					<div className="clipper" key={`${collection.name}-clipper${index}`}>
 						<img src={src} />
 					</div>
 				);
@@ -46,14 +68,14 @@ export default function CollectionsView(props: Props) {
 		}
 
 		return (
-			<div className="collection" key={`${coll.name}-collection${index}`}>
-				<div className="preview" onClick={() => props[coll.srcset.length && !props.isEditMode ? "onCollectionUse" : "onCollectionEdit"](coll.name || "")}>
+			<div className="collection" key={`${collection.name}-collection${index}`}>
+				<div className="preview" onClick={() => collectionEditClickHandler(collID)}>
 					{previewContent}
 					<div className={`edit-icon ${props.isEditMode && "showable" || ""}`}>
 						<EditIcon />
 					</div>
 				</div>
-				<span>{coll.srcset.length && coll.name || "no-name"}</span>
+				<span>{resolutionsIDs.length && collection.name || "no-name"}</span>
 			</div>
 		);
 	});

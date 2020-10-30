@@ -1,12 +1,13 @@
 import * as React from "react";
-import { Collection } from "..";
+import { IdentifiedResolutions, MediaCollection } from "../../../store/state";
 import AddElementButton from "../AddElementButton";
 import "./style.less";
 
 interface Props {
-	collection: Collection;
+	collectionID: string;
+	collection: MediaCollection;
 	onBack(): void;
-	onCollectionChange(collection: Collection): void;
+	onCollectionChange(collectionID: string, resolutions: IdentifiedResolutions): void;
 }
 
 export default function CollectionEditor(props: Props) {
@@ -16,25 +17,34 @@ export default function CollectionEditor(props: Props) {
 		}
 	});
 
-	const onBlurEventRef = React.useRef(({ currentTarget }: React.FocusEvent<HTMLInputElement>) => {
-		props.onCollectionChange({ name: currentTarget.value, srcset: [] });
-	});
+	const onBlurEventRef = React.useCallback((resolutionID: string, resolutionNewName: string) => {
+		props.onCollectionChange(props.collectionID, {
+			...props.collection.resolutions,
+			[resolutionID]: {
+				name: resolutionNewName,
+				content: props.collection.resolutions[resolutionID].content
+			}
+		});
+	}, [props.collection]);
 
-	const collectionItems = props.collection.srcset.map((url, index) => {
-		return (
-			<div className="item" key={`${url}-${index}`}>
-				<div className="clipper">
-					<img src={url} />
+	const collectionItems = Object.entries(props.collection.resolutions)
+		.map(([resolutionID, resolution], index) => {
+			const url = resolution.content[1];
+
+			return (
+				<div className="item" key={`${url}-${index}`}>
+					<div className="clipper">
+						<img src={url} />
+					</div>
+					<input
+						type="text"
+						onKeyDown={onKeyDownEventRef.current}
+						onBlur={({ currentTarget }: React.FocusEvent<HTMLInputElement>) => onBlurEventRef(resolutionID, currentTarget.value)}
+						defaultValue={props.collection.name}
+					/>
 				</div>
-				<input
-					type="text"
-					onKeyDown={onKeyDownEventRef.current}
-					onBlur={onBlurEventRef.current}
-					defaultValue={props.collection.name}
-				/>
-			</div>
-		);
-	});
+			);
+		});
 
 	return (
 		<div id="grid" className="collection-editor">
