@@ -27,12 +27,18 @@ export default class MediaModal extends React.Component<Props, State> {
 
 		this.onCollectionUse = this.onCollectionUse.bind(this);
 		this.onCollectionEdit = this.onCollectionEdit.bind(this);
+		this.onCollectionChange = this.onCollectionChange.bind(this);
 
 		this.state = {
 			isEditMode: false,
 			editingCollection: "",
 		};
 	}
+
+	/**
+	 * Sets a collection as edit target
+	 * @param name
+	 */
 
 	onCollectionEdit(name?: string) {
 		console.log("onEdit", name);
@@ -44,6 +50,21 @@ export default class MediaModal extends React.Component<Props, State> {
 
 	onCollectionUse(name: string) {
 		console.log("onUse", name);
+	}
+
+	/**
+	 * Receives updates to a collection
+	 */
+
+	onCollectionChange(collectionID: string, resolutions: IdentifiedResolutions) {
+		return this.props.updateCollections(
+			Object.assign({ ...this.props.collections }, {
+				[collectionID]: {
+					name: this.props.collections[collectionID].name,
+					resolutions,
+				} as MediaCollection
+			})
+		);
 	}
 
 	toggleEditMode() {
@@ -94,9 +115,10 @@ export default class MediaModal extends React.Component<Props, State> {
 								:
 								<>
 									<CollectionEditor
-										collection={this.props.collections[this.state.editingCollection].resolutions}
+										collectionID={this.state.editingCollection}
+										collection={this.props.collections[this.state.editingCollection]}
 										onBack={() => this.onCollectionEdit("")}
-										onCollectionChange={(collection: MediaCollection) => { console.log(collection) }}
+										onCollectionChange={this.onCollectionChange}
 									/>
 									<footer>
 										Hint: add a new resolution to collection by drag and drop
