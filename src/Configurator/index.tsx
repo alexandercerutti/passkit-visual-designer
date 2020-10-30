@@ -16,6 +16,7 @@ import { FieldSelectHandler } from "../Pass/layouts/sections/useRegistrations";
 import ExportModal from "./ExportModal";
 import { PKTransitType } from "../Pass/constants";
 import JSZip from "jszip";
+import MediaModal from "./MediaModal";
 
 interface DispatchProps {
 	changePassPropValue: typeof changePassPropValue;
@@ -38,7 +39,7 @@ interface ConfiguratorState {
 	emptyFieldsVisible: boolean;
 	showExportModal: boolean;
 	canBeExported: boolean;
-	showMediaModal: boolean;
+	showMediaModalForMedia: string;
 }
 
 class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState> implements InteractionContextMethods {
@@ -63,7 +64,7 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 			emptyFieldsVisible: true,
 			showExportModal: false,
 			canBeExported: false,
-			showMediaModal: false,
+			showMediaModalForMedia: null,
 		};
 	}
 
@@ -186,9 +187,9 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 		}));
 	}
 
-	toggleMediaModal() {
+	toggleMediaModal(mediaName: string) {
 		this.setState((previous) => ({
-			showMediaModal: !previous.showMediaModal
+			showMediaModalForMedia: previous.showMediaModalForMedia ? null : mediaName
 		}));
 	}
 
@@ -317,6 +318,13 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 						}]}
 						dataBank={this.props.passProps}
 						closeModal={this.toggleExportModal}
+					/>
+				}
+				{this.state.showMediaModalForMedia &&
+					<MediaModal
+						mediaName={this.state.showMediaModalForMedia}
+						closeModal={() => this.toggleMediaModal(this.state.showMediaModalForMedia)}
+						collections={this.props.media?.[this.props.projectOptions.activeMediaLanguage]?.[this.state.showMediaModalForMedia] ?? []}
 					/>
 				}
 			</div>
