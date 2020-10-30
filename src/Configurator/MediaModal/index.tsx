@@ -93,7 +93,13 @@ export default class MediaModal extends React.Component<Props, State> {
 						<span>it</span>
 						{
 							!this.state.editingCollection &&
-							<span onClick={() => this.props.collections.length && this.toggleEditMode()} className={`edit-button ${!this.props.collections.length && "disabled" || ""}`}>
+							<span
+								onClick={() => (
+									Object.keys(this.props.collections).filter(key => key !== "activeCollectionID").length &&
+									this.toggleEditMode()
+								)}
+								className={`edit-button ${!Object.keys(this.props.collections).length && "disabled" || ""}`}
+							>
 								{this.state.isEditMode ? "Done" : "Edit"}
 							</span> || null
 						}
