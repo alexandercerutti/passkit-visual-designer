@@ -9,7 +9,7 @@ import { FieldKind, PassKind } from "../model";
 import { InteractionContextMethods } from "../Pass/InteractionContext";
 import { connect } from "react-redux";
 import { PassMixedProps } from "../Pass";
-import { LocalizedMediaGroup, State } from "../store/state";
+import { LocalizedMediaGroup, MediaCollection, State } from "../store/state";
 import DefaultFields from "./staticFields";
 import { DataGroup } from "./OptionsMenu/pages/PanelsPage/PanelGroup";
 import { FieldSelectHandler } from "../Pass/layouts/sections/useRegistrations";
@@ -56,6 +56,7 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 		this.requestExport = this.requestExport.bind(this);
 		this.changeProjectTitle = this.changeProjectTitle.bind(this);
 		this.toggleMediaModal = this.toggleMediaModal.bind(this);
+		this.editCollection = this.editCollection.bind(this);
 
 		this.state = {
 			selectedFieldId: null,
@@ -195,6 +196,10 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 
 	changeProjectTitle(title: string) {
 		this.props.setProjectOption("title", title);
+	}
+
+	editCollection(collectionID: string, collection: MediaCollection, editHints: number) {
+		this.props.editCollection(this.state.showMediaModalForMedia, collectionID, collection, editHints);
 	}
 
 	async requestExport() {
