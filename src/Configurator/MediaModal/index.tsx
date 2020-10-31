@@ -8,12 +8,19 @@ import { CSSTransition, SwitchTransition } from "react-transition-group";
 import CollectionEditor from "./CollectionEditor";
 import { ArrowIcon } from "./icons";
 import { CollectionSet, IdentifiedResolutions, MediaCollection } from "../../store/state";
+import { v1 as uuid } from "uuid";
+
+type CollectionEditOperation = 0b0001 | 0b0010 | 0b0100;
+export const CollectionEditCreate = 0b0001;
+export const CollectionEditModify = 0b0010;
+/* skipping 0b0011 to avoid collisions */
+export const CollectionEditDelete = 0b0100;
 
 interface Props extends Omit<ModalProps, "contentClassName"> {
 	mediaName: string;
 	collections: CollectionSet;
 	useCollection(collectionID: string): void;
-	updateCollection(collectionID: string, collection: MediaCollection, editHints: number): void;
+	updateCollection(collectionID: string, collection: MediaCollection, editHints?: number): void;
 }
 
 interface State {
@@ -29,6 +36,7 @@ export default class MediaModal extends React.Component<Props, State> {
 		this.onCollectionEditSelect = this.onCollectionEditSelect.bind(this);
 		this.onCollectionChange = this.onCollectionChange.bind(this);
 		this.onResolutionChange = this.onResolutionChange.bind(this);
+		this.onCollectionListEdit = this.onCollectionListEdit.bind(this);
 
 		this.state = {
 			isEditMode: false,
@@ -52,6 +60,25 @@ export default class MediaModal extends React.Component<Props, State> {
 	onCollectionUse(collectionID: string) {
 		console.log("onUse", collectionID);
 		return this.props.useCollection(collectionID);
+	}
+
+	onCollectionListEdit(operation: CollectionEditOperation, collectionID?: string) {
+		if (operation & CollectionEditCreate) {
+			return this.props.updateCollection(uuid(), {
+				name: undefined,
+				resolutions: {}
+			});
+		}
+
+		if (operation & CollectionEditModify) {
+			// Modify
+			return;
+		}
+
+		if (operation & CollectionEditDelete) {
+			// Modify
+			return;
+		}
 	}
 
 	/**
@@ -136,6 +163,7 @@ export default class MediaModal extends React.Component<Props, State> {
 									isEditMode={this.state.isEditMode}
 									onCollectionEditSelect={this.onCollectionEditSelect}
 									onCollectionUse={this.onCollectionUse}
+									onCollectionListEdit={this.onCollectionListEdit}
 								/>
 								:
 								<>

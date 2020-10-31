@@ -2,6 +2,7 @@ import * as React from "react";
 import { CollectionSet } from "../../../store/state";
 import AddElementButton from "../AddElementButton";
 import { EditIcon } from "../icons";
+import { CollectionEditCreate, CollectionEditDelete, CollectionEditModify } from "..";
 import "./style.less";
 
 interface Props {
@@ -9,6 +10,7 @@ interface Props {
 	isEditMode: boolean;
 	onCollectionUse(collectionID: string): void;
 	onCollectionEditSelect(collectionID: string): void;
+	onCollectionListEdit(operation: number, collectionID?: string): void;
 }
 
 export default function CollectionsView(props: Props) {
@@ -21,6 +23,10 @@ export default function CollectionsView(props: Props) {
 			props.onCollectionEditSelect(collectionId);
 		}
 	}, [props.collections, props.isEditMode]);
+
+	const collectionAddClickHandler = React.useCallback(() => {
+		props.onCollectionListEdit(CollectionEditCreate, null);
+	}, [props.collections]);
 
 	const collectionsElements = Object.entries(props.collections).map(([collID, collection], index) => {
 		let previewContent: React.ReactFragment;
@@ -86,7 +92,7 @@ export default function CollectionsView(props: Props) {
 			<div className="collection">
 				<AddElementButton
 					caption="Add collection"
-					onClick={() => { }}
+					onClick={collectionAddClickHandler}
 				/>
 			</div>
 		</div>
