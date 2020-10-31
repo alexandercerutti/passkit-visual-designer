@@ -26,7 +26,7 @@ export default class MediaModal extends React.Component<Props, State> {
 		super(props);
 
 		this.onCollectionUse = this.onCollectionUse.bind(this);
-		this.onCollectionEdit = this.onCollectionEdit.bind(this);
+		this.onCollectionEditSelect = this.onCollectionEditSelect.bind(this);
 		this.onCollectionChange = this.onCollectionChange.bind(this);
 		this.onResolutionChange = this.onResolutionChange.bind(this);
 
@@ -41,11 +41,11 @@ export default class MediaModal extends React.Component<Props, State> {
 	 * @param name
 	 */
 
-	onCollectionEdit(name?: string) {
-		console.log("onEdit", name);
+	onCollectionEditSelect(collectionID?: string) {
+		console.log("onEdit", collectionID);
 
 		this.setState({
-			editingCollection: name || "",
+			editingCollection: collectionID || "",
 		});
 	}
 
@@ -104,7 +104,7 @@ export default class MediaModal extends React.Component<Props, State> {
 					<header>
 						<nav
 							className={this.state.editingCollection && "allow-back-nav" || ""}
-							onClick={() => this.state.editingCollection && this.onCollectionEdit()}
+							onClick={() => this.state.editingCollection && this.onCollectionEditSelect()}
 						>
 							<ArrowIcon className="back" />
 							<span>{this.props.mediaName}</span>
@@ -134,7 +134,7 @@ export default class MediaModal extends React.Component<Props, State> {
 								<CollectionsView
 									collections={this.props.collections}
 									isEditMode={this.state.isEditMode}
-									onCollectionEdit={this.onCollectionEdit}
+									onCollectionEditSelect={this.onCollectionEditSelect}
 									onCollectionUse={this.onCollectionUse}
 								/>
 								:
@@ -142,7 +142,6 @@ export default class MediaModal extends React.Component<Props, State> {
 									<CollectionEditor
 										collectionID={this.state.editingCollection}
 										collection={this.props.collections[this.state.editingCollection]}
-										onBack={() => this.onCollectionEdit("")}
 										onResolutionChange={this.onResolutionChange}
 									/>
 									<footer>

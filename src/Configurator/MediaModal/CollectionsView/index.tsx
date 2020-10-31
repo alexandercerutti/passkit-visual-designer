@@ -7,8 +7,8 @@ import "./style.less";
 interface Props {
 	collections: CollectionSet;
 	isEditMode: boolean;
-	onCollectionUse?(collectionID: string): void;
-	onCollectionEdit?(collectionID: string): void;
+	onCollectionUse(collectionID: string): void;
+	onCollectionEditSelect(collectionID: string): void;
 }
 
 export default function CollectionsView(props: Props) {
@@ -18,7 +18,7 @@ export default function CollectionsView(props: Props) {
 		if (hasResolutions && !props.isEditMode) {
 			props.onCollectionUse(collectionId);
 		} else {
-			props.onCollectionEdit(collectionId);
+			props.onCollectionEditSelect(collectionId);
 		}
 	}, [props.collections, props.isEditMode]);
 

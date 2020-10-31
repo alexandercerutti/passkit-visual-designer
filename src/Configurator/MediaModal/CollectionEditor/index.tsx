@@ -6,7 +6,6 @@ import "./style.less";
 interface Props {
 	collectionID: string;
 	collection: MediaCollection;
-	onBack(): void;
 	onResolutionChange(collectionID: string, resolutions: IdentifiedResolutions, editHints: number): void;
 }
 
