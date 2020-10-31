@@ -8,7 +8,7 @@ import OptionsMenu, { RegisteredFieldsMap } from "./OptionsMenu";
 import { FieldKind, PassKind } from "../model";
 import { InteractionContextMethods } from "../Pass/InteractionContext";
 import { connect } from "react-redux";
-import { PassMixedProps } from "../Pass";
+import { MediaProps, PassMixedProps } from "../Pass";
 import { LocalizedMediaGroup, MediaCollection, State } from "../store/state";
 import DefaultFields from "./staticFields";
 import { DataGroup } from "./OptionsMenu/pages/PanelsPage/PanelGroup";
@@ -39,7 +39,7 @@ interface ConfiguratorState {
 	emptyFieldsVisible: boolean;
 	showExportModal: boolean;
 	canBeExported: boolean;
-	showMediaModalForMedia: string;
+	showMediaModalForMedia: keyof MediaProps;
 }
 
 class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState> implements InteractionContextMethods {
@@ -188,7 +188,7 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 		}));
 	}
 
-	toggleMediaModal(mediaName: string) {
+	toggleMediaModal(mediaName: keyof MediaProps) {
 		this.setState((previous) => ({
 			showMediaModalForMedia: previous.showMediaModalForMedia ? null : mediaName
 		}));
