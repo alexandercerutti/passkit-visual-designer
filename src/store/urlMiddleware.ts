@@ -83,11 +83,11 @@ export default function URLMiddleware(store: MiddlewareAPI<Dispatch, State>) {
 						}
 
 						/** Weather it changed or not, we use the resolutionID */
-						finalCollection.resolutions[resolutionID] = paramResolutionDetail[resolutionID];
+						finalCollection.resolutions[resolutionID] = paramsCollectionAllResolutions[resolutionID];
 					} else {
 						// Adding the array buffer to list of urls to be created
 						resolutionsToBeCreated.push([resolutionID, paramResolutionDetail[0]]);
-						finalCollection.resolutions[resolutionID] = paramResolutionDetail[resolutionID];
+						finalCollection.resolutions[resolutionID] = paramsCollectionAllResolutions[resolutionID];
 					}
 				}
 			} else {
