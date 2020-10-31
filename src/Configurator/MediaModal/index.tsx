@@ -49,8 +49,9 @@ export default class MediaModal extends React.Component<Props, State> {
 		});
 	}
 
-	onCollectionUse(name: string) {
-		console.log("onUse", name);
+	onCollectionUse(collectionID: string) {
+		console.log("onUse", collectionID);
+		return this.props.useCollection(collectionID);
 	}
 
 	/**

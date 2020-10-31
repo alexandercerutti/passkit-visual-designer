@@ -7,8 +7,8 @@ import "./style.less";
 interface Props {
 	collections: CollectionSet;
 	isEditMode: boolean;
-	onCollectionUse?(name: string): void;
-	onCollectionEdit?(name: string): void;
+	onCollectionUse?(collectionID: string): void;
+	onCollectionEdit?(collectionID: string): void;
 }
 
 export default function CollectionsView(props: Props) {
