@@ -12,8 +12,8 @@ import { CollectionSet, IdentifiedResolutions, MediaCollection } from "../../sto
 interface Props extends Omit<ModalProps, "contentClassName"> {
 	mediaName: string;
 	collections: CollectionSet;
-	useCollection?(collectionID: string): void;
-	updateCollections?(collections: CollectionSet): void;
+	useCollection(collectionID: string): void;
+	updateCollection(collectionID: string, collection: MediaCollection, editHints: number): void;
 }
 
 interface State {
@@ -28,6 +28,7 @@ export default class MediaModal extends React.Component<Props, State> {
 		this.onCollectionUse = this.onCollectionUse.bind(this);
 		this.onCollectionEdit = this.onCollectionEdit.bind(this);
 		this.onCollectionChange = this.onCollectionChange.bind(this);
+		this.onResolutionChange = this.onResolutionChange.bind(this);
 
 		this.state = {
 			isEditMode: false,
@@ -56,14 +57,31 @@ export default class MediaModal extends React.Component<Props, State> {
 	 * Receives updates to a collection
 	 */
 
-	onCollectionChange(collectionID: string, resolutions: IdentifiedResolutions) {
-		return this.props.updateCollections(
-			Object.assign({ ...this.props.collections }, {
-				[collectionID]: {
-					name: this.props.collections[collectionID].name,
-					resolutions,
-				} as MediaCollection
-			})
+	onCollectionChange(collectionID: string, collection: MediaCollection, editHints: number = 0b0011) {
+		return this.props.updateCollection(collectionID, collection, editHints);
+	}
+
+	/**
+	 * Receives, merges and creates a new
+	 * collection to be submitted as for store processing.
+	 * Uses an editHint to make middleware understand what,
+	 * in current existing collection, changed.
+	 *
+	 * @param collectionID
+	 * @param resolutions
+	 * @param editHints
+	 */
+
+	onResolutionChange(collectionID: string, resolutions: IdentifiedResolutions, editHints: number = 0b0011) {
+		const changedCollection: MediaCollection = {
+			name: this.props.collections[collectionID].name,
+			resolutions,
+		};
+
+		return this.props.updateCollection(
+			collectionID,
+			changedCollection,
+			editHints
 		);
 	}
 
@@ -124,7 +142,7 @@ export default class MediaModal extends React.Component<Props, State> {
 										collectionID={this.state.editingCollection}
 										collection={this.props.collections[this.state.editingCollection]}
 										onBack={() => this.onCollectionEdit("")}
-										onCollectionChange={this.onCollectionChange}
+										onResolutionChange={this.onResolutionChange}
 									/>
 									<footer>
 										Hint: add a new resolution to collection by drag and drop

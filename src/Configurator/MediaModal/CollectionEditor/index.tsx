@@ -7,7 +7,7 @@ interface Props {
 	collectionID: string;
 	collection: MediaCollection;
 	onBack(): void;
-	onCollectionChange(collectionID: string, resolutions: IdentifiedResolutions): void;
+	onResolutionChange(collectionID: string, resolutions: IdentifiedResolutions, editHints: number): void;
 }
 
 export default function CollectionEditor(props: Props) {
@@ -18,13 +18,19 @@ export default function CollectionEditor(props: Props) {
 	});
 
 	const onBlurEventRef = React.useCallback((resolutionID: string, resolutionNewName: string) => {
-		props.onCollectionChange(props.collectionID, {
-			...props.collection.resolutions,
+		/**
+		 * Only resolution name changed. We use 0b0001 as editHint
+		 */
+
+		const { resolutions: currentResolutions } = props.collection;
+
+		props.onResolutionChange(props.collectionID, {
+			...currentResolutions,
 			[resolutionID]: {
 				name: resolutionNewName,
-				content: props.collection.resolutions[resolutionID].content
+				content: currentResolutions[resolutionID].content
 			}
-		});
+		}, 0b0010);
 	}, [props.collection]);
 
 	const collectionItems = Object.entries(props.collection.resolutions)
