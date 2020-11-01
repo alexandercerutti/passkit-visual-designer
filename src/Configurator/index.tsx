@@ -329,7 +329,9 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 					<MediaModal
 						mediaName={this.state.showMediaModalForMedia}
 						closeModal={() => this.toggleMediaModal(this.state.showMediaModalForMedia)}
-						collections={this.props.media?.[this.props.projectOptions.activeMediaLanguage]?.[this.state.showMediaModalForMedia] ?? []}
+						collections={this.props.media?.[this.props.projectOptions.activeMediaLanguage]?.[this.state.showMediaModalForMedia]}
+						updateCollection={this.editCollection}
+						useCollection={(collectionID: string) => this.props.setMediaActiveCollection(this.state.showMediaModalForMedia, collectionID)}
 					/>
 				}
 			</div>
