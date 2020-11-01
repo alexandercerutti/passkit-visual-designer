@@ -89,12 +89,30 @@ export default function CollectionsView(props: Props) {
 	return (
 		<div id="grid" className="collection-view">
 			{collectionsElements}
-			<div className="collection">
-				<AddElementButton
-					caption="Add collection"
-					onClick={collectionAddClickHandler}
-				/>
-			</div>
+			<CollectionAddButton
+				show={!collectionsElements.length || props.isEditMode}
+				onClick={collectionAddClickHandler}
+			/>
+		</div>
+	);
+}
+
+interface CABProps {
+	onClick(...args: any[]): void;
+	show: boolean;
+}
+
+function CollectionAddButton(props: CABProps) {
+	if (!props.show) {
+		return null;
+	}
+
+	return (
+		<div className="collection">
+			<AddElementButton
+				caption="Add collection"
+				onClick={props.onClick}
+			/>
 		</div>
 	);
 }
