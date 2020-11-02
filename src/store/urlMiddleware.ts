@@ -62,31 +62,34 @@ export default function URLMiddleware(store: MiddlewareAPI<Dispatch, State>) {
 				]);
 
 				for (const resolutionID of allResolutionsIDs) {
-					const paramResolutionDetail = paramsCollectionAllResolutions[resolutionID].content;
-					const storeResolutionDetail = storeCollectionAllResolutions[resolutionID].content;
+					const resolutionInParams = paramsCollectionAllResolutions[resolutionID];
+					const resolutionInStore = storeCollectionAllResolutions[resolutionID];
 
-					if (paramsCollectionAllResolutions[resolutionID] === null) {
-						if (storeResolutionDetail.length === 2) {
-							resolutionsURLToBeDestroyed.push(storeResolutionDetail[1]);
+					if (resolutionInParams === null) {
+						if (resolutionInStore[resolutionID]?.content?.length === 2) {
+							resolutionsURLToBeDestroyed.push(resolutionInStore[resolutionID]?.content[1]);
 						}
-					} else if (storeCollectionAllResolutions[resolutionID]) {
-						if (storeResolutionDetail[0] !== paramResolutionDetail[0]) {
+					} else if (resolutionInStore) {
+						const { content: storeResolutionContents } = resolutionInStore;
+						const { content: paramsResolutionContents } = resolutionInParams;
+
+						if (storeResolutionContents[0] !== paramsResolutionContents[0]) {
 							/**
 							 * Resolution ArrayBuffer is different. If we have an URL,
 							 * we remove it and create it again
 							 */
-							if (storeResolutionDetail[1]) {
-								resolutionsURLToBeDestroyed.push(storeResolutionDetail[1]);
+							if (storeResolutionContents[1]) {
+								resolutionsURLToBeDestroyed.push(storeResolutionContents[1]);
 							}
 
-							resolutionsToBeCreated.push([resolutionID, paramResolutionDetail[0]]);
+							resolutionsToBeCreated.push([resolutionID, paramsResolutionContents[0]]);
 						}
 
 						/** Weather it changed or not, we use the resolutionID */
 						finalCollection.resolutions[resolutionID] = paramsCollectionAllResolutions[resolutionID];
 					} else {
 						// Adding the array buffer to list of urls to be created
-						resolutionsToBeCreated.push([resolutionID, paramResolutionDetail[0]]);
+						resolutionsToBeCreated.push([resolutionID, resolutionInParams.content[0]]);
 						finalCollection.resolutions[resolutionID] = paramsCollectionAllResolutions[resolutionID];
 					}
 				}
