@@ -46,6 +46,10 @@ export default function CollectionEditor(props: Props) {
 
 		const { resolutions: currentResolutions } = props.collection;
 
+		if (currentResolutions[resolutionID].name === resolutionNewName) {
+			return;
+		}
+
 		props.onResolutionChange(props.collectionID, {
 			...currentResolutions,
 			[resolutionID]: {
