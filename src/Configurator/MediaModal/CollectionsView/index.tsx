@@ -87,13 +87,15 @@ export default function CollectionsView(props: Props) {
 	});
 
 	return (
-		<div id="grid" className="collection-view">
-			{collectionsElements}
-			<CollectionAddButton
-				show={!collectionsElements.length || props.isEditMode}
-				onClick={collectionAddClickHandler}
-			/>
-		</div>
+		<>
+			<div id="grid" className="collection-view">
+				{collectionsElements}
+				<CollectionAddButton
+					show={!collectionsElements.length || props.isEditMode}
+					onClick={collectionAddClickHandler}
+				/>
+			</div>
+		</>
 	);
 }
 
