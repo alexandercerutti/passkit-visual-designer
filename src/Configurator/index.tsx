@@ -234,7 +234,7 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 					const { resolutions } = currentMedia[currentMedia.activeCollectionID];
 
 					for (const res in resolutions) {
-						const { name, content: [buffer] } = resolutions[res];
+						const { name = "1x", content: [buffer] } = resolutions[res];
 						const fileName = `${mediaPath}${name === mediaPath || name === "1x" ? "" : name}.png`
 						zip.file(fileName, buffer);
 					}
