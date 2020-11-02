@@ -10,123 +10,164 @@ interface Props {
 	onResolutionChange(collectionID: string, resolutions: IdentifiedResolutions, editHints: number): void;
 }
 
-export default function CollectionEditor(props: Props) {
-	const [draggingOver, setDraggingOver] = React.useState(false);
+interface State {
+	draggingOver: boolean;
+}
 
-	const onDragEnterHandlerRef = React.useCallback((event: React.DragEvent<HTMLDivElement>) => {
-		preventPropagation(event);
+export default class CollectionEditor extends React.Component<Props, State> {
+	constructor(props: Props) {
+		super(props);
 
-		if (!draggingOver) {
-			setDraggingOver(true);
+		this.state = {
+			draggingOver: false,
+		};
+
+		this.onDragEnterHandler = this.onDragEnterHandler.bind(this);
+		this.onDragLeaveHandler = this.onDragLeaveHandler.bind(this);
+		this.onDropHandler = this.onDropHandler.bind(this);
+		this.onChangeHandler = this.onChangeHandler.bind(this);
+		this.onKeyDownHandler = this.onKeyDownHandler.bind(this);
+		this.onBlurHandler = this.onBlurHandler.bind(this);
+	}
+
+	static preventEventDefaultPropagation(event: React.SyntheticEvent) {
+		event.preventDefault();
+		event.stopPropagation();
+	}
+
+	// ************************************* //
+	// *** DRAG AND DROP, UPLOAD METHODS *** //
+	// ************************************* //
+
+	onDragEnterHandler(event: React.DragEvent<HTMLDivElement>) {
+		CollectionEditor.preventEventDefaultPropagation(event);
+
+		if (!this.state.draggingOver) {
+			this.setState({
+				draggingOver: true
+			});
 		}
-	}, [draggingOver]);
+	}
 
-	const onDragLeaveHandlerRef = React.useRef((event: React.DragEvent<HTMLDivElement>) => {
-		preventPropagation(event);
-		setDraggingOver(false);
-	});
+	onDragLeaveHandler(event: React.DragEvent<HTMLDivElement>) {
+		CollectionEditor.preventEventDefaultPropagation(event);
 
-	const onDropHandlerRef = React.useCallback(async (event: React.DragEvent<HTMLDivElement>) => {
-		preventPropagation(event);
-		setDraggingOver(false);
+		this.setState({
+			draggingOver: false
+		});
+	}
+
+	async onDropHandler(event: React.DragEvent<HTMLDivElement>) {
+		CollectionEditor.preventEventDefaultPropagation(event);
+
+		this.setState({
+			draggingOver: false
+		});
 
 		const newResolutions = await getResolutionsFromFileList(event.dataTransfer.files);
 
-		props.onResolutionChange(props.collectionID, {
-			...props.collection.resolutions,
+		const { onResolutionChange, collectionID, collection } = this.props;
+
+		onResolutionChange(collectionID, {
+			...collection.resolutions,
 			...newResolutions,
 		}, 0b0010);
-	}, [props.collection]);
+	}
 
-	const onChangeHandlerRef = React.useCallback(async (event: React.ChangeEvent<HTMLInputElement>) => {
+	async onChangeHandler(event: React.ChangeEvent<HTMLInputElement>) {
 		const newResolutions = await getResolutionsFromFileList(event.target.files);
 
-		props.onResolutionChange(props.collectionID, {
-			...props.collection.resolutions,
+		const { onResolutionChange, collectionID, collection } = this.props;
+
+		onResolutionChange(collectionID, {
+			...collection.resolutions,
 			...newResolutions,
 		}, 0b0010);
-	}, [props.collection]);
+	}
 
-	const onKeyDownEventRef = React.useRef(({ key, currentTarget }: React.KeyboardEvent<HTMLInputElement>) => {
+	// **************************** //
+	// *** INPUT EVENT HANDLERS *** //
+	// **************************** //
+
+	onKeyDownHandler({ key, currentTarget }: React.KeyboardEvent<HTMLInputElement>) {
 		if (key === "Enter") {
 			currentTarget.blur();
 		}
-	});
+	}
 
-	const onBlurEventRef = React.useCallback((resolutionID: string, resolutionNewName: string) => {
-		/**
-		 * Only resolution name changed. We use 0b0010 as editHint
-		 */
-
-		const { resolutions: currentResolutions } = props.collection;
+	onBlurHandler(resolutionID: string, resolutionNewName: string) {
+		const { resolutions: currentResolutions } = this.props.collection;
 
 		if (currentResolutions[resolutionID].name === resolutionNewName) {
 			return;
 		}
 
-		props.onResolutionChange(props.collectionID, {
+		/**
+		 * Only resolution name changed. We use 0b0010 as editHint
+		 */
+
+		this.props.onResolutionChange(this.props.collectionID, {
 			...currentResolutions,
 			[resolutionID]: {
 				name: resolutionNewName,
 				content: currentResolutions[resolutionID].content
 			}
 		}, 0b0010);
-	}, [props.collection]);
+	}
 
-	const collectionItems = Object.entries(props.collection.resolutions)
-		.map(([resolutionID, resolution], index) => {
-			const url = resolution.content[1];
+	render() {
+		const { collection } = this.props;
 
-			return (
-				<div className="item" key={`${url}-${index}`}>
-					<div className="clipper">
-						<img src={url} />
-					</div>
-					<input
-						type="text"
-						onKeyDown={onKeyDownEventRef.current}
-						onBlur={({ currentTarget }: React.FocusEvent<HTMLInputElement>) => onBlurEventRef(resolutionID, currentTarget.value)}
-						defaultValue={props.collection.name}
-					/>
-				</div>
-			);
-		});
+		const collectionItems = Object.entries(collection.resolutions)
+			.map(([resolutionID, resolution], index) => {
+				const url = resolution.content[1];
 
-	return (
-		<>
-			<div
-				id="grid"
-				className={`collection-editor ${draggingOver && "dragOver" || ""}`}
-				onDragEnter={onDragEnterHandlerRef}
-				// To avoid for children pictures to be dragged and trigger the onDragEnter
-				onDragStart={preventPropagation}
-			>
-				{collectionItems}
-				<div className="item">
-					<input type="file" id="file-upload" hidden onChange={onChangeHandlerRef} />
-					<label htmlFor="file-upload">
-						<AddElementButton
-							caption="Add picture"
-							onClick={() => void 0}
+				return (
+					<div className="item" key={`${url}-${index}`}>
+						<div className="clipper">
+							<img src={url} />
+						</div>
+						<input
+							type="text"
+							onKeyDown={this.onKeyDownHandler}
+							onBlur={({ currentTarget }: React.FocusEvent<HTMLInputElement>) => this.onBlurHandler(resolutionID, currentTarget.value)}
+							defaultValue={collection.name}
 						/>
-					</label>
-				</div>
-			</div>
-			<div
-				id="drop-area"
-				onDragOver={preventPropagation}
-				onDragLeave={onDragLeaveHandlerRef.current}
-				onDrop={onDropHandlerRef}
-			>
-				<span>Drop to add to collection</span>
-			</div>
-		</>
-	);
-}
+					</div>
+				);
+			});
 
-function preventPropagation(e: React.SyntheticEvent) {
-	e.preventDefault();
-	e.stopPropagation();
+		return (
+			<>
+				<div
+					id="grid"
+					className={`collection-editor ${this.state.draggingOver && "dragOver" || ""}`}
+					onDragEnter={this.onDragEnterHandler}
+					// To avoid for children pictures to be dragged and trigger the onDragEnter
+					onDragStart={CollectionEditor.preventEventDefaultPropagation}
+				>
+					{collectionItems}
+					<div className="item">
+						<input type="file" id="file-upload" hidden onChange={this.onChangeHandler} />
+						<label htmlFor="file-upload">
+							<AddElementButton
+								caption="Add picture"
+								onClick={() => void 0}
+							/>
+						</label>
+					</div>
+				</div>
+				<div
+					id="drop-area"
+					onDragOver={CollectionEditor.preventEventDefaultPropagation}
+					onDragLeave={this.onDragLeaveHandler}
+					onDrop={this.onDropHandler}
+				>
+					<span>Drop to add to collection</span>
+				</div>
+			</>
+		);
+	}
 }
 
 async function getResolutionsFromFileList(files: FileList) {
