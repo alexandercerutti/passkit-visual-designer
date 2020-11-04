@@ -11,11 +11,13 @@ export default function URLMiddleware(store: MiddlewareAPI<Dispatch, State>) {
 		const currentStore = store.getState();
 		const { projectOptions: { activeMediaLanguage }, media } = currentStore;
 		const selectedMedia = media[activeMediaLanguage][action.mediaName];
-		const resolutionsURLToBeDestroyed: string[] = [];
-		const resolutionsToBeCreated: [string, ArrayBuffer][] = [];
+		/** url string array */
+		const resolutionsURLRevokationQueue: string[] = [];
+		/** the resolution id to which the url has to be associated and the buffer source */
+		const resolutionsURLCreationQueue: [string, ArrayBuffer][] = [];
 
 		let finalCollection: MediaCollection = {
-			name: selectedMedia[action.collectionID]?.name,
+			name: undefined,
 			resolutions: {},
 		};
 
@@ -29,7 +31,7 @@ export default function URLMiddleware(store: MiddlewareAPI<Dispatch, State>) {
 
 			for (const resolutionID in resolutions) {
 				if (resolutions[resolutionID].content.length === 2) {
-					resolutionsURLToBeDestroyed.push(resolutions[resolutionID].content[1]);
+					resolutionsURLRevokationQueue.push(resolutions[resolutionID].content[1]);
 				}
 			}
 
@@ -45,52 +47,43 @@ export default function URLMiddleware(store: MiddlewareAPI<Dispatch, State>) {
 			 */
 			if (action.editHints & CollectionEditActionName) {
 				finalCollection.name = action.collection.name;
+			} else {
+				finalCollection.name = selectedMedia[action.collectionID].name;
 			}
 
 			/**
 			 * (0b0001, 0b0010, 0b0011) & 0b0010 => (0, 2, 2)
 			 */
 			if (action.editHints & CollectionEditActionResolutions) {
-				const storeCollectionAllResolutions = selectedMedia[action.collectionID].resolutions;
-				const paramsCollectionAllResolutions = action.collection.resolutions;
+				const storeCollectionResolutions = selectedMedia[action.collectionID].resolutions;
+				const actionCollectionResolutions = action.collection.resolutions;
 
 				/** Removing duplicates */
 
 				const allResolutionsIDs = new Set([
-					...Object.keys(storeCollectionAllResolutions),
-					...Object.keys(paramsCollectionAllResolutions)
+					...Object.keys(storeCollectionResolutions),
+					...Object.keys(actionCollectionResolutions)
 				]);
 
 				for (const resolutionID of allResolutionsIDs) {
-					const resolutionInParams = paramsCollectionAllResolutions[resolutionID];
-					const resolutionInStore = storeCollectionAllResolutions[resolutionID];
+					const actionResolution = actionCollectionResolutions[resolutionID];
+					const storeResolution = storeCollectionResolutions[resolutionID];
 
-					if (resolutionInParams === null) {
-						if (resolutionInStore[resolutionID]?.content?.length === 2) {
-							resolutionsURLToBeDestroyed.push(resolutionInStore[resolutionID]?.content[1]);
+					if (actionResolution && storeResolution) {
+						if (actionResolution.content[0] !== storeResolution.content[0]) {
+							/** buffers are different, old url has to be destroyed, and the new created */
+							resolutionsURLRevokationQueue.push(storeResolution.content[1]);
+							resolutionsURLCreationQueue.push([resolutionID, actionResolution.content[0]]);
+						} else {
+							/** Nothing changed. Use store resolution values */
+							finalCollection.resolutions[resolutionID] = storeResolution;
 						}
-					} else if (resolutionInStore) {
-						const { content: storeResolutionContents } = resolutionInStore;
-						const { content: paramsResolutionContents } = resolutionInParams;
-
-						if (storeResolutionContents[0] !== paramsResolutionContents[0]) {
-							/**
-							 * Resolution ArrayBuffer is different. If we have an URL,
-							 * we remove it and create it again
-							 */
-							if (storeResolutionContents[1]) {
-								resolutionsURLToBeDestroyed.push(storeResolutionContents[1]);
-							}
-
-							resolutionsToBeCreated.push([resolutionID, paramsResolutionContents[0]]);
-						}
-
-						/** Weather it changed or not, we use the resolutionID */
-						finalCollection.resolutions[resolutionID] = paramsCollectionAllResolutions[resolutionID];
+					} else if (!actionResolution && storeResolution) {
+						/** Resolution has been removed by action */
+						resolutionsURLRevokationQueue.push(storeResolution.content[1]);
 					} else {
-						// Adding the array buffer to list of urls to be created
-						resolutionsToBeCreated.push([resolutionID, resolutionInParams.content[0]]);
-						finalCollection.resolutions[resolutionID] = paramsCollectionAllResolutions[resolutionID];
+						/** Resolution has been added by action */
+						resolutionsURLCreationQueue.push([resolutionID, actionResolution.content[0]]);
 					}
 				}
 			} else {
@@ -105,13 +98,13 @@ export default function URLMiddleware(store: MiddlewareAPI<Dispatch, State>) {
 			const paramResolutions = action.collection.resolutions || {};
 
 			for (const resolutionID in paramResolutions) {
-				resolutionsToBeCreated.push([resolutionID, paramResolutions[resolutionID].content[0]]);
+				resolutionsURLCreationQueue.push([resolutionID, paramResolutions[resolutionID].content[0]]);
 			}
 		}
 
-		resolutionsURLToBeDestroyed.forEach(URL.revokeObjectURL);
+		resolutionsURLRevokationQueue.forEach(URL.revokeObjectURL);
 
-		for (const [id, buffer] of resolutionsToBeCreated) {
+		for (const [id, buffer] of resolutionsURLCreationQueue) {
 			const bufferURL = URL.createObjectURL(new Blob([buffer], { type: "image/*" }));
 
 			if (!finalCollection.resolutions[id]) {

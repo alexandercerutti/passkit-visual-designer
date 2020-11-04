@@ -1,5 +1,6 @@
 import * as React from "react";
 import { v1 as uuid } from "uuid";
+import { CollectionEditModify, CollectionEditOperation } from "..";
 import { IdentifiedResolutions, MediaCollection, ResolutionTuple } from "../../../store/state";
 import AddElementButton from "../AddElementButton";
 import "./style.less";
@@ -7,7 +8,7 @@ import "./style.less";
 interface Props {
 	collectionID: string;
 	collection: MediaCollection;
-	onResolutionChange(collectionID: string, resolutions: IdentifiedResolutions, editHints: number): void;
+	onResolutionChange(operation: CollectionEditOperation, collectionID: string, collection: MediaCollection): void;
 }
 
 interface State {
@@ -68,10 +69,15 @@ export default class CollectionEditor extends React.Component<Props, State> {
 
 		const { onResolutionChange, collectionID, collection } = this.props;
 
-		onResolutionChange(collectionID, {
-			...collection.resolutions,
-			...newResolutions,
-		}, 0b0010);
+		const changedCollection: MediaCollection = {
+			name: collection.name,
+			resolutions: {
+				...collection.resolutions,
+				...newResolutions
+			},
+		};
+
+		onResolutionChange(CollectionEditModify, collectionID, changedCollection);
 	}
 
 	async onChangeHandler(event: React.ChangeEvent<HTMLInputElement>) {
@@ -79,10 +85,15 @@ export default class CollectionEditor extends React.Component<Props, State> {
 
 		const { onResolutionChange, collectionID, collection } = this.props;
 
-		onResolutionChange(collectionID, {
-			...collection.resolutions,
-			...newResolutions,
-		}, 0b0010);
+		const changedCollection: MediaCollection = {
+			name: collection.name,
+			resolutions: {
+				...collection.resolutions,
+				...newResolutions
+			},
+		};
+
+		onResolutionChange(CollectionEditModify, collectionID, changedCollection);
 	}
 
 	// **************************** //
@@ -106,13 +117,20 @@ export default class CollectionEditor extends React.Component<Props, State> {
 		 * Only resolution name changed. We use 0b0010 as editHint
 		 */
 
-		this.props.onResolutionChange(this.props.collectionID, {
-			...currentResolutions,
-			[resolutionID]: {
-				name: resolutionNewName,
-				content: currentResolutions[resolutionID].content
-			}
-		}, 0b0010);
+		const { onResolutionChange, collectionID, collection } = this.props;
+
+		const changedCollection: MediaCollection = {
+			name: collection.name,
+			resolutions: {
+				...currentResolutions,
+				[resolutionID]: {
+					name: resolutionNewName,
+					content: currentResolutions[resolutionID].content
+				}
+			},
+		};
+
+		onResolutionChange(CollectionEditModify, collectionID, changedCollection);
 	}
 
 	render() {

@@ -10,7 +10,7 @@ import { ArrowIcon } from "./icons";
 import { CollectionSet, IdentifiedResolutions, MediaCollection } from "../../store/state";
 import { v1 as uuid } from "uuid";
 
-type CollectionEditOperation = 0b0001 | 0b0010 | 0b0100;
+export type CollectionEditOperation = 0b0001 | 0b0010 | 0b0100;
 export const CollectionEditCreate = 0b0001;
 export const CollectionEditModify = 0b0010;
 /* skipping 0b0011 to avoid collisions */
@@ -34,9 +34,7 @@ export default class MediaModal extends React.Component<Props, State> {
 
 		this.onCollectionUse = this.onCollectionUse.bind(this);
 		this.onCollectionEditSelect = this.onCollectionEditSelect.bind(this);
-		this.onCollectionChange = this.onCollectionChange.bind(this);
-		this.onResolutionChange = this.onResolutionChange.bind(this);
-		this.onCollectionListEdit = this.onCollectionListEdit.bind(this);
+		this.onCollectionEditOperation = this.onCollectionEditOperation.bind(this);
 
 		this.state = {
 			isEditMode: false,
@@ -62,7 +60,7 @@ export default class MediaModal extends React.Component<Props, State> {
 		return this.props.useCollection(collectionID);
 	}
 
-	onCollectionListEdit(operation: CollectionEditOperation, collectionID?: string) {
+	onCollectionEditOperation(operation: CollectionEditOperation, collectionID?: string, collection?: MediaCollection) {
 		if (operation & CollectionEditCreate) {
 			return this.props.updateCollection(uuid(), {
 				name: undefined,
@@ -71,46 +69,13 @@ export default class MediaModal extends React.Component<Props, State> {
 		}
 
 		if (operation & CollectionEditModify) {
-			// Modify
-			return;
+			return this.props.updateCollection(collectionID, collection);
 		}
 
 		if (operation & CollectionEditDelete) {
-			// Modify
-			return;
+			// Delete
+			return this.props.updateCollection(collectionID, null);
 		}
-	}
-
-	/**
-	 * Receives updates to a collection
-	 */
-
-	onCollectionChange(collectionID: string, collection: MediaCollection, editHints: number = 0b0011) {
-		return this.props.updateCollection(collectionID, collection, editHints);
-	}
-
-	/**
-	 * Receives, merges and creates a new
-	 * collection to be submitted as for store processing.
-	 * Uses an editHint to make middleware understand what,
-	 * in current existing collection, changed.
-	 *
-	 * @param collectionID
-	 * @param resolutions
-	 * @param editHints
-	 */
-
-	onResolutionChange(collectionID: string, resolutions: IdentifiedResolutions, editHints: number = 0b0011) {
-		const changedCollection: MediaCollection = {
-			name: this.props.collections[collectionID].name,
-			resolutions,
-		};
-
-		return this.props.updateCollection(
-			collectionID,
-			changedCollection,
-			editHints
-		);
 	}
 
 	toggleEditMode() {
@@ -163,14 +128,14 @@ export default class MediaModal extends React.Component<Props, State> {
 									isEditMode={this.state.isEditMode}
 									onCollectionEditSelect={this.onCollectionEditSelect}
 									onCollectionUse={this.onCollectionUse}
-									onCollectionListEdit={this.onCollectionListEdit}
+									performCollectionsOperation={this.onCollectionEditOperation}
 								/>
 								:
 								<>
 									<CollectionEditor
 										collectionID={this.state.editingCollection}
 										collection={this.props.collections[this.state.editingCollection]}
-										onResolutionChange={this.onResolutionChange}
+										onResolutionChange={this.onCollectionEditOperation}
 									/>
 									<footer>
 										Hint: add a new resolution to collection by drag and drop
