@@ -69,8 +69,12 @@ export default class CollectionEditor extends React.Component<Props, State> {
 		this.updateResolutionsFromFiles(event.dataTransfer.files);
 	}
 
-	onChangeHandler(event: React.ChangeEvent<HTMLInputElement>) {
-		this.updateResolutionsFromFiles(event.target.files);
+	async onChangeHandler(event: React.ChangeEvent<HTMLInputElement>) {
+		// @TODO Remove once React 17 will be integrated
+		event.persist();
+
+		await this.updateResolutionsFromFiles(event.target.files);
+		event.target.value = "";
 	}
 
 	async updateResolutionsFromFiles(files: FileList) {
