@@ -2,7 +2,7 @@ import { PassKind } from "../model";
 import { Action } from "redux";
 import { MediaProps, PassMixedProps } from "../Pass";
 import { ThunkAction } from "redux-thunk";
-import { MediaCollection, State } from "./state";
+import { CollectionSet, MediaCollection, State } from "./state";
 
 export type PassProps = keyof PassMixedProps;
 export type ProjectOptions = State["projectOptions"];
@@ -37,8 +37,7 @@ export function editCollection(mediaName: keyof MediaProps, collectionID: string
 export interface MediaEditAction extends Action<ConfigActions.EDIT_MEDIA> {
 	mediaLanguage: string;
 	mediaName: keyof MediaProps;
-	collection: MediaCollection;
-	collectionID: string;
+	collections: CollectionSet;
 }
 
 export interface ActiveCollectionSetAction extends Action<ConfigActions.SET_MEDIA_USAGE> {

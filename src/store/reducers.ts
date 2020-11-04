@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import { State, initialState } from "./state";
+import { State, initialState, CollectionSet } from "./state";
 import { SinglePropSettingAction, ConfigActions, PassProps, ProjectOptions, POKeys, POValues, MediaEditAction } from "./actions";
 
 /**
@@ -39,10 +39,18 @@ export function media(state = initialState.media, action: MediaEditAction): Stat
 			const selectedLanguage = (newState[action.mediaLanguage] || (newState[action.mediaLanguage] = {}));
 			const selectedMediaCollections = (selectedLanguage[action.mediaName] || (selectedLanguage[action.mediaName] = { activeCollectionID: null }));
 
-			Object.assign(selectedMediaCollections, {
-				[action.collectionID]: action.collection
-			});
+			const parsedCollections = Object.keys(action.collections).reduce<CollectionSet>((acc, coll) => {
+				if (action.collections[coll] === undefined && coll !== "activeCollectionID") {
+					return acc;
+				}
 
+				return {
+					...acc,
+					[coll]: action.collections[coll]
+				};
+			}, {} as CollectionSet);
+
+			Object.assign(selectedMediaCollections, parsedCollections);
 			return newState;
 		};
 

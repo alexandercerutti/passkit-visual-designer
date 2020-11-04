@@ -35,7 +35,7 @@ export default function URLMiddleware(store: MiddlewareAPI<Dispatch, State>) {
 				}
 			}
 
-			finalCollection = null;
+			finalCollection = undefined;
 		} else if (selectedMedia[action.collectionID]) {
 			/**
 			 * Collection has been edited somehow. We have to discover it.
@@ -117,9 +117,11 @@ export default function URLMiddleware(store: MiddlewareAPI<Dispatch, State>) {
 
 		return next<MediaEditAction>({
 			type: ConfigActions.EDIT_MEDIA,
-			collection: finalCollection,
+			collections: {
+				...selectedMedia,
+				[action.collectionID]: finalCollection,
+			},
 			mediaLanguage: activeMediaLanguage,
-			collectionID: action.collectionID,
 			mediaName: action.mediaName
 		});
 	}
