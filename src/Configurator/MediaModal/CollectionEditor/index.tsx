@@ -29,6 +29,7 @@ export default class CollectionEditor extends React.Component<Props, State> {
 		this.onChangeHandler = this.onChangeHandler.bind(this);
 		this.onKeyDownHandler = this.onKeyDownHandler.bind(this);
 		this.onBlurHandler = this.onBlurHandler.bind(this);
+		this.updateResolutionsFromFiles = this.updateResolutionsFromFiles.bind(this);
 	}
 
 	static preventEventDefaultPropagation(event: React.SyntheticEvent) {
@@ -65,23 +66,15 @@ export default class CollectionEditor extends React.Component<Props, State> {
 			draggingOver: false
 		});
 
-		const newResolutions = await getResolutionsFromFileList(event.dataTransfer.files);
-
-		const { onResolutionChange, collectionID, collection } = this.props;
-
-		const changedCollection: MediaCollection = {
-			name: collection.name,
-			resolutions: {
-				...collection.resolutions,
-				...newResolutions
-			},
-		};
-
-		onResolutionChange(CollectionEditModify, collectionID, changedCollection);
+		this.updateResolutionsFromFiles(event.dataTransfer.files);
 	}
 
-	async onChangeHandler(event: React.ChangeEvent<HTMLInputElement>) {
-		const newResolutions = await getResolutionsFromFileList(event.target.files);
+	onChangeHandler(event: React.ChangeEvent<HTMLInputElement>) {
+		this.updateResolutionsFromFiles(event.target.files);
+	}
+
+	async updateResolutionsFromFiles(files: FileList) {
+		const newResolutions = await getResolutionsFromFileList(files);
 
 		const { onResolutionChange, collectionID, collection } = this.props;
 
