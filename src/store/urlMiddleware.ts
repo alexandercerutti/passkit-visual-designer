@@ -94,12 +94,10 @@ export default function URLMiddleware(store: MiddlewareAPI<Dispatch, State>) {
 		for (const [id, buffer] of resolutionsURLCreationQueue) {
 			const bufferURL = URL.createObjectURL(new Blob([buffer], { type: "image/*" }));
 
-			if (!finalCollection.resolutions[id]) {
-				finalCollection.resolutions[id] = {} as Partial<IdentifiedResolutions>[0];
-			}
-
-			finalCollection.resolutions[id].name = "";
-			finalCollection.resolutions[id].content = [buffer, bufferURL];
+			finalCollection.resolutions[id] = {
+				name: "",
+				content: [buffer, bufferURL],
+			};
 		}
 
 		return next<MediaEditAction>({
