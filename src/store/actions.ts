@@ -9,24 +9,18 @@ export type ProjectOptions = State["projectOptions"];
 export type POKeys = keyof ProjectOptions;
 export type POValues = ProjectOptions[POKeys];
 
-export const CollectionEditActionName = 0b0001;
-export const CollectionEditActionResolutions = 0b0010;
-export const CollectionEditActionAll = 0b0011;
-
 export interface MediaCollectionAction extends Action<ConfigActions.EDIT_COLLECTION> {
 	mediaName: keyof MediaProps,
 	collectionID: string;
 	collection: MediaCollection,
-	editHints: number,
 }
 
-export function editCollection(mediaName: keyof MediaProps, collectionID: string, collection: MediaCollection | null, editHints: number): MediaCollectionAction {
+export function editCollection(mediaName: keyof MediaProps, collectionID: string, collection: MediaCollection | null): MediaCollectionAction {
 	return {
 		type: ConfigActions.EDIT_COLLECTION,
 		mediaName,
 		collectionID,
 		collection,
-		editHints
 	};
 }
 

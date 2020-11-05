@@ -198,8 +198,8 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 		this.props.setProjectOption("title", title);
 	}
 
-	editCollection(collectionID: string, collection: MediaCollection, editHints: number) {
-		this.props.editCollection(this.state.showMediaModalForMedia, collectionID, collection, editHints);
+	onMediaCollectionEdit(collectionID: string, collection: MediaCollection) {
+		this.props.editCollection(this.state.showMediaModalForMedia, collectionID, collection);
 	}
 
 	async requestExport() {

@@ -1,6 +1,6 @@
 import { IdentifiedResolutions, MediaCollection, State } from "./state";
 import { Dispatch, AnyAction, MiddlewareAPI } from "redux";
-import { CollectionEditActionName, CollectionEditActionResolutions, ConfigActions, MediaCollectionAction, MediaEditAction } from "./actions";
+import { ConfigActions, MediaCollectionAction, MediaEditAction } from "./actions";
 
 export default function URLMiddleware(store: MiddlewareAPI<Dispatch, State>) {
 	return (next: Dispatch<AnyAction>) => (action: MediaCollectionAction) => {
@@ -39,56 +39,43 @@ export default function URLMiddleware(store: MiddlewareAPI<Dispatch, State>) {
 		} else if (selectedMedia[action.collectionID]) {
 			/**
 			 * Collection has been edited somehow. We have to discover it.
-			 * We get a "hint" from the action itself.
 			 */
 
-			/**
-			 * (0b0001, 0b0010, 0b0011) & 0b0001 => (1, 0, 1)
-			 */
-			if (action.editHints & CollectionEditActionName) {
-				finalCollection.name = action.collection.name;
-			} else {
-				finalCollection.name = selectedMedia[action.collectionID].name;
-			}
+			const storeCollectionResolutions = selectedMedia[action.collectionID].resolutions;
+			const actionCollectionResolutions = action.collection.resolutions;
 
-			/**
-			 * (0b0001, 0b0010, 0b0011) & 0b0010 => (0, 2, 2)
-			 */
-			if (action.editHints & CollectionEditActionResolutions) {
-				const storeCollectionResolutions = selectedMedia[action.collectionID].resolutions;
-				const actionCollectionResolutions = action.collection.resolutions;
+			/** Removing duplicates */
+			const allResolutionsIDs = new Set([
+				...Object.keys(storeCollectionResolutions),
+				...Object.keys(actionCollectionResolutions)
+			]);
 
-				/** Removing duplicates */
+			for (const resolutionID of allResolutionsIDs) {
+				const actionResolution = actionCollectionResolutions[resolutionID];
+				const storeResolution = storeCollectionResolutions[resolutionID];
 
-				const allResolutionsIDs = new Set([
-					...Object.keys(storeCollectionResolutions),
-					...Object.keys(actionCollectionResolutions)
-				]);
-
-				for (const resolutionID of allResolutionsIDs) {
-					const actionResolution = actionCollectionResolutions[resolutionID];
-					const storeResolution = storeCollectionResolutions[resolutionID];
-
-					if (actionResolution && storeResolution) {
-						if (actionResolution.content[0] !== storeResolution.content[0]) {
-							/** buffers are different, old url has to be destroyed, and the new created */
-							resolutionsURLRevokationQueue.push(storeResolution.content[1]);
-							resolutionsURLCreationQueue.push([resolutionID, actionResolution.content[0]]);
-						} else {
-							/** Nothing changed. Use store resolution values */
-							finalCollection.resolutions[resolutionID] = storeResolution;
-						}
-					} else if (!actionResolution && storeResolution) {
-						/** Resolution has been removed by action */
+				if (actionResolution && storeResolution) {
+					if (actionResolution.content[0] !== storeResolution.content[0]) {
+						/** buffers are different, old url has to be destroyed, and the new created */
 						resolutionsURLRevokationQueue.push(storeResolution.content[1]);
-					} else {
-						/** Resolution has been added by action */
 						resolutionsURLCreationQueue.push([resolutionID, actionResolution.content[0]]);
+					} else {
+						/**
+						 * Buffer didn't change. But name might have changed.
+						 * Use action resolution values
+						 */
+						finalCollection.resolutions[resolutionID] = actionResolution;
 					}
+				} else if (!actionResolution && storeResolution) {
+					/** Resolution has been removed by action */
+					resolutionsURLRevokationQueue.push(storeResolution.content[1]);
+				} else {
+					/** Resolution has been added by action */
+					resolutionsURLCreationQueue.push([resolutionID, actionResolution.content[0]]);
 				}
-			} else {
-				finalCollection.resolutions = selectedMedia[action.collectionID].resolutions;
 			}
+
+			finalCollection.name = action.collection.name;
 		} else {
 			/**
 			 * The collection edited is new. If it has resolutions,
