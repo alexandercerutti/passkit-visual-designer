@@ -73,7 +73,6 @@ export default class MediaModal extends React.Component<Props, State> {
 		}
 
 		if (operation & CollectionEditDelete) {
-			// Delete
 			return this.props.updateCollection(collectionID, null);
 		}
 	}
@@ -103,7 +102,7 @@ export default class MediaModal extends React.Component<Props, State> {
 						</nav>
 						<span>it</span>
 						{
-							!this.state.editingCollection &&
+							!this.state.editingCollection && Object.keys(this.props.collections).length &&
 							<span
 								onClick={() => (
 									Object.keys(this.props.collections).filter(key => key !== "activeCollectionID").length &&
