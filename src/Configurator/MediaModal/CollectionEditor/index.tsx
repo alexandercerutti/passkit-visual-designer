@@ -2,6 +2,7 @@ import * as React from "react";
 import { v1 as uuid } from "uuid";
 import { CollectionEditModify, CollectionEditOperation } from "..";
 import { IdentifiedResolutions, MediaCollection, ResolutionTuple } from "../../../store/state";
+import { getArrayBuffer } from "../../../utils";
 import AddElementButton from "../AddElementButton";
 import "./style.less";
 
@@ -187,9 +188,7 @@ export default class CollectionEditor extends React.Component<Props, State> {
 
 async function getResolutionsFromFileList(files: FileList) {
 	const buffers = await Promise.all<ArrayBuffer>(
-		Array.prototype.map.call(files, (fileObj: File) =>
-			fileObj.arrayBuffer()
-		)
+		Array.prototype.map.call(files, getArrayBuffer)
 	);
 
 	return buffers.reduce((acc, buffer) => {

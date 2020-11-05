@@ -18,3 +18,17 @@ export function createClassName(staticClassNames: string[], candidates: Candidat
 		...keys.filter(key => Boolean(candidates[key]))
 	].join(" ").trim();
 }
+
+/**
+ * Converts a blob object to arrayBuffer.
+ * Includes support to a workaround for Safari and all the
+ * other browsers that do not support Blob.prototype.arrayBuffer
+ */
+
+export async function getArrayBuffer(blob: Blob) {
+	if (Blob.prototype.arrayBuffer instanceof Function) {
+		return await blob.arrayBuffer();
+	} else {
+		return await (new Response(blob)).arrayBuffer();
+	}
+}

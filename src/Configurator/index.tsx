@@ -142,7 +142,7 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 		let valueToStore: any = value;
 
 		if (value instanceof Blob) {
-			valueToStore = await value.arrayBuffer();
+			valueToStore = await getArrayBuffer(value);
 		}
 
 		this.props.changePassPropValue(key, valueToStore);
