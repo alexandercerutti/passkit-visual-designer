@@ -89,7 +89,7 @@
 						}
 					}
 
-					& > p {
+					& > div {
 						color: #a4a4a4;
 						margin: 0;
 						/** for ellipsis **/
@@ -101,6 +101,8 @@
 						& span#coll-name {
 							cursor: pointer;
 							color: #e6e6e6;
+							opacity: 0;
+							animation: appearance .5s ease-in-out 0s forwards;
 
 							&::before {
 								content: "/";
@@ -111,6 +113,48 @@
 								vertical-align: -4px;
 								font-size: 1.7em;
 								font-weight: 400;
+								pointer-events: none;
+							}
+
+							/**
+							 * Span to contain element and allow
+							 * enlarging focus effect
+							 */
+
+							& > span {
+								position: relative;
+
+								&::after {
+									content: "";
+									position: absolute;
+									width: 0%;
+									transition: width .4s ease-in-out;
+									border-bottom: 1px solid #e6e6e6;
+									left: 0;
+									bottom: -3px;
+								}
+
+								&:focus-within::after {
+									width: 100%;
+								}
+
+								& > input {
+									border: 0;
+									background: transparent;
+									color: #e6e6e6;
+									font-size: 1em;
+									font-family: 'SF Display';
+									font-weight: 200;
+									outline: none;
+									border-radius: 0;
+									width: 130px;
+									cursor: pointer;
+
+									&::selection {
+										background-color: #afafaf;
+										color: #e6e6e6;
+									}
+								}
 							}
 						}
 
