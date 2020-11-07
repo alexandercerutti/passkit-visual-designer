@@ -57,7 +57,7 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 		this.requestExport = this.requestExport.bind(this);
 		this.changeProjectTitle = this.changeProjectTitle.bind(this);
 		this.toggleMediaModal = this.toggleMediaModal.bind(this);
-		this.editCollection = this.editCollection.bind(this);
+		this.onMediaCollectionEdit = this.onMediaCollectionEdit.bind(this);
 
 		this.state = {
 			selectedFieldId: null,
@@ -331,7 +331,7 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 						mediaName={this.state.showMediaModalForMedia}
 						closeModal={() => this.toggleMediaModal(this.state.showMediaModalForMedia)}
 						collections={this.props.media?.[this.props.projectOptions.activeMediaLanguage]?.[this.state.showMediaModalForMedia]}
-						updateCollection={this.editCollection}
+						updateCollection={this.onMediaCollectionEdit}
 						useCollection={(collectionID: string) => this.props.setMediaActiveCollection(this.state.showMediaModalForMedia, collectionID)}
 					/>
 				}
