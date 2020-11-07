@@ -17,6 +17,7 @@ import ExportModal from "./ExportModal";
 import { PKTransitType } from "../Pass/constants";
 import JSZip from "jszip";
 import MediaModal from "./MediaModal";
+import { getArrayBuffer } from "../utils";
 
 interface DispatchProps {
 	changePassPropValue: typeof changePassPropValue;
