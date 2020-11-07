@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ArrowIcon } from "./icons";
+import { ArrowIcon, EditIcon } from "./icons";
 
 interface Props {
 	allowBack: boolean;
@@ -26,9 +26,7 @@ export function ModalNavigation(props: Props) {
 			</p>
 			{
 				allowBack &&
-				<div>
-					<div></div>
-				</div> || null
+				<EditIcon onClick={(e) => void 0} />
 			}
 		</nav>
 	);
