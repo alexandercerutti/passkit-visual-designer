@@ -7,8 +7,9 @@ import CollectionsView from "./CollectionsView";
 import { CSSTransition, SwitchTransition } from "react-transition-group";
 import CollectionEditor from "./CollectionEditor";
 import { ArrowIcon } from "./icons";
-import { CollectionSet, IdentifiedResolutions, MediaCollection } from "../../store/state";
+import { CollectionSet, MediaCollection } from "../../store/state";
 import { v1 as uuid } from "uuid";
+import { ModalNavigation } from "./ModalNavigation";
 
 export type CollectionEditOperation = 0b0001 | 0b0010 | 0b0100;
 export const CollectionEditCreate = 0b0001;
@@ -93,13 +94,12 @@ export default class MediaModal extends React.Component<Props, State> {
 				</div>
 				<div id="media-collector">
 					<header>
-						<nav
-							className={this.state.editingCollection && "allow-back-nav" || ""}
-							onClick={() => this.state.editingCollection && this.onCollectionEditSelect()}
-						>
-							<ArrowIcon className="back" />
-							<span>{this.props.mediaName}</span>
-						</nav>
+						<ModalNavigation
+							allowBack={Boolean(this.state.editingCollection)}
+							onBack={this.onCollectionEditSelect}
+							mediaName={this.props.mediaName}
+							collectionName={this.state.editingCollection && this.props.collections[this.state.editingCollection].name || ""}
+						/>
 						<span>it</span>
 						{
 							!this.state.editingCollection && Object.keys(this.props.collections).length &&
