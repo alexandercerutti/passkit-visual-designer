@@ -1,3 +1,5 @@
+@import "../../App/common.less";
+
 .viewer {
 	display: flex;
 	justify-content: center;
@@ -26,8 +28,7 @@
 		top: 30px;
 		left: 30px;
 		width: 200px;
-		opacity: 0;
-		animation: appearance .5s ease-in-out 2s forwards;
+		.lookMumIamAppearing(.5s, ease-in-out, 2s);
 
 		& input {
 			width: 100%;
@@ -59,9 +60,4 @@
 			width: 100%;
 		}
 	}
-}
-
-@keyframes appearance {
-	from { opacity: 0; }
-	to { opacity: 1; }
 }

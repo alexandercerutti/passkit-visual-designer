@@ -47,3 +47,12 @@
 		z-index: 1 !important;
 	}
 }
+
+.lookMumIamAppearing(@inTime, @tmf: ease-in-out, @delay: 0s) {
+	opacity: 0;
+	animation: appearance @inTime @tmf @delay forwards;
+}
+
+@keyframes appearance {
+	to { opacity: 1; }
+}

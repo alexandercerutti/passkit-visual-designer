@@ -1,13 +1,10 @@
+@import "../../App/common.less";
+
 .options-menu {
 	display: flex;
 	flex-direction: row;
 	overflow: hidden;
 	width: 100%;
-	opacity: 0;
-	animation: menu-appearance .5s ease-in-out 2s forwards;
+	.lookMumIamAppearing(.5s, ease-in-out, 2s);
 }
 
-@keyframes menu-appearance {
-	from { opacity: 0; }
-	to { opacity: 1; }
-}
