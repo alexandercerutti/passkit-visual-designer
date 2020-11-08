@@ -11,18 +11,18 @@ interface Props {
 
 export function ModalNavigation(props: Props) {
 	const [editing, setEditing] = React.useState(false);
-	const editableRef = React.useRef<HTMLInputElement>();
+	const inputRef = React.useRef<HTMLInputElement>();
 	const ghostSpanRef = React.useRef<HTMLSpanElement>();
 
 	React.useEffect(() => {
-		if (!editableRef.current) {
+		if (!inputRef.current) {
 			return;
 		}
 
 		if (editing) {
-			editableRef.current.focus();
+			inputRef.current.focus();
 		} else {
-			editableRef.current.blur();
+			inputRef.current.blur();
 		}
 	}, [editing]);
 
@@ -54,8 +54,8 @@ export function ModalNavigation(props: Props) {
 
 		Object.assign(ghostSpanRef.current.style, hiddenSpanStyleSet);
 
-		if (editableRef.current) {
-			editableRef.current.style.width = ghostSpanRef.current.offsetWidth + "px";
+		if (inputRef.current) {
+			inputRef.current.style.width = ghostSpanRef.current.offsetWidth + "px";
 		}
 	}, [editing]);
 
@@ -70,7 +70,7 @@ export function ModalNavigation(props: Props) {
 				ghostSpanRef.current.textContent = `${event.currentTarget.value}${event.key}`;
 			}
 
-			editableRef.current.style.width = ghostSpanRef.current.offsetWidth + "px";
+			inputRef.current.style.width = ghostSpanRef.current.offsetWidth + "px";
 		}
 	});
 
@@ -111,7 +111,7 @@ export function ModalNavigation(props: Props) {
 									onBlur={onBlurHandler}
 									onKeyDown={onKeyDownHandler.current}
 									onFocus={onFocusHandler.current}
-									ref={editableRef}
+									ref={inputRef}
 									defaultValue={collectionName || "Untitled collection"}
 								/> || null
 							}
