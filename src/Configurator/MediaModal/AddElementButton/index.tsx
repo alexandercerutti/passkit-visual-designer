@@ -4,7 +4,7 @@ import "./style.less";
 
 interface Props {
 	caption: string;
-	onClick(e: React.MouseEvent): void;
+	onClick?(e: React.MouseEvent): void;
 }
 
 export default function AddElementButton(props: Props) {

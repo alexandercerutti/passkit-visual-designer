@@ -166,10 +166,7 @@ export default class CollectionEditor extends React.Component<Props, State> {
 					<div className="item">
 						<input type="file" id="file-upload" hidden onChange={this.onChangeHandler} />
 						<label htmlFor="file-upload">
-							<AddElementButton
-								caption="Add picture"
-								onClick={() => void 0}
-							/>
+							<AddElementButton caption="Add picture" />
 						</label>
 					</div>
 				</div>
