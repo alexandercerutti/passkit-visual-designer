@@ -12,6 +12,7 @@ interface Props {
 export function ModalNavigation(props: Props) {
 	const [editing, setEditing] = React.useState(false);
 	const editableRef = React.useRef<HTMLInputElement>();
+	const ghostSpanRef = React.useRef<HTMLSpanElement>();
 
 	React.useEffect(() => {
 		if (!editableRef.current) {
@@ -25,17 +26,62 @@ export function ModalNavigation(props: Props) {
 		}
 	}, [editing]);
 
-	const onKeyDownHandler = React.useRef(({ key, currentTarget }: React.KeyboardEvent<HTMLInputElement>) =>
-		key === "Enter" && currentTarget.blur()
-	);
+	/**
+	 * This layout effects helps us to use
+	 * span element as a ghost-element
+	 * to change input element width when its
+	 * content changes.
+	 */
 
-	const onBlurHandler = React.useCallback(({ currentTarget }: React.FocusEvent<HTMLInputElement>) =>
-		void setEditing(false) || props.onCollectionNameEditComplete(props.collectionID, currentTarget.value)
-		, [props]);
+	React.useLayoutEffect(() => {
+		if (!ghostSpanRef.current) {
+			return;
+		}
 
-	const onFocusHandler = React.useRef(({ currentTarget }: React.FocusEvent<HTMLInputElement>) =>
-		currentTarget.select()
-	);
+		const hiddenSpanStyleSet = editing
+			// hiding span and using it as a ghost element
+			? {
+				visibility: "hidden",
+				pointerEvents: "none",
+				position: "absolute"
+			}
+			// Restoring usability and visibility
+			: {
+				position: "initial",
+				visibility: "visible",
+				pointerEvents: "auto",
+			};
+
+		Object.assign(ghostSpanRef.current.style, hiddenSpanStyleSet);
+
+		if (editableRef.current) {
+			editableRef.current.style.width = ghostSpanRef.current.offsetWidth + "px";
+		}
+	}, [editing]);
+
+	const onKeyDownHandler = React.useRef((event: React.KeyboardEvent<HTMLInputElement>) => {
+		if (event.key === "Enter") {
+			event.currentTarget.blur();
+			return;
+		}
+
+		if (event.key.length === 1 || event.key === "Backspace") {
+			if (event.key.length === 1) {
+				ghostSpanRef.current.textContent = `${event.currentTarget.value}${event.key}`;
+			}
+
+			editableRef.current.style.width = ghostSpanRef.current.offsetWidth + "px";
+		}
+	});
+
+	const onBlurHandler = React.useCallback(({ currentTarget }: React.FocusEvent<HTMLInputElement>) => {
+		setEditing(false);
+		props.onCollectionNameEditComplete(props.collectionID, currentTarget.value);
+	}, [props]);
+
+	const onFocusHandler = React.useRef(({ currentTarget }: React.FocusEvent<HTMLInputElement>) => {
+		currentTarget.select();
+	});
 
 	const onClickEditHandler = React.useRef(() => !editing && setEditing(true));
 
@@ -56,19 +102,18 @@ export function ModalNavigation(props: Props) {
 						onClick={onClickEditHandler.current}
 					>
 						<span>
-							{!editing
-								?
-								<span>
-									{collectionName || "Untitled collection"}
-								</span>
-								: <input
+							<span ref={ghostSpanRef}>
+								{collectionName || "Untitled collection"}
+							</span>
+							{editing &&
+								<input
 									type="text"
 									onBlur={onBlurHandler}
 									onKeyDown={onKeyDownHandler.current}
 									onFocus={onFocusHandler.current}
 									ref={editableRef}
 									defaultValue={collectionName || "Untitled collection"}
-								/>
+								/> || null
 							}
 						</span>
 					</span> || null
