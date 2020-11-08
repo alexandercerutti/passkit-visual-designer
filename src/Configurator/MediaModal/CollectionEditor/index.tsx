@@ -4,6 +4,7 @@ import { CollectionEditModify, CollectionEditOperation } from "..";
 import { IdentifiedResolutions, MediaCollection, ResolutionTuple } from "../../../store/state";
 import { getArrayBuffer } from "../../../utils";
 import AddElementButton from "../AddElementButton";
+import { DeleteIcon } from "../icons";
 import "./style.less";
 
 interface Props {
@@ -26,6 +27,8 @@ export default class CollectionEditor extends React.Component<Props, State> {
 
 		this.onDragEnterHandler = this.onDragEnterHandler.bind(this);
 		this.onDragLeaveHandler = this.onDragLeaveHandler.bind(this);
+		this.onResolutionsEdit = this.onResolutionsEdit.bind(this);
+		this.onResolutionDelete = this.onResolutionDelete.bind(this);
 		this.onDropHandler = this.onDropHandler.bind(this);
 		this.onChangeHandler = this.onChangeHandler.bind(this);
 		this.onKeyDownHandler = this.onKeyDownHandler.bind(this);
@@ -81,14 +84,29 @@ export default class CollectionEditor extends React.Component<Props, State> {
 	async updateResolutionsFromFiles(files: FileList) {
 		const newResolutions = await getResolutionsFromFileList(files);
 
-		const { onResolutionChange, collectionID, collection } = this.props;
+		const { collection } = this.props;
+
+		this.onResolutionsEdit({
+			...collection.resolutions,
+			...newResolutions
+		});
+	}
+
+	onResolutionDelete(resolutionID: string) {
+		const { collection } = this.props;
+
+		this.onResolutionsEdit({
+			...collection.resolutions,
+			[resolutionID]: null
+		});
+	}
+
+	onResolutionsEdit(resolutions: IdentifiedResolutions) {
+		const { onResolutionChange, collection, collectionID } = this.props;
 
 		const changedCollection: MediaCollection = {
 			name: collection.name,
-			resolutions: {
-				...collection.resolutions,
-				...newResolutions
-			},
+			resolutions,
 		};
 
 		onResolutionChange(CollectionEditModify, collectionID, changedCollection);
@@ -140,6 +158,9 @@ export default class CollectionEditor extends React.Component<Props, State> {
 
 				return (
 					<div className="item" key={`${url}-${index}`}>
+						<div className="item-actions">
+							<DeleteIcon onClick={() => this.onResolutionDelete(resolutionID)} />
+						</div>
 						<div className="clipper">
 							<img src={url} />
 						</div>
@@ -163,7 +184,7 @@ export default class CollectionEditor extends React.Component<Props, State> {
 					onDragStart={CollectionEditor.preventEventDefaultPropagation}
 				>
 					{collectionItems}
-					<div className="item">
+					<div className="item useless-id-to-diff-from-others">
 						<input type="file" id="file-upload" hidden onChange={this.onChangeHandler} />
 						<label htmlFor="file-upload">
 							<AddElementButton caption="Add picture" />

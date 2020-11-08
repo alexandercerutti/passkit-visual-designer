@@ -10,6 +10,56 @@
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
+		position: relative;
+
+		/** overlay **/
+
+		&:not(.useless-id-to-diff-from-others)::before {
+			content: "";
+			position: absolute;
+			transition: opacity .3s ease-in-out;
+			opacity: 0;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 30px;
+			background-color: rgba(25,25,25,0.8);
+			z-index: 2;
+			pointer-events: none;
+		}
+
+		& > .item-actions {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			opacity: 0;
+			transition: opacity .3s ease-in-out;
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 32px;
+			z-index: 2;
+
+			& > svg {
+				fill: #d82c2c;
+				pointer-events: auto;
+				width: 35px;
+				height: 35px;
+				cursor: pointer;
+
+				&:hover {
+					fill: #8c1d1d;
+				}
+			}
+		}
+
+		&:hover {
+			&::before,
+			& .item-actions {
+				opacity: 1;
+			}
+		}
 
 		& .clipper {
 			width: 160px;
