@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import { State, initialState, CollectionSet } from "./state";
+import { State, initialState } from "./state";
 import { SinglePropSettingAction, ConfigActions, PassProps, ProjectOptions, POKeys, POValues, MediaEditAction } from "./actions";
 
 /**
@@ -81,15 +81,6 @@ export function projectOptions(state = initialState.projectOptions, action: Sing
 		[action.key]: action.value
 	};
 }
-
-/* function isMedia(value: any) {
-	return (
-		value instanceof Array &&
-		typeof value[0] === "string" &&
-		value[1] instanceof ArrayBuffer
-	);
-}
- */
 
 export default combineReducers<State>({
 	pass,
