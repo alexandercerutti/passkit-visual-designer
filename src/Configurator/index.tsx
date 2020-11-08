@@ -93,8 +93,6 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 	 */
 
 	registerField(kind: FieldKind, groupName: string): FieldSelectHandler {
-		console.log("Received registration request for", kind, "+", groupName);
-
 		if (this.state.registeredFields.get(DataGroup.DATA).find(data => data.name === groupName)) {
 			console.log("...but failed due to duplicate already available");
 			return null;
