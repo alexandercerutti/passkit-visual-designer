@@ -5,6 +5,7 @@ import { EditIcon } from "../icons";
 import type { CollectionEditOperation } from "..";
 import { CollectionEditCreate, CollectionEditDelete, CollectionEditModify } from "..";
 import "./style.less";
+import { createClassName } from "../../../utils";
 
 interface Props {
 	collections: CollectionSet;
@@ -15,6 +16,10 @@ interface Props {
 }
 
 export default function CollectionsView(props: Props) {
+	const collectionsClassName = createClassName(["collection-actions"], {
+		"edit-mode-active": props.isEditMode
+	});
+
 	const collectionEditClickHandler = React.useCallback((collectionId) => {
 		const hasResolutions = Object.keys(props.collections[collectionId].resolutions).length;
 
@@ -78,8 +83,7 @@ export default function CollectionsView(props: Props) {
 			<div className="collection" key={`${collection.name}-collection${index}`}>
 				<div className="preview" onClick={() => collectionEditClickHandler(collID)}>
 					{previewContent}
-					<div className={`collection-actions ${props.isEditMode && "showable" || ""}`}>
-					<div className={`edit-icon ${props.isEditMode && "showable" || ""}`}>
+					<div className={collectionsClassName}>
 						<EditIcon />
 					</div>
 				</div>
