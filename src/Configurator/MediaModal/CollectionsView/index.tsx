@@ -78,6 +78,7 @@ export default function CollectionsView(props: Props) {
 			<div className="collection" key={`${collection.name}-collection${index}`}>
 				<div className="preview" onClick={() => collectionEditClickHandler(collID)}>
 					{previewContent}
+					<div className={`collection-actions ${props.isEditMode && "showable" || ""}`}>
 					<div className={`edit-icon ${props.isEditMode && "showable" || ""}`}>
 						<EditIcon />
 					</div>
