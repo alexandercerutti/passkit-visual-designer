@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ArrowIcon, EditIcon } from "./icons";
+import { ArrowIcon, EditIcon } from "../icons";
 
 interface Props {
 	collectionID: string;

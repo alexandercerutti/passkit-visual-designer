@@ -6,7 +6,6 @@ import Modal, { ModalProps } from "../ModalBase";
 import CollectionsView from "./CollectionsView";
 import { CSSTransition, SwitchTransition } from "react-transition-group";
 import CollectionEditor from "./CollectionEditor";
-import { ArrowIcon } from "./icons";
 import { CollectionSet, MediaCollection } from "../../store/state";
 import { v1 as uuid } from "uuid";
 import { ModalNavigation } from "./ModalNavigation";
