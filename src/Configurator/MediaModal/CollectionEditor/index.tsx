@@ -129,24 +129,13 @@ export default class CollectionEditor extends React.Component<Props, State> {
 			return;
 		}
 
-		/**
-		 * Only resolution name changed. We use 0b0010 as editHint
-		 */
-
-		const { onResolutionChange, collectionID, collection } = this.props;
-
-		const changedCollection: MediaCollection = {
-			name: collection.name,
-			resolutions: {
-				...currentResolutions,
-				[resolutionID]: {
-					name: resolutionNewName,
-					content: currentResolutions[resolutionID].content
-				}
-			},
-		};
-
-		onResolutionChange(CollectionEditModify, collectionID, changedCollection);
+		this.onResolutionsEdit({
+			...currentResolutions,
+			[resolutionID]: {
+				name: resolutionNewName,
+				content: currentResolutions[resolutionID].content
+			}
+		});
 	}
 
 	render() {
