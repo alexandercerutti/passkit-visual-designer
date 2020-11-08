@@ -1,9 +1,9 @@
 import * as React from "react";
 import { CollectionSet } from "../../../store/state";
 import AddElementButton from "../AddElementButton";
-import { EditIcon } from "../icons";
+import { DeleteIcon, EditIcon } from "../icons";
 import type { CollectionEditOperation } from "..";
-import { CollectionEditCreate, CollectionEditDelete, CollectionEditModify } from "..";
+import { CollectionEditCreate, CollectionEditDelete } from "..";
 import "./style.less";
 import { createClassName } from "../../../utils";
 
@@ -21,14 +21,12 @@ export default function CollectionsView(props: Props) {
 	});
 
 	const collectionEditClickHandler = React.useCallback((collectionId) => {
-		const hasResolutions = Object.keys(props.collections[collectionId].resolutions).length;
+		props.onCollectionEditSelect(collectionId);
+	}, [props.collections]);
 
-		if (hasResolutions && !props.isEditMode) {
-			props.onCollectionUse(collectionId);
-		} else {
-			props.onCollectionEditSelect(collectionId);
-		}
-	}, [props.collections, props.isEditMode]);
+	const collectionDeleteClickHandler = React.useCallback((collectionID) => {
+		props.performCollectionsOperation(CollectionEditDelete, collectionID);
+	}, [props.collections]);
 
 	const collectionAddClickHandler = React.useCallback(() => {
 		props.performCollectionsOperation(CollectionEditCreate);
@@ -81,10 +79,11 @@ export default function CollectionsView(props: Props) {
 
 		return (
 			<div className="collection" key={`${collection.name}-collection${index}`}>
-				<div className="preview" onClick={() => collectionEditClickHandler(collID)}>
+				<div className="preview" onClick={() => props.onCollectionUse(collID)}>
 					{previewContent}
 					<div className={collectionsClassName}>
-						<EditIcon />
+						<EditIcon id="edit-coll" onClick={(e) => void e.stopPropagation() || collectionEditClickHandler(collID)} />
+						<DeleteIcon id="delete-coll" onClick={(e) => void e.stopPropagation() || collectionDeleteClickHandler(collID)} />
 					</div>
 				</div>
 				<span>{resolutionsIDs.length && collection.name || "no-name"}</span>

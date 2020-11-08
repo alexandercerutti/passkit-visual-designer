@@ -55,24 +55,38 @@
 				transition: opacity .3s ease-in-out;
 				position: absolute;
 				z-index: 4;
-				background-color: rgba(25, 25, 25, 0.6);
+				background-color: rgba(25, 25, 25, 0.8);
 				top: 0;
 				left: 0;
-				right: 0;
-				bottom: 0;
+				right: -2px; /** to cover empty slot border **/
+				bottom: -2px; /** to cover empty slot border **/
 				display: flex;
 				justify-content: center;
 				align-items: center;
+				pointer-events: none;
 
 				& > svg {
+					pointer-events: auto;
 					width: 35px;
 					height: 35px;
-					fill: #e6e6e6;
 					transition: fill .1s;
 					cursor: pointer;
 
-					&:hover {
-						fill: #929292;
+					&#edit-coll {
+						fill: #e6e6e6;
+
+						&:hover {
+							fill: #929292;
+						}
+					}
+
+					&#delete-coll {
+						fill: #d00000;
+						margin-left: 15px;
+
+						&:hover {
+							fill: #7b0000;
+						}
 					}
 				}
 

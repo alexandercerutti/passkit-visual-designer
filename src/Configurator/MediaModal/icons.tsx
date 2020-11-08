@@ -33,3 +33,14 @@ export function ArrowIcon(props: React.SVGProps<SVGSVGElement>) {
 		</svg>
 	);
 }
+
+// Delete by Fantastic from the Noun Project (edited)
+// https://thenounproject.com/term/delete/1393049
+
+export function DeleteIcon(props: React.SVGProps<SVGSVGElement>) {
+	return (
+		<svg viewBox="0 0 68 68" {...props}>
+			<path d="M60.33 12.15H43.45V9.24A5.2 5.2 0 0038.22 4H29a5.2 5.2 0 00-5.23 5.23v2.91H7.6a1.49 1.49 0 100 3h3.73l3.29 43.32a6 6 0 006 5.53h26.04a6 6 0 006-5.53l3.29-43.32h4.45a1.5 1.5 0 001.49-1.49 1.56 1.56 0 00-1.56-1.5zM26.72 9.24A2.2 2.2 0 0129 7h9.34a2.2 2.2 0 012.24 2.24v2.91H26.72zm-1.27 44.14h-.07a1.48 1.48 0 01-1.5-1.38l-1.49-27.6a1.5 1.5 0 013-.15l1.49 27.56a1.55 1.55 0 01-1.43 1.57zm9.63-1.49a1.49 1.49 0 11-3 0V24.33a1.49 1.49 0 013 0zm8.22.11a1.48 1.48 0 01-1.49 1.42h-.07a1.5 1.5 0 01-1.42-1.57l1.48-27.6a1.55 1.55 0 011.57-1.42 1.5 1.5 0 011.42 1.57z" />
+		</svg>
+	);
+}
