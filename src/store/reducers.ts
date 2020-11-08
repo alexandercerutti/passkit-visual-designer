@@ -36,21 +36,29 @@ export function media(state = initialState.media, action: MediaEditAction): Stat
 		case ConfigActions.EDIT_MEDIA: {
 			const newState = { ...state };
 
-			const selectedLanguage = (newState[action.mediaLanguage] || (newState[action.mediaLanguage] = {}));
-			const selectedMediaCollections = (selectedLanguage[action.mediaName] || (selectedLanguage[action.mediaName] = { activeCollectionID: null }));
+			const selectedLanguage = (
+				newState[action.mediaLanguage] ||
+				(newState[action.mediaLanguage] = {})
+			);
 
-			const parsedCollections = Object.keys(action.collections).reduce<CollectionSet>((acc, coll) => {
-				if (action.collections[coll] === undefined && coll !== "activeCollectionID") {
-					return acc;
+			const selectedMediaCollections = (
+				selectedLanguage[action.mediaName] ||
+				(selectedLanguage[action.mediaName] = { activeCollectionID: null })
+			);
+
+			const collectionIDs = new Set([
+				...Object.keys(selectedMediaCollections),
+				...Object.keys(action.collections)
+			]);
+
+			for (const id of collectionIDs) {
+				if (action.collections[id]) {
+					selectedMediaCollections[id] = action.collections[id];
+				} else {
+					delete selectedMediaCollections[id];
 				}
+			}
 
-				return {
-					...acc,
-					[coll]: action.collections[coll]
-				};
-			}, {} as CollectionSet);
-
-			Object.assign(selectedMediaCollections, parsedCollections);
 			return newState;
 		};
 
