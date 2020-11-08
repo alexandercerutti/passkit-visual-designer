@@ -1,5 +1,6 @@
 import * as React from "react";
 import { ArrowIcon, EditIcon } from "../icons";
+import "./style.less";
 
 interface Props {
 	collectionID: string;
