@@ -34,6 +34,7 @@ export default class MediaModal extends React.Component<Props, State> {
 		super(props);
 
 		this.onCollectionUse = this.onCollectionUse.bind(this);
+		this.onCollectionNameEdit = this.onCollectionNameEdit.bind(this);
 		this.onCollectionEditSelect = this.onCollectionEditSelect.bind(this);
 		this.onCollectionEditOperation = this.onCollectionEditOperation.bind(this);
 
@@ -78,6 +79,15 @@ export default class MediaModal extends React.Component<Props, State> {
 		}
 	}
 
+	onCollectionNameEdit(collectionID: string, value: string) {
+		const editedCollection: MediaCollection = {
+			name: value,
+			resolutions: this.props.collections[collectionID].resolutions
+		};
+
+		this.onCollectionEditOperation(CollectionEditModify, collectionID, editedCollection);
+	}
+
 	toggleEditMode() {
 		this.setState(prev => ({
 			isEditMode: !prev.isEditMode
@@ -95,10 +105,11 @@ export default class MediaModal extends React.Component<Props, State> {
 				<div id="media-collector">
 					<header>
 						<ModalNavigation
-							allowBack={Boolean(this.state.editingCollection)}
+							collectionID={this.state.editingCollection}
 							onBack={this.onCollectionEditSelect}
 							mediaName={this.props.mediaName}
 							collectionName={this.state.editingCollection && this.props.collections[this.state.editingCollection].name || ""}
+							onCollectionNameEditComplete={this.onCollectionNameEdit}
 						/>
 						<span>it</span>
 						{

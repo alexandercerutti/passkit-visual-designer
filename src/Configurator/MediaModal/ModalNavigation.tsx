@@ -2,8 +2,9 @@ import * as React from "react";
 import { ArrowIcon, EditIcon } from "./icons";
 
 interface Props {
-	allowBack: boolean;
+	collectionID: string;
 	onBack(): void;
+	onCollectionNameEditComplete(collectionID: string, value: string): void;
 	mediaName: string;
 	collectionName?: string;
 }
@@ -28,25 +29,28 @@ export function ModalNavigation(props: Props) {
 		key === "Enter" && currentTarget.blur()
 	);
 
-	const onBlurHandler = React.useRef(() => setEditing(false));
+	const onBlurHandler = React.useCallback(({ currentTarget }: React.FocusEvent<HTMLInputElement>) =>
+		void setEditing(false) || props.onCollectionNameEditComplete(props.collectionID, currentTarget.value)
+		, [props]);
+
 	const onFocusHandler = React.useRef(({ currentTarget }: React.FocusEvent<HTMLInputElement>) =>
 		currentTarget.select()
 	);
 
 	const onClickEditHandler = React.useRef(() => !editing && setEditing(true));
 
-	const { mediaName, allowBack } = props;
+	const { mediaName, collectionID } = props;
 	const collectionName = props.collectionName || "Untitled Collection";
 
 	return (
-		<nav className={allowBack && "allow-back-nav" || ""}>
+		<nav className={collectionID && "allow-back-nav" || ""}>
 			<ArrowIcon
 				className="back"
-				onClick={() => props.allowBack && props.onBack()}
+				onClick={() => props.collectionID && props.onBack()}
 			/>
 			<div>
 				<span>{mediaName}</span>
-				{allowBack &&
+				{collectionID &&
 					<span
 						id="coll-name"
 						onClick={onClickEditHandler.current}
@@ -59,7 +63,7 @@ export function ModalNavigation(props: Props) {
 								</span>
 								: <input
 									type="text"
-									onBlur={onBlurHandler.current}
+									onBlur={onBlurHandler}
 									onKeyDown={onKeyDownHandler.current}
 									onFocus={onFocusHandler.current}
 									ref={editableRef}
@@ -78,7 +82,7 @@ export function ModalNavigation(props: Props) {
 				 * ellipsis will never happen (like, thx to responsiveness).
 				 * It only stands on future decisions.
 				 * */
-				allowBack &&
+				collectionID &&
 				<EditIcon onClick={onClickEditHandler.current} />
 			}
 		</nav>
