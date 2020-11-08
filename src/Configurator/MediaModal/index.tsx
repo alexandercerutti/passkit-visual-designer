@@ -74,6 +74,12 @@ export default class MediaModal extends React.Component<Props, State> {
 		}
 
 		if (operation & CollectionEditDelete) {
+			if (!(Object.keys(this.props.collections).length - 1)) {
+				this.setState({
+					isEditMode: false
+				});
+			}
+
 			return this.props.updateCollection(collectionID, null);
 		}
 	}
