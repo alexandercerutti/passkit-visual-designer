@@ -51,7 +51,7 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 		this.onFieldSelect = this.onFieldSelect.bind(this);
 		this.onVoidClick = this.onVoidClick.bind(this);
 		this.onValueChange = this.onValueChange.bind(this);
-		this.rotatePass = this.rotatePass.bind(this);
+		this.onShowPassBackRequest = this.onShowPassBackRequest.bind(this);
 		this.toggleEmptyVisibility = this.toggleEmptyVisibility.bind(this);
 		this.toggleExportModal = this.toggleExportModal.bind(this);
 		this.requestExport = this.requestExport.bind(this);
@@ -171,7 +171,7 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 		this.setState({ selectedFieldId: null });
 	}
 
-	rotatePass() {
+	onShowPassBackRequest() {
 		this.setState((previous) => ({
 			shouldShowPassBack: !previous.shouldShowPassBack
 		}));
@@ -300,7 +300,7 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 						changeProjectTitle={this.changeProjectTitle}
 					/>
 					<OptionsBar
-						rotatePass={this.rotatePass}
+						rotatePass={this.onShowPassBackRequest}
 						isEmptyVisible={this.state.emptyFieldsVisible}
 						toggleEmptyVisibility={this.toggleEmptyVisibility}
 					/>
