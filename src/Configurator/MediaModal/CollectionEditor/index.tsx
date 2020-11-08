@@ -147,7 +147,7 @@ export default class CollectionEditor extends React.Component<Props, State> {
 							type="text"
 							onKeyDown={this.onKeyDownHandler}
 							onBlur={({ currentTarget }: React.FocusEvent<HTMLInputElement>) => this.onBlurHandler(resolutionID, currentTarget.value)}
-							defaultValue={collection.name}
+							defaultValue={resolution.name}
 						/>
 					</div>
 				);
