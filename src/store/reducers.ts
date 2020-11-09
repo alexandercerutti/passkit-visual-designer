@@ -52,10 +52,12 @@ export function media(state = initialState.media, action: MediaEditAction | Acti
 			]);
 
 			for (const id of collectionIDs) {
-				if (action.collections[id]) {
-					selectedMediaCollections[id] = action.collections[id];
-				} else {
-					delete selectedMediaCollections[id];
+				if (id !== "activeCollectionID") {
+					if (action.collections[id]) {
+						selectedMediaCollections[id] = action.collections[id];
+					} else {
+						delete selectedMediaCollections[id];
+					}
 				}
 			}
 
