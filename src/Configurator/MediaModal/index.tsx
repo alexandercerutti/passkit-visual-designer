@@ -45,7 +45,7 @@ export default class MediaModal extends React.Component<Props, State> {
 
 	/**
 	 * Sets a collection as edit target
-	 * @param name
+	 * @param collectionID
 	 */
 
 	onCollectionEditSelect(collectionID?: string) {
@@ -56,10 +56,26 @@ export default class MediaModal extends React.Component<Props, State> {
 		});
 	}
 
+	/**
+	 * Use the selected collectionID as media for
+	 * the pass preview.
+	 *
+	 * @param collectionID
+	 */
+
 	onCollectionUse(collectionID: string) {
 		console.log("onUse", collectionID);
 		return this.props.useCollection(collectionID);
 	}
+
+	/**
+	 * Apply edit to the collection for the
+	 * selected collectionID (if available).
+	 *
+	 * @param operation
+	 * @param collectionID
+	 * @param collection
+	 */
 
 	onCollectionEditOperation(operation: CollectionEditOperation, collectionID?: string, collection?: MediaCollection) {
 		if (operation & CollectionEditCreate) {
@@ -84,6 +100,13 @@ export default class MediaModal extends React.Component<Props, State> {
 		}
 	}
 
+	/**
+	 * Changes the name for the selected collectionID
+	 *
+	 * @param collectionID
+	 * @param value
+	 */
+
 	onCollectionNameEdit(collectionID: string, value: string) {
 		const editedCollection: MediaCollection = {
 			name: value,
@@ -92,6 +115,11 @@ export default class MediaModal extends React.Component<Props, State> {
 
 		this.onCollectionEditOperation(CollectionEditModify, collectionID, editedCollection);
 	}
+
+	/**
+	 * Toggles editMode to show buttons
+	 * to edit the collection list
+	 */
 
 	toggleEditMode() {
 		this.setState(prev => ({
