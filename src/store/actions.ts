@@ -36,12 +36,14 @@ export interface MediaEditAction extends Action<ConfigActions.EDIT_MEDIA> {
 
 export interface ActiveCollectionSetAction extends Action<ConfigActions.SET_MEDIA_USAGE> {
 	mediaName: string;
+	mediaLanguage: string;
 	collectionID: string;
 }
 
-export function setMediaActiveCollection(mediaName: keyof MediaProps, collectionID: string): ActiveCollectionSetAction {
+export function setMediaActiveCollection(mediaName: keyof MediaProps, mediaLanguage: string, collectionID: string): ActiveCollectionSetAction {
 	return {
 		type: ConfigActions.SET_MEDIA_USAGE,
+		mediaLanguage,
 		mediaName,
 		collectionID
 	};

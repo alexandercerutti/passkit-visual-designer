@@ -203,7 +203,11 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 	}
 
 	onMediaCollectionUse(collectionID: string) {
-		this.props.setMediaActiveCollection(this.state.showMediaModalForMedia, collectionID);
+		this.props.setMediaActiveCollection(
+			this.state.showMediaModalForMedia,
+			this.props.projectOptions.activeMediaLanguage,
+			collectionID
+		);
 	}
 
 	async requestExport() {

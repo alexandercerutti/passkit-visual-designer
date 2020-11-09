@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
-import { State, initialState } from "./state";
-import { SinglePropSettingAction, ConfigActions, PassProps, ProjectOptions, POKeys, POValues, MediaEditAction } from "./actions";
+import { State, initialState, CollectionSet } from "./state";
+import { SinglePropSettingAction, ConfigActions, PassProps, ProjectOptions, POKeys, POValues, MediaEditAction, ActiveCollectionSetAction } from "./actions";
 
 /**
  * Reducer for actions in PassSelector
@@ -31,7 +31,7 @@ function pass(state = initialState.pass, action: SinglePropSettingAction<PassPro
 	}
 }
 
-export function media(state = initialState.media, action: MediaEditAction): State["media"] {
+export function media(state = initialState.media, action: MediaEditAction | ActiveCollectionSetAction): State["media"] {
 	switch (action.type) {
 		case ConfigActions.EDIT_MEDIA: {
 			const newState = { ...state };
@@ -61,6 +61,20 @@ export function media(state = initialState.media, action: MediaEditAction): Stat
 
 			return newState;
 		};
+
+		case ConfigActions.SET_MEDIA_USAGE: {
+			const newState = { ...state };
+
+			const selectedLanguage = (
+				newState[action.mediaLanguage] ||
+				(newState[action.mediaLanguage] = {})
+			);
+
+			const selectedMediaCollections = selectedLanguage[action.mediaName] as CollectionSet;
+			selectedMediaCollections["activeCollectionID"] = action.collectionID;
+
+			return newState
+		}
 
 		default: {
 			return state;
