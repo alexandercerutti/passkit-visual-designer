@@ -69,17 +69,25 @@ export function media(state = initialState.media, action: MediaEditAction): Stat
 }
 
 export function projectOptions(state = initialState.projectOptions, action: SinglePropSettingAction<POKeys, POValues>): ProjectOptions {
-	if (!action.value) {
-		const stateCopy = { ...state };
+	switch (action.type) {
+		case ConfigActions.SET_SINGLE_PROP: {
+			if (!action.value) {
+				const stateCopy = { ...state };
 
-		delete stateCopy[action.key];
-		return stateCopy;
+				delete stateCopy[action.key];
+				return stateCopy;
+			}
+
+			return {
+				...state,
+				[action.key]: action.value
+			};
+		};
+
+		default: {
+			return state;
+		}
 	}
-
-	return {
-		...state,
-		[action.key]: action.value
-	};
 }
 
 export default combineReducers<State>({
