@@ -1,4 +1,4 @@
-import { IdentifiedResolutions, MediaCollection, State } from "./state";
+import { CollectionSet, MediaCollection, State } from "./state";
 import { Dispatch, AnyAction, MiddlewareAPI } from "redux";
 import { ConfigActions, MediaCollectionAction, MediaEditAction } from "./actions";
 
@@ -10,7 +10,7 @@ export default function URLMiddleware(store: MiddlewareAPI<Dispatch, State>) {
 
 		const currentStore = store.getState();
 		const { projectOptions: { activeMediaLanguage }, media } = currentStore;
-		const selectedMedia = media[activeMediaLanguage][action.mediaName];
+		const selectedMedia = media[activeMediaLanguage][action.mediaName] ?? {} as CollectionSet;
 		/** url string array */
 		const resolutionsURLRevokationQueue: string[] = [];
 		/** the resolution id to which the url has to be associated and the buffer source */
