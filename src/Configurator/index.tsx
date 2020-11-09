@@ -9,7 +9,7 @@ import { FieldKind, PassKind } from "../model";
 import { InteractionContextMethods } from "../Pass/InteractionContext";
 import { connect } from "react-redux";
 import { MediaProps, PassMixedProps } from "../Pass";
-import { LocalizedMediaGroup, MediaCollection, State } from "../store/state";
+import { CollectionSet, LocalizedMediaGroup, MediaCollection, MediaSet, State } from "../store/state";
 import DefaultFields from "./staticFields";
 import { DataGroup } from "./OptionsMenu/pages/PanelsPage/PanelGroup";
 import { FieldSelectHandler } from "../Pass/layouts/sections/useRegistrations";
@@ -293,11 +293,16 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 	}
 
 	render() {
+		const allPassProps = Object.assign({},
+			this.props.passProps,
+			getBestResolutionForMedia(this.props.media[this.props.projectOptions.activeMediaLanguage]),
+		);
+
 		return (
 			<div id="configurator">
 				<div className="screen">
 					<Viewer
-						{...this.props.passProps}
+						{...allPassProps}
 						onFieldSelect={this.onFieldSelect}
 						registerField={this.registerField}
 						onVoidClick={this.onVoidClick}
@@ -314,7 +319,7 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 				</div>
 				<div className="config-panel">
 					<OptionsMenu
-						data={this.props.passProps}
+						data={allPassProps}
 						selection={this.state.selectedFieldId}
 						registeredFields={this.state.registeredFields}
 						onValueChange={this.onValueChange}
@@ -337,7 +342,8 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 					<MediaModal
 						mediaName={this.state.showMediaModalForMedia}
 						closeModal={() => this.toggleMediaModal(this.state.showMediaModalForMedia)}
-						collections={this.props.media?.[this.props.projectOptions.activeMediaLanguage]?.[this.state.showMediaModalForMedia]}
+						passProps={allPassProps}
+						collections={this.props.media?.[this.props.projectOptions.activeMediaLanguage]?.[this.state.showMediaModalForMedia] ?? {} as CollectionSet}
 						updateCollection={this.onMediaCollectionEdit}
 						useCollection={this.onMediaCollectionUse}
 					/>
@@ -361,6 +367,31 @@ function convertFieldKindToDataGroup(kind: FieldKind): DataGroup {
 	}
 
 	return undefined
+}
+
+/**
+ * It retrieves the URL to use for each media.
+ * It should select the best resolution to use, but currently
+ * we don't have a well-defined criteria to use.
+ *
+ * @param mediaSetForSelectedLanguage
+ * @TODO Use a selection criteria to select the best resolution
+ */
+
+function getBestResolutionForMedia(mediaSetForSelectedLanguage: MediaSet) {
+	const best = {} as MediaProps;
+
+	for (let m in mediaSetForSelectedLanguage) {
+		const media = mediaSetForSelectedLanguage[m] as CollectionSet;
+		const { activeCollectionID = null } = media ?? {};
+
+		if (media && activeCollectionID) {
+			const resolutions = Object.values(media[activeCollectionID].resolutions);
+			best[m] = resolutions[0].content[1];
+		}
+	}
+
+	return best;
 }
 
 // Webpack defined

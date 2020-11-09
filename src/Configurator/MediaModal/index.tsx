@@ -1,7 +1,7 @@
 import * as React from "react";
 import "./style.less";
 import { PassKind } from "../../model";
-import Pass from "../../Pass";
+import Pass, { MediaProps } from "../../Pass";
 import Modal, { ModalProps } from "../ModalBase";
 import CollectionsView from "./CollectionsView";
 import { CSSTransition, SwitchTransition } from "react-transition-group";
@@ -19,6 +19,7 @@ export const CollectionEditDelete = 0b0100;
 interface Props extends Omit<ModalProps, "contentClassName"> {
 	mediaName: string;
 	collections: CollectionSet;
+	passProps: MediaProps;
 	useCollection(collectionID: string): void;
 	updateCollection(collectionID: string, collection: MediaCollection, editHints?: number): void;
 }
@@ -128,11 +129,16 @@ export default class MediaModal extends React.Component<Props, State> {
 	}
 
 	render() {
+		const passMediaProps = {
+			[this.props.mediaName]: this.props.passProps[this.props.mediaName]
+		};
+
 		return (
 			<Modal closeModal={this.props.closeModal} contentClassName="media-collection">
 				<div id="pass-preview">
 					<Pass
 						kind={PassKind.BOARDING_PASS}
+						{...passMediaProps}
 					/>
 				</div>
 				<div id="media-collector">
