@@ -53,7 +53,6 @@
 		& span#coll-name {
 			cursor: pointer;
 			color: #e6e6e6;
-			.lookMumIamAppearing(.5s, ease-in-out);
 
 			&::before {
 				content: "/";
@@ -65,6 +64,7 @@
 				font-size: 1.7em;
 				font-weight: 400;
 				pointer-events: none;
+				.lookMumIamAppearing(.5s, ease-in-out);
 			}
 
 			/**
@@ -74,6 +74,7 @@
 
 			& > span {
 				position: relative;
+				.lookMumIamAppearing(.5s, ease-in-out, .5s);
 
 				&::after {
 					content: "";
@@ -109,6 +110,7 @@
 		}
 
 		& + svg {
+			.lookMumIamAppearing(.5s, ease-in-out, .5s);
 			width: 15px;
 			height: 15px;
 			flex-shrink: 0;
