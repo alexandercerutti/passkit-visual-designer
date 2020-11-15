@@ -38,6 +38,7 @@ export default class MediaModal extends React.Component<Props, State> {
 		this.onCollectionNameEdit = this.onCollectionNameEdit.bind(this);
 		this.onCollectionEditSelect = this.onCollectionEditSelect.bind(this);
 		this.onCollectionEditOperation = this.onCollectionEditOperation.bind(this);
+		this.shouldToggleEditMode = this.shouldToggleEditMode.bind(this);
 
 		this.state = {
 			isEditMode: false,
@@ -119,11 +120,19 @@ export default class MediaModal extends React.Component<Props, State> {
 	}
 
 	/**
-	 * Toggles editMode to show buttons
+	 * Conditionally Toggles editMode to show buttons
 	 * to edit the collection list
 	 */
 
-	toggleEditMode() {
+	shouldToggleEditMode() {
+		/**
+		 * We are sure that "activeCollectionID" will never get deleted.
+		 * Only resetted.
+		 */
+		if (Object.entries(this.props.collections).length === 1 && !this.state.isEditMode) {
+			return;
+		}
+
 		this.setState(prev => ({
 			isEditMode: !prev.isEditMode
 		}));
@@ -133,6 +142,8 @@ export default class MediaModal extends React.Component<Props, State> {
 		const passMediaProps = {
 			[this.props.mediaName]: this.props.passProps[this.props.mediaName]
 		};
+
+		const collectionsKeys = Object.keys(this.props.collections);
 
 		return (
 			<Modal closeModal={this.props.closeModal} contentClassName="media-collection">
@@ -153,13 +164,10 @@ export default class MediaModal extends React.Component<Props, State> {
 						/>
 						<span>it</span>
 						{
-							!this.state.editingCollection && Object.keys(this.props.collections).length &&
+							!this.state.editingCollection && collectionsKeys.length &&
 							<span
-								onClick={() => (
-									Object.keys(this.props.collections).filter(key => key !== "activeCollectionID").length &&
-									this.toggleEditMode()
-								)}
-								className={`edit-button ${!Object.keys(this.props.collections).length && "disabled" || ""}`}
+								onClick={this.shouldToggleEditMode}
+								className={`edit-button ${!collectionsKeys.length && "disabled" || ""}`}
 							>
 								{this.state.isEditMode ? "Done" : "Edit"}
 							</span> || null
