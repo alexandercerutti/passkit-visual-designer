@@ -40,6 +40,16 @@
 			width: 140px + @clips-v-offset * @clips;
 			height: 120px;
 			cursor: pointer;
+			padding: 4px;
+			border-width: 3px;
+			border-style: solid;
+			border-color: transparent;
+			transition: border-color .3s ease-in-out;
+			border-radius: 3px;
+
+			&.selected {
+				border-color: rgb(216, 86, 0);
+			}
 
 			& .clipper {
 				.clipper-shifter(@clips + 1);
@@ -61,8 +71,8 @@
 					position: absolute;
 					top: 0;
 					left: 0;
-					right: -2px; /** to cover empty slot border **/
-					bottom: -2px; /** to cover empty slot border **/
+					right: 0px;
+					bottom: 0px;
 					z-index: 4;
 				}
 
@@ -155,8 +165,8 @@
 
 	&:nth-child(@{childN}) {
 		z-index: @loops-amount - @counter - 1;
-		left: @clips-h-offset * @counter;
-		bottom: @clips-v-offset * @counter;
+		left: 4 + @clips-h-offset * @counter;
+		bottom: 4 + @clips-v-offset * @counter;
 	}
 
 	.clipper-shifter(@loops-amount, @counter + 1);

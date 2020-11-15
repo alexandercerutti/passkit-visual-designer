@@ -20,6 +20,7 @@ interface Props extends Omit<ModalProps, "contentClassName"> {
 	mediaName: string;
 	collections: CollectionSet;
 	passProps: MediaProps;
+	activeCollectionID?: string;
 	useCollection(collectionID: string): void;
 	updateCollection(collectionID: string, collection: MediaCollection, editHints?: number): void;
 }
@@ -175,6 +176,7 @@ export default class MediaModal extends React.Component<Props, State> {
 								<CollectionsView
 									collections={this.props.collections}
 									isEditMode={this.state.isEditMode}
+									activeCollectionID={this.props.activeCollectionID}
 									onCollectionEditSelect={this.onCollectionEditSelect}
 									onCollectionUse={this.onCollectionUse}
 									performCollectionsOperation={this.onCollectionEditOperation}

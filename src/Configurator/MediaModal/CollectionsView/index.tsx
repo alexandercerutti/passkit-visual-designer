@@ -10,6 +10,7 @@ import { createClassName } from "../../../utils";
 interface Props {
 	collections: CollectionSet;
 	isEditMode: boolean;
+	activeCollectionID?: string;
 	onCollectionUse(collectionID: string): void;
 	onCollectionEditSelect(collectionID: string): void;
 	performCollectionsOperation(operation: CollectionEditOperation, collectionID?: string): void;
@@ -79,9 +80,13 @@ export default function CollectionsView(props: Props) {
 				);
 			}
 
+			const previewClassName = createClassName(["preview"], {
+				"selected": props.activeCollectionID === collID
+			});
+
 			return (
 				<div className="collection" key={`${collection.name}-collection${index}`}>
-					<div className="preview" onClick={() => props.onCollectionUse(collID)}>
+					<div className={previewClassName} onClick={() => props.onCollectionUse(collID)}>
 						{previewContent}
 						<div className={collectionsClassName} onClick={(e) => void e.stopPropagation()}>
 							<EditIcon id="edit-coll" onClick={(e) => void e.stopPropagation() || collectionEditClickHandler(collID)} />
@@ -98,10 +103,12 @@ export default function CollectionsView(props: Props) {
 			<div id="grid" className="collection-view">
 				{collectionsElements}
 				<div className="collection">
-					<AddElementButton
-						caption="Add collection"
-						onClick={collectionAddClickHandler}
-					/>
+					<div className="preview">
+						<AddElementButton
+							caption="Add collection"
+							onClick={collectionAddClickHandler}
+						/>
+					</div>
 				</div>
 			</div>
 		</>
