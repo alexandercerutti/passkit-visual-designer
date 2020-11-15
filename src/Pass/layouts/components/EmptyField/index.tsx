@@ -3,6 +3,6 @@ import "./style.less";
 
 export default function EmptyField<P>(props: P) {
 	return (
-		<div className="empty" {...props} />
+		<div className="empty-field" {...props} />
 	);
 }
