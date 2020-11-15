@@ -83,7 +83,7 @@ export default function CollectionsView(props: Props) {
 				<div className="collection" key={`${collection.name}-collection${index}`}>
 					<div className="preview" onClick={() => props.onCollectionUse(collID)}>
 						{previewContent}
-						<div className={collectionsClassName}>
+						<div className={collectionsClassName} onClick={(e) => void e.stopPropagation()}>
 							<EditIcon id="edit-coll" onClick={(e) => void e.stopPropagation() || collectionEditClickHandler(collID)} />
 							<DeleteIcon id="delete-coll" onClick={(e) => void e.stopPropagation() || collectionDeleteClickHandler(collID)} />
 						</div>

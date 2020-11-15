@@ -53,24 +53,30 @@
 
 			& .collection-actions {
 				transition: opacity .3s ease-in-out;
-				position: absolute;
-				z-index: 4;
-				background-color: rgba(25, 25, 25, 0.8);
-				top: 0;
-				left: 0;
-				right: -2px; /** to cover empty slot border **/
-				bottom: -2px; /** to cover empty slot border **/
 				display: flex;
 				justify-content: center;
 				align-items: center;
-				pointer-events: none;
+
+				&, &::before {
+					position: absolute;
+					top: 0;
+					left: 0;
+					right: -2px; /** to cover empty slot border **/
+					bottom: -2px; /** to cover empty slot border **/
+					z-index: 4;
+				}
+
+				&::before {
+					content: "";
+					background-color: rgba(25, 25, 25, 0.8);
+				}
 
 				& > svg {
-					pointer-events: auto;
 					width: 35px;
 					height: 35px;
 					transition: fill .1s;
 					cursor: pointer;
+					z-index: 5;
 
 					&#edit-coll {
 						fill: #e6e6e6;
@@ -91,10 +97,9 @@
 				}
 
 				&:not(.edit-mode-active) {
-					pointer-events: none;
 					opacity: 0;
 
-					& > svg {
+					&, & > svg {
 						pointer-events: none;
 					}
 				}
