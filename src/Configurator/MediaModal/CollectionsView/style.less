@@ -48,7 +48,41 @@
 			border-radius: 3px;
 
 			&.selected {
-				border-color: rgb(216, 86, 0);
+				border-color: #d85600;
+			}
+
+			&.empty-coll {
+				border-color: #5c5c5c;
+				border-style: dashed;
+				border-width: 1px;
+
+				/**
+				 * To make this border and selection border
+				 * be of the same height
+				 */
+
+				padding-bottom: 8px;
+
+				& div:first-child {
+					display: flex;
+					justify-content: center;
+					align-items: center;
+					width: 100%;
+					height: 100%;
+
+					& span.fade-blink {
+						opacity: 1;
+						animation-name: fade-blinking;
+						animation-duration: 1s;
+						animation-timing-function: ease-in-out;
+						animation-direction: alternate-reverse;
+						animation-iteration-count: infinite;
+					}
+
+					@keyframes fade-blinking {
+						to { opacity: 0; }
+					}
+				}
 			}
 
 			& .clipper {
@@ -113,29 +147,6 @@
 						pointer-events: none;
 					}
 				}
-			}
-
-			& .empty-slot {
-				border: 1px dashed @placeholder-color;
-				border-radius: 2px;
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				width: 100%;
-				height: 100%;
-
-				& span.fade-blink {
-					opacity: 1;
-					animation-name: fade-blinking;
-					animation-duration: 1s;
-					animation-timing-function: ease-in-out;
-					animation-direction: alternate-reverse;
-					animation-iteration-count: infinite;
-				}
-			}
-
-			@keyframes fade-blinking {
-				to { opacity: 0; }
 			}
 		}
 

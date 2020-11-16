@@ -73,24 +73,25 @@ export default function CollectionsView(props: Props) {
 			} else {
 				previewContent = (
 					<>
-						<div className="empty-slot">
-							<span className="fade-blink" title="Add pictures to this collection to see something">Empty Slot</span>
+						<div>
+							<span className="fade-blink" title="Edit this collection to see preview here">Empty Slot</span>
 						</div>
 					</>
 				);
 			}
 
 			const previewClassName = createClassName(["preview"], {
-				"selected": props.activeCollectionID === collID
+				"selected": resolutionsIDs.length && props.activeCollectionID === collID,
+				"empty-coll": !resolutionsIDs.length
 			});
 
 			return (
 				<div className="collection" key={`${collection.name}-collection${index}`}>
-					<div className={previewClassName} onClick={() => props.onCollectionUse(collID)}>
+					<div className={previewClassName} onClick={() => resolutionsIDs.length && props.onCollectionUse(collID)}>
 						{previewContent}
 						<div className={collectionsClassName} onClick={(e) => void e.stopPropagation()}>
-							<EditIcon id="edit-coll" onClick={(e) => void e.stopPropagation() || collectionEditClickHandler(collID)} />
-							<DeleteIcon id="delete-coll" onClick={(e) => void e.stopPropagation() || collectionDeleteClickHandler(collID)} />
+							<EditIcon id="edit-coll" onClick={(e) => collectionEditClickHandler(collID)} />
+							<DeleteIcon id="delete-coll" onClick={(e) => collectionDeleteClickHandler(collID)} />
 						</div>
 					</div>
 					<span>{resolutionsIDs.length && collection.name || "no-name"}</span>
