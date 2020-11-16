@@ -1,7 +1,6 @@
 import * as React from "react";
 import { CollectionSet } from "../../../store/state";
-import AddElementButton from "../AddElementButton";
-import { DeleteIcon, EditIcon } from "../icons";
+import { DeleteIcon, EditIcon, PlusIcon } from "../icons";
 import type { CollectionEditOperation } from "..";
 import { CollectionEditCreate, CollectionEditDelete } from "..";
 import "./style.less";
@@ -104,12 +103,12 @@ export default function CollectionsView(props: Props) {
 			<div id="grid" className="collection-view">
 				{collectionsElements}
 				<div className="collection">
-					<div className="preview">
-						<AddElementButton
-							caption="Add collection"
-							onClick={collectionAddClickHandler}
-						/>
+					<div className="preview add-coll" onClick={collectionAddClickHandler}>
+						<div>
+							<PlusIcon />
+						</div>
 					</div>
+					<span>Add collection</span>
 				</div>
 			</div>
 		</>

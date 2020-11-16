@@ -51,7 +51,7 @@
 				border-color: #d85600;
 			}
 
-			&.empty-coll {
+			&.empty-coll, &.add-coll {
 				border-color: #5c5c5c;
 				border-style: dashed;
 				border-width: 1px;
@@ -61,15 +61,27 @@
 				 * be of the same height
 				 */
 
-				padding-bottom: 8px;
+				 padding-bottom: 8px;
 
 				& div:first-child {
 					display: flex;
-					justify-content: center;
 					align-items: center;
+					justify-content: center;
 					width: 100%;
 					height: 100%;
+				}
+			}
 
+			&.add-coll {
+				& div:first-child > svg {
+					width: 40px;
+					height: 40px;
+					fill: #5c5c5c;
+				}
+			}
+
+			&.empty-coll {
+				& div:first-child {
 					& span.fade-blink {
 						opacity: 1;
 						animation-name: fade-blinking;
