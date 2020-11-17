@@ -39,7 +39,6 @@
 			position: relative;
 			width: 140px + @clips-v-offset * @clips;
 			height: 120px;
-			cursor: pointer;
 			padding: 4px;
 			border-width: 3px;
 			border-style: solid;
@@ -51,10 +50,15 @@
 				border-color: #d85600;
 			}
 
+			&:not(.empty-coll), &.add-coll {
+				cursor: pointer;
+			}
+
 			&.empty-coll, &.add-coll {
 				border-color: #5c5c5c;
 				border-style: dashed;
 				border-width: 1px;
+				user-select: none;
 
 				/**
 				 * To make this border and selection border
