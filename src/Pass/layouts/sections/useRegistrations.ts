@@ -21,7 +21,7 @@ export interface RegistrableComponent {
 	onClick?: onComponentSelection;
 }
 
-type RegistrationDescriptor = [FieldKind, string];
+type RegistrationDescriptor = [kind: FieldKind, fieldName: string];
 
 export function useRegistrations(registerFn: onRegister, components: RegistrationDescriptor[]): FieldSelectHandler[] {
 	const [handlers, setHandlers] = React.useState<FieldSelectHandler[]>([]);

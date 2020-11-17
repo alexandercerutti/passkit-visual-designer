@@ -13,8 +13,7 @@ export default function URLMiddleware(store: MiddlewareAPI<Dispatch, State>) {
 		const selectedMedia = media[activeMediaLanguage][action.mediaName] ?? {} as CollectionSet;
 		/** url string array */
 		const resolutionsURLRevokationQueue: string[] = [];
-		/** the resolution id to which the url has to be associated and the buffer source */
-		const resolutionsURLCreationQueue: [string, ArrayBuffer][] = [];
+		const resolutionsURLCreationQueue: [resolutionID: string, buffer: ArrayBuffer][] = [];
 
 		let finalCollection: MediaCollection = {
 			name: undefined,
