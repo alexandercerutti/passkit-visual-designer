@@ -3,8 +3,7 @@ import { v1 as uuid } from "uuid";
 import { CollectionEditModify, CollectionEditOperation } from "..";
 import { IdentifiedResolutions, MediaCollection, ResolutionTuple } from "../../../store/state";
 import { getArrayBuffer } from "../../../utils";
-import AddElementButton from "../AddElementButton";
-import { DeleteIcon } from "../icons";
+import { DeleteIcon, PlusIcon } from "../icons";
 import "./style.less";
 
 interface Props {
@@ -146,12 +145,14 @@ export default class CollectionEditor extends React.Component<Props, State> {
 				const url = resolution.content[1];
 
 				return (
-					<div className="item" key={`${url}-${index}`}>
-						<div className="item-actions">
-							<DeleteIcon onClick={() => this.onResolutionDelete(resolutionID)} />
-						</div>
-						<div className="clipper">
-							<img src={url} />
+					<div className="resolution" key={`${url}-${index}`}>
+						<div className="item">
+							<div className="item-actions">
+								<DeleteIcon onClick={() => this.onResolutionDelete(resolutionID)} />
+							</div>
+							<div className="clipper">
+								<img src={url} />
+							</div>
 						</div>
 						<input
 							type="text"
@@ -173,11 +174,14 @@ export default class CollectionEditor extends React.Component<Props, State> {
 					onDragStart={CollectionEditor.preventEventDefaultPropagation}
 				>
 					{collectionItems}
-					<div className="item useless-id-to-diff-from-others">
-						<input type="file" id="file-upload" hidden onChange={this.onChangeHandler} />
-						<label htmlFor="file-upload">
-							<AddElementButton caption="Add picture" />
+					<div className="resolution">
+						<label className="item add-resolution" htmlFor="file-upload">
+							<input type="file" id="file-upload" hidden onChange={this.onChangeHandler} />
+							<div>
+								<PlusIcon />
+							</div>
 						</label>
+						<span>Add resolution</span>
 					</div>
 				</div>
 				<div

@@ -4,71 +4,107 @@
 .collection-editor {
 	flex-grow: 2;
 
-	& .item {
+	& .resolution {
 		width: 160px;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
-		position: relative;
 
-		/** overlay **/
+		& .item {
+			@item-height: 120px;
 
-		&:not(.useless-id-to-diff-from-others)::before {
-			content: "";
-			position: absolute;
-			transition: opacity .3s ease-in-out;
-			opacity: 0;
-			top: 0;
-			left: 0;
-			right: 0;
-			bottom: 30px;
-			background-color: rgba(25,25,25,0.8);
-			z-index: 2;
-			pointer-events: none;
-		}
+			position: relative;
+			width: 160px;
 
-		& > .item-actions {
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			opacity: 0;
-			transition: opacity .3s ease-in-out;
-			position: absolute;
-			top: 0;
-			left: 0;
-			right: 0;
-			bottom: 32px;
-			z-index: 2;
-
-			& > svg {
-				fill: #d82c2c;
-				pointer-events: auto;
-				width: 35px;
-				height: 35px;
+			&.add-resolution {
+				height: @item-height;
+				border-color: #5c5c5c;
+				border-style: dashed;
+				border-width: 1px;
+				user-select: none;
 				cursor: pointer;
 
-				&:hover {
-					fill: #8c1d1d;
+				& div {
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					width: 100%;
+					height: 100%;
+
+					& > svg {
+						width: 40px;
+						height: 40px;
+						fill: #5c5c5c;
+					}
+				}
+
+				& + span {
+					width: 100%;
+					text-align: center;
+					padding: 6px 0;
 				}
 			}
-		}
 
-		&:hover {
-			&::before,
-			& .item-actions {
-				opacity: 1;
+			&:not(.add-resolution) {
+				/* To make it of the same height of add button */
+				height: @item-height + 2px;
+			}
+
+			& > .item-actions {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				opacity: 0;
+				transition: opacity .3s ease-in-out;
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				z-index: 2;
+
+				&::before {
+					content: "";
+					position: absolute;
+					top: 0;
+					left: 0;
+					right: 0;
+					bottom: 0;
+					background-color: rgba(25,25,25,0.8);
+					z-index: 2;
+					pointer-events: none;
+				}
+
+				& > svg {
+					fill: #d82c2c;
+					pointer-events: auto;
+					width: 35px;
+					height: 35px;
+					cursor: pointer;
+					z-index: 2;
+
+					&:hover {
+						fill: #8c1d1d;
+					}
+				}
+			}
+
+			&:hover {
+				&::before,
+				& .item-actions {
+					opacity: 1;
+				}
+			}
+
+			& .clipper {
+				height: 100%;
+				overflow: hidden;
+				.withImagesTrasparencyBackground(true);
 			}
 		}
 
-		& .clipper {
-			width: 160px;
-			height: 120px;
-			overflow: hidden;
-			.withImagesTrasparencyBackground(true);
-		}
-
-		& input[type="text"] {
+		& > input[type="text"] {
 			padding: 7px 0;
 			border: 0;
 			outline: none;
@@ -86,14 +122,14 @@
 			}
 		}
 
-		& label {
+/* 		& label {
 			width: 100%;
 			text-align: center;
-		}
+		} */
 
-		& .add-element-btn {
+/* 		& .add-element-btn {
 			margin-bottom: 10px;
-		}
+		} */
 	}
 }
 
