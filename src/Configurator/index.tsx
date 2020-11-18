@@ -402,7 +402,7 @@ function getBestResolutionForMedia(mediaSetForSelectedLanguage: MediaSet) {
 
 		if (media && activeCollectionID) {
 			const resolutions = Object.values(media[activeCollectionID].resolutions);
-			best[m] = resolutions[0].content[1];
+			best[m] = resolutions[0]?.content[1];
 		}
 	}
 
