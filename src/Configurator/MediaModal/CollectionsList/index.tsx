@@ -100,7 +100,7 @@ export default function CollectionsList(props: Props) {
 
 	return (
 		<>
-			<div id="grid" className="collection-view">
+			<div id="grid" className="collections-list">
 				{collectionsElements}
 				<div className="collection">
 					<div className="preview add-coll" onClick={collectionAddClickHandler}>
