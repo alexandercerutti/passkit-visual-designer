@@ -15,7 +15,7 @@ interface Props {
 	performCollectionsOperation(operation: CollectionEditOperation, collectionID?: string): void;
 }
 
-export default function CollectionsView(props: Props) {
+export default function CollectionsList(props: Props) {
 	const collectionsClassName = createClassName(["collection-actions"], {
 		"edit-mode-active": props.isEditMode
 	});

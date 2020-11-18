@@ -3,9 +3,9 @@ import "./style.less";
 import { PassKind } from "../../model";
 import Pass, { MediaProps } from "../../Pass";
 import Modal, { ModalProps } from "../ModalBase";
-import CollectionsView from "./CollectionsView";
-import { CSSTransition, SwitchTransition } from "react-transition-group";
+import CollectionsList from "./CollectionsList";
 import CollectionEditor from "./CollectionEditor";
+import { CSSTransition, SwitchTransition } from "react-transition-group";
 import { CollectionSet, MediaCollection } from "../../store/state";
 import { v1 as uuid } from "uuid";
 import { ModalNavigation } from "./ModalNavigation";
@@ -181,7 +181,7 @@ export default class MediaModal extends React.Component<Props, State> {
 						>
 							{!this.state.editingCollection
 								?
-								<CollectionsView
+								<CollectionsList
 									collections={this.props.collections}
 									isEditMode={this.state.isEditMode}
 									activeCollectionID={this.props.activeCollectionID}
