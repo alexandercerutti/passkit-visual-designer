@@ -6,7 +6,7 @@
 @grid-gap: 10px;
 @placeholder-color: #5c5c5c;
 
-.collections-list {
+.collections-list > #grid {
 	flex-grow: 2;
 
 	// Animation
@@ -180,6 +180,18 @@
 		& .add-element-btn {
 			width: 130px + @clips-h-offset * @clips;
 		}
+	}
+
+	& ~ footer {
+		flex-shrink: 0;
+
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		border-top: 0.5px solid #292929;
+		margin-top: 15px;
+		height: 50px;
+		padding: 0 10px; /* small sizes */
 	}
 }
 

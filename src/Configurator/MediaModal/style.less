@@ -62,16 +62,23 @@
 				}
 			}
 
-			& > #grid {
-				display: grid;
-				column-gap: @grid-gap;
-				row-gap: @grid-gap;
-				margin: 0 20px;
-				justify-items: center;
-				align-items: start;
-				grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+			& > .list {
+				display: flex;
+				flex-direction: column;
+				flex-grow: 1;
+				overflow: hidden;
 
-				.scrollableWithoutScrollbars(y);
+				& > #grid {
+					display: grid;
+					column-gap: @grid-gap;
+					row-gap: @grid-gap;
+					margin: 0 20px;
+					justify-items: center;
+					align-items: start;
+					grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+
+					.scrollableWithoutScrollbars(y);
+				}
 			}
 		}
 	}

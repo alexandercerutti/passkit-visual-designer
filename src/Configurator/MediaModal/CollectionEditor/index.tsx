@@ -165,14 +165,12 @@ export default class CollectionEditor extends React.Component<Props, State> {
 			});
 
 		return (
-			<>
-				<div
-					id="grid"
-					className={`collection-editor ${this.state.draggingOver && "dragOver" || ""}`}
-					onDragEnter={this.onDragEnterHandler}
-					// To avoid for children pictures to be dragged and trigger the onDragEnter
-					onDragStart={CollectionEditor.preventEventDefaultPropagation}
-				>
+			<div className={`list collection-editor ${this.state.draggingOver && "dragOver" || ""}`}
+				onDragEnter={this.onDragEnterHandler}
+				// To avoid for children pictures to be dragged and trigger the onDragEnter
+				onDragStart={CollectionEditor.preventEventDefaultPropagation}
+			>
+				<div id="grid">
 					{collectionItems}
 					<div className="resolution">
 						<label className="item add-resolution" htmlFor="file-upload">
@@ -184,6 +182,9 @@ export default class CollectionEditor extends React.Component<Props, State> {
 						<span>Add resolution</span>
 					</div>
 				</div>
+				<footer>
+					<span>Hint: add a new resolution to collection by drag and drop</span>
+				</footer>
 				<div
 					id="drop-area"
 					onDragOver={CollectionEditor.preventEventDefaultPropagation}
@@ -192,7 +193,7 @@ export default class CollectionEditor extends React.Component<Props, State> {
 				>
 					<span>Drop to add to collection</span>
 				</div>
-			</>
+			</div>
 		);
 	}
 }

@@ -162,7 +162,6 @@ export default class MediaModal extends React.Component<Props, State> {
 							collectionName={this.state.editingCollection && this.props.collections[this.state.editingCollection].name || ""}
 							onCollectionNameEditComplete={this.onCollectionNameEdit}
 						/>
-						<span>it</span>
 						{
 							!this.state.editingCollection && collectionsKeys.length &&
 							<span
@@ -190,16 +189,11 @@ export default class MediaModal extends React.Component<Props, State> {
 									performCollectionsOperation={this.onCollectionEditOperation}
 								/>
 								:
-								<>
-									<CollectionEditor
-										collectionID={this.state.editingCollection}
-										collection={this.props.collections[this.state.editingCollection]}
-										onResolutionChange={this.onCollectionEditOperation}
-									/>
-									<footer>
-										Hint: add a new resolution to collection by drag and drop
-									</footer>
-								</>
+								<CollectionEditor
+									collectionID={this.state.editingCollection}
+									collection={this.props.collections[this.state.editingCollection]}
+									onResolutionChange={this.onCollectionEditOperation}
+								/>
 							}
 						</CSSTransition>
 					</SwitchTransition>

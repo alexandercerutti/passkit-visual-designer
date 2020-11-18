@@ -99,8 +99,8 @@ export default function CollectionsList(props: Props) {
 		});
 
 	return (
-		<>
-			<div id="grid" className="collections-list">
+		<div className="list collections-list">
+			<div id="grid">
 				{collectionsElements}
 				<div className="collection">
 					<div className="preview add-coll" onClick={collectionAddClickHandler}>
@@ -111,6 +111,9 @@ export default function CollectionsList(props: Props) {
 					<span>Add collection</span>
 				</div>
 			</div>
-		</>
+			<footer>
+				<span>it</span>
+			</footer>
+		</div>
 	);
 }
