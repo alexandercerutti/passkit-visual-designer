@@ -1,8 +1,8 @@
-import { CollectionSet, MediaCollection, State } from "./state";
+import { CollectionSet, MediaCollection, State } from "../state";
 import { Dispatch, AnyAction, MiddlewareAPI } from "redux";
-import { ConfigActions, MediaCollectionAction, MediaEditAction } from "./actions";
+import { ConfigActions, MediaCollectionAction, MediaEditAction } from "../actions";
 
-export default function URLMiddleware(store: MiddlewareAPI<Dispatch, State>) {
+export default function CollectionEditUrlMiddleware(store: MiddlewareAPI<Dispatch, State>) {
 	return (next: Dispatch<AnyAction>) => (action: MediaCollectionAction) => {
 		if (action.type !== ConfigActions.EDIT_COLLECTION) {
 			return next(action);

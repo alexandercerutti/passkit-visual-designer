@@ -9,7 +9,7 @@ import Configurator from "../Configurator";
 import { composeWithDevTools } from "redux-devtools-extension";
 import { PKTextAlignment } from "../Pass/constants";
 import thunk from "redux-thunk";
-import URLMiddleware from "../store/urlMiddleware";
+import CollectionEditUrlMiddleware from "../store/middleware/CollectionEditUrlMiddleware";
 
 // Webpack valorized
 declare const isDevelopment: boolean;
@@ -17,7 +17,7 @@ declare const isDevelopment: boolean;
 const store = createStore(reducers,
 	// preloadedState,
 	composeWithDevTools(
-		applyMiddleware(URLMiddleware),
+		applyMiddleware(CollectionEditUrlMiddleware),
 		applyMiddleware(thunk),
 	)
 );
