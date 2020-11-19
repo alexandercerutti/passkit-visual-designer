@@ -2,6 +2,24 @@ import { CollectionSet, MediaCollection, State } from "../state";
 import { Dispatch, AnyAction, MiddlewareAPI } from "redux";
 import { ConfigActions, MediaCollectionAction, MediaEditAction } from "../actions";
 
+/**
+ * This middleware receives a collection being added, edited or deleted
+ * and handles its resolutions.
+ *
+ * On adding, picks every resolution's buffer and creates a URI for it.
+ *
+ * On modification, compares collection in action and in store and their
+ * resolutions.
+ * 	- If a resolution is added, it creates URLs for them.
+ * 	- If a resolution has different buffer, it destroys the old URL and
+ * 	  creates a new one.
+ *
+ * On collection deletion, iterates the collection in store and destroys
+ * every resolution's URL.
+ *
+ * @param store
+ */
+
 export default function CollectionEditUrlMiddleware(store: MiddlewareAPI<Dispatch, State>) {
 	return (next: Dispatch<AnyAction>) => (action: MediaCollectionAction) => {
 		if (action.type !== ConfigActions.EDIT_COLLECTION) {
