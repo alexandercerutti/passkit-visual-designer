@@ -200,20 +200,8 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 
 	onMediaCollectionEdit(collectionID: string, collection: MediaCollection) {
 		const { showMediaModalForMedia: mediaName } = this.state;
-		const { media, projectOptions: { activeMediaLanguage } } = this.props;
 
-		/** candidate for deletion */
-		if (collection === null && media[activeMediaLanguage][mediaName].activeCollectionID === collectionID) {
-			/**
-			 * Resetting first the used active collection
-			 * but the browser sends us 404 anyway on
-			 * old selected resolution URL (why?)
-			 */
-
-			this.onMediaCollectionUse(null);
-		}
-
-		this.props.editCollection(this.state.showMediaModalForMedia, collectionID, collection);
+		this.props.editCollection(mediaName, collectionID, collection);
 	}
 
 	onMediaCollectionUse(collectionID: string) {
