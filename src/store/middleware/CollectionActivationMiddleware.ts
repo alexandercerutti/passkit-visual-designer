@@ -90,7 +90,7 @@ export default function CollectionActivationMiddleware(store: MiddlewareAPI<Disp
 			return next(createActionWithActiveID(action, nextCollectionID));
 		}
 
-		return next(action);
+		return next(createActionWithActiveID(action, currentActiveID));
 	}
 }
 
