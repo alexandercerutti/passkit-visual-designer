@@ -20,6 +20,7 @@ interface Props extends Omit<ModalProps, "contentClassName"> {
 	mediaName: string;
 	mediaContent: CollectionSet;
 	passProps: MediaProps;
+	setMediaExportState(enable: boolean): void;
 	useCollection(collectionID: string): void;
 	updateCollection(collectionID: string, collection: MediaCollection, editHints?: number): void;
 }
@@ -178,6 +179,7 @@ export default class MediaModal extends React.Component<Props, State> {
 								<CollectionsList
 									media={this.props.mediaContent}
 									isEditMode={this.state.isEditMode}
+									onMediaExportStateToggle={this.props.setMediaExportState}
 									onCollectionEditSelect={this.onCollectionEditSelect}
 									onCollectionUse={this.onCollectionUse}
 									performCollectionsOperation={this.onCollectionEditOperation}

@@ -10,6 +10,7 @@ export type MediaSet = {
 
 export type CollectionSet = {
 	activeCollectionID: string;
+	enabled: boolean;
 	collections: {
 		[collectionID: string]: MediaCollection;
 	};

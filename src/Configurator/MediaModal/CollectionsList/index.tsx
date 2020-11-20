@@ -5,12 +5,14 @@ import type { CollectionEditOperation } from "..";
 import { CollectionEditCreate, CollectionEditDelete } from "..";
 import "./style.less";
 import { createClassName } from "../../../utils";
+import { Switcher } from "../../Switcher";
 
 interface Props {
 	media: CollectionSet;
 	isEditMode: boolean;
 	onCollectionUse(collectionID: string): void;
 	onCollectionEditSelect(collectionID: string): void;
+	onMediaExportStateToggle(enabled: boolean): void;
 	performCollectionsOperation(operation: CollectionEditOperation, collectionID?: string): void;
 }
 
@@ -110,6 +112,13 @@ export default function CollectionsList(props: Props) {
 				</div>
 			</div>
 			<footer>
+				<Switcher
+					labelPosition="after"
+					checked={props.media.enabled}
+					onToggle={props.onMediaExportStateToggle}
+				>
+					Export
+				</Switcher>
 				<span>it</span>
 			</footer>
 		</div>

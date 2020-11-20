@@ -52,6 +52,21 @@ export function setMediaActiveCollection(mediaName: keyof MediaProps, mediaLangu
 	};
 }
 
+export interface MediaExportStateAction extends Action<ConfigActions.SET_MEDIA_EXPORT_STATE> {
+	mediaLanguage: string;
+	mediaName: string;
+	enabled: boolean;
+}
+
+export function setMediaExportState(mediaName: keyof MediaProps, mediaLanguage: string, enabled: boolean): MediaExportStateAction {
+	return {
+		type: ConfigActions.SET_MEDIA_EXPORT_STATE,
+		mediaLanguage,
+		mediaName,
+		enabled
+	};
+}
+
 export interface SinglePropSettingAction<K extends string, V = any> extends Action<ConfigActions> {
 	key: K;
 	value: V;
@@ -62,6 +77,8 @@ export enum ConfigActions {
 	SET_SINGLE_PROP = "CHANGE_SINGLE_PROP",
 	SET_PASS_KIND = "SET_PASS_KIND",
 	SET_PROPS = "SET_PROPS",
+
+	SET_MEDIA_EXPORT_STATE = "SET_MEDIA_EXPORT_STATE",
 
 	/**
 	 * Media collection actions types

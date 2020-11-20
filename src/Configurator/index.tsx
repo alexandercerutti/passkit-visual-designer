@@ -1,7 +1,7 @@
 import * as React from "react";
 import "./style.less";
 import { RouteComponentProps, withRouter } from "react-router-dom";
-import { changePassPropValue, setProjectOption, ProjectOptions, setMediaActiveCollection, editCollection } from "../store/actions";
+import { changePassPropValue, setProjectOption, ProjectOptions, setMediaActiveCollection, editCollection, setMediaExportState } from "../store/actions";
 import Viewer from "./Viewer";
 import OptionsBar from "./OptionsBar";
 import OptionsMenu, { RegisteredFieldsMap } from "./OptionsMenu";
@@ -24,6 +24,7 @@ interface DispatchProps {
 	setProjectOption: typeof setProjectOption;
 	setMediaActiveCollection: typeof setMediaActiveCollection;
 	editCollection: typeof editCollection;
+	setMediaExportState: typeof setMediaExportState;
 }
 
 interface ConfiguratorStore {
@@ -59,6 +60,7 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 		this.toggleMediaModal = this.toggleMediaModal.bind(this);
 		this.onMediaCollectionEdit = this.onMediaCollectionEdit.bind(this);
 		this.onMediaCollectionUse = this.onMediaCollectionUse.bind(this);
+		this.onMediaExportStateChange = this.onMediaExportStateChange.bind(this);
 
 		this.state = {
 			selectedFieldId: null,
@@ -212,6 +214,14 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 		);
 	}
 
+	onMediaExportStateChange(enable: boolean) {
+		this.props.setMediaExportState(
+			this.state.showMediaModalForMedia,
+			this.props.projectOptions.activeMediaLanguage,
+			enable
+		);
+	}
+
 	async requestExport() {
 		// @TODO: check requirements for exporting
 		// so all the basic fields and so on.
@@ -348,6 +358,7 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 						mediaContent={this.props.media?.[this.props.projectOptions.activeMediaLanguage]?.[this.state.showMediaModalForMedia] ?? {} as CollectionSet}
 						updateCollection={this.onMediaCollectionEdit}
 						useCollection={this.onMediaCollectionUse}
+						setMediaExportState={this.onMediaExportStateChange}
 					/>
 				}
 			</div>
@@ -414,5 +425,11 @@ export default withRouter(connect(
 			projectOptions
 		};
 	},
-	{ changePassPropValue, setProjectOption, setMediaActiveCollection, editCollection }
+	{
+		changePassPropValue,
+		setProjectOption,
+		setMediaActiveCollection,
+		editCollection,
+		setMediaExportState
+	}
 )(Configurator));
