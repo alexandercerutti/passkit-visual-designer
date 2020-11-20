@@ -46,6 +46,17 @@ export default class MediaModal extends React.Component<Props, State> {
 		};
 	}
 
+	static getDerivedStateFromProps(props: Props, state: State) {
+		if (state.isEditMode && !props.mediaContent.enabled) {
+			return {
+				...state,
+				isEditMode: false
+			};
+		}
+
+		return state;
+	}
+
 	/**
 	 * Sets a collection as edit target
 	 * @param collectionID
@@ -162,7 +173,7 @@ export default class MediaModal extends React.Component<Props, State> {
 							!this.state.editingCollection && collectionsKeys.length &&
 							<span
 								onClick={this.shouldToggleEditMode}
-								className={`edit-button ${!collectionsKeys.length && "disabled" || ""}`}
+								className={`edit-button ${(!collectionsKeys.length || !this.props.mediaContent.enabled) && "disabled" || ""}`}
 							>
 								{this.state.isEditMode ? "Done" : "Edit"}
 							</span> || null
