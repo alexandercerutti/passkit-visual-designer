@@ -3,8 +3,8 @@ import "./style.less";
 
 interface Props {
 	labelPosition: "before" | "after";
-	initialChecked?: boolean;
-	onToggle?(enabled: boolean): void;
+	checked?: boolean;
+	onToggle(enabled: boolean): void;
 	/** For multiple switches all together */
 	index?: string;
 }
@@ -36,8 +36,8 @@ export function Switcher(props: React.PropsWithChildren<Props>) {
 				hidden
 				id={id}
 				type="checkbox"
-				defaultChecked={props.initialChecked || false}
-				onChange={(e) => props.onToggle?.(e.currentTarget.checked)}
+				checked={props.checked}
+				onChange={(e) => props.onToggle(e.currentTarget.checked)}
 			/>
 			<i></i>
 			{afterLabel}
