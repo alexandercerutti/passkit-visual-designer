@@ -43,7 +43,7 @@ export default function CollectionEditUrlMiddleware(store: MiddlewareAPI<Dispatc
 			 * We have to destroy the URLs of this collections
 			 * because the collection has been removed
 			 */
-			const storeCollection = selectedMedia[action.collectionID];
+			const storeCollection = selectedMedia.collections[action.collectionID];
 			const resolutions = storeCollection.resolutions;
 
 			for (const resolutionID in resolutions) {

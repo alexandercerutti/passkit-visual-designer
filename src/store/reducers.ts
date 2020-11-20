@@ -50,7 +50,19 @@ export function media(state = initialState.media, action: MediaEditAction | Acti
 			);
 
 			selectedMediaCollections.activeCollectionID = action.activeCollectionID;
-			selectedMediaCollections.collections = action.collections;
+
+			/**
+			 * Updating store collections
+			 * and deleting the deleted ones.
+			 */
+
+			for (const [collID, collection] of Object.entries(action.collections)) {
+				if (!collection) {
+					delete selectedMediaCollections.collections[collID];
+				} else {
+					selectedMediaCollections.collections[collID] = collection;
+				}
+			}
 
 			return newState;
 		};
