@@ -10,14 +10,17 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import { PKTextAlignment } from "../Pass/constants";
 import thunk from "redux-thunk";
 import CollectionEditUrlMiddleware from "../store/middleware/CollectionEditUrlMiddleware";
+import CollectionActivationMiddleware from "../store/middleware/CollectionActivationMiddleware";
+import { initialState } from "../store/state";
 
 // Webpack valorized
 declare const isDevelopment: boolean;
 
 const store = createStore(reducers,
-	// preloadedState,
+	initialState,
 	composeWithDevTools(
 		applyMiddleware(CollectionEditUrlMiddleware),
+		applyMiddleware(CollectionActivationMiddleware),
 		applyMiddleware(thunk),
 	)
 );
