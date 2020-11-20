@@ -60,6 +60,12 @@ export default function CollectionActivationMiddleware(store: MiddlewareAPI<Disp
 				}
 			}
 
+			const nextActiveCollectionID = findNextSuitableCollectionID(action.collections);
+
+			if (nextActiveCollectionID) {
+				return next(createActionWithActiveID(action, nextActiveCollectionID));
+			}
+
 			/** There is no collection with at least one element */
 			return next(action);
 		}
@@ -79,9 +85,7 @@ export default function CollectionActivationMiddleware(store: MiddlewareAPI<Disp
 			 * in this collection. Selecting next
 			 */
 
-			const collectionsCopy = { ...action.collections };
-			delete collectionsCopy.activeCollectionID;
-			const nextCollectionID = findNextSuitableCollectionID(collectionsCopy);
+			const nextCollectionID = findNextSuitableCollectionID(action.collections);
 
 			return next(createActionWithActiveID(action, nextCollectionID));
 		}
@@ -90,9 +94,9 @@ export default function CollectionActivationMiddleware(store: MiddlewareAPI<Disp
 	}
 }
 
-function findNextSuitableCollectionID(collections: Omit<CollectionSet, "activeCollectionID">): string {
+function findNextSuitableCollectionID(collections: CollectionSet): string {
 	for (let [collID, collection] of Object.entries(collections)) {
-		if (collection.resolutions.length) {
+		if (collID !== "activeCollectionID" && Object.keys(collection.resolutions).length) {
 			return collID;
 		}
 	}
