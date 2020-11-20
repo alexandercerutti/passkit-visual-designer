@@ -18,9 +18,8 @@ export const CollectionEditDelete = 0b0100;
 
 interface Props extends Omit<ModalProps, "contentClassName"> {
 	mediaName: string;
-	collections: CollectionSet;
+	mediaContent: CollectionSet;
 	passProps: MediaProps;
-	activeCollectionID?: string;
 	useCollection(collectionID: string): void;
 	updateCollection(collectionID: string, collection: MediaCollection, editHints?: number): void;
 }
@@ -93,7 +92,7 @@ export default class MediaModal extends React.Component<Props, State> {
 		}
 
 		if (operation & CollectionEditDelete) {
-			if (!(Object.keys(this.props.collections).length - 1)) {
+			if (!(Object.keys(this.props.mediaContent.collections).length - 1)) {
 				this.setState({
 					isEditMode: false
 				});
@@ -113,7 +112,7 @@ export default class MediaModal extends React.Component<Props, State> {
 	onCollectionNameEdit(collectionID: string, value: string) {
 		const editedCollection: MediaCollection = {
 			name: value,
-			resolutions: this.props.collections[collectionID].resolutions
+			resolutions: this.props.mediaContent.collections[collectionID].resolutions
 		};
 
 		this.onCollectionEditOperation(CollectionEditModify, collectionID, editedCollection);
@@ -125,11 +124,7 @@ export default class MediaModal extends React.Component<Props, State> {
 	 */
 
 	shouldToggleEditMode() {
-		/**
-		 * We are sure that "activeCollectionID" will never get deleted.
-		 * Only resetted.
-		 */
-		if (Object.entries(this.props.collections).length === 1 && !this.state.isEditMode) {
+		if (!Object.entries(this.props.mediaContent.collections).length && !this.state.isEditMode) {
 			return;
 		}
 
@@ -143,7 +138,7 @@ export default class MediaModal extends React.Component<Props, State> {
 			[this.props.mediaName]: this.props.passProps[this.props.mediaName]
 		};
 
-		const collectionsKeys = Object.keys(this.props.collections);
+		const collectionsKeys = Object.keys(this.props.mediaContent.collections);
 
 		return (
 			<Modal closeModal={this.props.closeModal} contentClassName="media-collection">
@@ -159,7 +154,7 @@ export default class MediaModal extends React.Component<Props, State> {
 							collectionID={this.state.editingCollection}
 							onBack={this.onCollectionEditSelect}
 							mediaName={this.props.mediaName}
-							collectionName={this.state.editingCollection && this.props.collections[this.state.editingCollection].name || ""}
+							collectionName={this.state.editingCollection && this.props.mediaContent.collections[this.state.editingCollection].name || ""}
 							onCollectionNameEditComplete={this.onCollectionNameEdit}
 						/>
 						{
@@ -181,9 +176,8 @@ export default class MediaModal extends React.Component<Props, State> {
 							{!this.state.editingCollection
 								?
 								<CollectionsList
-									collections={this.props.collections}
+									media={this.props.mediaContent}
 									isEditMode={this.state.isEditMode}
-									activeCollectionID={this.props.activeCollectionID}
 									onCollectionEditSelect={this.onCollectionEditSelect}
 									onCollectionUse={this.onCollectionUse}
 									performCollectionsOperation={this.onCollectionEditOperation}
@@ -191,7 +185,7 @@ export default class MediaModal extends React.Component<Props, State> {
 								:
 								<CollectionEditor
 									collectionID={this.state.editingCollection}
-									collection={this.props.collections[this.state.editingCollection]}
+									collection={this.props.mediaContent.collections[this.state.editingCollection]}
 									onResolutionChange={this.onCollectionEditOperation}
 								/>
 							}

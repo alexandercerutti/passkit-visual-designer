@@ -9,9 +9,10 @@ export type MediaSet = {
 }
 
 export type CollectionSet = {
-	[collectionID: string]: MediaCollection;
-} & {
 	activeCollectionID: string;
+	collections: {
+		[collectionID: string]: MediaCollection;
+	};
 }
 
 export interface MediaCollection {

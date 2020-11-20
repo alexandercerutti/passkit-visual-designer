@@ -18,7 +18,7 @@ export default function CollectionActivationMiddleware(store: MiddlewareAPI<Disp
 		}
 
 		const nextActionCollectionsID = Object.entries(action.collections)
-			.filter(([key, value]) => key !== "activeCollectionID" && value)
+			.filter(([_, value]) => Boolean(value))
 			.map(([key]) => key);
 
 		if (nextActionCollectionsID.length === 1) {
@@ -71,7 +71,7 @@ export default function CollectionActivationMiddleware(store: MiddlewareAPI<Disp
 		}
 
 		const action_activeCollResolutionAmount = Object.keys(action.collections[currentActiveID].resolutions).length;
-		const store_activeCollResolutionAmount = Object.keys(currentMedia[currentActiveID].resolutions).length;
+		const store_activeCollResolutionAmount = Object.keys(currentMedia.collections[currentActiveID].resolutions).length;
 
 		const shouldSelectNextCollection = (
 			action_activeCollResolutionAmount !== store_activeCollResolutionAmount &&
@@ -94,9 +94,9 @@ export default function CollectionActivationMiddleware(store: MiddlewareAPI<Disp
 	}
 }
 
-function findNextSuitableCollectionID(collections: CollectionSet): string {
+function findNextSuitableCollectionID(collections: CollectionSet["collections"]): string {
 	for (let [collID, collection] of Object.entries(collections)) {
-		if (collID !== "activeCollectionID" && Object.keys(collection.resolutions).length) {
+		if (Object.keys(collection.resolutions).length) {
 			return collID;
 		}
 	}
@@ -107,9 +107,9 @@ function findNextSuitableCollectionID(collections: CollectionSet): string {
 function createActionWithActiveID(action: MediaEditAction, activeCollectionID: string) {
 	return {
 		...action,
+		activeCollectionID,
 		collections: {
 			...action.collections,
-			activeCollectionID,
 		}
 	}
 }

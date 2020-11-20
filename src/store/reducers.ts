@@ -43,21 +43,14 @@ export function media(state = initialState.media, action: MediaEditAction | Acti
 
 			const selectedMediaCollections = (
 				selectedLanguage[action.mediaName] ||
-				(selectedLanguage[action.mediaName] = { activeCollectionID: null })
+				(selectedLanguage[action.mediaName] = {
+					activeCollectionID: null,
+					collections: {}
+				})
 			);
 
-			const collectionIDs = new Set([
-				...Object.keys(selectedMediaCollections),
-				...Object.keys(action.collections)
-			]);
-
-			for (const id of collectionIDs) {
-				if (action.collections[id] || id === "activeCollectionID") {
-					selectedMediaCollections[id] = action.collections[id];
-				} else {
-					delete selectedMediaCollections[id];
-				}
-			}
+			selectedMediaCollections.activeCollectionID = action.activeCollectionID;
+			selectedMediaCollections.collections = action.collections;
 
 			return newState;
 		};
@@ -71,7 +64,7 @@ export function media(state = initialState.media, action: MediaEditAction | Acti
 			);
 
 			const selectedMediaCollections = selectedLanguage[action.mediaName] as CollectionSet;
-			selectedMediaCollections["activeCollectionID"] = action.collectionID;
+			selectedMediaCollections.activeCollectionID = action.collectionID;
 
 			return newState
 		}

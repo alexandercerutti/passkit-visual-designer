@@ -7,9 +7,8 @@ import "./style.less";
 import { createClassName } from "../../../utils";
 
 interface Props {
-	collections: CollectionSet;
+	media: CollectionSet;
 	isEditMode: boolean;
-	activeCollectionID?: string;
 	onCollectionUse(collectionID: string): void;
 	onCollectionEditSelect(collectionID: string): void;
 	performCollectionsOperation(operation: CollectionEditOperation, collectionID?: string): void;
@@ -22,18 +21,17 @@ export default function CollectionsList(props: Props) {
 
 	const collectionEditClickHandler = React.useCallback((collectionId) => {
 		props.onCollectionEditSelect(collectionId);
-	}, [props.collections]);
+	}, [props.media]);
 
 	const collectionDeleteClickHandler = React.useCallback((collectionID) => {
 		props.performCollectionsOperation(CollectionEditDelete, collectionID);
-	}, [props.collections]);
+	}, [props.media]);
 
 	const collectionAddClickHandler = React.useCallback(() => {
 		props.performCollectionsOperation(CollectionEditCreate);
-	}, [props.collections]);
+	}, [props.media]);
 
-	const collectionsElements = Object.entries(props.collections)
-		.filter(([collID]) => collID !== "activeCollectionID")
+	const collectionsElements = Object.entries(props.media.collections)
 		.map(([collID, collection], index) => {
 			let previewContent: React.ReactFragment;
 			const resolutionsIDs = Object.keys(collection.resolutions);
@@ -80,7 +78,7 @@ export default function CollectionsList(props: Props) {
 			}
 
 			const previewClassName = createClassName(["preview"], {
-				"selected": resolutionsIDs.length && props.activeCollectionID === collID,
+				"selected": resolutionsIDs.length && props.media.activeCollectionID === collID,
 				"empty-coll": !resolutionsIDs.length
 			});
 

@@ -237,11 +237,11 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 			const folderPath = `${lang !== "default" && `${lang}.lproj/` || ""}`;
 
 			for (const mediaName in mediaSet) {
-				const currentMedia = mediaSet[mediaName];
+				const currentMedia = mediaSet[mediaName] as CollectionSet;
 				const mediaPath = `${folderPath}${mediaName.replace(/image/ig, "")}`;
 
 				if (currentMedia.activeCollectionID) {
-					const { resolutions } = currentMedia[currentMedia.activeCollectionID];
+					const { resolutions } = currentMedia.collections[currentMedia.activeCollectionID];
 
 					for (const res in resolutions) {
 						const { name = "1x", content: [buffer] } = resolutions[res];
@@ -342,11 +342,10 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 				}
 				{this.state.showMediaModalForMedia &&
 					<MediaModal
-						activeCollectionID={this.props.media[this.props.projectOptions.activeMediaLanguage]?.[this.state.showMediaModalForMedia]?.activeCollectionID}
-						mediaName={this.state.showMediaModalForMedia}
 						closeModal={() => this.toggleMediaModal(this.state.showMediaModalForMedia)}
 						passProps={allPassProps}
-						collections={this.props.media?.[this.props.projectOptions.activeMediaLanguage]?.[this.state.showMediaModalForMedia] ?? {} as CollectionSet}
+						mediaName={this.state.showMediaModalForMedia}
+						mediaContent={this.props.media?.[this.props.projectOptions.activeMediaLanguage]?.[this.state.showMediaModalForMedia] ?? {} as CollectionSet}
 						updateCollection={this.onMediaCollectionEdit}
 						useCollection={this.onMediaCollectionUse}
 					/>
@@ -386,10 +385,10 @@ function getBestResolutionForMedia(mediaSetForSelectedLanguage: MediaSet) {
 
 	for (let m in mediaSetForSelectedLanguage) {
 		const media = mediaSetForSelectedLanguage[m] as CollectionSet;
-		const { activeCollectionID = null } = media ?? {};
+		const { activeCollectionID = "", collections } = media ?? {};
 
 		if (media && activeCollectionID) {
-			const resolutions = Object.values(media[activeCollectionID].resolutions);
+			const resolutions = Object.values(collections[activeCollectionID].resolutions);
 			best[m] = resolutions[0]?.content[1];
 		}
 	}

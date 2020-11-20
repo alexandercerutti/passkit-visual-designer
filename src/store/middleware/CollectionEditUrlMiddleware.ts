@@ -53,12 +53,12 @@ export default function CollectionEditUrlMiddleware(store: MiddlewareAPI<Dispatc
 			}
 
 			finalCollection = undefined;
-		} else if (selectedMedia[action.collectionID]) {
+		} else if (selectedMedia.collections[action.collectionID]) {
 			/**
 			 * Collection has been edited somehow. We have to discover it.
 			 */
 
-			const storeCollectionResolutions = selectedMedia[action.collectionID].resolutions;
+			const storeCollectionResolutions = selectedMedia.collections[action.collectionID].resolutions;
 			const actionCollectionResolutions = action.collection.resolutions;
 
 			/** Removing duplicates */
@@ -120,7 +120,7 @@ export default function CollectionEditUrlMiddleware(store: MiddlewareAPI<Dispatc
 		return next<MediaEditAction>({
 			type: ConfigActions.EDIT_MEDIA,
 			collections: {
-				...selectedMedia,
+				...selectedMedia.collections,
 				[action.collectionID]: finalCollection,
 			},
 			mediaLanguage: activeMediaLanguage,

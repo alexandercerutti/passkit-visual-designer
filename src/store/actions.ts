@@ -31,7 +31,10 @@ export function editCollection(mediaName: keyof MediaProps, collectionID: string
 export interface MediaEditAction extends Action<ConfigActions.EDIT_MEDIA> {
 	mediaLanguage: string;
 	mediaName: keyof MediaProps;
-	collections: CollectionSet;
+	collections: CollectionSet["collections"];
+
+	/** To be used only from active collection middleware */
+	activeCollectionID?: string;
 }
 
 export interface ActiveCollectionSetAction extends Action<ConfigActions.SET_MEDIA_USAGE> {
