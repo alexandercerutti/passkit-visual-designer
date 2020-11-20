@@ -100,7 +100,7 @@ export default function CollectionsList(props: Props) {
 
 	return (
 		<div className="list collections-list">
-			<div id="grid">
+			<div id="grid" data-disabled={!props.media.enabled}>
 				{collectionsElements}
 				<div className="collection">
 					<div className="preview add-coll" onClick={collectionAddClickHandler}>

@@ -8,6 +8,7 @@
 
 .collections-list > #grid {
 	flex-grow: 2;
+	position: relative;
 
 	// Animation
 
@@ -26,6 +27,31 @@
 		&.fade-exit-active {
 			opacity: 0;
 			transition: opacity .3s ease-in;
+		}
+	}
+
+	// Disable overlay
+
+	&::before {
+		content: "";
+		position: absolute;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		z-index: 10;
+		background-color: rgba(0, 0, 0, 0.5);
+		opacity: 0;
+		transition: opacity .3s ease-in-out;
+		pointer-events: none;
+	}
+
+	&[data-disabled="true"] {
+		overflow-y: hidden !important;
+
+		&::before {
+			opacity: 1;
+			pointer-events: all;
 		}
 	}
 
@@ -189,7 +215,6 @@
 		justify-content: space-between;
 		align-items: center;
 		border-top: 0.5px solid #292929;
-		margin-top: 15px;
 		height: 50px;
 		padding: 0 10px; /* small sizes */
 
