@@ -125,55 +125,55 @@
 		}
 	}
 
-		&  footer {
-			flex-shrink: 0;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			font-size: 9pt;
-			color: #616161;
-			border-top: 0.5px solid #292929;
-			height: 50px;
-			padding: 0 20px; /* small sizes */
-		}
+	& footer {
+		flex-shrink: 0;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		font-size: 9pt;
+		color: #616161;
+		border-top: 0.5px solid #292929;
+		height: 50px;
+		padding: 0 20px; /* small sizes */
+	}
 
-		&.dragOver > #drop-area {
-			opacity: 1;
-			visibility: visible;
-			transition-delay: 0s, 0s;
-		}
+	&.dragOver > #drop-area {
+		opacity: 1;
+		visibility: visible;
+		transition-delay: 0s, 0s;
+	}
 
-		& > #drop-area {
-			position: absolute;
-			top: 0;
-			left: 0;
-			right: 0;
-			bottom: 0;
-			z-index: 10;
+	& > #drop-area {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		z-index: 10;
 
-			opacity: 0;
-			box-sizing: border-box;
-			border-radius: 5px;
-			transition:
-				opacity .5s ease-in-out,
-				visibility 0s linear;
-			transition-delay: 0s, .5s;
-			border-width: 4px;
-			border-style: dashed;
-			border-color: #333;
-			background-color: rgba(45, 45, 45, 0.5);
-			display: flex;
-			flex-direction: column;
-			justify-content: center;
-			align-items: center;
-			color: #cacaca;
-			cursor: pointer;
-			margin: 10px;
-			visibility: hidden;
+		opacity: 0;
+		box-sizing: border-box;
+		border-radius: 5px;
+		transition:
+			opacity .5s ease-in-out,
+			visibility 0s linear;
+		transition-delay: 0s, .5s;
+		border-width: 4px;
+		border-style: dashed;
+		border-color: #333;
+		background-color: rgba(45, 45, 45, 0.5);
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		color: #cacaca;
+		cursor: pointer;
+		margin: 10px;
+		visibility: hidden;
 
-			& > span {
-				/* To avoid flicker effect while dragging over the text*/
-				pointer-events: none;
-			}
+		& > span {
+			/* To avoid flicker effect while dragging over the text*/
+			pointer-events: none;
 		}
 	}
+}
