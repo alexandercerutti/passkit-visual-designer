@@ -1,4 +1,5 @@
 import * as React from "react";
+import ModalCloseIcon from "./icons";
 import "./style.less";
 
 /**
@@ -22,6 +23,7 @@ export default function Modal({ children, closeModal, contentClassName }: React.
 
 	return (
 		<div id="modal">
+			<ModalCloseIcon id="closeIcon" />
 			<div id="modal-content" className={contentClassName}>
 				{children}
 			</div>
