@@ -15,7 +15,7 @@ import { DataGroup } from "./OptionsMenu/pages/PanelsPage/PanelGroup";
 import { FieldSelectHandler } from "../Pass/layouts/sections/useRegistrations";
 import ExportModal from "./ExportModal";
 import { PKTransitType } from "../Pass/constants";
-import JSZip from "jszip";
+import { exportPass } from "./exportPass";
 import MediaModal from "./MediaModal";
 import { getArrayBuffer } from "../utils";
 
@@ -228,71 +228,8 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 
 		this.toggleExportModal();
 
-		const { passProps, media } = this.props;
-		const zip = new JSZip();
-
-		/**
-		 * Creating physical files
-		 */
-
-		const languagesMap = new Map(Object.entries(media));
-
-		for (const [lang, mediaSet] of languagesMap) {
-
-			/**
-			 * if lang is "default", we insert the
-			 * files in root folder
-			 */
-
-			const folderPath = `${lang !== "default" && `${lang}.lproj/` || ""}`;
-
-			for (const mediaName in mediaSet) {
-				const currentMedia = mediaSet[mediaName] as CollectionSet;
-				const mediaPath = `${folderPath}${mediaName.replace(/image/ig, "")}`;
-
-				if (currentMedia.activeCollectionID) {
-					const { resolutions } = currentMedia.collections[currentMedia.activeCollectionID];
-
-					for (const res in resolutions) {
-						const { name = "1x", content: [buffer] } = resolutions[res];
-						const fileName = `${mediaPath}${name === mediaPath || name === "1x" ? "" : name}.png`
-						zip.file(fileName, buffer);
-					}
-				}
-			}
-		}
-
-		/**
-		 * Adding properties to pass.json
-		 * But first... let me take a selfie! 🤳✌
-		 *
-		 * JK, first we are excluding the ones we want to handle
-		 * separately or completely exclude.
-		 */
-
-		const {
-			headerFields, auxiliaryFields, primaryFields, secondaryFields, backFields, transitType,
-			kind, logo, backgroundImage, thumbnailImage, stripImage, icon, footerImage, ...topLevelProps
-		} = passProps;
-
-		const passJSONObject = {
-			...topLevelProps,
-			formatVersion: 1,
-			[kind]: {
-				headerFields,
-				auxiliaryFields,
-				primaryFields,
-				secondaryFields,
-				backFields,
-				transitType
-			}
-		};
-
-		const passJSONString = JSON.stringify(passJSONObject);
-		zip.file("pass.json", passJSONString, { binary: false });
-
-		const templateFile = await zip.generateAsync({ type: "blob" });
-		const fileURL = URL.createObjectURL(templateFile);
+		const buffer = await exportPass(this.props.passProps, this.props.media);
+		const fileURL = URL.createObjectURL(buffer);
 
 		Object.assign(document.createElement("a"), {
 			download: `${this.props.projectOptions.title ?? "untitled project"}.zip`,
