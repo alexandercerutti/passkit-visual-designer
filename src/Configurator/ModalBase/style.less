@@ -1,10 +1,8 @@
+@import "../../App/common.less";
+
 #modal {
 	z-index: 999;
-	opacity: 0;
-	animation-name: opacity-in-out;
-	animation-duration: .5s;
-	animation-timing-function: ease-in-out;
-	animation-fill-mode: forwards;
+	.lookMumIamAppearing(.5s, ease-in-out);
 
 	& > #close-underlay {
 		background-color: rgba(33, 33, 33, 0.5);
@@ -19,16 +17,6 @@
 	}
 
 	& > #modal-content {
-		opacity: 0;
-		animation-name: opacity-in-out;
-		animation-delay: .2s;
-		animation-timing-function: ease-in-out;
-		animation-fill-mode: forwards;
-		animation-duration: .5s;
+		.lookMumIamAppearing(.5s, ease-in-out, .2s);
 	}
-}
-
-@keyframes opacity-in-out {
-	from { opacity: 0; }
-	to { opacity: 1; }
 }

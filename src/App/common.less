@@ -50,7 +50,12 @@
 
 .lookMumIamAppearing(@inTime, @tmf: ease-in-out, @delay: 0s) {
 	opacity: 0;
-	animation: appearance @inTime @tmf @delay forwards;
+	animation-name: appearance;
+	animation-duration: @inTime;
+	animation-timing-function: @tmf;
+	animation-delay: @delay;
+	animation-iteration-count: 1;
+	animation-fill-mode: forwards;
 }
 
 @keyframes appearance {
