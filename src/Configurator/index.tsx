@@ -19,6 +19,15 @@ import { exportPass } from "./exportPass";
 import MediaModal from "./MediaModal";
 import { getArrayBuffer } from "../utils";
 
+/**
+ * Filters out from B the keys that not match the type of T.
+ * @see https://medium.com/dailyjs/typescript-create-a-condition-based-subset-types-9d902cea5b8c
+ */
+
+type FilterOutUnmatchedType<B extends Object, T extends any> = {
+	[K in keyof B]: B[K] extends T ? K : never;
+}[keyof B]
+
 interface DispatchProps {
 	changePassPropValue: typeof changePassPropValue;
 	setProjectOption: typeof setProjectOption;
@@ -85,6 +94,12 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 		return {
 			canBeExported: true
 		};
+	}
+
+	private StateToggler(property: FilterOutUnmatchedType<ConfiguratorState, boolean>) {
+		this.setState((previous) => ({
+			[property]: !previous[property]
+		} as Record<typeof property, boolean>));
 	}
 
 	/**
@@ -179,21 +194,15 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 	}
 
 	onShowPassBackRequest() {
-		this.setState((previous) => ({
-			shouldShowPassBack: !previous.shouldShowPassBack
-		}));
+		this.StateToggler("shouldShowPassBack");
 	}
 
 	toggleEmptyVisibility() {
-		this.setState((previous) => ({
-			emptyFieldsVisible: !previous.emptyFieldsVisible
-		}));
+		this.StateToggler("emptyFieldsVisible");
 	}
 
 	toggleExportModal() {
-		this.setState((previous) => ({
-			showExportModal: !previous.showExportModal
-		}));
+		this.StateToggler("showExportModal");
 	}
 
 	toggleMediaModal(mediaName: keyof MediaProps) {
