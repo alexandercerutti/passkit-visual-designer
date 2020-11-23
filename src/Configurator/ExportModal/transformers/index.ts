@@ -9,7 +9,7 @@ export function replaceAllBlock(partnerTemplate: string, propsDictionary: PassMi
 	let partnerReplaced = partnerTemplate;
 
 	function replacer(match: string, _: string, offset: number, __: string, groups: RegExpExecArray["groups"]) {
-		const { propName } = groups;
+		const propName = groups.propName as keyof PassMixedProps;
 
 		if (propsDictionary[propName] === undefined) {
 			return match;

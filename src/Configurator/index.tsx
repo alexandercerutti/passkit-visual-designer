@@ -35,7 +35,7 @@ interface ConfiguratorStore {
 
 interface ConfiguratorProps extends ConfiguratorStore, DispatchProps, RouteComponentProps<any> { }
 interface ConfiguratorState {
-	selectedFieldId?: string;
+	selectedFieldId?: keyof PassMixedProps;
 	registeredFields: RegisteredFieldsMap;
 	shouldShowPassBack: boolean;
 	emptyFieldsVisible: boolean;
@@ -95,8 +95,8 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 	 * @param id
 	 */
 
-	registerField(kind: FieldKind, groupName: string): FieldSelectHandler {
-		if (this.state.registeredFields.get(DataGroup.DATA).find(data => data.name === groupName)) {
+	registerField(kind: FieldKind, id: keyof PassMixedProps): FieldSelectHandler {
+		if (this.state.registeredFields.get(DataGroup.DATA).find(data => data.name === id)) {
 			console.log("...but failed due to duplicate already available");
 			return null;
 		}
@@ -112,11 +112,17 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 			}
 
 			return {
-				registeredFields: updatedFields.set(fieldDataGroup, [...updatedFields.get(fieldDataGroup), { name: groupName, kind }])
+				registeredFields: updatedFields.set(
+					fieldDataGroup,
+					[
+						...updatedFields.get(fieldDataGroup),
+						{ name: id, kind }
+					]
+				)
 			};
 		});
 
-		return (key: string) => this.onFieldSelect(groupName, key);
+		return (key: string) => this.onFieldSelect(id, key);
 	}
 
 	/**
@@ -124,7 +130,7 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 	 * to highlight the linked field
 	 */
 
-	onFieldSelect(id: string, key: string | null): void {
+	onFieldSelect(id: keyof PassMixedProps, key: string | null): void {
 		// @TODO: Resolve key in id
 		this.setState({ selectedFieldId: id });
 		console.log(id, "selected, with key", key);
@@ -332,12 +338,13 @@ function getBestResolutionForMedia(mediaSetForSelectedLanguage: MediaSet) {
 	const best = {} as MediaProps;
 
 	for (let m in mediaSetForSelectedLanguage) {
-		const media = mediaSetForSelectedLanguage[m] as CollectionSet;
+		const key = m as keyof MediaSet;
+		const media = mediaSetForSelectedLanguage[key] as CollectionSet;
 		const { activeCollectionID = "", collections } = media ?? {};
 
 		if (media && activeCollectionID) {
 			const resolutions = Object.values(collections[activeCollectionID].resolutions);
-			best[m] = resolutions[0]?.content[1];
+			best[key] = resolutions[0]?.content[1];
 		}
 	}
 

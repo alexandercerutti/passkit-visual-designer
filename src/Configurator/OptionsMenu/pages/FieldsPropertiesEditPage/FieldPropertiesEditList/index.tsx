@@ -22,7 +22,7 @@ export default function FieldPropertiesEditList(props: FieldPropertiesEditListPr
 					name={name}
 					options={type}
 					onValueChange={props.onValueChange}
-					value={valueFromData ?? defaultValue}
+					value={valueFromData as string ?? defaultValue}
 					defaultValue={defaultValue}
 				/>
 			);
@@ -35,7 +35,7 @@ export default function FieldPropertiesEditList(props: FieldPropertiesEditListPr
 					name={name}
 					placeholder={placeholder}
 					onValueChange={props.onValueChange}
-					value={valueFromData}
+					value={valueFromData as string}
 				/>
 			);
 		}
@@ -45,7 +45,7 @@ export default function FieldPropertiesEditList(props: FieldPropertiesEditListPr
 				<FieldCheckboxPropertyPanel
 					key={name}
 					name={name}
-					value={valueFromData}
+					value={valueFromData as boolean}
 					onValueChange={props.onValueChange}
 				/>
 			);

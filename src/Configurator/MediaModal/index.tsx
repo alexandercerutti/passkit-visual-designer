@@ -17,7 +17,7 @@ export const CollectionEditModify = 0b0010;
 export const CollectionEditDelete = 0b0100;
 
 interface Props extends Omit<ModalProps, "contentClassName"> {
-	mediaName: string;
+	mediaName: keyof MediaProps;
 	mediaContent: CollectionSet;
 	passProps: MediaProps;
 	setMediaExportState(enable: boolean): void;

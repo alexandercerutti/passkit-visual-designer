@@ -74,13 +74,13 @@ class PassSelector extends React.PureComponent<SelectorProps> {
 		const { selectedPassKind } = this.props;
 		const availableAlternatives = selectedPassKind && this.alternatives[selectedPassKind] || [];
 
-		const passes = Object.keys(PassKind).map((pass: keyof typeof PassKind) => {
+		const passes = Object.entries(PassKind).map(([_, pass]) => {
 			return (
 				<NamedPass
-					key={PassKind[pass]}
-					name={PassKind[pass]}
-					kind={PassKind[pass]}
-					registerAlternatives={this.registerAlternatives.bind(this, PassKind[pass])}
+					key={pass}
+					name={pass}
+					kind={pass}
+					registerAlternatives={this.registerAlternatives.bind(this, pass)}
 				/>
 			);
 		});

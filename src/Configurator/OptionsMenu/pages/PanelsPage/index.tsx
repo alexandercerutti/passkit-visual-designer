@@ -7,7 +7,7 @@ import PageNavigationContext from "../PageNavigationContext";
 import { PassMixedProps } from "../../../../Pass";
 
 interface Props extends Partial<PageNavigation> {
-	selectedFieldID: string;
+	selectedFieldID: keyof PassMixedProps;
 	fields: RegisteredFieldsMap;
 	data: PassMixedProps;
 	onValueChange<T>(name: string, data: T): void;

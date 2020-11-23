@@ -34,6 +34,11 @@ export interface PassMixedProps {
 	passTypeIdentifier?: string;
 	teamIdentifier?: string;
 	formatVersion?: 1;
+	groupingIdentifier?: string;
+	webServiceURL?: string,
+	authenticationToken?: string;
+	associatedStoreIdentifiers?: string;
+	appLaunchURL?: string;
 
 	// URLs from redux middlewares
 	logo?: string;

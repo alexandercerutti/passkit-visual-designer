@@ -2,7 +2,7 @@ import * as React from "react";
 
 interface Props {
 	name: string;
-	value?: string;
+	value?: string | number;
 	placeholder?: string;
 	onValueChange<T>(prop: string, value: T): void;
 }

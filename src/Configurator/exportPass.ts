@@ -74,8 +74,8 @@ function createPhysicalFilesBuffers(languagesMediaMap: Map<string, MediaSet>): [
 
 		const folderPath = `${lang !== "default" && `${lang}.lproj/` || ""}`;
 
-		for (const mediaName in mediaSet) {
-			const { enabled, activeCollectionID, collections } = mediaSet[mediaName] as CollectionSet;
+		for (const [mediaName, collection] of Object.entries(mediaSet)) {
+			const { enabled, activeCollectionID, collections } = collection;
 			const mediaPath = `${folderPath}${mediaName.replace(/image/ig, "")}`;
 
 			if (enabled && activeCollectionID) {
@@ -101,7 +101,7 @@ type ExportGeneratorReturn = Generator<
 
 function* exportMediaCollections(): ExportGeneratorReturn {
 	const rawCollections: CollectionWithZipPath[] = [];
-	const buffers = []
+	const buffers: [string, ArrayBuffer][] = []
 	let value: CollectionWithZipPath = null;
 
 	while ((value = yield) !== undefined) {

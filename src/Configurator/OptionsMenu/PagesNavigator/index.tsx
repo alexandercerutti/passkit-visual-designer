@@ -13,7 +13,7 @@ interface NavigatorState {
 }
 
 interface NavigatorProps {
-	selectedFieldID?: string;
+	selectedFieldID?: keyof PassMixedProps;
 	fields: RegisteredFieldsMap;
 	data: PassMixedProps;
 	cancelFieldSelection(): void;

@@ -38,7 +38,7 @@ export interface MediaEditAction extends Action<ConfigActions.EDIT_MEDIA> {
 }
 
 export interface ActiveCollectionSetAction extends Action<ConfigActions.SET_MEDIA_USAGE> {
-	mediaName: string;
+	mediaName: keyof MediaProps;
 	mediaLanguage: string;
 	collectionID: string;
 }
@@ -54,7 +54,7 @@ export function setMediaActiveCollection(mediaName: keyof MediaProps, mediaLangu
 
 export interface MediaExportStateAction extends Action<ConfigActions.SET_MEDIA_EXPORT_STATE> {
 	mediaLanguage: string;
-	mediaName: string;
+	mediaName: keyof MediaProps;
 	enabled: boolean;
 }
 

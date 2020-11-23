@@ -1,6 +1,6 @@
 import * as React from "react";
 
-interface Props<E> {
+interface Props<E extends Object> {
 	name: string;
 	value?: string;
 	options: E;
@@ -31,10 +31,10 @@ export default function FieldEnumPropertyPanel<T>(props: Props<T>) {
 				{props.defaultValue}
 			</option>
 		) || null,
-		...Object.keys(props.options).map(key => (
+		...Object.entries(props.options).map(([key, object]) => (
 			<option
 				key={key}
-				value={props.options[key]}
+				value={object}
 			>
 				{key}
 			</option>

@@ -8,7 +8,7 @@ import { PassMixedProps } from "../../Pass";
 export type RegisteredFieldsMap = Map<DataGroup, FieldDetails[]>;
 
 interface OptionsMenuProps {
-	selection?: string;
+	selection?: keyof PassMixedProps;
 	registeredFields: RegisteredFieldsMap;
 	data: PassMixedProps;
 	onValueChange(key: string, value: any): Promise<boolean>;

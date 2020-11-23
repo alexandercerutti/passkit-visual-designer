@@ -76,7 +76,7 @@ export function media(state = initialState.media, action: MediaEditAction | Acti
 				(newState[action.mediaLanguage] = {})
 			);
 
-			const selectedMediaCollections = selectedLanguage[action.mediaName] as CollectionSet;
+			const selectedMediaCollections = selectedLanguage[action.mediaName];
 			selectedMediaCollections.activeCollectionID = action.collectionID;
 
 			return newState
@@ -84,7 +84,7 @@ export function media(state = initialState.media, action: MediaEditAction | Acti
 
 		case ConfigActions.SET_MEDIA_EXPORT_STATE: {
 			const newState = { ...state };
-			const selectedMedia = newState[action.mediaLanguage][action.mediaName] as CollectionSet;
+			const selectedMedia = newState[action.mediaLanguage][action.mediaName];
 			selectedMedia.enabled = action.enabled;
 
 			return newState;

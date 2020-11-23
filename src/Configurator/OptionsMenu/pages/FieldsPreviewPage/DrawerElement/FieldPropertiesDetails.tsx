@@ -1,7 +1,7 @@
-import { PKDataDetectorType, PKTextAlignment, PKDateStyle } from "../../../../../Pass/constants";
+import { PKDataDetectorType, PKTextAlignment, PKDateStyle, PassFieldKeys } from "../../../../../Pass/constants";
 
 type FieldPropertyDetail = {
-	name: string,
+	name: keyof PassFieldKeys,
 	type: typeof String | typeof Boolean | typeof PKTextAlignment | typeof PKDateStyle | typeof PKDataDetectorType,
 	placeholder?: string;
 	optional?: boolean;
