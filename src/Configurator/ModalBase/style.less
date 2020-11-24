@@ -1,5 +1,6 @@
 @import "../../App/common.less";
 @fullscreen-size: 650px;
+@modal-background-color: #191919;
 
 #modal {
 	z-index: 999;
@@ -35,6 +36,11 @@
 	}
 
 	& > #modal-content {
+		position: absolute;
+		z-index: 999;
+		display: flex;
+		color: #e6e6e6;
+
 		.lookMumIamAppearing(.5s, ease-in-out, .2s);
 
 		@media screen and (max-width: @fullscreen-size) {

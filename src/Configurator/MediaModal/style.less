@@ -1,20 +1,17 @@
 @import "../../App/common.less";
+@import "../ModalBase/style.less";
+
 @grid-gap: 10px;
 
 #modal {
 	& > #modal-content.media-collection {
-		display: flex;
-
-		z-index: 10;
-		position: absolute;
 		top: 18%;
 		left: 8%;
 		right: 8%;
 		bottom: 18%;
-		color: #e6e6e6;
 
 		& > * {
-			background-color: #191919;
+			background-color: @modal-background-color;
 			display: flex;
 			box-shadow: 0 0 5px 0px #3c3c3c;
 		}
