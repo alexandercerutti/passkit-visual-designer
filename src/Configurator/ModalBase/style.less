@@ -2,7 +2,7 @@
 @fullscreen-size: 650px;
 @modal-background-color: #191919;
 
-#modal {
+.modal {
 	z-index: 999;
 	.lookMumIamAppearing(.5s, ease-in-out);
 
@@ -23,7 +23,7 @@
 		}
 	}
 
-	& > #close-underlay {
+	& > .close-underlay {
 		background-color: rgba(33, 33, 33, 0.5);
 		position: fixed;
 		top: 0;
@@ -35,7 +35,7 @@
 		filter: blur(10px);
 	}
 
-	& > #modal-content {
+	& > .modal-content {
 		position: absolute;
 		z-index: 999;
 		display: flex;

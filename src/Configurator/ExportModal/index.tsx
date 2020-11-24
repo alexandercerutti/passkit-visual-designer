@@ -25,7 +25,7 @@ interface Partner {
 	template: string;
 }
 
-interface Props extends Omit<ModalProps, "contentClassName"> {
+interface Props extends Omit<ModalProps, "contentUniqueID"> {
 	partners: Partner[];
 	dataBank: PassMixedProps;
 }
@@ -65,7 +65,7 @@ export default function ExportModal(props: Props) {
 	return (
 		<Modal
 			closeModal={props.closeModal}
-			contentClassName="export"
+			contentUniqueID="export"
 		>
 			<h2>Great <span>Pass</span>!</h2>
 			<p>Your model is now being exported. Here below you can see some open source libraries examples to generate programmatically passes with your mock data compiled. Enjoy!</p>

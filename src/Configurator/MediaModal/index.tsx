@@ -16,7 +16,7 @@ export const CollectionEditModify = 0b0010;
 /* skipping 0b0011 to avoid collisions */
 export const CollectionEditDelete = 0b0100;
 
-interface Props extends Omit<ModalProps, "contentClassName"> {
+interface Props extends Omit<ModalProps, "contentUniqueID"> {
 	mediaName: keyof MediaProps;
 	mediaContent: CollectionSet;
 	passProps: MediaProps;
@@ -153,7 +153,7 @@ export default class MediaModal extends React.Component<Props, State> {
 		const collectionsKeys = Object.keys(this.props.mediaContent.collections);
 
 		return (
-			<Modal closeModal={this.props.closeModal} contentClassName="media-collection">
+			<Modal closeModal={this.props.closeModal} contentUniqueID="media-collection">
 				<div id="pass-preview">
 					<Pass
 						kind={PassKind.BOARDING_PASS}
