@@ -349,9 +349,9 @@ function getBestResolutionForMedia(mediaSetForSelectedLanguage: MediaSet) {
 	for (let m in mediaSetForSelectedLanguage) {
 		const key = m as keyof MediaSet;
 		const media = mediaSetForSelectedLanguage[key] as CollectionSet;
-		const { activeCollectionID = "", collections } = media ?? {};
+		const { activeCollectionID = "", collections, enabled } = media ?? {};
 
-		if (media && activeCollectionID) {
+		if (media && activeCollectionID && enabled) {
 			const resolutions = Object.values(collections[activeCollectionID].resolutions);
 			best[key] = resolutions[0]?.content[1];
 		}
