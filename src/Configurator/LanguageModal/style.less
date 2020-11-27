@@ -1,3 +1,4 @@
+@import (reference) "../../App/common.less";
 @import (reference) "../ModalBase/common.less";
 
 .modal {
@@ -7,6 +8,7 @@
 		left: 8%;
 		right: 8%;
 		background-color: @modal-background-color;
+
 
 		&::before {
 			content: "";
@@ -22,6 +24,40 @@
 			left: 0;
 			right: 0;
 			bottom: 0;
+			z-index: -1;
+		}
+
+		& > .languages-list {
+			flex-direction: column;
+			display: flex;
+			.scrollableWithoutScrollbars(y);
+			width: 100%;
+			padding: 30px;
+
+			& h2 {
+				margin-top: 0;
+			}
+
+			& .languages-grid {
+				display: grid;
+				grid-template-columns: [zero] 1fr [one] 1fr [two] 1fr [three] 1fr;
+				grid-gap: 10px;
+				font-size: 14pt;
+
+				&:not(:last-child) {
+					border-bottom: 1px solid rgba(230, 230, 230, 0.3);
+					margin-bottom: 30px;
+					padding-bottom: 30px;
+				}
+
+				& div {
+					cursor: pointer;
+
+					&:hover {
+						text-decoration: underline;
+					}
+				}
+			}
 		}
 	}
 }
