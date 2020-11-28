@@ -93,9 +93,31 @@
 
 				& div {
 					cursor: pointer;
+					color: #b3b3b3;
 
 					&:hover {
 						text-decoration: underline;
+					}
+
+					&::before {
+						content: "";
+						display: inline-block;
+						vertical-align: middle;
+						margin-right: 5px;
+						width: 5px;
+						height: 5px;
+						border-radius: 50%;
+
+						background-color: red;
+					}
+
+					&.used {
+						color: #e6e6e6;
+						font-weight: 500;
+
+						&::before {
+							background-color: green;
+						}
 					}
 				}
 			}

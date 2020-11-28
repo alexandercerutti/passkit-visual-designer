@@ -39,6 +39,7 @@ interface DispatchProps {
 interface ConfiguratorStore {
 	passProps: PassMixedProps;
 	media: LocalizedMediaGroup;
+	usedLanguages: Set<string>;
 	projectOptions: ProjectOptions;
 }
 
@@ -372,9 +373,12 @@ export default withRouter(connect(
 			kind: PassKind.BOARDING_PASS
 		} || {};
 
+		const usedLanguages = new Set(Object.keys(media));
+
 		return {
 			passProps: Object.assign(fallbackDevelopmentPassMetadata, pass),
 			media,
+			usedLanguages,
 			projectOptions
 		};
 	},

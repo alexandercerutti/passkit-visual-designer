@@ -5,13 +5,19 @@ import { languages } from "./languages";
 
 interface Props {
 	closeModal(): void;
+	usedLanguages: Set<string>;
 	selectLanguage(languageCode: string): void;
 }
 
 export default function LanguageModal(props: Props) {
 	const languagesRegions = Object.entries(languages).map(([region, languages]) => {
 		const languagesList = Object.entries(languages).map(([ISO639alpha1, language]) => (
-			<div key={ISO639alpha1} onClick={() => props.selectLanguage(ISO639alpha1)} title={`Language code: ${ISO639alpha1}`}>
+			<div
+				key={ISO639alpha1}
+				className={props.usedLanguages.has(language) ? "used" : ""}
+				onClick={() => props.selectLanguage(ISO639alpha1)}
+				title={`Language code: ${ISO639alpha1}`}
+			>
 				{language}
 			</div>
 		));
