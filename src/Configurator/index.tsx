@@ -18,6 +18,7 @@ import { PKTransitType } from "../Pass/constants";
 import { exportPass } from "./exportPass";
 import MediaModal from "./MediaModal";
 import { getArrayBuffer } from "../utils";
+import LanguageModal from "./LanguageModal";
 
 /**
  * Filters out from B the keys that not match the type of T.
@@ -52,6 +53,7 @@ interface ConfiguratorState {
 	showExportModal: boolean;
 	canBeExported: boolean;
 	showMediaModalForMedia: keyof MediaProps;
+	showLanguageModal: boolean;
 }
 
 class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState> implements InteractionContextMethods {
@@ -71,6 +73,7 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 		this.onMediaCollectionEdit = this.onMediaCollectionEdit.bind(this);
 		this.onMediaCollectionUse = this.onMediaCollectionUse.bind(this);
 		this.onMediaExportStateChange = this.onMediaExportStateChange.bind(this);
+		this.toggleLanguageModal = this.toggleLanguageModal.bind(this);
 
 		this.state = {
 			selectedFieldId: null,
@@ -80,6 +83,7 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 			showExportModal: false,
 			canBeExported: false,
 			showMediaModalForMedia: null,
+			showLanguageModal: false,
 		};
 	}
 
@@ -212,6 +216,10 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 		}));
 	}
 
+	toggleLanguageModal() {
+		this.StateToggler("showLanguageModal");
+	}
+
 	changeProjectTitle(title: string) {
 		this.props.setProjectOption("title", title);
 	}
@@ -312,6 +320,13 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 						updateCollection={this.onMediaCollectionEdit}
 						useCollection={this.onMediaCollectionUse}
 						setMediaExportState={this.onMediaExportStateChange}
+					/>
+				}
+				{this.state.showLanguageModal &&
+					<LanguageModal
+						closeModal={() => this.toggleLanguageModal()}
+						usedLanguages={this.props.usedLanguages}
+						selectLanguage={(langCode: string) => console.log(langCode)}
 					/>
 				}
 			</div>
