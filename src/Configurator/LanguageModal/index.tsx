@@ -11,18 +11,18 @@ interface Props {
 export default function LanguageModal(props: Props) {
 	const languagesRegions = Object.entries(languages).map(([region, languages]) => {
 		const languagesList = Object.entries(languages).map(([ISO639alpha1, language]) => (
-			<div onClick={() => props.selectLanguage(ISO639alpha1)} title={`Language code: ${ISO639alpha1}`}>
+			<div key={ISO639alpha1} onClick={() => props.selectLanguage(ISO639alpha1)} title={`Language code: ${ISO639alpha1}`}>
 				{language}
 			</div>
 		));
 
 		return (
-			<>
+			<React.Fragment key={region}>
 				<h2>{region}</h2>
 				<div className="languages-grid">
 					{languagesList}
 				</div>
-			</>
+			</React.Fragment>
 		);
 	});
 
