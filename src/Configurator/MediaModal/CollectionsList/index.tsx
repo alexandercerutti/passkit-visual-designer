@@ -10,10 +10,12 @@ import { Switcher } from "../../Switcher";
 interface Props {
 	media: CollectionSet;
 	isEditMode: boolean;
+	currentLanguage: string;
 	onCollectionUse(collectionID: string): void;
 	onCollectionEditSelect(collectionID: string): void;
 	onMediaExportStateToggle(enabled: boolean): void;
 	performCollectionsOperation(operation: CollectionEditOperation, collectionID?: string): void;
+	requestForLanguageChange(): void;
 }
 
 export default function CollectionsList(props: Props) {
@@ -119,7 +121,9 @@ export default function CollectionsList(props: Props) {
 				>
 					Export
 				</Switcher>
-				<span>it</span>
+				<span onClick={props.requestForLanguageChange}>
+					{props.currentLanguage}
+				</span>
 			</footer>
 		</div>
 	);

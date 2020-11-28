@@ -17,12 +17,14 @@ export const CollectionEditModify = 0b0010;
 export const CollectionEditDelete = 0b0100;
 
 interface Props extends Omit<ModalProps, "contentUniqueID"> {
+	currentLanguage: string;
 	mediaName: keyof MediaProps;
 	mediaContent: CollectionSet;
 	passProps: MediaProps;
 	setMediaExportState(enable: boolean): void;
 	useCollection(collectionID: string): void;
 	updateCollection(collectionID: string, collection: MediaCollection, editHints?: number): void;
+	requestForLanguageChange(): void;
 }
 
 interface State {
@@ -194,6 +196,8 @@ export default class MediaModal extends React.Component<Props, State> {
 									onCollectionEditSelect={this.onCollectionEditSelect}
 									onCollectionUse={this.onCollectionUse}
 									performCollectionsOperation={this.onCollectionEditOperation}
+									currentLanguage={this.props.currentLanguage}
+									requestForLanguageChange={this.props.requestForLanguageChange}
 								/>
 								:
 								<CollectionEditor

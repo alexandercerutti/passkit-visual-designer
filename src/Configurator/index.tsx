@@ -313,13 +313,15 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 				}
 				{this.state.showMediaModalForMedia &&
 					<MediaModal
-						closeModal={() => this.toggleMediaModal(this.state.showMediaModalForMedia)}
 						passProps={allPassProps}
+						currentLanguage={this.props.projectOptions.activeMediaLanguage}
 						mediaName={this.state.showMediaModalForMedia}
 						mediaContent={this.props.media?.[this.props.projectOptions.activeMediaLanguage]?.[this.state.showMediaModalForMedia] ?? {} as CollectionSet}
+						requestForLanguageChange={this.toggleLanguageModal}
 						updateCollection={this.onMediaCollectionEdit}
 						useCollection={this.onMediaCollectionUse}
 						setMediaExportState={this.onMediaExportStateChange}
+						closeModal={() => this.toggleMediaModal(this.state.showMediaModalForMedia)}
 					/>
 				}
 				{this.state.showLanguageModal &&
