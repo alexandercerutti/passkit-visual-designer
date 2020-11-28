@@ -98,7 +98,7 @@ export function media(state = initialState.media, action: MediaEditAction | Acti
 
 export function projectOptions(state = initialState.projectOptions, action: SinglePropSettingAction<POKeys, POValues>): ProjectOptions {
 	switch (action.type) {
-		case ConfigActions.SET_SINGLE_PROP: {
+		case ConfigActions.SET_PROJECT_OPT: {
 			if (!action.value) {
 				const stateCopy = { ...state };
 
