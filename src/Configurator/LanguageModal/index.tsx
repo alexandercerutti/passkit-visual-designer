@@ -38,6 +38,7 @@ export default function LanguageModal(props: Props) {
 			<div className="languages-list">
 				{languagesRegions}
 			</div>
+			<div className="scroll-indicator" />
 		</Modal>
 	);
 }
