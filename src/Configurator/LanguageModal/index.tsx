@@ -38,7 +38,7 @@ export default function LanguageModal(props: Props) {
 			contentUniqueID="language"
 		>
 			<header>
-				<h1>Choo-choose a language.</h1>
+				<h1>Choo-choose a language</h1>
 				<p>The list is contains languages supported by Apple. Keep cursor on a language to see its ISO 639-1 code.</p>
 			</header>
 			<div className="languages-list">
