@@ -74,6 +74,7 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 		this.onMediaCollectionUse = this.onMediaCollectionUse.bind(this);
 		this.onMediaExportStateChange = this.onMediaExportStateChange.bind(this);
 		this.toggleLanguageModal = this.toggleLanguageModal.bind(this);
+		this.onActiveMediaLanguageChange = this.onActiveMediaLanguageChange.bind(this);
 
 		this.state = {
 			selectedFieldId: null,
@@ -224,6 +225,12 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 		this.props.setProjectOption("title", title);
 	}
 
+	onActiveMediaLanguageChange(language: string) {
+		console.log("Selected new language:", language);
+		this.props.setProjectOption("activeMediaLanguage", language);
+		this.toggleLanguageModal();
+	}
+
 	onMediaCollectionEdit(collectionID: string, collection: MediaCollection) {
 		const { showMediaModalForMedia: mediaName } = this.state;
 
@@ -328,7 +335,7 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 					<LanguageModal
 						closeModal={() => this.toggleLanguageModal()}
 						usedLanguages={this.props.usedLanguages}
-						selectLanguage={(langCode: string) => console.log(langCode)}
+						selectLanguage={this.onActiveMediaLanguageChange}
 					/>
 				}
 			</div>
