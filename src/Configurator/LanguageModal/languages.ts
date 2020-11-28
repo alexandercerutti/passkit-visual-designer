@@ -4,122 +4,122 @@
 
 export const languages = {
 	"Europe": {
-		"en": "English",
-		"gd": "Scottish Gaelic",
-		"cy": "Welsh", // Wales
-		"gv": "Manx", // Ireland / Celtic
-		"fr": "French", // France, Belgique, Luxembourg, Suisse
+		"sq": "Albanian", // Albania
+		"eu": "Basque", // Basques
+		"be": "Belarusian", // Беларусь
 		"br": "Breton", // Brittany
-		"de": "German", // Deutschland, Liechtenstein, Österreich, Schweiz
-		"it": "Italian", // Italia
-		"mt": "Maltese", // Malta
-		"nl": "Dutch", // Nederland
-		"es": "Spanish", // España
+		"bg": "Bulgarian", // България
 		"ca": "Catalan", // España
-		"gl": "Galician", // Galicia (España)
+		"hr": "Croatian", // Hrvatska
+		"cs": "Czech", // Česko
 		"da": "Danish", // Danmark
+		"nl": "Dutch", // Nederland
+		"en": "English",
+		"et": "Estonian", // Eesti
 		"fo": "Faroese", // Danmark
-		"pt": "Portuguese", // Portugal
+		"fi": "Finnish", // Suomi
+		"fr": "French", // France, Belgique, Luxembourg, Suisse
+		"gl": "Galician", // Galicia (España)
+		"de": "German", // Deutschland, Liechtenstein, Österreich, Schweiz
+		"el": "Greek", // Ελλάδα
+		"hu": "Hungarian", // Magyarorszag
+		"is": "Icelandic", // ísland
+		"ga": "Irish", // Ireland
+		"it": "Italian", // Italia
+		"lv": "Latvian", // Latvija
+		"lt": "Lithuanian", // Lietuva
+		"mk": "Macedonian", // North Macedonia
+		"mt": "Maltese", // Malta
+		"gv": "Manx", // Ireland / Celtic
+		"mo": "Moldavian", // Moldova
+		"se": "Northern Sami", // Norge, Sverige and Suomi
 		"no": "Norwegian Bokmål", // Norge
 		"nn": "Norwegian Nynorsk", // Norge
-		"sv": "Swedish", // Sverige
-		"fi": "Finnish", // Suomi
-		"se": "Northern Sami", // Norge, Sverige and Suomi
-		"lt": "Lithuanian", // Lietuva
-		"et": "Estonian", // Eesti
-		"lv": "Latvian", // Latvija
-		"el": "Greek", // Ελλάδα
-		"is": "Icelandic", // ísland
 		"pl": "Polish", // Polska
-		"hr": "Croatian", // Hrvatska
-		"hu": "Hungarian", // Magyarorszag
-		"ga": "Irish", // Ireland
-		"ru": "Russian", // Россия
-		"tt": "Tatar", // Tatarstan, Россия, Siberian
-		"sq": "Albanian", // Albania
+		"pt": "Portuguese", // Portugal
 		"ro": "Romanian", // România
-		"cs": "Czech", // Česko
+		"ru": "Russian", // Россия
+		"gd": "Scottish Gaelic",
+		"sr": "Serbian", // српски
 		"sk": "Slovak", // Slovensko
 		"sl": "Slovenian", // Slovenia
-		"mk": "Macedonian", // North Macedonia
-		"bg": "Bulgarian", // България
-		"uk": "Ukrainian", // Ukrayina
-		"be": "Belarusian", // Беларусь
-		"eu": "Basque", // Basques
-		"mo": "Moldavian", // Moldova
-		"sr": "Serbian", // српски
+		"es": "Spanish", // España
+		"sv": "Swedish", // Sverige
+		"tt": "Tatar", // Tatarstan, Россия, Siberian
 		"tr": "Turkish", // Türkiye
+		"uk": "Ukrainian", // Ukrayina
+		"cy": "Welsh", // Wales
 		// Montenegrin // Montenegro ???
 	},
 	"Asia Pacific": {
+		"my": "Burmese", // Myanmar
 		"zh-Hant": "Chinese", // 中国大陆, 澳門, 台灣
 		"zh": "Chinese / Mandarin", // 中国大陆, 澳門, 台灣
-		"ug": "Uyghur", // China
-		"mn": "Mongolian", // Mongolia
-		"ja": "Japanese", // 日本
-		"ko": "Korean", // 대한민국
 		"id": "Indonesian", // Indonesia / bahasa Indonesia
-		"ms": "Malay", // bahasa Malaysia, Singapore
-		"th": "Thai", // ไทย
-		"vi": "Vietnamese", // Vietnam / Cộng hòa Xã hội chủ nghĩa Việt Nam
-		"km": "Khmer", // Cambodia
-		"lo": "Lao", // Lao
-		"my": "Burmese", // Myanmar
-		"tl": "Tagalog", // Philippines
+		"ja": "Japanese", // 日本
 		"jv": "Javanese", // Indonesia
+		"km": "Khmer", // Cambodia
+		"ko": "Korean", // 대한민국
+		"lo": "Lao", // Lao
+		"ms": "Malay", // bahasa Malaysia, Singapore
+		"mn": "Mongolian", // Mongolia
 		"su": "Sundanese", // Indonesia
+		"tl": "Tagalog", // Philippines
+		"th": "Thai", // ไทย
 		"to": "Tongan", // Tonga
+		"ug": "Uyghur", // China
+		"vi": "Vietnamese", // Vietnam / Cộng hòa Xã hội chủ nghĩa Việt Nam
 	},
 	"Africa, Middle East and India": {
-		"hy": "Armenian", // Armenia (Հայաստան)
+		"af": "Afrikaans", // South Africa
+		"am": "Amharic", // Amharas (North Ethiopia)
 		"ar": "Arabic", // Bahrain Arabic (البحرين), مصر (Egypt), الأردن (Jordan), الكويت (Kuwait), اللهجة المغربية (Morocco), عُمان (Oman), قطر (Qatar), المملكة العربية السعودية (Saudi Arabia), Tunisie, الإمارات العربية المتحدة (United Arab Emirates)
-		// "sg": "Sango", // République Centrafricaine (unsupported?)
-		"hi": "Hindi", // भारत (India)
-		"ur": "Urdu", // India, Pakistan
-		"sd": "Sindhi", // India
-		"mr": "Marathi", // India
-		"bn": "Bengali", // India
-		"pa": "Punjabi", // Punjab (Culture)
-		"or": "Oriya", // Odisha
-		"ml": "Malayalam", // Kerala
-		"kn": "Kannada", // Karnataka
-		"ta": "Tamil", // Tamil Nadu
-		"te": "Telugu", // Andhra Pradesh, Telangana, Yanam district of Puducherry
-		"si": "Sinhala", // Sri Lanka
+		"hy": "Armenian", // Armenia (Հայաստան)
 		"as": "Assamese", // Assam
+		"az": "Azerbaijani", // Azerbaijan
+		"bn": "Bengali", // India
+		"dz": "Dzongkha", // Bhutan
+		"ka": "Georgian", // Georgia
 		"gu": "Gujarati", // Gujarat
 		"he": "Hebrew", // ישראל (Israel)
-		"yi": "Yiddish", // Israel
-		"sw": "Swahili", // Keyna, Uganda
-		"mg": "Malagasy", //  Repoblikan'i Madagasikara (Madagascar)
-		"af": "Afrikaans", // South Africa
-		"fa": "Persian", // Iran
-		"uz": "Uzbek", // Uzbekistan
-		"kk": "Kazakh", // Kazakhstan
-		"ka": "Georgian", // Georgia
-		"ky": "Kyrgyz", // Kyrgyzstan
-		"tg": "Tajik", // Tajikistan
-		"tk": "Turkmen", // Turkmenistan
-		"ps": "Pashto", // Iran
-		"ku": "Kurdish", // Iran, Kurdistan
+		"hi": "Hindi", // भारत (India)
+		"kn": "Kannada", // Karnataka
 		"ks": "Kashmiri", // Jammu and Kashmir (ex India)
-		"bo": "Tibetan", // Tibet
-		"ne": "Nepali", // Nepal
-		"am": "Amharic", // Amharas (North Ethiopia)
-		"ti": "Tigrinya", // North Ethiopia, Eritrea
-		"om": "Oromo", // Ethiopia
-		"so": "Somali", // Federal Republic of Somalia
+		"kk": "Kazakh", // Kazakhstan
 		"rw": "Kinyarwanda", // Rwanda, Eastern Democratic Republic of the Congo, Uganda
+		"ku": "Kurdish", // Iran, Kurdistan
+		"ky": "Kyrgyz", // Kyrgyzstan
+		"mg": "Malagasy", //  Repoblikan'i Madagasikara (Madagascar)
+		"ml": "Malayalam", // Kerala
+		"mr": "Marathi", // India
+		"ne": "Nepali", // Nepal
+		"or": "Oriya", // Odisha
+		"om": "Oromo", // Ethiopia
+		"ps": "Pashto", // Iran
+		"fa": "Persian", // Iran
+		"pa": "Punjabi", // Punjab (Culture)
 		"rn": "Rundi", // Burundi, Democratic Republic of the Congo, Uganda
-		"dz": "Dzongkha", // Bhutan
-		"az": "Azerbaijani", // Azerbaijan
+		// "sg": "Sango", // République Centrafricaine (unsupported?)
 		"sa": "Sanskrit",
+		"sd": "Sindhi", // India
+		"si": "Sinhala", // Sri Lanka
+		"so": "Somali", // Federal Republic of Somalia
+		"sw": "Swahili", // Keyna, Uganda
+		"tg": "Tajik", // Tajikistan
+		"ta": "Tamil", // Tamil Nadu
+		"te": "Telugu", // Andhra Pradesh, Telangana, Yanam district of Puducherry
+		"bo": "Tibetan", // Tibet
+		"ti": "Tigrinya", // North Ethiopia, Eritrea
+		"tk": "Turkmen", // Turkmenistan
+		"ur": "Urdu", // India, Pakistan
+		"uz": "Uzbek", // Uzbekistan
+		"yi": "Yiddish", // Israel
 	},
 	"Latin America and the Caribbean": {
+		"ay": "Aymara", // Bolivia, Peru and Chile
+		"gn": "Guarani", // Paraguay, Bolivia, Argentina, Brazil
 		"la": "Latin", // Spanish
 		"qu": "Quechua",
-		"gn": "Guarani", // Paraguay, Bolivia, Argentina, Brazil
-		"ay": "Aymara", // Bolivia, Peru and Chile
 	},
 	"Others": {
 		"eo": "Esperanto", // All the world
