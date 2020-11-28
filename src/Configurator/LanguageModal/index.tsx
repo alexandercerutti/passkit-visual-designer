@@ -42,6 +42,16 @@ export default function LanguageModal(props: Props) {
 				<p>The list is contains languages supported by Apple. Keep cursor on a language to see its ISO 639-1 code.</p>
 			</header>
 			<div className="languages-list">
+				<h2>Default</h2>
+				<div className="languages-grid">
+					<div
+						className={props.usedLanguages.has("default") ? "used" : ""}
+						onClick={() => props.selectLanguage("default")}
+						title={"This is the root folder of your pass. Any media / translation here will be valid for each unused or not overriden language"}
+					>
+						Default (root)
+					</div>
+				</div>
 				{languagesRegions}
 			</div>
 			<div className="scroll-indicator" />
