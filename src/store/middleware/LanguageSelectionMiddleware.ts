@@ -29,7 +29,12 @@ export default function LanguageSelectionMiddleware(store: MiddlewareAPI<Dispatc
 			thunks.push(createMediaSet(action.value));
 		}
 
-		if (!Object.keys(media[activeMediaLanguage]).length) {
+		const shouldDestroyCurrentMediaSet = (
+			Object.entries(media[activeMediaLanguage])
+				.every(([_, mediaSet]) => !Object.keys(mediaSet.collections).length)
+		);
+
+		if (shouldDestroyCurrentMediaSet) {
 			/** Current active media language have no media setted in it. Deleting */
 			thunks.push(destroyMediaSet(activeMediaLanguage));
 		}
