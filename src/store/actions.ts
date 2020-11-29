@@ -67,6 +67,29 @@ export function setMediaExportState(mediaName: keyof MediaProps, mediaLanguage: 
 	};
 }
 
+export interface MediaSetCreateAction extends Action<ConfigActions.CREATE_MEDIA_SET> {
+	mediaLanguage: string;
+}
+
+export function createMediaSet(mediaLanguage: string): MediaSetCreateAction {
+	return {
+		type: ConfigActions.CREATE_MEDIA_SET,
+		mediaLanguage,
+	};
+}
+
+export interface MediaSetDestroyAction extends Action<ConfigActions.DESTROY_MEDIA_SET> {
+	mediaLanguage: string;
+}
+
+export function destroyMediaSet(mediaLanguage: string): MediaSetDestroyAction {
+	return {
+		type: ConfigActions.DESTROY_MEDIA_SET,
+		mediaLanguage,
+	};
+}
+
+
 export interface SinglePropSettingAction<K extends string, V = any> extends Action<ConfigActions> {
 	key: K;
 	value: V;
@@ -80,6 +103,9 @@ export enum ConfigActions {
 
 	SET_MEDIA_EXPORT_STATE = "SET_MEDIA_EXPORT_STATE",
 
+	CREATE_MEDIA_SET = "CREATE_MEDIA_SET",
+	DESTROY_MEDIA_SET = "DESTROY_SEDIA_SET",
+
 	/**
 	 * Media collection actions types
 	 */
@@ -92,6 +118,11 @@ export enum ConfigActions {
 }
 
 // Action Creators
+
+export interface ProjectOptionSetAction extends Action<ConfigActions.SET_PROJECT_OPT> {
+	key: POKeys;
+	value: POValues;
+}
 
 export function setProjectOption(key: POKeys, value: POValues): SinglePropSettingAction<POKeys, POValues> {
 	return {
