@@ -1,7 +1,7 @@
 import { AnyAction, Dispatch, MiddlewareAPI } from "redux";
-import thunk, { ThunkAction, ThunkDispatch } from "redux-thunk";
+import { ThunkDispatch } from "redux-thunk";
 import { ConfigActions, createMediaSet, destroyMediaSet, MediaSetCreateAction, MediaSetDestroyAction, ProjectOptionSetAction } from "../actions";
-import { MediaSet, State } from "../state";
+import { State } from "../state";
 
 /**
  * This middleware handles the case where a language is
