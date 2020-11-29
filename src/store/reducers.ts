@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
 import { State, initialState } from "./state";
-import { SinglePropSettingAction, ConfigActions, PassProps, ProjectOptions, POKeys, POValues, MediaEditAction, ActiveCollectionSetAction, MediaExportStateAction, MediaSetCreateAction, MediaSetDestroyAction } from "./actions";
+import { SinglePropSettingAction, ConfigActions, PassProps, ProjectOptions, POKeys, POValues, MediaEditAction, ActiveCollectionSetAction, MediaExportStateAction, MediaSetCreateAction, MediaSetDestroyAction, MediaInitAction } from "./actions";
 
 /**
  * Reducer for actions in PassSelector
@@ -31,9 +31,22 @@ function pass(state = initialState.pass, action: SinglePropSettingAction<PassPro
 	}
 }
 
-type MediaActions = MediaEditAction | ActiveCollectionSetAction | MediaExportStateAction | MediaSetCreateAction | MediaSetDestroyAction;
+type MediaActions = MediaEditAction | ActiveCollectionSetAction | MediaExportStateAction | MediaSetCreateAction | MediaSetDestroyAction | MediaInitAction;
 export function media(state = initialState.media, action: MediaActions): State["media"] {
 	switch (action.type) {
+		case ConfigActions.INIT_MEDIA: {
+			const newState = { ...state };
+
+			const mediaSet = (newState[action.mediaLanguage] || (newState[action.mediaLanguage] = {}));
+			mediaSet[action.mediaName] = {
+				activeCollectionID: "",
+				collections: {},
+				enabled: true,
+			};
+
+			return newState;
+		};
+
 		case ConfigActions.CREATE_MEDIA_SET: {
 			const newState = { ...state };
 			newState[action.mediaLanguage] = {};

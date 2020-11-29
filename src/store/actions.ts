@@ -78,6 +78,19 @@ export function createMediaSet(mediaLanguage: string): MediaSetCreateAction {
 	};
 }
 
+export interface MediaInitAction extends Action<ConfigActions.INIT_MEDIA> {
+	mediaName: keyof MediaProps;
+	mediaLanguage: string;
+}
+
+export function initMedia(mediaName: keyof MediaProps, mediaLanguage: string): MediaInitAction {
+	return {
+		type: ConfigActions.INIT_MEDIA,
+		mediaName,
+		mediaLanguage
+	};
+}
+
 export interface MediaSetDestroyAction extends Action<ConfigActions.DESTROY_MEDIA_SET> {
 	mediaLanguage: string;
 }
@@ -104,6 +117,7 @@ export enum ConfigActions {
 	SET_MEDIA_EXPORT_STATE = "SET_MEDIA_EXPORT_STATE",
 
 	CREATE_MEDIA_SET = "CREATE_MEDIA_SET",
+	INIT_MEDIA = "INIT_MEDIA",
 	DESTROY_MEDIA_SET = "DESTROY_SEDIA_SET",
 
 	/**

@@ -25,7 +25,7 @@ export default function LanguageSelectionMiddleware(store: MiddlewareAPI<Dispatc
 		const { media, projectOptions: { activeMediaLanguage } } = state;
 
 		if (!(action.key in media)) {
-			/** We have to initialize the media */
+			/** We have to create an empty media object */
 			thunks.push(createMediaSet(action.value));
 		}
 
