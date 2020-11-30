@@ -2,7 +2,7 @@
 	"compilerOptions": {
 		"jsx": "react",
 		"sourceMap": true,
-		"module": "es2020",
+		"module": "CommonJS",
 		"target": "es6",
 		"newLine": "LF",
 		"lib": [

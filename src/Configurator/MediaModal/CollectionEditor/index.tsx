@@ -73,9 +73,6 @@ export default class CollectionEditor extends React.Component<Props, State> {
 	}
 
 	async onChangeHandler(event: React.ChangeEvent<HTMLInputElement>) {
-		// @TODO Remove once React 17 will be integrated
-		event.persist();
-
 		await this.updateResolutionsFromFiles(event.target.files);
 		event.target.value = "";
 	}
