@@ -12,6 +12,8 @@ import thunk from "redux-thunk";
 import CollectionEditUrlMiddleware from "../store/middleware/CollectionEditUrlMiddleware";
 import CollectionActivationMiddleware from "../store/middleware/CollectionActivationMiddleware";
 import { initialState } from "../store/state";
+import LanguageSelectionMiddleware from "../store/middleware/LanguageSelectionMiddleware";
+import { LanguageOperationsEnsureExistingMiddleware } from "../store/middleware/LanguageOperationsEnsureExistingMiddleware";
 
 // Webpack valorized
 declare const isDevelopment: boolean;
@@ -19,8 +21,10 @@ declare const isDevelopment: boolean;
 const store = createStore(reducers,
 	initialState,
 	composeWithDevTools(
+		applyMiddleware(LanguageOperationsEnsureExistingMiddleware),
 		applyMiddleware(CollectionEditUrlMiddleware),
 		applyMiddleware(CollectionActivationMiddleware),
+		applyMiddleware(LanguageSelectionMiddleware),
 		applyMiddleware(thunk),
 	)
 );
