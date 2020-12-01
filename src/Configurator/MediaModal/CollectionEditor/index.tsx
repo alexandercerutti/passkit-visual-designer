@@ -1,7 +1,7 @@
 import * as React from "react";
 import { v1 as uuid } from "uuid";
 import { CollectionEditModify, CollectionEditOperation } from "..";
-import { IdentifiedResolutions, MediaCollection, ResolutionTuple } from "../../../store/state";
+import type { IdentifiedResolutions, MediaCollection, ResolutionTuple } from "../../../store";
 import { getArrayBuffer } from "../../../utils";
 import { DeleteIcon, PlusIcon } from "../icons";
 import "./style.less";

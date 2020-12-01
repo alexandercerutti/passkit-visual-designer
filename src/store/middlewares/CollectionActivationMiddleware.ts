@@ -1,6 +1,6 @@
 import { AnyAction, Dispatch, MiddlewareAPI } from "redux";
-import { ConfigActions, MediaEditAction } from "../actions";
-import { CollectionSet, MediaCollection, State } from "../state";
+import type { CollectionSet, MediaCollection, State } from "..";
+import * as Store from "..";
 
 /**
  * This middleware handles the cases in which, for a media being edited,
@@ -12,8 +12,8 @@ import { CollectionSet, MediaCollection, State } from "../state";
  */
 
 export default function CollectionActivationMiddleware(store: MiddlewareAPI<Dispatch, State>) {
-	return (next: Dispatch<AnyAction>) => (action: MediaEditAction) => {
-		if (action.type !== ConfigActions.EDIT_MEDIA) {
+	return (next: Dispatch<AnyAction>) => (action: Store.Media.Actions.Edit) => {
+		if (action.type !== Store.Media.EDIT) {
 			return next(action);
 		}
 
@@ -104,12 +104,12 @@ function findNextSuitableCollectionID(collections: CollectionSet["collections"])
 	return "";
 }
 
-function createActionWithActiveID(action: MediaEditAction, activeCollectionID: string) {
+function createActionWithActiveID(action: Store.Media.Actions.Edit, activeCollectionID: string) {
 	return {
 		...action,
 		activeCollectionID,
 		collections: {
 			...action.collections,
 		}
-	}
+	};
 }

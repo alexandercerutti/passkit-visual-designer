@@ -6,7 +6,7 @@ import Modal, { ModalProps } from "../ModalBase";
 import CollectionsList from "./CollectionsList";
 import CollectionEditor from "./CollectionEditor";
 import { CSSTransition, SwitchTransition } from "react-transition-group";
-import { CollectionSet, MediaCollection } from "../../store/state";
+import type { CollectionSet, MediaCollection } from "../../store";
 import { v1 as uuid } from "uuid";
 import { ModalNavigation } from "./ModalNavigation";
 

@@ -1,9 +1,9 @@
 import * as React from "react";
-import { CollectionSet } from "../../../store/state";
+import "./style.less";
+import type { CollectionSet } from "../../../store";
 import { DeleteIcon, EditIcon, PlusIcon } from "../icons";
 import type { CollectionEditOperation } from "..";
 import { CollectionEditCreate, CollectionEditDelete } from "..";
-import "./style.less";
 import { createClassName } from "../../../utils";
 import { Switcher } from "../../Switcher";
 

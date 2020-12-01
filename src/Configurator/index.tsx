@@ -1,7 +1,6 @@
 import * as React from "react";
 import "./style.less";
 import { RouteComponentProps, withRouter } from "react-router-dom";
-import { changePassPropValue, setProjectOption, ProjectOptions, setMediaActiveCollection, editCollection, setMediaExportState } from "../store/actions";
 import Viewer from "./Viewer";
 import OptionsBar from "./OptionsBar";
 import OptionsMenu, { RegisteredFieldsMap } from "./OptionsMenu";
@@ -9,7 +8,8 @@ import { FieldKind, PassKind } from "../model";
 import { InteractionContextMethods } from "../Pass/InteractionContext";
 import { connect } from "react-redux";
 import { MediaProps, PassMixedProps } from "../Pass";
-import { CollectionSet, LocalizedMediaGroup, MediaCollection, MediaSet, State } from "../store/state";
+import type { CollectionSet, LocalizedMediaGroup, MediaCollection, MediaSet, State } from "../store";
+import * as Store from "../store";
 import DefaultFields from "./staticFields";
 import { DataGroup } from "./OptionsMenu/pages/PanelsPage/PanelGroup";
 import { FieldSelectHandler } from "../Pass/layouts/sections/useRegistrations";
@@ -30,18 +30,18 @@ type FilterOutUnmatchedType<B extends Object, T extends any> = {
 }[keyof B]
 
 interface DispatchProps {
-	changePassPropValue: typeof changePassPropValue;
-	setProjectOption: typeof setProjectOption;
-	setMediaActiveCollection: typeof setMediaActiveCollection;
-	editCollection: typeof editCollection;
-	setMediaExportState: typeof setMediaExportState;
+	changePassPropValue: typeof Store.Pass.setProp;
+	setProjectOption: typeof Store.Options.Set;
+	setMediaActiveCollection: typeof Store.Media.SetActiveCollection;
+	editCollection: typeof Store.Media.EditCollection;
+	setMediaExportState: typeof Store.Media.SetExportState;
 }
 
 interface ConfiguratorStore {
 	passProps: PassMixedProps;
 	media: LocalizedMediaGroup;
 	usedLanguages: Set<string>;
-	projectOptions: ProjectOptions;
+	projectOptions: State["projectOptions"];
 }
 
 interface ConfiguratorProps extends ConfiguratorStore, DispatchProps, RouteComponentProps<any> { }
@@ -407,10 +407,10 @@ export default withRouter(connect(
 		};
 	},
 	{
-		changePassPropValue,
-		setProjectOption,
-		setMediaActiveCollection,
-		editCollection,
-		setMediaExportState
+		changePassPropValue: Store.Pass.setProp,
+		setProjectOption: Store.Options.Set,
+		setMediaActiveCollection: Store.Media.SetActiveCollection,
+		editCollection: Store.Media.EditCollection,
+		setMediaExportState: Store.Media.SetExportState
 	}
 )(Configurator));

@@ -1,6 +1,6 @@
 import JSZip from "jszip";
 import { PassMixedProps } from "../Pass";
-import { CollectionSet, LocalizedMediaGroup, MediaCollection, MediaSet } from "../store/state";
+import type { LocalizedMediaGroup, MediaCollection, MediaSet } from "../store";
 
 export async function exportPass(props: PassMixedProps, media: LocalizedMediaGroup) {
 	const zip = new JSZip();

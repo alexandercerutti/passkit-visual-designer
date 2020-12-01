@@ -3,16 +3,16 @@ import { connect } from "react-redux";
 import "./style.less";
 import { PassKind } from "../model";
 import PassList from "./PassList";
-import { setPassKind, setPassProps } from "../store/actions";
-import { State } from "../store/state";
 import NamedPass from "./NamedPass";
 import { PassProps } from "../Pass";
 import { withRouter, RouteComponentProps } from "react-router-dom";
 import type { PassAlternative } from "../Pass/useAlternativesRegistration";
+import type { State } from "../store";
+import * as Store from "../store";
 
 interface DispatchProps {
-	setPassKind: typeof setPassKind,
-	setPassProps: typeof setPassProps,
+	setPassKind: typeof Store.Pass.setKind,
+	setPassProps: typeof Store.Pass.setPropsBatch,
 }
 
 interface StoreProps {
@@ -123,5 +123,8 @@ export default withRouter(connect(
 	({ pass: { kind: selectedPassKind } }: State) => {
 		return { selectedPassKind };
 	},
-	{ setPassKind, setPassProps }
+	{
+		setPassKind: Store.Pass.setKind,
+		setPassProps: Store.Pass.setPropsBatch
+	}
 )(PassSelector));

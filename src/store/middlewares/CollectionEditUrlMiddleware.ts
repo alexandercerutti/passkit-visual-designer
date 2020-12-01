@@ -1,6 +1,6 @@
-import { CollectionSet, MediaCollection, State } from "../state";
 import { Dispatch, AnyAction, MiddlewareAPI } from "redux";
-import { ConfigActions, MediaCollectionAction, MediaEditAction } from "../actions";
+import type { CollectionSet, MediaCollection, State } from "..";
+import * as Store from "..";
 
 /**
  * This middleware receives a collection being added, edited or deleted
@@ -21,8 +21,8 @@ import { ConfigActions, MediaCollectionAction, MediaEditAction } from "../action
  */
 
 export default function CollectionEditUrlMiddleware(store: MiddlewareAPI<Dispatch, State>) {
-	return (next: Dispatch<AnyAction>) => (action: MediaCollectionAction) => {
-		if (action.type !== ConfigActions.EDIT_COLLECTION) {
+	return (next: Dispatch<AnyAction>) => (action: Store.Media.Actions.EditCollection) => {
+		if (action.type !== Store.Media.EDIT_COLLECTION) {
 			return next(action);
 		}
 
@@ -117,14 +117,13 @@ export default function CollectionEditUrlMiddleware(store: MiddlewareAPI<Dispatc
 			};
 		}
 
-		return next<MediaEditAction>({
-			type: ConfigActions.EDIT_MEDIA,
-			collections: {
+		return next(Store.Media.Edit(
+			activeMediaLanguage,
+			action.mediaName,
+			{
 				...selectedMedia.collections,
-				[action.collectionID]: finalCollection,
-			},
-			mediaLanguage: activeMediaLanguage,
-			mediaName: action.mediaName
-		});
+				[action.collectionID]: finalCollection
+			}
+		));
 	}
 }

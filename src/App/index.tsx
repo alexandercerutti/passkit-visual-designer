@@ -1,30 +1,27 @@
 import * as React from "react";
+import thunk from "redux-thunk";
 import { Route, Redirect } from "react-router-dom";
 import PassSelector from "../PassSelector";
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware } from "redux";
-import reducers from "../store/reducers";
 import SmoothRouter from "./SmoothRouter";
 import Configurator from "../Configurator";
 import { composeWithDevTools } from "redux-devtools-extension";
 import { PKTextAlignment } from "../Pass/constants";
-import thunk from "redux-thunk";
-import CollectionEditUrlMiddleware from "../store/middleware/CollectionEditUrlMiddleware";
-import CollectionActivationMiddleware from "../store/middleware/CollectionActivationMiddleware";
-import { initialState } from "../store/state";
-import LanguageSelectionMiddleware from "../store/middleware/LanguageSelectionMiddleware";
-import { LanguageOperationsEnsureExistingMiddleware } from "../store/middleware/LanguageOperationsEnsureExistingMiddleware";
+import * as Store from "../store";
 
 // Webpack valorized
 declare const isDevelopment: boolean;
 
-const store = createStore(reducers,
-	initialState,
+const store = createStore(Store.reducers,
+	Store.initialState,
 	composeWithDevTools(
-		applyMiddleware(LanguageOperationsEnsureExistingMiddleware),
-		applyMiddleware(CollectionEditUrlMiddleware),
-		applyMiddleware(CollectionActivationMiddleware),
-		applyMiddleware(LanguageSelectionMiddleware),
+		applyMiddleware(
+			Store.middlewares.LanguageOperationsEnsureExistingMiddleware,
+			Store.middlewares.CollectionEditUrlMiddleware,
+			Store.middlewares.CollectionActivationMiddleware,
+			Store.middlewares.LanguageSelectionMiddleware,
+		),
 		applyMiddleware(thunk),
 	)
 );

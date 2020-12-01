@@ -1,7 +1,7 @@
 import { AnyAction, Dispatch, MiddlewareAPI } from "redux";
 import { ThunkDispatch } from "redux-thunk";
-import { ConfigActions, createMediaSet, destroyMediaSet, MediaSetCreateAction, MediaSetDestroyAction, ProjectOptionSetAction } from "../actions";
-import { State } from "../state";
+import type { State } from "..";
+import * as Store from "..";
 
 /**
  * This middleware handles the case where a language is
@@ -12,12 +12,17 @@ import { State } from "../state";
  */
 
 export default function LanguageSelectionMiddleware(store: MiddlewareAPI<Dispatch, State>) {
-	return (next: ThunkDispatch<State, any, AnyAction>) => (action: ProjectOptionSetAction) => {
-		if (action.type !== ConfigActions.SET_PROJECT_OPT || action.key !== "activeMediaLanguage") {
+	return (next: ThunkDispatch<State, any, AnyAction>) => (action: Store.Options.Actions.Set) => {
+		if (action.type !== Store.Options.SET_OPTION || action.key !== "activeMediaLanguage") {
 			return next(action);
 		}
 
-		const thunks: (MediaSetDestroyAction | MediaSetCreateAction | ProjectOptionSetAction)[] = [
+		type Thunks =
+			| Store.Media.Actions.Destroy
+			| Store.Media.Actions.Create
+			| Store.Options.Actions.Set;
+
+		const thunks: Thunks[] = [
 			action
 		];
 
@@ -26,7 +31,7 @@ export default function LanguageSelectionMiddleware(store: MiddlewareAPI<Dispatc
 
 		if (!(action.key in media)) {
 			/** We have to create an empty media object */
-			thunks.push(createMediaSet(action.value));
+			thunks.push(Store.Media.Create(action.value));
 		}
 
 		const shouldDestroyCurrentMediaSet = (
@@ -36,7 +41,7 @@ export default function LanguageSelectionMiddleware(store: MiddlewareAPI<Dispatc
 
 		if (shouldDestroyCurrentMediaSet) {
 			/** Current active media language have no media setted in it. Deleting */
-			thunks.push(destroyMediaSet(activeMediaLanguage));
+			thunks.push(Store.Media.Destroy(activeMediaLanguage));
 		}
 
 		return next((dispatch) => thunks.forEach(dispatch));
