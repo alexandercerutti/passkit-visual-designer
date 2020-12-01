@@ -7,8 +7,13 @@ import * as Store from "..";
  * This Middleware handles the case in which a media language is selected but
  * it has no content.
  *
- * To avoid initializing it uselessly, we initialize it on-demand, when the user
- * achieves its first operation on it (first on media for MediaSets).
+ * Since the media creation is performed by another Middleware
+ * and the current media opened is not available in the store,
+ * when a media is created, we cannot initialize it. Therefore we need
+ * to initialize it on-demand (as soon the user accomplish the first operation).
+ *
+ * Also media creation might happen in another context, for example
+ * when there is no open media (for example, translations)
  *
  * @param store
  */
