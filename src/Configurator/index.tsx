@@ -273,9 +273,16 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 	}
 
 	render() {
+		const {
+			projectOptions: { title, activeMediaLanguage },
+			usedLanguages,
+			passProps,
+			media
+		} = this.props;
+
 		const allPassProps = Object.assign({},
-			this.props.passProps,
-			getBestResolutionForMedia(this.props.media[this.props.projectOptions.activeMediaLanguage]),
+			passProps,
+			getBestResolutionForMedia(media[activeMediaLanguage]),
 		);
 
 		return (
@@ -288,7 +295,7 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 						onVoidClick={this.onVoidClick}
 						showBack={this.state.shouldShowPassBack}
 						showEmpty={this.state.emptyFieldsVisible}
-						projectTitle={this.props.projectOptions?.title}
+						projectTitle={title}
 						changeProjectTitle={this.changeProjectTitle}
 					/>
 					<OptionsBar
@@ -314,16 +321,16 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 							lang: "javascript",
 							template: `var x = {\n\tdescription: <!PKVD:inline description !>,\n\tserialNumber: <!PKVD:inline serialNumber !>\n}`
 						}]}
-						dataBank={this.props.passProps}
+						dataBank={passProps}
 						closeModal={this.toggleExportModal}
 					/>
 				}
 				{this.state.showMediaModalForMedia &&
 					<MediaModal
 						passProps={allPassProps}
-						currentLanguage={this.props.projectOptions.activeMediaLanguage}
+						currentLanguage={activeMediaLanguage}
 						mediaName={this.state.showMediaModalForMedia}
-						mediaContent={this.props.media?.[this.props.projectOptions.activeMediaLanguage]?.[this.state.showMediaModalForMedia] ?? {} as CollectionSet}
+						mediaContent={media?.[activeMediaLanguage]?.[this.state.showMediaModalForMedia]}
 						requestForLanguageChange={this.toggleLanguageModal}
 						updateCollection={this.onMediaCollectionEdit}
 						useCollection={this.onMediaCollectionUse}
@@ -334,8 +341,8 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 				{this.state.showLanguageModal &&
 					<LanguageModal
 						closeModal={() => this.toggleLanguageModal()}
-						currentLanguage={this.props.projectOptions.activeMediaLanguage}
-						usedLanguages={this.props.usedLanguages}
+						currentLanguage={activeMediaLanguage}
+						usedLanguages={usedLanguages}
 						selectLanguage={this.onActiveMediaLanguageChange}
 					/>
 				}
