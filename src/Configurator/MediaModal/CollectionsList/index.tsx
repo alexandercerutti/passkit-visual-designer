@@ -121,7 +121,11 @@ export default function CollectionsList(props: Props) {
 				>
 					Export
 				</Switcher>
-				<span onClick={props.requestForLanguageChange}>
+				<span
+					id="select-lang"
+					onClick={props.requestForLanguageChange}
+					title="Click here to switch language"
+				>
 					{props.currentLanguage}
 				</span>
 			</footer>
