@@ -37,22 +37,21 @@ type MediaActions =
 
 export default function reducer(state = initialState.media, action: MediaActions): State["media"] {
 	switch (action.type) {
-		case INIT: {
+		case CREATE: {
 			const newState = { ...state };
-
-			const mediaSet = (newState[action.mediaLanguage] || (newState[action.mediaLanguage] = {}));
-			mediaSet[action.mediaName] = {
-				activeCollectionID: "",
-				collections: {},
-				enabled: true,
-			};
+			newState[action.mediaLanguage] = {};
 
 			return newState;
 		};
 
-		case CREATE: {
+		case INIT: {
 			const newState = { ...state };
-			newState[action.mediaLanguage] = {};
+
+			newState[action.mediaLanguage][action.mediaName] = {
+				activeCollectionID: "",
+				collections: {},
+				enabled: true,
+			};
 
 			return newState;
 		};
@@ -67,19 +66,8 @@ export default function reducer(state = initialState.media, action: MediaActions
 		case EDIT: {
 			const newState = { ...state };
 
-			const selectedLanguage = (
-				newState[action.mediaLanguage] ||
-				(newState[action.mediaLanguage] = {})
-			);
-
-			const selectedMediaCollections = (
-				selectedLanguage[action.mediaName] ||
-				(selectedLanguage[action.mediaName] = {
-					enabled: true,
-					activeCollectionID: "",
-					collections: {}
-				})
-			);
+			const selectedLanguage = newState[action.mediaLanguage];
+			const selectedMediaCollections = selectedLanguage[action.mediaName];
 
 			selectedMediaCollections.activeCollectionID = action.activeCollectionID;
 
@@ -102,11 +90,7 @@ export default function reducer(state = initialState.media, action: MediaActions
 		case SET_ACTIVE_COLLECTION: {
 			const newState = { ...state };
 
-			const selectedLanguage = (
-				newState[action.mediaLanguage] ||
-				(newState[action.mediaLanguage] = {})
-			);
-
+			const selectedLanguage = newState[action.mediaLanguage];
 			const selectedMediaCollections = selectedLanguage[action.mediaName];
 			selectedMediaCollections.activeCollectionID = action.collectionID;
 
