@@ -152,7 +152,7 @@ export default class MediaModal extends React.Component<Props, State> {
 			[this.props.mediaName]: this.props.passProps[this.props.mediaName]
 		};
 
-		const collectionsKeys = Object.keys(this.props.mediaContent.collections);
+		const collectionsKeys = Object.keys(this.props.mediaContent?.collections || {});
 
 		return (
 			<Modal closeModal={this.props.closeModal} contentUniqueID="media-collection">

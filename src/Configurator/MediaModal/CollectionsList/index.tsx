@@ -35,7 +35,7 @@ export default function CollectionsList(props: Props) {
 		props.performCollectionsOperation(CollectionEditCreate);
 	}, [props.media]);
 
-	const collectionsElements = Object.entries(props.media.collections)
+	const collectionsElements = Object.entries(props.media?.collections || {})
 		.map(([collID, collection], index) => {
 			let previewContent: React.ReactFragment;
 			const resolutionsIDs = Object.keys(collection.resolutions);
@@ -82,7 +82,7 @@ export default function CollectionsList(props: Props) {
 			}
 
 			const previewClassName = createClassName(["preview"], {
-				"selected": resolutionsIDs.length && props.media.activeCollectionID === collID,
+				"selected": resolutionsIDs.length && props.media?.activeCollectionID === collID,
 				"empty-coll": !resolutionsIDs.length
 			});
 
@@ -102,7 +102,7 @@ export default function CollectionsList(props: Props) {
 
 	return (
 		<div className="list collections-list">
-			<div id="grid" data-disabled={!props.media.enabled}>
+			<div id="grid" data-disabled={!(props.media?.enabled ?? true)}>
 				{collectionsElements}
 				<div className="collection">
 					<div className="preview add-coll" onClick={collectionAddClickHandler}>
@@ -116,7 +116,7 @@ export default function CollectionsList(props: Props) {
 			<footer>
 				<Switcher
 					labelPosition="after"
-					checked={props.media.enabled}
+					checked={props.media?.enabled ?? true}
 					onToggle={props.onMediaExportStateToggle}
 				>
 					Export
