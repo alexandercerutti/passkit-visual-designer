@@ -29,7 +29,7 @@ export default function LanguageSelectionMiddleware(store: MiddlewareAPI<Dispatc
 		const state = store.getState();
 		const { media, projectOptions: { activeMediaLanguage } } = state;
 
-		if (!(action.key in media)) {
+		if (!(action.value in media)) {
 			/** We have to create an empty media object */
 			thunks.push(Store.Media.Create(action.value));
 		}
