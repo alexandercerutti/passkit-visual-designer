@@ -334,6 +334,7 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 				{this.state.showLanguageModal &&
 					<LanguageModal
 						closeModal={() => this.toggleLanguageModal()}
+						currentLanguage={this.props.projectOptions.activeMediaLanguage}
 						usedLanguages={this.props.usedLanguages}
 						selectLanguage={this.onActiveMediaLanguageChange}
 					/>

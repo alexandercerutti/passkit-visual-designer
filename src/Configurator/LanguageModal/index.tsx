@@ -2,25 +2,34 @@ import * as React from "react";
 import "./style.less";
 import Modal from "../ModalBase";
 import { languages } from "./languages";
+import { createClassName } from "../../utils";
 
 interface Props {
 	closeModal(): void;
+	currentLanguage: string;
 	usedLanguages: Set<string>;
 	selectLanguage(languageCode: string): void;
 }
 
 export default function LanguageModal(props: Props) {
 	const languagesRegions = Object.entries(languages).map(([region, languages]) => {
-		const languagesList = Object.entries(languages).map(([ISO639alpha1, language]) => (
-			<div
-				key={ISO639alpha1}
-				className={props.usedLanguages.has(ISO639alpha1) ? "used" : ""}
-				onClick={() => props.selectLanguage(ISO639alpha1)}
-				title={`Language code: ${ISO639alpha1}`}
-			>
-				{language}
-			</div>
-		));
+		const languagesList = Object.entries(languages).map(([ISO639alpha1, language]) => {
+			const className = createClassName([], {
+				used: props.usedLanguages.has(ISO639alpha1),
+				current: ISO639alpha1 === props.currentLanguage
+			});
+
+			return (
+				<div
+					key={ISO639alpha1}
+					className={className}
+					onClick={() => props.selectLanguage(ISO639alpha1)}
+					title={`Language code: ${ISO639alpha1}`}
+				>
+					{language}
+				</div>
+			);
+		});
 
 		return (
 			<React.Fragment key={region}>
@@ -30,6 +39,11 @@ export default function LanguageModal(props: Props) {
 				</div>
 			</React.Fragment>
 		);
+	});
+
+	const defaultLanguageClassName = createClassName([], {
+		used: props.usedLanguages.has("default"),
+		current: props.currentLanguage === "default",
 	});
 
 	return (
@@ -45,7 +59,7 @@ export default function LanguageModal(props: Props) {
 				<h2>Default</h2>
 				<div className="languages-grid">
 					<div
-						className={props.usedLanguages.has("default") ? "used" : ""}
+						className={defaultLanguageClassName}
 						onClick={() => props.selectLanguage("default")}
 						title={"This is the root folder of your pass. Any media / translation here will be valid for each unused or not overriden language"}
 					>
