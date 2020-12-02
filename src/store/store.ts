@@ -3,13 +3,9 @@ import type { PassMixedProps, MediaProps } from "../Pass";
 export const initialState: State = {
 	pass: {},
 	media: {
-		// "default": {
-		/* 			backgroundImage: {
-						enabled: true,
-						activeCollectionID: "",
-						collections: {}
-					} */
-		// }
+		// Initializing default language because, otherwise
+		// we would need to fire a Store.Media.Create action
+		default: {}
 	},
 	projectOptions: {
 		activeMediaLanguage: "default"
