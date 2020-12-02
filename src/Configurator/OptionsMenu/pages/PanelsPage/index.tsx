@@ -4,13 +4,14 @@ import PanelGroup, { DataGroup } from "./PanelGroup";
 import Panel, { FieldDetails } from "./Panel";
 import { RegisteredFieldsMap } from "../..";
 import PageNavigationContext from "../PageNavigationContext";
-import { PassMixedProps } from "../../../../Pass";
+import type { MediaProps, PassMixedProps } from "../../../../Pass";
 
 interface Props extends Partial<PageNavigation> {
 	selectedFieldID: keyof PassMixedProps;
 	fields: RegisteredFieldsMap;
 	data: PassMixedProps;
 	onValueChange<T>(name: string, data: T): void;
+	onMediaEditRequest(mediaName: keyof MediaProps): void;
 }
 
 export default function PanelsPage(props: Props) {
@@ -58,7 +59,11 @@ export default function PanelsPage(props: Props) {
 									name={name}
 									kind={kind}
 									data={otherData}
-									value={props.data?.[name]}
+									value={
+										group === DataGroup.IMAGES
+											? props.onMediaEditRequest
+											: props.data?.[name]
+									}
 									onValueChange={props.onValueChange}
 									isSelected={props.selectedFieldID === name}
 									{...navProps}

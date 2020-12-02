@@ -1,69 +1,22 @@
 .panel.image {
-	& > .picture {
+	& > div {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		color: #e6e6e6;
 		border: 5px solid #333;
 		border-radius: 5px;
 		box-sizing: border-box;
 		width: 100%;
-		height: 150px;
-		position: relative;
-		overflow: hidden;
-
-		& img {
-			max-width: 100%;
-		}
-
-		&:hover .opts {
-			opacity: 1;
-		}
-
-		& .opts {
-			opacity: 0;
-			position: absolute;
-			top: 0;
-			left: 0;
-			right: 0;
-			bottom: 0;
-			transition: opacity .5s ease-in-out;
-			background-color: rgba(0,0,0,0.3);
-			display: flex;
-			justify-content: space-evenly;
-			align-items: center;
-
-			& > div {
-				cursor: pointer;
-				background-color: #333;
-				color: #333;
-				width: 50px;
-				height: 50px;
-				border-radius: 5px;
-				justify-content: center;
-				align-items: center;
-				padding: 7px;
-				box-sizing: border-box;
-				border: 1px solid #e6e6e6;
-			}
-		}
-	}
-
-	& .dd-area {
 		height: 100px;
-		margin-top: 10px;
-		border-radius: 5px;
-		border-width: 5px;
-		border-style: dashed;
-		border-color: #333;
-		transition:
-			background-color .5s ease-in-out;
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		background-color: #2d2d2d;
-		color: #cacaca;
+		padding-left: 20px;
 		cursor: pointer;
 
-		&.drag-active {
-			background-color: #424242;
+		& > .go-editor-arrow {
+			width: 32px;
+			height: 32px;
+			fill: #e6e6e6;
+			padding-right: 20px;
 		}
 	}
 }

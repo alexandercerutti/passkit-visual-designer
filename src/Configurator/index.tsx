@@ -280,6 +280,17 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 			media
 		} = this.props;
 
+		const {
+			shouldShowPassBack,
+			emptyFieldsVisible,
+			registeredFields,
+			selectedFieldId,
+			canBeExported,
+			showMediaModalForMedia,
+			showExportModal,
+			showLanguageModal
+		} = this.state;
+
 		const allPassProps = Object.assign({},
 			passProps,
 			getBestResolutionForMedia(media[activeMediaLanguage]),
@@ -293,28 +304,28 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 						onFieldSelect={this.onFieldSelect}
 						registerField={this.registerField}
 						onVoidClick={this.onVoidClick}
-						showBack={this.state.shouldShowPassBack}
-						showEmpty={this.state.emptyFieldsVisible}
+						showBack={shouldShowPassBack}
+						showEmpty={emptyFieldsVisible}
 						projectTitle={title}
 						changeProjectTitle={this.changeProjectTitle}
 					/>
 					<OptionsBar
 						rotatePass={this.onShowPassBackRequest}
-						isEmptyVisible={this.state.emptyFieldsVisible}
+						isEmptyVisible={emptyFieldsVisible}
 						toggleEmptyVisibility={this.toggleEmptyVisibility}
 					/>
 				</div>
 				<div className="config-panel">
 					<OptionsMenu
 						data={allPassProps}
-						selection={this.state.selectedFieldId}
-						registeredFields={this.state.registeredFields}
+						selection={selectedFieldId}
+						registeredFields={registeredFields}
 						onValueChange={this.onValueChange}
 						cancelFieldSelection={this.onVoidClick}
-						requestExport={this.state.canBeExported && this.requestExport || null}
+						requestExport={canBeExported && this.requestExport || null}
 					/>
 				</div>
-				{this.state.showExportModal &&
+				{showExportModal &&
 					<ExportModal
 						partners={[{
 							name: "Passkit-generator",
@@ -325,20 +336,20 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 						closeModal={this.toggleExportModal}
 					/>
 				}
-				{this.state.showMediaModalForMedia &&
+				{showMediaModalForMedia &&
 					<MediaModal
 						passProps={allPassProps}
 						currentLanguage={activeMediaLanguage}
-						mediaName={this.state.showMediaModalForMedia}
-						mediaContent={media?.[activeMediaLanguage]?.[this.state.showMediaModalForMedia]}
+						mediaName={showMediaModalForMedia}
+						mediaContent={media?.[activeMediaLanguage]?.[showMediaModalForMedia]}
 						requestForLanguageChange={this.toggleLanguageModal}
 						updateCollection={this.onMediaCollectionEdit}
 						useCollection={this.onMediaCollectionUse}
 						setMediaExportState={this.onMediaExportStateChange}
-						closeModal={() => this.toggleMediaModal(this.state.showMediaModalForMedia)}
+						closeModal={() => this.toggleMediaModal(showMediaModalForMedia)}
 					/>
 				}
-				{this.state.showLanguageModal &&
+				{showLanguageModal &&
 					<LanguageModal
 						closeModal={() => this.toggleLanguageModal()}
 						currentLanguage={activeMediaLanguage}

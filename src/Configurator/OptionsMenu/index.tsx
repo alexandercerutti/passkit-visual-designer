@@ -3,7 +3,7 @@ import "./style.less";
 import { FieldDetails } from "./pages/PanelsPage/Panel";
 import PagesNavigator from "./PagesNavigator";
 import { DataGroup } from "./pages/PanelsPage/PanelGroup";
-import { PassMixedProps } from "../../Pass";
+import type { MediaProps, PassMixedProps } from "../../Pass";
 
 export type RegisteredFieldsMap = Map<DataGroup, FieldDetails[]>;
 
@@ -14,6 +14,7 @@ interface OptionsMenuProps {
 	onValueChange(key: string, value: any): Promise<boolean>;
 	cancelFieldSelection(): void;
 	requestExport(): void;
+	onMediaEditRequest(mediaName: keyof MediaProps): void;
 }
 
 export default function OptionsMenu(props: OptionsMenuProps) {
@@ -26,6 +27,7 @@ export default function OptionsMenu(props: OptionsMenuProps) {
 				onValueChange={props.onValueChange}
 				data={props.data}
 				requestExport={props.requestExport}
+				onMediaEditRequest={props.onMediaEditRequest}
 			/>
 		</div>
 	);

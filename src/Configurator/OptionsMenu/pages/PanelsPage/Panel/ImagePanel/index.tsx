@@ -1,32 +1,21 @@
 import * as React from "react";
 import "./style.less";
 import { PanelProps } from "..";
-import UploadArea from "./UploadArea";
-import PictureShowdown from "./PictureShowdown";
-import useContentSavingHandler from "../useContentSavingHandler";
 import CapitalHeaderTitle from "../../../components/CapitalHeaderTitle";
+import { ArrowIcon } from "./icons";
 
 interface ImagePanelProps extends PanelProps {
-	value?: File;
+	value?: Function;
 }
 
 export default function ImagePanel(props: ImagePanelProps) {
-	const [file, onChosenFileChangedHandlerRef] = useContentSavingHandler(props.onValueChange, props.name, props.value);
-
 	return (
 		<>
 			<CapitalHeaderTitle name={props.name} />
-			{file
-				? <PictureShowdown
-					name={props.name}
-					pictureData={file}
-					onDelete={onChosenFileChangedHandlerRef}
-				/>
-				: <UploadArea
-					areaIdentifier={props.name}
-					onFileUpload={onChosenFileChangedHandlerRef}
-				/>
-			}
+			<div onClick={() => props.value(props.name)}>
+				<span>Open media editor</span>
+				<ArrowIcon className="go-editor-arrow" />
+			</div>
 		</>
 	);
 }

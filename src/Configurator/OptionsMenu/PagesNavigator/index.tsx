@@ -4,7 +4,7 @@ import { RegisteredFieldsMap } from "..";
 import PanelsPage from "../pages/PanelsPage";
 import PageNavigationContext from "../pages/PageNavigationContext";
 import { RequestPageCreationFunction, PageNavigation, ContextPropsGetter } from "../pages/usePageFactory";
-import { PassMixedProps } from "../../../Pass";
+import { MediaProps, PassMixedProps } from "../../../Pass";
 import { ShareIcon } from "../pages/PanelsPage/PanelGroup/icons";
 import { createClassName } from "../../../utils";
 
@@ -19,6 +19,7 @@ interface NavigatorProps {
 	cancelFieldSelection(): void;
 	onValueChange(key: string, value: any): Promise<boolean>;
 	requestExport(): void;
+	onMediaEditRequest(mediaName: keyof MediaProps): void;
 }
 
 export default class PagesNavigator extends React.Component<NavigatorProps, NavigatorState> implements PageNavigation {
@@ -103,6 +104,7 @@ export default class PagesNavigator extends React.Component<NavigatorProps, Navi
 						<PanelsPage
 							selectedFieldID={this.props.selectedFieldID}
 							onValueChange={this.props.onValueChange}
+							onMediaEditRequest={this.props.onMediaEditRequest}
 							fields={this.props.fields}
 							data={this.props.data}
 						/>
