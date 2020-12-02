@@ -14,7 +14,7 @@ export default function LanguageModal(props: Props) {
 		const languagesList = Object.entries(languages).map(([ISO639alpha1, language]) => (
 			<div
 				key={ISO639alpha1}
-				className={props.usedLanguages.has(language) ? "used" : ""}
+				className={props.usedLanguages.has(ISO639alpha1) ? "used" : ""}
 				onClick={() => props.selectLanguage(ISO639alpha1)}
 				title={`Language code: ${ISO639alpha1}`}
 			>

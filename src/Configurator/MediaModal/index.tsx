@@ -49,10 +49,10 @@ export default class MediaModal extends React.Component<Props, State> {
 	}
 
 	static getDerivedStateFromProps(props: Props, state: State) {
-		if (state.isEditMode && !props.mediaContent.enabled) {
+		if (state.isEditMode && !props.mediaContent?.enabled) {
 			return {
 				...state,
-				isEditMode: false
+				isEditMode: false,
 			};
 		}
 

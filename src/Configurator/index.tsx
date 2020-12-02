@@ -397,7 +397,14 @@ export default withRouter(connect(
 			kind: PassKind.BOARDING_PASS
 		} || {};
 
-		const usedLanguages = new Set(Object.keys(media));
+		const usedLanguages = new Set(
+			/**
+			 * Seeking for medias that has contents for current language
+			 */
+			Object.entries(media)
+				.filter(([_, mediaSet]) => hasMediaContents(mediaSet))
+				.map(([language]) => language)
+		);
 
 		return {
 			passProps: Object.assign(fallbackDevelopmentPassMetadata, pass),
@@ -414,3 +421,8 @@ export default withRouter(connect(
 		setMediaExportState: Store.Media.SetExportState
 	}
 )(Configurator));
+
+function hasMediaContents(media: MediaSet) {
+	return Object.values(media)
+		.some((collectionSet) => Object.keys(collectionSet.collections).length)
+}
