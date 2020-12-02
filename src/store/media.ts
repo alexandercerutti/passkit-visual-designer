@@ -61,7 +61,7 @@ export default function reducer(state = initialState.media, action: MediaActions
 			delete newState[action.mediaLanguage];
 
 			return newState;
-		}
+		};
 
 		case EDIT: {
 			const newState = { ...state };
@@ -95,7 +95,7 @@ export default function reducer(state = initialState.media, action: MediaActions
 			selectedMediaCollections.activeCollectionID = action.collectionID;
 
 			return newState
-		}
+		};
 
 		case SET_EXPORT_STATE: {
 			const newState = { ...state };
@@ -103,11 +103,11 @@ export default function reducer(state = initialState.media, action: MediaActions
 			selectedMedia.enabled = action.enabled;
 
 			return newState;
-		}
+		};
 
 		default: {
 			return state;
-		}
+		};
 	}
 }
 
