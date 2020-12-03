@@ -30,7 +30,7 @@ export default function StripPrimaryFields(props: React.PropsWithChildren<PFStri
 					<FieldLabel fieldData={data} />
 				</GhostField>
 			);
-		})
+		});
 
 	return (
 		<div className="strip-primaryFields">
