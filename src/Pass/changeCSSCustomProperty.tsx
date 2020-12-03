@@ -1,17 +1,23 @@
-export default function changeCSSCustomProperty(key: string, value: string, defaultValue: string) {
-	let finalValue = value;
+import * as React from "react";
 
-	if (!value) {
-		finalValue = defaultValue;
-	} else if (value?.includes("://")) {
-		finalValue = `url(${value})`;
-	}
+export default function useCSSCustomProperty(ref: React.RefObject<HTMLDivElement>, name: string, value: string) {
+	React.useLayoutEffect(() => {
+		const { current } = ref;
 
-	const { style } = document.documentElement;
+		if (!current) {
+			return;
+		}
 
-	if (style.getPropertyValue(key) === finalValue) {
-		return;
-	}
+		if (value.includes("://")) {
+			value = `url(${value})`;
+		}
 
-	document.documentElement.style.setProperty(key, finalValue);
+		const prefixedName = `--pass-${name}`;
+
+		if (current.style.getPropertyValue(prefixedName) === value) {
+			return;
+		}
+
+		current.style.setProperty(prefixedName, value);
+	}, [value]);
 }

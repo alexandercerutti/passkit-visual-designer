@@ -8,9 +8,9 @@ import { Generic } from "./layouts/Generic";
 import { StoreCard } from "./layouts/StoreCard";
 import { PKTransitType, PassFields, WalletPassFormat, DEFAULT_BACKGROUND_COLOR, DEFAULT_FOREGROUND_COLOR, DEFAULT_LABEL_COLOR } from "./constants";
 import { InteractionContextMethods } from "./InteractionContext";
-import changeCSSCustomProperty from "./changeCSSCustomProperty";
 import { createClassName } from "../utils";
 import Backfields from "./layouts/sections/BackFields";
+import useCSSCustomProperty from "./changeCSSCustomProperty";
 
 export { default as InteractionContext } from "./InteractionContext";
 
@@ -72,11 +72,19 @@ export default function Pass(props: PassProps) {
 
 	const PassComponent = PassKindsMap.get(kind);
 
-	React.useEffect(() => {
-		changeCSSCustomProperty("--pass-background", backgroundImage || backgroundColor, DEFAULT_BACKGROUND_COLOR);
-		changeCSSCustomProperty("--pass-foreground-color", foregroundColor, DEFAULT_FOREGROUND_COLOR);
-		changeCSSCustomProperty("--pass-label-color", labelColor, DEFAULT_LABEL_COLOR);
-	}, [backgroundColor, backgroundImage, foregroundColor, labelColor]);
+	/**
+	 * Setting ref against card and not on main pass element
+	 * to avoid an annoying flickering rendering bug in chromium
+	 * that happens when using transitions on hover
+	 * and css background images through CSS variables.
+	 * Browser performs new request every time and rerenders the
+	 * element.
+	 */
+
+	const cardRef = React.useRef<HTMLDivElement>();
+	useCSSCustomProperty(cardRef, "background", backgroundImage || backgroundColor || DEFAULT_BACKGROUND_COLOR);
+	useCSSCustomProperty(cardRef, "foreground-color", foregroundColor || DEFAULT_FOREGROUND_COLOR);
+	useCSSCustomProperty(cardRef, "label-color", labelColor || DEFAULT_LABEL_COLOR);
 
 	/** To avoid blur effect if no background is available */
 	const contentClassName = createClassName(["content"], {
@@ -90,7 +98,7 @@ export default function Pass(props: PassProps) {
 	return (
 		<div className="pass" data-kind={kind}>
 			<div className="decorations"></div>
-			<div className={passCardClassName}>
+			<div className={passCardClassName} ref={cardRef}>
 				<div className={contentClassName}>
 					<PassComponent {...newProps} />
 				</div>
