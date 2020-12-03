@@ -158,8 +158,7 @@ export default class MediaModal extends React.Component<Props, State> {
 			<Modal closeModal={this.props.closeModal} contentUniqueID="media-collection">
 				<div id="pass-preview">
 					<Pass
-						kind={PassKind.BOARDING_PASS}
-						{...passMediaProps}
+						{...this.props.passProps}
 					/>
 				</div>
 				<div id="media-collector">
