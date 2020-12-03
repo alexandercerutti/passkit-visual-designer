@@ -55,7 +55,7 @@ export interface PassProps extends PassMixedProps, Partial<InteractionContextMet
 	showBack?: boolean;
 }
 
-const PassKindsMap = new Map<PassKind, React.FunctionComponent<PassMixedProps>>([
+const PassKindsLayoutsMap = new Map<PassKind, React.FunctionComponent<PassMixedProps>>([
 	[PassKind.BOARDING_PASS, BoardingPass],
 	[PassKind.COUPON, Coupon],
 	[PassKind.EVENT, EventTicket],
@@ -70,7 +70,7 @@ export default function Pass(props: PassProps) {
 	// the Background
 	const { backgroundImage } = props;
 
-	const PassComponent = PassKindsMap.get(kind);
+	const PassLayout = PassKindsLayoutsMap.get(kind);
 
 	/**
 	 * Setting ref against card and not on main pass element
@@ -100,7 +100,7 @@ export default function Pass(props: PassProps) {
 			<div className="decorations"></div>
 			<div className={passCardClassName} ref={cardRef}>
 				<div className={contentClassName}>
-					<PassComponent {...newProps} />
+					<PassLayout {...newProps} />
 				</div>
 				<Backfields data={backFields} />
 			</div>
