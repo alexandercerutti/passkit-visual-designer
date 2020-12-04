@@ -91,7 +91,7 @@ export function Generic(props: GenericProps): JSX.Element {
 				register={registerField}
 			/>
 			{middleFragment}
-			<Footer>
+			<Footer icon={props.icon}>
 				<Barcodes
 					fallbackShape={isSquaredBarcode ? "square" : "rect"}
 					format={barcode?.format}

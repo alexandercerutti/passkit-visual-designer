@@ -7,6 +7,7 @@ import { AppIconEmpty } from "./icons";
 
 interface FooterProps extends Pick<RegistrableComponent, "register">, ImageFieldProps {
 	allowFooterImage?: boolean;
+	icon?: string;
 }
 
 export default function Footer(props: React.PropsWithChildren<FooterProps>) {
@@ -34,7 +35,11 @@ export default function Footer(props: React.PropsWithChildren<FooterProps>) {
 		<div className="footer">
 			<div className="grid">
 				<div className="icon" onClick={() => iconClickHandler("icon")}>
-					<AppIconEmpty />
+					{
+						props.icon
+							? <img alt="icon" src={props.icon} />
+							: <AppIconEmpty />
+					}
 				</div>
 				{footerImage}
 				{children}

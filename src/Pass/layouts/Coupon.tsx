@@ -61,7 +61,7 @@ export function Coupon(props: CouponProps): JSX.Element {
 				register={registerField}
 				id="secondary-auxiliary"
 			/>
-			<Footer>
+			<Footer icon={props.icon}>
 				<Barcode
 					format={barcode?.format}
 					fallbackShape="square"

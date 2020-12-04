@@ -88,6 +88,7 @@ export function BoardingPass(props: BoardingPassProps) {
 			/>
 			<Footer
 				allowFooterImage
+				icon={props.icon}
 				register={registerField}
 				src={footerImage}
 			>

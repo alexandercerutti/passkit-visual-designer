@@ -61,7 +61,7 @@ export function StoreCard(props: StoreCardProps): JSX.Element {
 				onClick={onFieldSelect}
 				register={registerField}
 			/>
-			<Footer>
+			<Footer icon={props.icon}>
 				<Barcodes format={barcode?.format} fallbackShape="rect" />
 			</Footer>
 		</>
