@@ -27,13 +27,6 @@ export default function Footer(props: React.PropsWithChildren<FooterProps>) {
 
 	return (
 		<div className="footer">
-			{
-				/*
-				 * This internal div, allows us to have an
-				 * image field with a width equal to the
-				 * barcode's.
-				 */
-			}
 			<div className="grid">
 				{footerImage}
 				{children}

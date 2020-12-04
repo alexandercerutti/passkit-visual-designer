@@ -31,6 +31,7 @@ export default function Barcodes(props: BarcodeProps) {
 		<div className={className}>
 			<div>
 				<BarcodeComponent />
+				{(props.format && props.message) ?? null}
 			</div>
 		</div>
 	);
