@@ -39,7 +39,8 @@ export function Generic(props: GenericProps): JSX.Element {
 		barcode,
 		logoText,
 		logo,
-		thumbnailImage
+		thumbnailImage,
+		icon
 	} = props;
 
 	const { onFieldSelect, registerField } = React.useContext(InteractionContext);
@@ -91,7 +92,10 @@ export function Generic(props: GenericProps): JSX.Element {
 				register={registerField}
 			/>
 			{middleFragment}
-			<Footer icon={props.icon}>
+			<Footer
+				icon={icon}
+				register={registerField}
+			>
 				<Barcodes
 					fallbackShape={isSquaredBarcode ? "square" : "rect"}
 					format={barcode?.format}

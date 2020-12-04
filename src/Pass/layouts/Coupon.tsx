@@ -27,7 +27,8 @@ export function Coupon(props: CouponProps): JSX.Element {
 		barcode,
 		stripImage,
 		logo,
-		logoText
+		logoText,
+		icon
 	} = props;
 
 	const { onFieldSelect, registerField } = React.useContext(InteractionContext);
@@ -61,7 +62,10 @@ export function Coupon(props: CouponProps): JSX.Element {
 				register={registerField}
 				id="secondary-auxiliary"
 			/>
-			<Footer icon={props.icon}>
+			<Footer
+				icon={icon}
+				register={registerField}
+			>
 				<Barcode
 					format={barcode?.format}
 					fallbackShape="square"

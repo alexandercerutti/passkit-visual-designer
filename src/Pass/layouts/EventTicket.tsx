@@ -37,6 +37,7 @@ export function EventTicket(props: EventTicketProps): JSX.Element {
 		barcode,
 		logoText,
 		logo,
+		icon,
 		stripImage,
 		thumbnailImage
 	} = props;
@@ -105,7 +106,10 @@ export function EventTicket(props: EventTicketProps): JSX.Element {
 				onClick={onFieldSelect}
 				register={registerField}
 			/>
-			<Footer icon={props.icon}>
+			<Footer
+				icon={icon}
+				register={registerField}
+			>
 				<Barcodes
 					format={barcode?.format}
 					fallbackShape="square"

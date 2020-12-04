@@ -27,7 +27,8 @@ export function StoreCard(props: StoreCardProps): JSX.Element {
 		barcode,
 		logo,
 		logoText,
-		stripImage
+		stripImage,
+		icon
 	} = props;
 
 	const { onFieldSelect, registerField } = React.useContext(InteractionContext);
@@ -61,7 +62,10 @@ export function StoreCard(props: StoreCardProps): JSX.Element {
 				onClick={onFieldSelect}
 				register={registerField}
 			/>
-			<Footer icon={props.icon}>
+			<Footer
+				icon={icon}
+				register={registerField}
+			>
 				<Barcodes format={barcode?.format} fallbackShape="rect" />
 			</Footer>
 		</>

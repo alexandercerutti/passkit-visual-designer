@@ -52,6 +52,7 @@ export function BoardingPass(props: BoardingPassProps) {
 		logo,
 		logoText,
 		footerImage,
+		icon
 	} = props;
 
 	const { onFieldSelect, registerField } = React.useContext(InteractionContext);
@@ -88,7 +89,7 @@ export function BoardingPass(props: BoardingPassProps) {
 			/>
 			<Footer
 				allowFooterImage
-				icon={props.icon}
+				icon={icon}
 				register={registerField}
 				src={footerImage}
 			>
