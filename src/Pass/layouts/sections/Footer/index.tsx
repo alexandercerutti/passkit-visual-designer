@@ -34,7 +34,7 @@ export default function Footer(props: React.PropsWithChildren<FooterProps>) {
 				 * barcode's.
 				 */
 			}
-			<div>
+			<div className="grid">
 				{footerImage}
 				{children}
 			</div>

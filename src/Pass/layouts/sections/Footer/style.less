@@ -3,32 +3,45 @@
 
 .footer {
 	display: flex;
-/* 	align-items: center;*/
+	align-items: flex-end;
+	justify-content: center;
 	width: 100%;
 	flex-grow: 1;
 
-	& > div {
-		align-self: flex-end;
+	& > div.grid {
+		display: grid;
 		width: 100%;
-		display: flex;
-		flex-direction: column;
+		row-gap: 5px;
+		grid-template-columns: 25px 1fr 25px;
+		grid-template-rows: 20px 1fr;
+		position: absolute;
 	}
 
 	& .empty-field {
 		width: 100%;
 		height: @footer-picture-row-height;
 		flex-grow: 0;
-		margin: @footer-picture-row-margins;
 		border-radius: 2px;
+
+		grid-column: ~"2 / 3";
+		grid-row: ~"1 / 2";
 	}
 
 	& .image-field {
+		justify-self: center;
+		align-self: center;
+
 		display: flex;
-		margin: @footer-picture-row-margins;
 		justify-content: center;
 
+		grid-column: ~"2 / 3";
+		grid-row: ~"1 / 2";
+
+		/* For picture prop object-fit below */
+		height: 100%;
+
 		& > img {
-			width: 50px;
+			object-fit: scale-down;
 		}
 	}
 }
