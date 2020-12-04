@@ -54,10 +54,6 @@ const StaticFields: Array<[DataGroup, FieldDetails[]]> = [
 			jsonKeys: ["altitude", "latitude", "longitude", "relevantText"]
 		}, */
 	]],
-	[DataGroup.IMAGES, [{
-		name: "icon",
-		kind: FieldKind.IMAGE,
-	}]],
 	[DataGroup.COLORS, [{
 		name: "backgroundColor",
 		kind: FieldKind.COLOR,
@@ -68,6 +64,7 @@ const StaticFields: Array<[DataGroup, FieldDetails[]]> = [
 		name: "labelColor",
 		kind: FieldKind.COLOR,
 	}]],
+	[DataGroup.IMAGES, []],
 	[DataGroup.DATA, []]
 ];
 

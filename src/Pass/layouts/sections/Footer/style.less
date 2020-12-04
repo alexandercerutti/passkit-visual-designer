@@ -15,6 +15,35 @@
 		grid-template-columns: 25px 1fr 25px;
 		grid-template-rows: 20px 1fr;
 		position: absolute;
+
+		& > .icon {
+			grid-column: ~"1 / 2";
+			grid-row: ~"2 / 3";
+
+			background-color: #cecece;
+			width: 15px;
+			height: 15px;
+
+			padding: 0.5px;
+			margin-left: 5px;
+			margin-bottom: -5px;
+
+			align-self: flex-end;
+			border-radius: 4px;
+			cursor: pointer;
+
+			& > svg {
+				& .cls-1 {
+					fill: #5a5a5aa6
+				}
+
+				& .cls-2 {
+					fill: none;
+					stroke: #5a5a5aa6;
+					stroke-width: .2px
+				}
+			}
+		}
 	}
 
 	& .empty-field {
