@@ -78,7 +78,6 @@ export function Generic(props: GenericProps): JSX.Element {
 	return (
 		<>
 			<PassHeader
-				withSeparator
 				headerFields={headerFields}
 				logo={logo}
 				logoText={logoText}

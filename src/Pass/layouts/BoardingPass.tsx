@@ -60,7 +60,6 @@ export function BoardingPass(props: BoardingPassProps) {
 	return (
 		<>
 			<PassHeader
-				withSeparator
 				logo={logo}
 				logoText={logoText}
 				headerFields={headerFields}

@@ -12,7 +12,6 @@ interface HeaderProps extends Partial<RegistrableComponent> {
 	headerFields?: PassFieldKeys[];
 	logoText?: string;
 	logo?: string;
-	withSeparator?: boolean;
 }
 
 export function PassHeader(props: HeaderProps) {
@@ -25,10 +24,6 @@ export function PassHeader(props: HeaderProps) {
 		[FieldKind.TEXT, "logoText"]
 	]);
 
-	const className = createClassName(["header-container"], {
-		"separator": props.withSeparator
-	});
-
 	/**
 	 * This is to make fallback growing and be visible
 	 * We need to have at least one element that have value or label
@@ -39,7 +34,7 @@ export function PassHeader(props: HeaderProps) {
 	) && "can-grow" || "";
 
 	return (
-		<div className={className}>
+		<div className="header-container">
 			<div className="inner">
 				<ImageField
 					src={props.logo}
