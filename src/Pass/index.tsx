@@ -97,8 +97,8 @@ export default function Pass(props: PassProps) {
 
 	return (
 		<div className="pass" data-kind={kind}>
-			<div className="decorations"></div>
 			<div className={passCardClassName} ref={cardRef}>
+				<div className="decorations" />
 				<div className={contentClassName}>
 					<PassLayout {...newProps} />
 				</div>

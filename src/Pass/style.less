@@ -19,17 +19,6 @@
 		margin-right: 30px;
 	}
 
-	& .decorations {
-		overflow: hidden;
-		position: absolute;
-		top: 0;
-		right: 0;
-		left: 0;
-		bottom: 0;
-		z-index: 1;
-		pointer-events: none;
-	}
-
 	& .card {
 		display: flex;
 		width: 100%;
@@ -51,6 +40,17 @@
 			& > .back-fields {
 				z-index: 99
 			}
+		}
+
+		& .decorations {
+			overflow: hidden;
+			position: absolute;
+			top: 0;
+			right: 0;
+			left: 0;
+			bottom: 0;
+			z-index: 1;
+			pointer-events: none;
 		}
 
 		& > .content {
