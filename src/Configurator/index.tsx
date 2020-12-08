@@ -328,6 +328,7 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 						onValueChange={this.onValueChange}
 						cancelFieldSelection={this.onVoidClick}
 						requestExport={canBeExported && this.requestExport || null}
+						onMediaEditRequest={this.toggleMediaModal}
 					/>
 				</div>
 				{showExportModal &&
