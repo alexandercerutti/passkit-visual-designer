@@ -12,11 +12,11 @@ interface Props {
 
 export default function DrawerJSONEditor(props: Props) {
 	const [jsonValid, setJSONValidityState] = React.useState(true);
-	const openingContent = `{\n\t${props.fieldName}: [`;
-	const closingContent = `\t]\n}`;
 	const codeRef = React.useRef<HTMLElement>();
 	const textAreaRef = React.useRef<HTMLTextAreaElement>();
 	const jsonValidityCheckTimeoutRef = React.useRef<number>();
+	const openingContent = `{\n\t${props.fieldName}: [`;
+	const closingContent = `\t]\n}`;
 
 	React.useLayoutEffect(() => {
 		textAreaRef.current.focus();
