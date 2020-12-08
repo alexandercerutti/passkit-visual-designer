@@ -1,0 +1,33 @@
+.pages-navigator > .page > .fields-preview-page > .json-editor {
+	display: flex;
+	flex-grow: 1;
+	flex-direction: column;
+
+	& pre {
+		margin: 0;
+		padding-left: 4px;
+
+		& code {
+			text-shadow: none;
+		}
+	}
+
+	& textarea {
+		background-color: #272727;
+		border: none;
+		resize: none;
+		flex-grow: 1;
+		color: #e6e6e6;
+		padding: 0 0 0 40px;
+		tab-size: 4;
+		transition: outline .2s ease-in-out;
+
+		&:focus {
+			outline: 1px solid #333333;
+		}
+
+		&.invalid {
+			outline: 1px solid #a00000;
+		}
+	}
+}

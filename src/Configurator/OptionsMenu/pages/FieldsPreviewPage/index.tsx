@@ -1,7 +1,7 @@
 import * as React from "react";
 import { v1 as uuid } from "uuid";
 import "./style.less";
-import { PassFieldKeys } from "../../../../Pass/constants";
+import { PassFieldKeys, PassFields } from "../../../../Pass/constants";
 import { FieldsAddIcon } from "./icons";
 import Drawer from "./Drawer";
 import DrawerPlaceholder from "./DrawerPlaceholder";
@@ -36,6 +36,7 @@ export default class FieldsPreviewPage extends React.Component<Props, State> {
 		this.onFieldDeleteHandler = this.onFieldDeleteHandler.bind(this);
 		this.onFieldOrderChange = this.onFieldOrderChange.bind(this);
 		this.onFieldChangeHandler = this.onFieldChangeHandler.bind(this);
+		this.onFieldsChangeFromJSON = this.onFieldsChangeFromJSON.bind(this);
 		this.toggleJSONMode = this.toggleJSONMode.bind(this);
 	}
 
@@ -127,6 +128,27 @@ export default class FieldsPreviewPage extends React.Component<Props, State> {
 		});
 	}
 
+	onFieldsChangeFromJSON(jsonString: string) {
+		try {
+			const fields = JSON.parse(jsonString) as PassFieldKeys[];
+
+			this.setState({
+				fields,
+				/**
+				 * Regenerating every internally every uuid
+				 * as we should have a way to understand
+				 * which field is new, which field has been deleted
+				 * or updated.
+				 * These uuids are only for this components, so we
+				 * can safely recreate them.
+				 */
+				fieldsUUIDs: fields.map(_ => uuid()),
+			});
+		} catch (err) {
+			console.error(err);
+		}
+	}
+
 	toggleJSONMode() {
 		this.setState(({ isJSONMode }) => ({
 			isJSONMode: !isJSONMode
@@ -140,7 +162,11 @@ export default class FieldsPreviewPage extends React.Component<Props, State> {
 
 		if (isJSONMode) {
 			contentElement = (
-				<DrawerJSONEditor />
+				<DrawerJSONEditor
+					fieldName={this.props.name as keyof PassFields}
+					content={fields ?? []}
+					onChange={this.onFieldsChangeFromJSON}
+				/>
 			);
 		} else if (fields.length) {
 			contentElement = (
