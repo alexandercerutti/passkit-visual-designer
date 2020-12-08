@@ -169,7 +169,7 @@ export default class FieldsPreviewPage extends React.Component<Props, State> {
 						className={isJSONMode && "json-mode-active" || ""}
 						onClick={this.toggleJSONMode}
 					>
-						{isJSONMode ? "Disable" : "Enable"} JSON Mode
+						JSON
 					</button>
 				</footer>
 			</div>
