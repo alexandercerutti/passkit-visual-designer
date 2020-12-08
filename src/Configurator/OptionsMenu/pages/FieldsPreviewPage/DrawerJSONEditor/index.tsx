@@ -2,6 +2,7 @@ import * as React from "react";
 import Prism from "prismjs";
 import { PassFieldKeys, PassFields } from "../../../../../Pass/constants";
 import "./style.less";
+import { createClassName } from "../../../../../utils";
 
 interface Props {
 	fieldName: keyof PassFields;
@@ -44,8 +45,6 @@ export default function DrawerJSONEditor(props: Props) {
 			}
 		}, 500);
 
-		console.log(event);
-
 		if (event.key === "Enter") {
 			event.preventDefault();
 			const rows = value.split(/\r*\n/);
@@ -78,8 +77,8 @@ export default function DrawerJSONEditor(props: Props) {
 				/>
 			</pre>
 			<textarea
-				className={!jsonValid ? "invalid" : ""}
 				ref={textAreaRef}
+				spellCheck={false}
 				onKeyDown={onKeyDownHandler}
 				defaultValue={props.content.map((content) => JSON.stringify(content, null, "\t")).join(",\n")}
 			/>
@@ -89,6 +88,10 @@ export default function DrawerJSONEditor(props: Props) {
 					dangerouslySetInnerHTML={{ __html: Prism.highlight(closingContent, Prism.languages["json"], "json") }}
 				/>
 			</pre>
+			<div className={createClassName(["json-validity-alert"], {
+				valid: jsonValid,
+				invalid: !jsonValid
+			})} />
 		</div>
 	);
 }

@@ -20,14 +20,33 @@
 		color: #e6e6e6;
 		padding: 0 0 0 40px;
 		tab-size: 4;
-		transition: outline .2s ease-in-out;
 
 		&:focus {
 			outline: 1px solid #333333;
 		}
+	}
+
+	& .json-validity-alert {
+		min-height: 40px;
+		position: relative;
+		display: flex;
+		align-items: center;
+		padding: 10px;
+
+		&.valid {
+			background-color: rgb(16, 70, 16);
+
+			&::before {
+				content: "Valid JSON! Safe to go";
+			}
+		}
 
 		&.invalid {
-			outline: 1px solid #a00000;
+			background-color: #a00000;
+
+			&::before {
+				content: "Invalid JSON. Going back now will result in your latest edits to get discarded. Last successful check changes will be used instead."
+			}
 		}
 	}
 }
