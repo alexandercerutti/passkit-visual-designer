@@ -8,7 +8,7 @@ export default function FieldsDrawerPlaceholder() {
 				<text y="35" x="20">¯\_(ツ)_/¯</text>
 			</svg>
 			<p>There are no fields here yet.</p>
-			<p>What about starting adding some? 🤔</p>
+			<p>What about starting adding some?</p>
 		</div>
 	);
 }

@@ -7,6 +7,7 @@ import Drawer from "./Drawer";
 import DrawerPlaceholder from "./DrawerPlaceholder";
 import PageHeader from "../components/Header";
 import { PageProps, PageNavigation } from "../usePageFactory";
+import DrawerJSONEditor from "./DrawerJSONEditor";
 
 interface Props extends PageProps, PageNavigation {
 	value?: PassFieldKeys[];
@@ -16,6 +17,7 @@ interface Props extends PageProps, PageNavigation {
 interface State {
 	fields: PassFieldKeys[];
 	fieldsUUIDs: string[];
+	isJSONMode: boolean;
 }
 
 export default class FieldsPreviewPage extends React.Component<Props, State> {
@@ -27,12 +29,14 @@ export default class FieldsPreviewPage extends React.Component<Props, State> {
 		this.state = {
 			fields: props.value ?? [],
 			fieldsUUIDs: props.value?.map(_ => uuid()) ?? [],
+			isJSONMode: false,
 		};
 
 		this.onFieldAddHandler = this.onFieldAddHandler.bind(this);
 		this.onFieldDeleteHandler = this.onFieldDeleteHandler.bind(this);
 		this.onFieldOrderChange = this.onFieldOrderChange.bind(this);
 		this.onFieldChangeHandler = this.onFieldChangeHandler.bind(this);
+		this.toggleJSONMode = this.toggleJSONMode.bind(this);
 	}
 
 	componentDidUpdate(_: Props, prevState: State) {
@@ -123,27 +127,51 @@ export default class FieldsPreviewPage extends React.Component<Props, State> {
 		});
 	}
 
-	render() {
-		const { fields, fieldsUUIDs } = this.state;
+	toggleJSONMode() {
+		this.setState(({ isJSONMode }) => ({
+			isJSONMode: !isJSONMode
+		}));
+	}
 
-		const fullPageElement = (
-			this.state.fields.length &&
-			<Drawer
-				fieldsData={fields}
-				fieldsUUIDs={fieldsUUIDs}
-				onFieldChange={this.onFieldChangeHandler}
-				onFieldDelete={this.onFieldDeleteHandler}
-				onFieldOrderChange={this.onFieldOrderChange}
-			/> ||
-			<DrawerPlaceholder />
-		);
+	render() {
+		const { fields, fieldsUUIDs, isJSONMode } = this.state;
+
+		let contentElement: React.ReactElement<typeof DrawerJSONEditor | typeof Drawer | typeof DrawerPlaceholder>;
+
+		if (isJSONMode) {
+			contentElement = (
+				<DrawerJSONEditor />
+			);
+		} else if (fields.length) {
+			contentElement = (
+				<Drawer
+					fieldsData={fields}
+					fieldsUUIDs={fieldsUUIDs}
+					onFieldChange={this.onFieldChangeHandler}
+					onFieldDelete={this.onFieldDeleteHandler}
+					onFieldOrderChange={this.onFieldOrderChange}
+				/>
+			);
+		} else {
+			contentElement = (
+				<DrawerPlaceholder />
+			);
+		}
 
 		return (
 			<div className="fields-preview-page">
 				<PageHeader name={this.pageName}>
 					<FieldsAddIcon className="add" onClick={this.onFieldAddHandler} />
 				</PageHeader>
-				{fullPageElement}
+				{contentElement}
+				<footer>
+					<button
+						className={isJSONMode && "json-mode-active" || ""}
+						onClick={this.toggleJSONMode}
+					>
+						{isJSONMode ? "Disable" : "Enable"} JSON Mode
+					</button>
+				</footer>
 			</div>
 		);
 	}

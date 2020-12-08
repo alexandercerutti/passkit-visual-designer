@@ -30,6 +30,27 @@
 			}
 		}
 	}
+
+	& footer {
+		height: 10px;
+		border-top: 1px solid #333;
+		padding: 20px 10px;
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
+
+		& button {
+			background-color: #333;
+			border: 0;
+			color: #e6e6e6;
+			padding: 4px;
+			transition: background-color .2s ease-in-out;
+
+			&.json-mode-active {
+				background-color: #106d08;
+			}
+		}
+	}
 }
 
 svg.add {
