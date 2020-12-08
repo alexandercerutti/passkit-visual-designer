@@ -3,6 +3,7 @@
 		"jsx": "react",
 		"sourceMap": true,
 		"module": "CommonJS",
+		"esModuleInterop": true,
 		"target": "es6",
 		"newLine": "LF",
 		"lib": [
