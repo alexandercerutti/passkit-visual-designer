@@ -1,10 +1,6 @@
 import * as React from "react";
 import "./style.less";
 import Prism from "prismjs";
-import "prismjs/plugins/line-numbers/prism-line-numbers";
-import "prismjs/plugins/line-numbers/prism-line-numbers.css";
-import "prismjs/themes/prism.css";
-import "prismjs/themes/prism-tomorrow.css";
 import { createClassName } from "../../utils";
 import { replaceAllBlock } from "./transformers";
 import { PassMixedProps } from "../../Pass";

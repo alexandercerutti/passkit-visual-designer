@@ -19,6 +19,11 @@ import { exportPass } from "./exportPass";
 import MediaModal from "./MediaModal";
 import { getArrayBuffer } from "../utils";
 import LanguageModal from "./LanguageModal";
+import 'prismjs/components/prism-json';
+import "prismjs/plugins/line-numbers/prism-line-numbers";
+import "prismjs/plugins/line-numbers/prism-line-numbers.css";
+import "prismjs/themes/prism.css";
+import "prismjs/themes/prism-tomorrow.css";
 
 /**
  * Filters out from B the keys that not match the type of T.
