@@ -18,9 +18,9 @@ export default function DrawerJSONEditor(props: Props) {
 	const openingContent = `{\n\t${props.fieldName}: [`;
 	const closingContent = `\t]\n}`;
 
-	React.useLayoutEffect(() => {
+	React.useEffect(() => {
 		textAreaRef.current.focus();
-	});
+	}, []);
 
 	React.useEffect(() => {
 		if (jsonValid && JSON.stringify(props.content, null, "\t") !== textAreaRef.current.value) {
