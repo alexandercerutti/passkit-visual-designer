@@ -1,0 +1,66 @@
+@import (reference) "../../../../App/common.less";
+
+.page {
+	& > ul {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		height: 50px;
+		list-style-type: none;
+		padding: 0;
+		margin: 0;
+		color: #e6e6e6;
+		border-bottom: 0.5px solid rgba(230, 230, 230, 0.2);
+		.scrollableWithoutScrollbars(x);
+
+		&.left {
+			&::before {
+				opacity: 1;
+			}
+		}
+
+		&.right {
+			&::after {
+				opacity: 1;
+			}
+		}
+
+		&::before, &::after {
+			content: "";
+			position: fixed;
+			top: 0;
+			bottom: 0;
+			width: 50px;
+			height: 50px;
+			opacity: 0;
+			transition: opacity .2s ease-in-out;
+			pointer-events: none;
+		}
+
+		&::after {
+			right: 0;
+			background: linear-gradient(to left, #1c1c1c 0%, transparent);
+		}
+
+		&::before {
+			left: 0;
+			background: linear-gradient(to right, #1c1c1c 0%, transparent);
+		}
+
+		& li {
+			padding: 0 10px;
+			margin: auto;
+			cursor: pointer;
+			display: flex;
+			align-items: center;
+			height: 49px;
+			transition: border-bottom .2s ease-in-out;
+			border-bottom: 0.5px solid transparent;
+
+			&.active {
+				font-weight: 400;
+				border-bottom: 0.5px solid rgb(255, 176, 0);
+			}
+		}
+	}
+}
