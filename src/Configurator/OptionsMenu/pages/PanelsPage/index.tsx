@@ -89,11 +89,39 @@ export default function PanelsPage(props: Props) {
 	const [shadowMode, setShadowMode] = React.useState(ShadowMode.END);
 
 	React.useLayoutEffect(() => {
+		/**
+		 * Delaying operation because of the animation.
+		 * In fact, useLayoutEffect performs calculations but
+		 * too early, with wrong values. 2 seconds seems to be
+		 * enough to allow browser to perform animation and
+		 * allow the user to not see the change.
+		 */
+
+		setTimeout(() => {
+			if (shadowsRef.current.offsetWidth === (Math.round(shadowsRef.current.scrollWidth / 10) * 10)) {
+				setShadowMode(undefined);
+			}
+		}, 2000);
+	}, []);
+
+	React.useLayoutEffect(() => {
 		if (!shadowsRef.current) {
 			return;
 		}
 
-		const activeChild = shadowsRef.current.childNodes[selectedListElement] as HTMLLIElement;
+		const { scrollWidth, offsetWidth, childNodes } = shadowsRef.current;
+
+		/** offsetWidth might start as 0 because it is hidden by animation (?) */
+		if (offsetWidth === scrollWidth) {
+			/**
+			 * No scroll available. This is, anyway, not true
+			 * while the element must yet appear.
+			 * For this reason we use a layoutEffect above.
+			 */
+			return;
+		}
+
+		const activeChild = childNodes[selectedListElement] as HTMLLIElement;
 		const previousScrollLeft = shadowsRef.current.scrollLeft;
 
 		activeChild.scrollIntoView({
