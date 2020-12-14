@@ -10,5 +10,46 @@
 		display: flex;
 		flex-direction: column;
 		flex-shrink: 0;
+
+		& > .export-btn {
+			display: flex;
+			cursor: pointer;
+			flex-grow: 0;
+			flex-shrink: 0;
+			justify-content: space-between;
+			align-items: center;
+			padding: 0 15px;
+			min-height: 70px;
+			transition:
+				border-left .5s ease-in-out,
+				border-bottom .5s ease-in-out;
+			border-left: 0px solid #444;
+
+			&.disabled {
+				pointer-events: none;
+
+				& h3 {
+					color: #464646;
+				}
+
+				& svg {
+					fill: #464646;
+				}
+			}
+
+			& > h3 {
+				font-weight: 300;
+				color: #d2d2d2;
+				margin: 0;
+				transition: color .5s ease-in-out;
+			}
+
+			& .icon {
+				width: 21px;
+				height: 21px;
+				fill: #d2d2d2;
+				transition: fill .5s ease-in-out;
+			}
+		}
 	}
 }

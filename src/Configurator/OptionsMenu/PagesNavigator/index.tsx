@@ -88,7 +88,7 @@ export default class PagesNavigator extends React.Component<NavigatorProps, Navi
 			);
 		});
 
-		const exportButtonClassName = createClassName(["menu-group"], {
+		const exportButtonClassName = createClassName(["export-btn"], {
 			disabled: !this.props.requestExport
 		});
 
@@ -108,11 +108,9 @@ export default class PagesNavigator extends React.Component<NavigatorProps, Navi
 							fields={this.props.fields}
 							data={this.props.data}
 						/>
-						<div className={exportButtonClassName} style={{ marginTop: "auto" }}>
-							<div className="intro" onClick={() => this.props.requestExport?.()}>
-								<h3>Export</h3>
-								<ShareIcon className="icon" width="25px" height="25px" />
-							</div>
+						<div className={exportButtonClassName} onClick={() => this.props.requestExport?.()}>
+							<h3>Export</h3>
+							<ShareIcon className="icon" width="25px" height="25px" />
 						</div>
 					</div>
 					{pages}

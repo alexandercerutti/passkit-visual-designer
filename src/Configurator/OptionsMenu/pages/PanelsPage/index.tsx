@@ -1,11 +1,20 @@
-import { PageNavigation } from "../usePageFactory";
 import * as React from "react";
-import PanelGroup, { DataGroup } from "./PanelGroup";
-import Panel, { FieldDetails } from "./Panel";
+import "./style.less";
+import { PageNavigation } from "../usePageFactory";
+import Panel from "./Panel";
 import { RegisteredFieldsMap } from "../..";
 import PageNavigationContext from "../PageNavigationContext";
 import type { MediaProps, PassMixedProps } from "../../../../Pass";
 import TabsList from "./TabsList";
+
+export enum DataGroup {
+	METADATA = "Metadata",
+	IMAGES = "Images",
+	COLORS = "Colors",
+	DATA = "Data"
+}
+
+const MenuVoices = [DataGroup.METADATA, DataGroup.IMAGES, DataGroup.COLORS, DataGroup.DATA];
 
 interface Props extends Partial<PageNavigation> {
 	selectedFieldID: keyof PassMixedProps;
@@ -43,49 +52,40 @@ export default function PanelsPage(props: Props) {
 		setActivePanel(isDataActive);
 	}, [props.selectedFieldID]);
 
-	const groups = Array.from<[DataGroup, FieldDetails[]], JSX.Element>(props.fields.entries(), ([group, details]) => {
-		return (
-			<PanelGroup
-				group={group}
-				key={group}
-				isActive={group === activePanel}
-				setActive={exclusivePanelActivation.current}
-			>
-				<PageNavigationContext.Consumer>
-					{(navProps) => (
-						details.map((data => {
-							const { kind, name, ...otherData } = data;
-							return (
-								<Panel
-									key={name}
-									name={name}
-									kind={kind}
-									data={otherData}
-									value={
-										group === DataGroup.IMAGES
-											? props.onMediaEditRequest
-											: props.data?.[name]
-									}
-									onValueChange={props.onValueChange}
-									isSelected={props.selectedFieldID === name}
-									{...navProps}
-								/>
-							);
-						}))
-					)}
-				</PageNavigationContext.Consumer>
-			</PanelGroup>
-		);
-	});
+	const context = React.useContext(PageNavigationContext);
+
+	const panels = Array.from(props.fields.entries())
+		.find(([group]) => group === MenuVoices[selectedTabIndex])[1]
+		.map(({ kind, name, ...otherData }) => (
+			<Panel
+				key={name}
+				name={name}
+				kind={kind}
+				data={otherData}
+				value={
+					MenuVoices[selectedTabIndex] === DataGroup.IMAGES
+						? props.onMediaEditRequest
+						: props.data?.[name]
+				}
+				onValueChange={props.onValueChange}
+				isSelected={props.selectedFieldID === name}
+				requestPageClosing={context.requestPageClosing}
+				requestPageCreation={context.requestPageCreation}
+			/>
+		));
 
 	return (
 		<>
 			<TabsList
-				menuVoices={["Metadata", "Images", "Colors", "Data"]}
+				menuVoices={MenuVoices}
 				selectedIndex={selectedTabIndex}
 				onSelect={setSelectedTabIndex}
 			/>
-			{groups}
+			<div className="list-element">
+				<div className="panels-list">
+					{panels}
+				</div>
+			</div>
 		</>
 	);
 }

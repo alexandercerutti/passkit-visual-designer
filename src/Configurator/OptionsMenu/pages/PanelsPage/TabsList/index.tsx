@@ -1,6 +1,7 @@
 import * as React from "react";
 import "./style.less";
 import { createClassName } from "../../../../../utils";
+import { DataGroup } from "..";
 
 enum ShadowMode {
 	START, /** Carriage is scrolled to end */
@@ -9,7 +10,7 @@ enum ShadowMode {
 }
 
 interface Props {
-	menuVoices: string[];
+	menuVoices: DataGroup[];
 	selectedIndex: number;
 	onSelect(index: number): void;
 }
