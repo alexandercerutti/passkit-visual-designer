@@ -5,7 +5,7 @@ import PanelsPage from "../pages/PanelsPage";
 import PageNavigationContext from "../pages/PageNavigationContext";
 import { RequestPageCreationFunction, PageNavigation, ContextPropsGetter } from "../pages/usePageFactory";
 import { MediaProps, PassMixedProps } from "../../../Pass";
-import { ShareIcon } from "../pages/PanelsPage/PanelGroup/icons";
+import { ShareIcon } from "../pages/PanelsPage/icons";
 import { createClassName } from "../../../utils";
 
 interface NavigatorState {

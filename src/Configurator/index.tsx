@@ -11,7 +11,7 @@ import { MediaProps, PassMixedProps } from "../Pass";
 import type { CollectionSet, LocalizedMediaGroup, MediaCollection, MediaSet, State } from "../store";
 import * as Store from "../store";
 import DefaultFields from "./staticFields";
-import { DataGroup } from "./OptionsMenu/pages/PanelsPage/PanelGroup";
+import { DataGroup } from "./OptionsMenu/pages/PanelsPage";
 import { FieldSelectHandler } from "../Pass/layouts/sections/useRegistrations";
 import ExportModal from "./ExportModal";
 import { PKTransitType } from "../Pass/constants";

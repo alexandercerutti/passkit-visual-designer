@@ -2,7 +2,7 @@ import * as React from "react";
 import "./style.less";
 import { FieldDetails } from "./pages/PanelsPage/Panel";
 import PagesNavigator from "./PagesNavigator";
-import { DataGroup } from "./pages/PanelsPage/PanelGroup";
+import { DataGroup } from "./pages/PanelsPage";
 import type { MediaProps, PassMixedProps } from "../../Pass";
 
 export type RegisteredFieldsMap = Map<DataGroup, FieldDetails[]>;

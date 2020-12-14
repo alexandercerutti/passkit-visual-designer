@@ -1,0 +1,16 @@
+@import (reference) "../../../../App/common.less";
+
+.list-element {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	border-bottom: 1px solid #333;
+	overflow: hidden;
+	flex-grow: 1;
+
+	& > .panels-list {
+		padding-top: 10px;
+		background-color: #282828;
+		.scrollableWithoutScrollbars(y);
+	}
+}

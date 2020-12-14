@@ -1,6 +1,6 @@
 import { FieldDetails } from "./OptionsMenu/pages/PanelsPage/Panel";
 import { FieldKind } from "../model";
-import { DataGroup } from "./OptionsMenu/pages/PanelsPage/PanelGroup";
+import { DataGroup } from "./OptionsMenu/pages/PanelsPage";
 
 const StaticFields: Array<[DataGroup, FieldDetails[]]> = [
 	[DataGroup.METADATA, [{

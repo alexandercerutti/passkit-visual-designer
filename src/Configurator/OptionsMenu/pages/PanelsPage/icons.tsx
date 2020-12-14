@@ -1,5 +1,6 @@
 import * as React from "react";
 
+// @TODO probably remove if unused
 // Tag by Icon Lauk from the Noun Project
 // https://thenounproject.com/term/tag/1948174
 export function TagIcon(props: React.SVGProps<SVGSVGElement>) {
@@ -10,6 +11,7 @@ export function TagIcon(props: React.SVGProps<SVGSVGElement>) {
 	);
 }
 
+// @TODO probably remove if unused
 // Color by Flatart from the Noun Project (edited)
 // https://thenounproject.com/term/color/3170709
 export function ColorIcon(props: React.SVGProps<SVGSVGElement>) {
@@ -20,6 +22,7 @@ export function ColorIcon(props: React.SVGProps<SVGSVGElement>) {
 	);
 }
 
+// @TODO probably remove if unused
 // pictures by DTDesign from the Noun Project (edited)
 // https://thenounproject.com/term/pictures/1529846
 export function ImagesIcon(props: React.SVGProps<SVGSVGElement>) {
