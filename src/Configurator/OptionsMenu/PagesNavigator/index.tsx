@@ -1,12 +1,14 @@
 import * as React from "react";
 import "./style.less";
-import { RegisteredFieldsMap } from "..";
-import PanelsPage from "../pages/PanelsPage";
+import PanelsPage, { DataGroup } from "../pages/PanelsPage";
 import PageNavigationContext from "../pages/PageNavigationContext";
 import { RequestPageCreationFunction, PageNavigation, ContextPropsGetter } from "../pages/usePageFactory";
 import { MediaProps, PassMixedProps } from "../../../Pass";
 import { ShareIcon } from "../pages/PanelsPage/icons";
 import { createClassName } from "../../../utils";
+import { FieldDetails } from "../pages/PanelsPage/Panel";
+
+export type RegisteredFieldsMap = Map<DataGroup, FieldDetails[]>;
 
 interface NavigatorState {
 	pagesHierarchy: Parameters<RequestPageCreationFunction>[];

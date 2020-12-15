@@ -2,7 +2,7 @@ import * as React from "react";
 import "./style.less";
 import { PageNavigation } from "../usePageFactory";
 import Panel from "./Panel";
-import { RegisteredFieldsMap } from "../..";
+import { RegisteredFieldsMap } from "../../PagesNavigator";
 import PageNavigationContext from "../PageNavigationContext";
 import type { MediaProps, PassMixedProps } from "../../../../Pass";
 import TabsList from "./TabsList";
