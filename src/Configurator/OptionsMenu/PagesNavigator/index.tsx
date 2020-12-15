@@ -99,7 +99,7 @@ export default class PagesNavigator extends React.Component<NavigatorProps, Navi
 					requestPageCreation: this.requestPageCreation
 				}}
 			>
-				<div className="pages-navigator" style={{ transform: `translate(-${this.state.pagesHierarchy.length * 100}%)` }}>
+				<div id="pages-navigator" style={{ transform: `translate(-${this.state.pagesHierarchy.length * 100}%)` }}>
 					<div className="page" key="panel-depth0">
 						<PanelsPage
 							selectedFieldID={this.props.selectedFieldID}

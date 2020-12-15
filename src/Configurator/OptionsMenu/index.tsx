@@ -1,5 +1,4 @@
 import * as React from "react";
-import "./style.less";
 import { FieldDetails } from "./pages/PanelsPage/Panel";
 import PagesNavigator from "./PagesNavigator";
 import { DataGroup } from "./pages/PanelsPage";
@@ -19,16 +18,14 @@ interface OptionsMenuProps {
 
 export default function OptionsMenu(props: OptionsMenuProps) {
 	return (
-		<div className="options-menu">
-			<PagesNavigator
-				selectedFieldID={props.selection}
-				cancelFieldSelection={props.cancelFieldSelection}
-				fields={props.registeredFields}
-				onValueChange={props.onValueChange}
-				data={props.data}
-				requestExport={props.requestExport}
-				onMediaEditRequest={props.onMediaEditRequest}
-			/>
-		</div>
+		<PagesNavigator
+			selectedFieldID={props.selection}
+			cancelFieldSelection={props.cancelFieldSelection}
+			fields={props.registeredFields}
+			onValueChange={props.onValueChange}
+			data={props.data}
+			requestExport={props.requestExport}
+			onMediaEditRequest={props.onMediaEditRequest}
+		/>
 	);
 }
