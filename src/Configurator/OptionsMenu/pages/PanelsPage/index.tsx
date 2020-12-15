@@ -28,6 +28,16 @@ export default function PanelsPage(props: Props) {
 	const [selectedTabIndex, setSelectedTabIndex] = React.useState(0);
 	const [activePanel, setActivePanel] = React.useState<DataGroup>(undefined);
 
+	const onWheelEventHandler = React.useCallback((event: React.WheelEvent<HTMLDivElement>) => {
+		const { scrollHeight, offsetHeight, scrollTop, parentElement } = event.currentTarget;
+
+		if (scrollHeight - offsetHeight !== Math.floor(scrollTop)) {
+			parentElement.classList.add("not-enough");
+		} else {
+			parentElement.classList.remove("not-enough");
+		}
+	}, []);
+
 	const exclusivePanelActivation = React.useRef((group: DataGroup) => {
 		setActivePanel(currentActivePanel =>
 			currentActivePanel !== group && group || null
@@ -82,7 +92,7 @@ export default function PanelsPage(props: Props) {
 				onSelect={setSelectedTabIndex}
 			/>
 			<div className="list-element">
-				<div className="panels-list">
+				<div className="panels-list" onWheel={onWheelEventHandler}>
 					{panels}
 				</div>
 			</div>

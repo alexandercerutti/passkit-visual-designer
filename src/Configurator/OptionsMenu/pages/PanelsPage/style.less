@@ -13,4 +13,21 @@
 		background-color: #282828;
 		.scrollableWithoutScrollbars(y);
 	}
+
+	&::after {
+		height: 60px;
+		bottom: 56px;
+		content: "";
+		position: absolute;
+		right: 0;
+		left: 0;
+		opacity: 0;
+		background: linear-gradient(to top, rgb(28 28 28) 0%, transparent 40%);
+		transition: opacity .5s ease-in-out;
+		pointer-events: none;
+	}
+
+	&.not-enough::after {
+		opacity: 1;
+	}
 }
