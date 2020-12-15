@@ -37,6 +37,15 @@ export default function PanelsPage(props: Props) {
 		}
 	}, []);
 
+	React.useEffect(() => {
+		if (!props.selectedFieldID) {
+			return;
+		}
+
+		// Selecting Data
+		setSelectedTabIndex(3);
+	}, [props.selectedFieldID]);
+
 	const context = React.useContext(PageNavigationContext);
 
 	const panels = Array.from(props.fields.entries())
