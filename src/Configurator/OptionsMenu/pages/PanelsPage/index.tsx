@@ -26,7 +26,6 @@ interface Props extends Partial<PageNavigation> {
 
 export default function PanelsPage(props: Props) {
 	const [selectedTabIndex, setSelectedTabIndex] = React.useState(0);
-	const [activePanel, setActivePanel] = React.useState<DataGroup>(undefined);
 
 	const onWheelEventHandler = React.useCallback((event: React.WheelEvent<HTMLDivElement>) => {
 		const { scrollHeight, offsetHeight, scrollTop, parentElement } = event.currentTarget;
@@ -37,30 +36,6 @@ export default function PanelsPage(props: Props) {
 			parentElement.classList.remove("not-enough");
 		}
 	}, []);
-
-	const exclusivePanelActivation = React.useRef((group: DataGroup) => {
-		setActivePanel(currentActivePanel =>
-			currentActivePanel !== group && group || null
-		);
-	});
-
-	React.useEffect(() => {
-		if (!props.selectedFieldID) {
-			// We don't want to close data menu if we come back
-			// from an auto-navigated page
-			return;
-		}
-
-		const isDataActive = (
-			props.fields
-				.get(DataGroup.DATA)
-				.map(entry => entry.name)
-				.includes(props.selectedFieldID) &&
-			DataGroup.DATA
-		);
-
-		setActivePanel(isDataActive);
-	}, [props.selectedFieldID]);
 
 	const context = React.useContext(PageNavigationContext);
 
