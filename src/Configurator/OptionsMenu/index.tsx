@@ -1,12 +1,12 @@
 import * as React from "react";
 import "./style.less";
-import PanelsPage, { DataGroup } from "../pages/PanelsPage";
-import PageNavigationContext from "../pages/PageNavigationContext";
-import { RequestPageCreationFunction, PageNavigation, ContextPropsGetter } from "../pages/usePageFactory";
-import { MediaProps, PassMixedProps } from "../../../Pass";
-import { ShareIcon } from "../pages/PanelsPage/icons";
-import { createClassName } from "../../../utils";
-import { FieldDetails } from "../pages/PanelsPage/Panel";
+import PanelsPage, { DataGroup } from "./pages/PanelsPage";
+import PageNavigationContext from "./pages/PageNavigationContext";
+import { RequestPageCreationFunction, PageNavigation, ContextPropsGetter } from "./pages/usePageFactory";
+import { MediaProps, PassMixedProps } from "../../Pass";
+import { ShareIcon } from "./pages/PanelsPage/icons";
+import { createClassName } from "../../utils";
+import { FieldDetails } from "./pages/PanelsPage/Panel";
 
 export type RegisteredFieldsMap = Map<DataGroup, FieldDetails[]>;
 
@@ -24,7 +24,7 @@ interface NavigatorProps {
 	onMediaEditRequest(mediaName: keyof MediaProps): void;
 }
 
-export default class PagesNavigator extends React.Component<NavigatorProps, NavigatorState> implements PageNavigation {
+export default class OptionsMenu extends React.Component<NavigatorProps, NavigatorState> implements PageNavigation {
 	constructor(props: NavigatorProps) {
 		super(props);
 
@@ -95,13 +95,13 @@ export default class PagesNavigator extends React.Component<NavigatorProps, Navi
 		});
 
 		return (
-			<PageNavigationContext.Provider
-				value={{
-					requestPageClosing: this.requestPageClosing,
-					requestPageCreation: this.requestPageCreation
-				}}
-			>
-				<div id="pages-navigator" style={{ transform: `translate(-${this.state.pagesHierarchy.length * 100}%)` }}>
+			<div id="pages-navigator" style={{ transform: `translate(-${this.state.pagesHierarchy.length * 100}%)` }}>
+				<PageNavigationContext.Provider
+					value={{
+						requestPageClosing: this.requestPageClosing,
+						requestPageCreation: this.requestPageCreation
+					}}
+				>
 					<div className="page" key="panel-depth0">
 						<PanelsPage
 							selectedFieldID={this.props.selectedFieldID}
@@ -116,8 +116,8 @@ export default class PagesNavigator extends React.Component<NavigatorProps, Navi
 						</div>
 					</div>
 					{pages}
-				</div>
-			</PageNavigationContext.Provider>
+				</PageNavigationContext.Provider >
+			</div >
 		);
 	}
 }

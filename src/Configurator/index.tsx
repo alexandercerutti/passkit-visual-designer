@@ -323,8 +323,8 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 				<div className="config-panel">
 					<OptionsMenu
 						data={allPassProps}
-						selection={selectedFieldId}
-						registeredFields={registeredFields}
+						selectedFieldID={selectedFieldId}
+						fields={registeredFields}
 						onValueChange={this.onValueChange}
 						cancelFieldSelection={this.onVoidClick}
 						requestExport={canBeExported && this.requestExport || null}
