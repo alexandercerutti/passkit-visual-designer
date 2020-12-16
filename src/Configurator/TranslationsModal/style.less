@@ -1,0 +1,97 @@
+@import (reference) "../../App/common.less";
+@import (reference) "../ModalBase/common.less";
+
+.modal {
+	& > .modal-content#translations {
+		top: 18%;
+		bottom: 18%;
+		left: 8%;
+		right: 8%;
+		background-color: @modal-background-color;
+		flex-direction: column;
+		padding: 0 30px;
+
+		& > #translations-content {
+			flex-grow: 1;
+			display: grid;
+			grid-template-columns: 1fr 1fr 50px;
+			grid-template-rows: repeat(auto-fill, 50px);
+			gap: 3px;
+
+			& > header {
+				display: grid;
+				grid-column: ~"1 / 4";
+				height: 100%;
+				grid-template-columns: 1fr 1fr 50px;
+				border-bottom: 1px solid #212121;
+
+				& > div {
+					grid-row: ~"1 / 2";
+					display: flex;
+					justify-content: center;
+					align-items: center;
+				}
+			}
+
+			& > input {
+				background: #292929;
+				color: #e6e6e6;
+				border: none;
+				border-bottom: 1px solid transparent;
+				padding-left: 10px;
+				cursor: pointer;
+				transition: background .3s ease-in-out;
+				outline: none;
+
+				&:nth-child(2n) {
+					grid-column: ~"1 / 2";
+				}
+
+				&:nth-child(2n+1) {
+					grid-column: ~"2 / 3";
+				}
+
+				&:hover {
+					background: #252525;
+				}
+
+				&:focus {
+					background: #252525;
+					border-bottom-color: #464646;
+				}
+			}
+		}
+
+		& > footer {
+			flex-shrink: 0;
+
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			border-top: 0.5px solid #292929;
+			height: 50px;
+			margin: 0 -30px;
+			padding: 0 20px; /* small sizes */
+
+			& > .the-switcher {
+				margin-left: 0;
+			}
+
+			& > #select-lang {
+				cursor: pointer;
+
+				&:after {
+					content: "";
+					display: inline-block;
+					width: 0;
+					height: 0;
+					border-style: solid;
+					border-width: 5px 5px 0 5px;
+					border-color: #e6e6e6 transparent transparent transparent;
+					vertical-align: middle;
+					margin-left: 5px;
+				}
+			}
+		}
+	}
+}
