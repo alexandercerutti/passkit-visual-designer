@@ -1,11 +1,10 @@
 import * as React from "react";
 import "./style.less";
-import Modal from "../ModalBase";
+import Modal, { ModalProps } from "../ModalBase";
 import { languages } from "./languages";
 import { createClassName } from "../../utils";
 
-interface Props {
-	closeModal(): void;
+interface Props extends Omit<ModalProps, "contentUniqueID"> {
 	currentLanguage: string;
 	usedLanguages: Set<string>;
 	selectLanguage(languageCode: string): void;
