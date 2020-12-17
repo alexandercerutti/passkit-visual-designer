@@ -19,6 +19,8 @@ import { exportPass } from "./exportPass";
 import MediaModal from "./MediaModal";
 import { getArrayBuffer } from "../utils";
 import LanguageModal from "./LanguageModal";
+import TranslationsModal from "./TranslationsModal";
+import { v1 as uuid } from "uuid";
 import 'prismjs/components/prism-json';
 import "prismjs/plugins/line-numbers/prism-line-numbers";
 import "prismjs/plugins/line-numbers/prism-line-numbers.css";
@@ -64,6 +66,7 @@ interface ConfiguratorState {
 	canBeExported: boolean;
 	showMediaModalForMedia: keyof MediaProps;
 	showLanguageModal: boolean;
+	showTranslationsModal: boolean;
 }
 
 class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState> implements InteractionContextMethods {
@@ -84,6 +87,7 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 		this.onMediaCollectionUse = this.onMediaCollectionUse.bind(this);
 		this.onMediaExportStateChange = this.onMediaExportStateChange.bind(this);
 		this.toggleLanguageModal = this.toggleLanguageModal.bind(this);
+		this.toggleTranslationsModal = this.toggleTranslationsModal.bind(this);
 		this.onActiveMediaLanguageChange = this.onActiveMediaLanguageChange.bind(this);
 		this.onTranslationEdit = this.onTranslationEdit.bind(this);
 		this.onTranslationAdd = this.onTranslationAdd.bind(this);
@@ -98,6 +102,7 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 			canBeExported: false,
 			showMediaModalForMedia: null,
 			showLanguageModal: false,
+			showTranslationsModal: false,
 		};
 	}
 
@@ -224,6 +229,10 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 		this.StateToggler("showExportModal");
 	}
 
+	toggleTranslationsModal() {
+		this.StateToggler("showTranslationsModal");
+	}
+
 	toggleMediaModal(mediaName: keyof MediaProps) {
 		this.setState((previous) => ({
 			showMediaModalForMedia: previous.showMediaModalForMedia ? null : mediaName
@@ -309,6 +318,7 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 		const {
 			projectOptions: { title, activeMediaLanguage },
 			usedLanguages,
+			translations,
 			passProps,
 			media
 		} = this.props;
@@ -321,7 +331,8 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 			canBeExported,
 			showMediaModalForMedia,
 			showExportModal,
-			showLanguageModal
+			showLanguageModal,
+			showTranslationsModal,
 		} = this.state;
 
 		const allPassProps = Object.assign({},
@@ -381,6 +392,17 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 						useCollection={this.onMediaCollectionUse}
 						setMediaExportState={this.onMediaExportStateChange}
 						closeModal={() => this.toggleMediaModal(showMediaModalForMedia)}
+					/>
+				}
+				{showTranslationsModal &&
+					<TranslationsModal
+						closeModal={this.toggleTranslationsModal}
+						availableTranslations={translations?.[activeMediaLanguage]}
+						currentLanguage={activeMediaLanguage}
+						requestForLanguageChange={this.toggleLanguageModal}
+						editTranslation={this.onTranslationEdit}
+						addTranslation={this.onTranslationAdd}
+						removeTranslation={this.onTranslationRemove}
 					/>
 				}
 				{showLanguageModal &&
