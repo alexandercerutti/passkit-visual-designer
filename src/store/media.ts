@@ -10,13 +10,13 @@ import { CollectionSet, initialState, MediaCollection, State } from ".";
 
 // ************************************************************************ //
 
-export const CREATE = "CREATE_MEDIA_SET";
-export const INIT = "INIT_MEDIA_SET";
-export const DESTROY = "DESTROY_MEDIA_SET";
-export const EDIT = "EDIT";
-export const EDIT_COLLECTION = "EDIT_COLLECTION";
-export const SET_EXPORT_STATE = "SET_EXPORT_STATE";
-export const SET_ACTIVE_COLLECTION = "SET_ACTIVE_COLLECTION";
+export const CREATE = "media/CREATE_SET";
+export const INIT = "media/INIT_SET";
+export const DESTROY = "media/DESTROY_SET";
+export const EDIT = "media/EDIT";
+export const EDIT_COLLECTION = "media/EDIT_COLLECTION";
+export const SET_EXPORT_STATE = "media/SET_EXPORT_STATE";
+export const SET_ACTIVE_COLLECTION = "media/SET_ACTIVE_COLLECTION";
 
 // ************************************************************************ //
 

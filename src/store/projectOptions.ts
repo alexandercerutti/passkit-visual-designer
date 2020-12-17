@@ -12,7 +12,7 @@ export type POValues = State["projectOptions"][POKeys];
 
 // ************************************************************************ //
 
-export const SET_OPTION = "SET_OPTION";
+export const SET_OPTION = "options/SET_OPTION";
 
 // ************************************************************************ //
 

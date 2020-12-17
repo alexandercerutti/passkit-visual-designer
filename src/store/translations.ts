@@ -1,6 +1,5 @@
 import { Action } from "redux";
-import { MediaProps } from "../Pass";
-import { CollectionSet, initialState, MediaCollection, State } from ".";
+import { initialState, State } from ".";
 
 // ************************************************************************ //
 
@@ -10,10 +9,10 @@ import { CollectionSet, initialState, MediaCollection, State } from ".";
 
 // ************************************************************************ //
 
-export const ADD = "ADD_TRANSLATION";
-export const REMOVE = "REMOVE_TRANSLATION";
-export const EDIT = "EDIT";
-export const SET_EXPORT_STATE = "SET_EXPORT_STATE";
+export const ADD = "translations/ADD";
+export const REMOVE = "translations/REMOVE";
+export const EDIT = "translations/EDIT";
+export const SET_EXPORT_STATE = "translations/SET_EXPORT_STATE";
 
 // ************************************************************************ //
 

@@ -12,9 +12,9 @@ import { initialState, State } from ".";
 
 // ************************************************************************ //
 
-export const SET_PROP = "SET_PROP";
-export const SET_PASS_KIND = "SET_PASS_KIND";
-export const SET_PROPS = "SET_PROPS_BATCH";
+export const SET_PROP = "pass/SET_PROP";
+export const SET_PASS_KIND = "pass/SET_KIND";
+export const SET_PROPS = "pass/SET_PROPS_BATCH";
 
 // ************************************************************************ //
 
