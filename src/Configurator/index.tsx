@@ -8,7 +8,7 @@ import { FieldKind, PassKind } from "../model";
 import { InteractionContextMethods } from "../Pass/InteractionContext";
 import { connect } from "react-redux";
 import { MediaProps, PassMixedProps } from "../Pass";
-import type { CollectionSet, LocalizedMediaGroup, MediaCollection, MediaSet, State } from "../store";
+import type { CollectionSet, MediaCollection, MediaSet, State } from "../store";
 import * as Store from "../store";
 import DefaultFields from "./staticFields";
 import { DataGroup } from "./OptionsMenu/pages/PanelsPage";
@@ -40,13 +40,18 @@ interface DispatchProps {
 	setMediaActiveCollection: typeof Store.Media.SetActiveCollection;
 	editCollection: typeof Store.Media.EditCollection;
 	setMediaExportState: typeof Store.Media.SetExportState;
+	setTranslationExportState: typeof Store.Translations.SetExportState;
+	addTranslation: typeof Store.Translations.Add;
+	removeTranslation: typeof Store.Translations.Remove;
+	editTranslation: typeof Store.Translations.Edit;
 }
 
 interface ConfiguratorStore {
-	passProps: PassMixedProps;
-	media: LocalizedMediaGroup;
+	passProps: State["pass"];
+	media: State["media"];
 	usedLanguages: Set<string>;
 	projectOptions: State["projectOptions"];
+	translations: State["translations"];
 }
 
 interface ConfiguratorProps extends ConfiguratorStore, DispatchProps, RouteComponentProps<any> { }
@@ -80,6 +85,9 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 		this.onMediaExportStateChange = this.onMediaExportStateChange.bind(this);
 		this.toggleLanguageModal = this.toggleLanguageModal.bind(this);
 		this.onActiveMediaLanguageChange = this.onActiveMediaLanguageChange.bind(this);
+		this.onTranslationEdit = this.onTranslationEdit.bind(this);
+		this.onTranslationAdd = this.onTranslationAdd.bind(this);
+		this.onTranslationRemove = this.onTranslationRemove.bind(this);
 
 		this.state = {
 			selectedFieldId: null,
@@ -258,6 +266,26 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 		);
 	}
 
+	onTranslationEdit(id: string, placeholder: string, value: string) {
+		this.props.editTranslation(
+			this.props.projectOptions.activeMediaLanguage,
+			id,
+			placeholder,
+			value
+		);
+	}
+
+	onTranslationAdd() {
+		this.props.addTranslation(this.props.projectOptions.activeMediaLanguage, uuid());
+	}
+
+	onTranslationRemove(id: string) {
+		this.props.removeTranslation(
+			this.props.projectOptions.activeMediaLanguage,
+			id
+		);
+	}
+
 	async requestExport() {
 		// @TODO: check requirements for exporting
 		// so all the basic fields and so on.
@@ -415,7 +443,7 @@ declare const isDevelopment: boolean;
 
 export default withRouter(connect(
 	(state: State): ConfiguratorStore => {
-		const { pass, media, projectOptions } = state;
+		const { pass, media, projectOptions, translations } = state;
 
 		const fallbackDevelopmentPassMetadata = !pass.kind && isDevelopment && {
 			transitType: PKTransitType.Boat,
@@ -434,6 +462,7 @@ export default withRouter(connect(
 		return {
 			passProps: Object.assign(fallbackDevelopmentPassMetadata, pass),
 			media,
+			translations,
 			usedLanguages,
 			projectOptions
 		};
@@ -443,7 +472,11 @@ export default withRouter(connect(
 		setProjectOption: Store.Options.Set,
 		setMediaActiveCollection: Store.Media.SetActiveCollection,
 		editCollection: Store.Media.EditCollection,
-		setMediaExportState: Store.Media.SetExportState
+		setMediaExportState: Store.Media.SetExportState,
+		setTranslationExportState: Store.Translations.SetExportState,
+		addTranslation: Store.Translations.Add,
+		removeTranslation: Store.Translations.Remove,
+		editTranslation: Store.Translations.Edit,
 	}
 )(Configurator));
 
