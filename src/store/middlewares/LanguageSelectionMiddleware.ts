@@ -20,14 +20,16 @@ export default function LanguageSelectionMiddleware(store: MiddlewareAPI<Dispatc
 		type Thunks =
 			| Store.Media.Actions.Destroy
 			| Store.Media.Actions.Create
-			| Store.Options.Actions.Set;
+			| Store.Options.Actions.Set
+			| Store.Translations.Actions.Init
+			| Store.Translations.Actions.Destroy;
 
 		const thunks: Thunks[] = [
 			action
 		];
 
 		const state = store.getState();
-		const { media, projectOptions: { activeMediaLanguage } } = state;
+		const { media, translations, projectOptions: { activeMediaLanguage } } = state;
 
 		if (!(action.value in media)) {
 			/** We have to create an empty media object */
@@ -42,6 +44,16 @@ export default function LanguageSelectionMiddleware(store: MiddlewareAPI<Dispatc
 		if (shouldDestroyCurrentMediaSet) {
 			/** Current active media language have no media setted in it. Deleting */
 			thunks.push(Store.Media.Destroy(activeMediaLanguage));
+		}
+
+		if (!(action.value in translations)) {
+			thunks.push(Store.Translations.Init(action.value));
+		}
+
+		const shouldDestroyCurrentTranslation = !Object.keys(translations[activeMediaLanguage].translations).length;
+
+		if (shouldDestroyCurrentTranslation) {
+			thunks.push(Store.Translations.Destroy(activeMediaLanguage));
 		}
 
 		return next((dispatch) => thunks.forEach(dispatch));
