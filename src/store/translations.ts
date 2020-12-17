@@ -32,16 +32,14 @@ export default function reducer(state = initialState.translations, action: Trans
 	switch (action.type) {
 		case ADD: {
 			const newState = { ...state };
-			newState
-			/* 			newState[action.mediaLanguage] = {};
-			 */
+			newState[action.translationLanguage].translations[action.translationID] = ["", ""];
 			return newState;
 		};
 
 
 		case REMOVE: {
 			const newState = { ...state };
-			/* 			delete newState[action.mediaLanguage];*/
+			delete newState[action.translationLanguage].translations[action.translationID];
 
 			return newState;
 		};
@@ -49,33 +47,20 @@ export default function reducer(state = initialState.translations, action: Trans
 		case EDIT: {
 			const newState = { ...state };
 
-			/*	const selectedLanguage = newState[action.mediaLanguage];
-				const selectedMediaCollections = selectedLanguage[action.mediaName];
-
-				selectedMediaCollections.activeCollectionID = action.activeCollectionID;
-
-				/**
-				 * Updating store collections
-				 * and deleting the deleted ones.
-				 */
-
-			/*	for (const [collID, collection] of Object.entries(action.collections)) {
-					if (!collection) {
-						delete selectedMediaCollections.collections[collID];
-					} else {
-						selectedMediaCollections.collections[collID] = collection;
-					}
-				} */
+			newState[action.translationLanguage].translations[action.translationID] = [
+				action.placeholderContent,
+				action.valueContent
+			];
 
 			return newState;
 		};
 
 		case SET_EXPORT_STATE: {
-			/* 			const newState = { ...state };
-						const selectedMedia = newState[action.mediaLanguage][action.mediaName];
-						selectedMedia.enabled = action.enabled;
+			const newState = { ...state };
+			const selectedMedia = newState[action.translationLanguage];
+			selectedMedia.enabled = action.enabled;
 
-						return newState; */
+			return newState;
 		};
 
 		default: {
@@ -92,9 +77,10 @@ export default function reducer(state = initialState.translations, action: Trans
 
 // ************************************************************************ //
 
-export function Add(translationLanguage: string): Actions.Add {
+export function Add(translationLanguage: string, translationID: string): Actions.Add {
 	return {
 		type: ADD,
+		translationID,
 		translationLanguage,
 	};
 }
@@ -144,6 +130,7 @@ export declare namespace Actions {
 	}
 
 	interface Add extends Action<typeof ADD> {
+		translationID: string;
 		translationLanguage: string;
 	}
 
