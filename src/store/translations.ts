@@ -10,6 +10,8 @@ import { initialState, State } from ".";
 // ************************************************************************ //
 
 export const ADD = "translations/ADD";
+export const INIT = "translations/INIT";
+export const DESTROY = "translations/DESTROY";
 export const REMOVE = "translations/REMOVE";
 export const EDIT = "translations/EDIT";
 export const SET_EXPORT_STATE = "translations/SET_EXPORT_STATE";
@@ -23,6 +25,8 @@ export const SET_EXPORT_STATE = "translations/SET_EXPORT_STATE";
 // ************************************************************************ //
 
 type TranslationsActions =
+	| Actions.Init
+	| Actions.Destroy
 	| Actions.Edit
 	| Actions.SetExportState
 	| Actions.Add
@@ -36,6 +40,21 @@ export default function reducer(state = initialState.translations, action: Trans
 			return newState;
 		};
 
+		case INIT: {
+			const newState = { ...state };
+			newState[action.translationLanguage] = {
+				enabled: true,
+				translations: {},
+			};
+
+			return newState;
+		};
+
+		case DESTROY: {
+			const newState = { ...state };
+			delete newState[action.translationLanguage];
+			return newState;
+		}
 
 		case REMOVE: {
 			const newState = { ...state };
@@ -104,6 +123,20 @@ export function Edit(translationLanguage: string, translationID: string, placeho
 	};
 }
 
+export function Init(translationLanguage: string): Actions.Init {
+	return {
+		type: INIT,
+		translationLanguage
+	};
+}
+
+export function Destroy(translationLanguage: string): Actions.Destroy {
+	return {
+		type: DESTROY,
+		translationLanguage,
+	};
+}
+
 export function SetExportState(translationLanguage: string, enabled: boolean): Actions.SetExportState {
 	return {
 		type: SET_EXPORT_STATE,
@@ -137,6 +170,14 @@ export declare namespace Actions {
 	interface Remove extends Action<typeof REMOVE> {
 		translationLanguage: string;
 		translationID: string;
+	}
+
+	interface Init extends Action<typeof INIT> {
+		translationLanguage: string;
+	}
+
+	interface Destroy extends Action<typeof DESTROY> {
+		translationLanguage: string;
 	}
 
 	interface SetExportState extends Action<typeof SET_EXPORT_STATE> {
