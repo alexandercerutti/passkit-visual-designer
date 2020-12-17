@@ -7,6 +7,12 @@ export const initialState: State = {
 		// we would need to fire a Store.Media.Create action
 		default: {}
 	},
+	translations: {
+		default: {
+			enabled: true,
+			translations: {}
+		}
+	},
 	projectOptions: {
 		activeMediaLanguage: "default"
 	},
@@ -15,11 +21,23 @@ export const initialState: State = {
 export interface State {
 	pass: Partial<PassMixedProps>;
 	media: LocalizedMediaGroup;
+	translations: LocalizedTranslationsGroup;
 	projectOptions: {
 		title?: string,
 		activeMediaLanguage: string;
 	};
 }
+
+export type LocalizedTranslationsGroup = {
+	[languageOrDefault: string]: TranslationsSet;
+}
+
+export type TranslationsSet = {
+	enabled: boolean;
+	translations: {
+		[translationCoupleID: string]: [string?, string?];
+	};
+};
 
 export type LocalizedMediaGroup = {
 	[languageOrDefault: string]: MediaSet;
@@ -27,7 +45,7 @@ export type LocalizedMediaGroup = {
 
 export type MediaSet = {
 	[K in keyof MediaProps]: CollectionSet;
-}
+};
 
 export type CollectionSet = {
 	activeCollectionID: string;
@@ -35,7 +53,7 @@ export type CollectionSet = {
 	collections: {
 		[collectionID: string]: MediaCollection;
 	};
-}
+};
 
 export interface MediaCollection {
 	name: string;

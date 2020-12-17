@@ -29,7 +29,6 @@ export const SET_ACTIVE_COLLECTION = "SET_ACTIVE_COLLECTION";
 type MediaActions =
 	| Actions.Edit
 	| Actions.SetActiveCollection
-	| Actions.SetActiveCollection
 	| Actions.SetExportState
 	| Actions.Create
 	| Actions.Destroy
