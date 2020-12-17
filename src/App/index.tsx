@@ -17,7 +17,7 @@ const store = createStore(Store.reducers,
 	Store.initialState,
 	composeWithDevTools(
 		applyMiddleware(
-			Store.middlewares.LanguageOperationsEnsureMediaMiddleware,
+			Store.middlewares.LanguageOperationsEnsureExistingMiddleware,
 			Store.middlewares.CollectionEditUrlMiddleware,
 			Store.middlewares.CollectionActivationMiddleware,
 			Store.middlewares.LanguageSelectionMiddleware,
