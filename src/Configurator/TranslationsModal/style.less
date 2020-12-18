@@ -15,8 +15,8 @@
 			flex-grow: 1;
 			display: grid;
 			grid-template-columns: 1fr 1fr 50px;
-			grid-template-rows: repeat(auto-fill, 50px);
-			gap: 3px;
+			grid-template-rows: repeat(auto-fill, 40px);
+			gap: 5px 2px;
 
 			& > header {
 				display: grid;
@@ -37,17 +37,19 @@
 				background: #292929;
 				color: #e6e6e6;
 				border: none;
-				border-bottom: 1px solid transparent;
+				border-bottom: 1px solid #3c3c3c;
 				padding-left: 10px;
 				cursor: pointer;
-				transition: background .3s ease-in-out;
+				transition: all .3s ease-in-out;
 				outline: none;
 
 				&:nth-child(2n) {
+					border-radius: 3px 0px 0px 3px;
 					grid-column: ~"1 / 2";
 				}
 
 				&:nth-child(2n+1) {
+					border-radius: 0px 3px 3px 0px;
 					grid-column: ~"2 / 3";
 				}
 
