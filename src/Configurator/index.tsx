@@ -268,11 +268,11 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 		);
 	}
 
-	onMediaExportStateChange(enable: boolean) {
+	onMediaExportStateChange(enabled: boolean) {
 		this.props.setMediaExportState(
 			this.state.showMediaModalForMedia,
 			this.props.projectOptions.activeMediaLanguage,
-			enable
+			enabled
 		);
 	}
 

@@ -11,9 +11,9 @@ interface Props {
 	media: CollectionSet;
 	isEditMode: boolean;
 	currentLanguage: string;
-	onCollectionUse(collectionID: string): void;
-	onCollectionEditSelect(collectionID: string): void;
-	onMediaExportStateToggle(enabled: boolean): void;
+	useSelectedCollection(collectionID: string): void;
+	editSelectedCollection(collectionID: string): void;
+	setMediaExportState(enabled: boolean): void;
 	performCollectionsOperation(operation: CollectionEditOperation, collectionID?: string): void;
 	requestForLanguageChange(): void;
 }
@@ -24,7 +24,7 @@ export default function CollectionsList(props: Props) {
 	});
 
 	const collectionEditClickHandler = React.useCallback((collectionId) => {
-		props.onCollectionEditSelect(collectionId);
+		props.editSelectedCollection(collectionId);
 	}, [props.media]);
 
 	const collectionDeleteClickHandler = React.useCallback((collectionID) => {
@@ -88,7 +88,7 @@ export default function CollectionsList(props: Props) {
 
 			return (
 				<div className="collection" key={`${collection.name}-collection${index}`}>
-					<div className={previewClassName} onClick={() => resolutionsIDs.length && props.onCollectionUse(collID)}>
+					<div className={previewClassName} onClick={() => resolutionsIDs.length && props.useSelectedCollection(collID)}>
 						{previewContent}
 						<div className={collectionsClassName} onClick={(e) => void e.stopPropagation()}>
 							<EditIcon id="edit-coll" onClick={(e) => collectionEditClickHandler(collID)} />
@@ -117,7 +117,7 @@ export default function CollectionsList(props: Props) {
 				<Switcher
 					labelPosition="after"
 					checked={props.media?.enabled ?? true}
-					onToggle={props.onMediaExportStateToggle}
+					onToggle={props.setMediaExportState}
 				>
 					Export
 				</Switcher>

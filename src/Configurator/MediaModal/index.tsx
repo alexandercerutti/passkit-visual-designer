@@ -24,7 +24,7 @@ interface Props extends Omit<ModalProps, "contentUniqueID"> {
 	passProps: MediaProps;
 	setMediaExportState(enable: boolean): void;
 	useCollection(collectionID: string): void;
-	updateCollection(collectionID: string, collection: MediaCollection, editHints?: number): void;
+	updateCollection(collectionID: string, collection: MediaCollection): void;
 	requestForLanguageChange(): void;
 }
 
@@ -190,9 +190,9 @@ export default class MediaModal extends React.Component<Props, State> {
 								<CollectionsList
 									media={this.props.mediaContent}
 									isEditMode={this.state.isEditMode}
-									onMediaExportStateToggle={this.props.setMediaExportState}
-									onCollectionEditSelect={this.onCollectionEditSelect}
-									onCollectionUse={this.onCollectionUse}
+									setMediaExportState={this.props.setMediaExportState}
+									editSelectedCollection={this.onCollectionEditSelect}
+									useSelectedCollection={this.onCollectionUse}
 									performCollectionsOperation={this.onCollectionEditOperation}
 									currentLanguage={this.props.currentLanguage}
 									requestForLanguageChange={this.props.requestForLanguageChange}
