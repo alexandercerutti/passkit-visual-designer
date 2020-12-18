@@ -29,8 +29,8 @@ export default function TranslationsModal(props: Props) {
 		props.editTranslation(id, ...newPayload);
 	}, [props.availableTranslations]);
 
-	const translations = Object.entries(props.availableTranslations.translations).map(([id, [placeholder, value]]) => (
-		<React.Fragment key={`trl-${placeholder}`}>
+	const translations = Object.entries(props.availableTranslations.translations).map(([id, [placeholder, value]], index) => (
+		<React.Fragment key={`trl-r${index}`}>
 			<input type="text" value={placeholder || ""} onChange={(e) => onInputValueChange(id, TranslationChangePlaceholder, e.currentTarget.value)} />
 			<input type="text" value={value || ""} onChange={(e) => onInputValueChange(id, TranslationChangeValue, e.currentTarget.value)} />
 		</React.Fragment>
