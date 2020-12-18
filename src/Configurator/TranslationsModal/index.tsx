@@ -1,6 +1,7 @@
 import * as React from "react";
 import { TranslationsSet } from "../../store";
 import Modal, { ModalProps } from "../ModalBase";
+import { Switcher } from "../Switcher";
 import "./style.less";
 
 const TranslationChangePlaceholder = 0b001;
@@ -14,6 +15,7 @@ interface Props extends Omit<ModalProps, "contentUniqueID"> {
 	editTranslation(id: string, placeholder: string, value: string): void;
 	removeTranslation(id: string): void;
 	addTranslation(): void;
+	setExportState(enabled: boolean): void;
 }
 
 export default function TranslationsModal(props: Props) {
@@ -47,6 +49,13 @@ export default function TranslationsModal(props: Props) {
 				{translations}
 			</div>
 			<footer>
+				<Switcher
+					labelPosition="after"
+					onToggle={props.setExportState}
+					checked={props.availableTranslations.enabled}
+				>
+					Export
+				</Switcher>
 				<span
 					id="select-lang"
 					onClick={props.requestForLanguageChange}

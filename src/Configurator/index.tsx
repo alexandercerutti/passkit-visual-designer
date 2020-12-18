@@ -92,6 +92,7 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 		this.onTranslationEdit = this.onTranslationEdit.bind(this);
 		this.onTranslationAdd = this.onTranslationAdd.bind(this);
 		this.onTranslationRemove = this.onTranslationRemove.bind(this);
+		this.onTranslationExportStateChange = this.onTranslationExportStateChange.bind(this);
 
 		this.state = {
 			selectedFieldId: null,
@@ -295,6 +296,13 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 		);
 	}
 
+	onTranslationExportStateChange(enabled: boolean) {
+		this.props.setTranslationExportState(
+			this.props.projectOptions.activeMediaLanguage,
+			enabled
+		);
+	}
+
 	async requestExport() {
 		// @TODO: check requirements for exporting
 		// so all the basic fields and so on.
@@ -403,6 +411,7 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 						editTranslation={this.onTranslationEdit}
 						addTranslation={this.onTranslationAdd}
 						removeTranslation={this.onTranslationRemove}
+						setExportState={this.onTranslationExportStateChange}
 					/>
 				}
 				{showLanguageModal &&
