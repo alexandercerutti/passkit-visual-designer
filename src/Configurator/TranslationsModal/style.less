@@ -10,8 +10,44 @@
 		background-color: @modal-background-color;
 		flex-direction: column;
 
-		& > h2 {
-			padding: 0 30px;
+		& > header {
+			display: flex;
+			padding: 30px;
+			justify-content: space-between;
+			align-items: center;
+
+			& > h2 {
+				margin: 0;
+			}
+
+			& > svg {
+				width: 30px;
+				height: 30px;
+				fill: #333333;
+				cursor: pointer;
+
+				&:active path:first-child {
+					fill: #252525;
+				}
+
+				& path:nth-child(2) {
+					fill: #e6e6e6;
+				}
+
+				&[data-disabled="true"] {
+					pointer-events: none;
+
+					& path {
+						&:first-child {
+							fill: #1f1f1f;
+						}
+
+						&:nth-child(2) {
+							fill: #656565;
+						}
+					}
+				}
+			}
 		}
 
 		& > #translations-content {
