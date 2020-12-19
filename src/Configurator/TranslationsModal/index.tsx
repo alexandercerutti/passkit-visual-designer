@@ -2,6 +2,7 @@ import * as React from "react";
 import { TranslationsSet } from "../../store";
 import Modal, { ModalProps } from "../ModalBase";
 import { Switcher } from "../Switcher";
+import { DeleteFieldIcon } from "./icons";
 import "./style.less";
 
 const TranslationChangePlaceholder = 0b001;
@@ -35,6 +36,7 @@ export default function TranslationsModal(props: Props) {
 		<React.Fragment key={`trl-r${index}`}>
 			<input type="text" value={placeholder || ""} onChange={(e) => onInputValueChange(id, TranslationChangePlaceholder, e.currentTarget.value)} />
 			<input type="text" value={value || ""} onChange={(e) => onInputValueChange(id, TranslationChangeValue, e.currentTarget.value)} />
+			<DeleteFieldIcon onClick={() => props.removeTranslation(id)} />
 		</React.Fragment>
 	));
 

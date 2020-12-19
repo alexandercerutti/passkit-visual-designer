@@ -48,14 +48,14 @@
 				transition: all .3s ease-in-out;
 				outline: none;
 
-				&:nth-child(2n) {
-					border-radius: 3px 0px 0px 3px;
-					grid-column: ~"1 / 2";
-				}
-
-				&:nth-child(2n+1) {
+				&:nth-of-type(2n) {
 					border-radius: 0px 3px 3px 0px;
 					grid-column: ~"2 / 3";
+				}
+
+				&:nth-of-type(2n+1) {
+					border-radius: 3px 0px 0px 3px;
+					grid-column: ~"1 / 2";
 				}
 
 				&:hover {
@@ -65,6 +65,21 @@
 				&:focus {
 					background: #252525;
 					border-bottom-color: #464646;
+				}
+			}
+
+			& svg {
+				grid-column: ~"3 / 4";
+				fill: #9c0000;
+				width: 25px;
+				height: 25px;
+				justify-self: center;
+				align-self: center;
+				cursor: pointer;
+				transition: fill .3s ease-in-out;
+
+				&:hover {
+					fill: #bb0000;
 				}
 			}
 
