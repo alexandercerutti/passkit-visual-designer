@@ -1,18 +1,20 @@
 import JSZip from "jszip";
 import { PassMixedProps } from "../Pass";
-import type { LocalizedMediaGroup, MediaCollection, MediaSet } from "../store";
+import type { LocalizedMediaGroup, LocalizedTranslationsGroup, MediaCollection, MediaSet, TranslationsSet } from "../store";
 
-export async function exportPass(props: PassMixedProps, media: LocalizedMediaGroup) {
+export async function exportPass(props: PassMixedProps, media: LocalizedMediaGroup, translations: LocalizedTranslationsGroup) {
 	const zip = new JSZip();
 
 	/**
 	 * Creating physical files
 	 */
 
-	const languagesMap = new Map(Object.entries(media));
+	const mediaLanguagesMap = new Map(Object.entries(media));
+	const translationsLanguagesMap = new Map(Object.entries(translations));
 
 	[
-		...createPhysicalFilesBuffers(languagesMap),
+		...createPhysicalFilesBuffers(mediaLanguagesMap),
+		...createTranslationsFiles(translationsLanguagesMap),
 		createPassJSON(props)
 	]
 		.forEach(([name, value]) =>
@@ -54,6 +56,45 @@ function createPassJSON(passProps: PassMixedProps): [string, string] {
 	return ["pass.json", JSON.stringify(passJSONObject)];
 }
 
+function createTranslationsFiles(languagesTranslationsMap: Map<string, TranslationsSet>) {
+	const filesList: [string, string][] = [];
+	for (const [lang, set] of languagesTranslationsMap) {
+		if (lang !== "default" && set.enabled) {
+			let fileContent = "";
+
+			for (const id in set.translations) {
+				const [placeholder, value] = set.translations[id];
+
+				if (placeholder && value) {
+					fileContent += stringsTag`${placeholder} = ${value}`;
+				}
+			}
+
+			if (fileContent) {
+				const targetFile = `${lang === "default" ? "" : `${lang}.lproj/`}pass.strings`;
+				filesList.push([targetFile, fileContent]);
+			}
+		}
+	}
+
+	return filesList;
+}
+
+function stringsTag(strings: TemplateStringsArray, placeholder: string, value: string) {
+	return `"${escapeStringsCharacters(placeholder)}"${strings[1]}"${escapeStringsCharacters(value)}";\n`;
+}
+
+function escapeStringsCharacters(content: string) {
+	const sequences = ["\\", "\n", "\t", "\""];
+	let newContent = content;
+
+	for (let seq of sequences) {
+		newContent = newContent.replace(seq, `\\${seq}`);
+	}
+
+	return newContent;
+}
+
 /**
  * Loops through languages and medias to find the medias and
  * the selected collections that should be exported.
@@ -89,7 +130,7 @@ function createPhysicalFilesBuffers(languagesMediaMap: Map<string, MediaSet>): [
 
 type CollectionWithZipPath = [collection: MediaCollection, path: string] | undefined;
 type ExportGeneratorReturn = Generator<
-	any,
+	[string, ArrayBuffer][],
 	[string, ArrayBuffer][],
 	CollectionWithZipPath
 >;

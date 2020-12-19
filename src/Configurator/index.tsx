@@ -309,11 +309,13 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 
 		this.toggleExportModal();
 
-		const buffer = await exportPass(this.props.passProps, this.props.media);
+		const { projectOptions, passProps, media, translations } = this.props;
+
+		const buffer = await exportPass(passProps, media, translations);
 		const fileURL = URL.createObjectURL(buffer);
 
 		Object.assign(document.createElement("a"), {
-			download: `${this.props.projectOptions.title ?? "untitled project"}.zip`,
+			download: `${projectOptions.title ?? "untitled project"}.zip`,
 			href: fileURL
 		}).click();
 
