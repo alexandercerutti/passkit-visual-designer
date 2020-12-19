@@ -9,10 +9,15 @@
 		right: 8%;
 		background-color: @modal-background-color;
 		flex-direction: column;
-		padding: 0 30px;
+
+		& > h2 {
+			padding: 0 30px;
+		}
 
 		& > #translations-content {
 			flex-grow: 1;
+			padding: 0 30px;
+ 			position: relative;
 			display: grid;
 			grid-template-columns: 1fr 1fr 50px;
 			grid-template-rows: repeat(auto-fill, 40px);
@@ -62,6 +67,29 @@
 					border-bottom-color: #464646;
 				}
 			}
+
+			&::before {
+				content: "";
+				position: absolute;
+				top: 0;
+				right: 0;
+				bottom: 0;
+				left: 0;
+				z-index: 10;
+				background-color: rgba(0, 0, 0, 0.5);
+				opacity: 0;
+				transition: opacity .3s ease-in-out;
+				pointer-events: none;
+			}
+
+			&[data-disabled="true"] {
+				overflow-y: hidden !important;
+
+				&::before {
+					opacity: 1;
+					pointer-events: all;
+				}
+			}
 		}
 
 		& > footer {
@@ -72,8 +100,7 @@
 			align-items: center;
 			border-top: 0.5px solid #292929;
 			height: 50px;
-			margin: 0 -30px;
-			padding: 0 20px; /* small sizes */
+			padding: 0 30px; /* small sizes */
 
 			& > .the-switcher {
 				margin-left: 0;

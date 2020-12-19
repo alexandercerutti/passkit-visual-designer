@@ -41,7 +41,7 @@ export default function TranslationsModal(props: Props) {
 	return (
 		<Modal closeModal={props.closeModal} contentUniqueID="translations">
 			<h2>Translations</h2>
-			<div id="translations-content">
+			<div id="translations-content" data-disabled={!props.availableTranslations.enabled}>
 				<header>
 					<div>Placeholder</div>
 					<div>Value</div>
