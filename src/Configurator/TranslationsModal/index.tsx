@@ -34,8 +34,18 @@ export default function TranslationsModal(props: Props) {
 
 	const translations = Object.entries(props.availableTranslations.translations).map(([id, [placeholder, value]], index) => (
 		<React.Fragment key={`trl-r${index}`}>
-			<input type="text" value={placeholder || ""} onChange={(e) => onInputValueChange(id, TranslationChangePlaceholder, e.currentTarget.value)} />
-			<input type="text" value={value || ""} onChange={(e) => onInputValueChange(id, TranslationChangeValue, e.currentTarget.value)} />
+			<input
+				type="text"
+				value={placeholder || ""}
+				placeholder="Insert localizable string placeholder"
+				onChange={(e) => onInputValueChange(id, TranslationChangePlaceholder, e.currentTarget.value)}
+			/>
+			<input
+				type="text"
+				value={value || ""}
+				placeholder="Insert value for this language"
+				onChange={(e) => onInputValueChange(id, TranslationChangeValue, e.currentTarget.value)}
+			/>
 			<DeleteIcon onClick={() => props.removeTranslation(id)} />
 		</React.Fragment>
 	));
