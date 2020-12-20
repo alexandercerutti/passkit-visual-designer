@@ -20,31 +20,45 @@ interface Props extends Omit<ModalProps, "contentUniqueID"> {
 }
 
 export default function TranslationsModal(props: Props) {
-	const onInputValueChange = React.useCallback((id: string, changeOP: TranslationChangeOps, changedValue: string) => {
-		const newPayload: TranslationsSet["translations"][0] = [];
-
-		if (changeOP & TranslationChangeValue) {
-			newPayload.push(props.availableTranslations.translations[id][0], changedValue);
-		} else if (changeOP & TranslationChangePlaceholder) {
-			newPayload.push(changedValue, props.availableTranslations.translations[id][1]);
+	const onKeyDownHandler = React.useCallback(({ key, currentTarget }: React.KeyboardEvent<HTMLInputElement>) => {
+		if (key === "Enter" || key === "Escape") {
+			currentTarget.blur();
 		}
+	}, []);
 
-		props.editTranslation(id, ...newPayload);
+	const onBlurHandler = React.useCallback((id: string, changeOP: TranslationChangeOps, content: string) => {
+		const currentSet = props.availableTranslations.translations[id];
+
+		const placeholder = (
+			changeOP & TranslationChangePlaceholder &&
+			content !== currentSet[0] &&
+			content
+		) || currentSet[0];
+
+		const value = (
+			changeOP & TranslationChangeValue &&
+			content !== currentSet[1] &&
+			content
+		) || currentSet[1];
+
+		props.editTranslation(id, placeholder, value);
 	}, [props.availableTranslations]);
 
 	const translations = Object.entries(props.availableTranslations.translations).map(([id, [placeholder, value]], index) => (
 		<React.Fragment key={`trl-r${index}`}>
 			<input
 				type="text"
-				value={placeholder || ""}
+				defaultValue={placeholder || ""}
 				placeholder="Insert localizable string placeholder"
-				onChange={(e) => onInputValueChange(id, TranslationChangePlaceholder, e.currentTarget.value)}
+				onKeyDown={onKeyDownHandler}
+				onBlur={({ currentTarget }) => onBlurHandler(id, TranslationChangePlaceholder, currentTarget.value)}
 			/>
 			<input
 				type="text"
-				value={value || ""}
+				defaultValue={value || ""}
 				placeholder="Insert value for this language"
-				onChange={(e) => onInputValueChange(id, TranslationChangeValue, e.currentTarget.value)}
+				onKeyDown={onKeyDownHandler}
+				onBlur={({ currentTarget }) => onBlurHandler(id, TranslationChangeValue, currentTarget.value)}
 			/>
 			<DeleteIcon onClick={() => props.removeTranslation(id)} />
 		</React.Fragment>
