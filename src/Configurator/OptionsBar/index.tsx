@@ -1,11 +1,12 @@
 import * as React from "react";
 import "./style.less";
-import { ShowMoreIcon, EyeVisibleIcon, EyeInvisibleIcon } from "./icons";
+import { ShowMoreIcon, EyeVisibleIcon, EyeInvisibleIcon, TranslationsIcon } from "./icons";
 
 interface Props {
 	isEmptyVisible: boolean;
 	rotatePass(): void;
 	toggleEmptyVisibility(): void;
+	toggleTranslationsModal(): void;
 }
 
 export default function OptionsBar(props: Props) {
@@ -13,16 +14,21 @@ export default function OptionsBar(props: Props) {
 
 	return (
 		<div className="options-bar">
-			<EyeIcon
-				width="20px"
-				height="20px"
-				onClick={() => props.toggleEmptyVisibility()}
-			/>
-			<ShowMoreIcon
-				width="20px"
-				height="20px"
-				onClick={() => props.rotatePass()}
-			/>
+			<div title="Set current language translations">
+				<TranslationsIcon
+					onClick={props.toggleTranslationsModal}
+				/>
+			</div>
+			<div title="Hide empty fields">
+				<EyeIcon
+					onClick={() => props.toggleEmptyVisibility()}
+				/>
+			</div>
+			<div title="Show back fields">
+				<ShowMoreIcon
+					onClick={() => props.rotatePass()}
+				/>
+			</div>
 		</div>
 	);
 }

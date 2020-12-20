@@ -1,7 +1,7 @@
 .options-bar {
 	width: 100%;
 	display: flex;
-	justify-content: space-between;
+	justify-content: flex-end;
 	align-items: center;
 	box-sizing: border-box;
 	padding: 5px 10px;
@@ -19,15 +19,30 @@
 	animation-fill-mode: forwards;
 	animation-delay: 2s;
 
-	& svg {
-		cursor: pointer;
-		transition: fill .5s;
+	& div {
+		border: 2px solid #e6e6e6;
+		padding: 2px;
+		border-radius: 50%;
+		width: 22px;
+		height: 22px;
 
-		& > * {
+		& svg {
+			cursor: pointer;
 			transition: fill .5s;
+			border-radius: 50%;
+			width: 22px;
+			height: 22px;
+
+			& > path {
+				fill: #e6e6e6;
+			}
+
+			& > * {
+				transition: fill .5s;
+			}
 		}
 
-		&:hover, &:hover > * {
+		&:hover > svg > path {
 			fill: darken(#e6e6e6, 25%);
 		}
 	}
