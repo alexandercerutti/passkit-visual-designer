@@ -61,7 +61,7 @@ export function ModalNavigation(props: Props) {
 	}, [editing]);
 
 	const onKeyDownHandler = React.useRef((event: React.KeyboardEvent<HTMLInputElement>) => {
-		if (event.key === "Enter") {
+		if (event.key === "Enter" || event.key === "Escape") {
 			event.currentTarget.blur();
 			return;
 		}

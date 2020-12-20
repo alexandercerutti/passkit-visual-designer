@@ -113,7 +113,7 @@ export default class CollectionEditor extends React.Component<Props, State> {
 	// **************************** //
 
 	onKeyDownHandler({ key, currentTarget }: React.KeyboardEvent<HTMLInputElement>) {
-		if (key === "Enter") {
+		if (key === "Enter" || key === "Escape") {
 			currentTarget.blur();
 		}
 	}
