@@ -14,7 +14,7 @@ export default function OptionsBar(props: Props) {
 
 	return (
 		<div className="options-bar">
-			<div title="Set current language translations">
+			<div title="Open translations tool">
 				<TranslationsIcon
 					onClick={props.toggleTranslationsModal}
 				/>
