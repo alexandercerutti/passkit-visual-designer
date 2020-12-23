@@ -21,6 +21,7 @@ const store = createStore(Store.reducers,
 			Store.middlewares.CollectionEditUrlMiddleware,
 			Store.middlewares.CollectionActivationMiddleware,
 			Store.middlewares.LanguageSelectionMiddleware,
+			Store.middlewares.LocalForageSaveMiddleware,
 		),
 		applyMiddleware(thunk),
 	)

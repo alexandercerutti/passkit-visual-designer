@@ -2,3 +2,4 @@ export { default as CollectionActivationMiddleware } from "./CollectionActivatio
 export { default as CollectionEditUrlMiddleware } from "./CollectionEditUrlMiddleware";
 export { default as LanguageOperationsEnsureExistingMiddleware } from "./LanguageOperationsEnsureExistingMiddleware";
 export { default as LanguageSelectionMiddleware } from "./LanguageSelectionMiddleware";
+export { default as LocalForageSaveMiddleware } from "./LocalForageSaveMiddleware";

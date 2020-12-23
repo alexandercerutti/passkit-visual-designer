@@ -43,6 +43,7 @@
 	"dependencies": {
 		"date-fns": "^2.16.1",
 		"jszip": "^3.5.0",
+		"localforage": "^1.9.0",
 		"prismjs": "^1.22.0",
 		"react": "^17.0.1",
 		"react-color": "^2.18.1",
