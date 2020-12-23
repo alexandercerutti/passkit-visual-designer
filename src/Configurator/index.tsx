@@ -367,6 +367,7 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 						rotatePass={this.onShowPassBackRequest}
 						isEmptyVisible={emptyFieldsVisible}
 						toggleEmptyVisibility={this.toggleEmptyVisibility}
+						toggleTranslationsModal={this.toggleTranslationsModal}
 					/>
 				</div>
 				<div className="config-panel">
