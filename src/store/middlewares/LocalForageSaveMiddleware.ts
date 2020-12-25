@@ -32,18 +32,19 @@ export default function LocalForageSaveMiddleware(store: MiddlewareAPI<Dispatch,
 		// We should now have the updated infos
 		const state = store.getState();
 		const { projectOptions: { title } } = state;
-		const { preview: currentPreview } = await localForage.getItem<Store.Forage.ForageStructure>(currentProjectName);
+		const projects = await localForage.getItem<Store.Forage.ForageStructure["projects"]>("projects");
+
+		const currentProjectContent = projects?.[currentProjectName] ?? { preview: null, snapshot: null };
 
 		if (title && action.type === Store.Options.SET_OPTION && action.key === "title") {
 			// Removing old key for the new
-			localForage.removeItem(currentProjectName);
+			delete projects[currentProjectName];
 		}
 
-		await localForage.setItem<Store.Forage.ForageStructure>(title, {
-			preview: currentPreview,
-			snapshot: {
-				...state
-			}
+		currentProjectContent.snapshot = { ...state };
+
+		await localForage.setItem<Store.Forage.ForageStructure["projects"]>("projects", {
+			[title || currentProjectName]: currentProjectContent,
 		});
 	};
 }
