@@ -25,26 +25,27 @@ type SupportedActions =
 
 export default function LocalForageSaveMiddleware(store: MiddlewareAPI<Dispatch, State>) {
 	return (next: Dispatch<AnyAction>) => async (action: SupportedActions) => {
-		const currentProjectName = store.getState().projectOptions.title ?? "current";
 		// Unblocking now the middleware chain. We are performing only side-effects now.
 		next(action);
 
 		// We should now have the updated infos
 		const state = store.getState();
-		const { projectOptions: { title } } = state;
+		const { projectOptions: { id } } = state;
+
+		if (!id) {
+			// Project has not been initialized yet.
+			// We don't want to perform any action on localForage
+			return;
+		}
+
 		const projects = await localForage.getItem<Store.Forage.ForageStructure["projects"]>("projects");
 
-		const currentProjectContent = projects?.[currentProjectName] ?? { preview: null, snapshot: null };
-
-		if (title && action.type === Store.Options.SET_OPTION && action.key === "title") {
-			// Removing old key for the new
-			delete projects[currentProjectName];
-		}
+		const currentProjectContent = projects?.[id] ?? { preview: null, snapshot: null };
 
 		currentProjectContent.snapshot = { ...state };
 
 		await localForage.setItem<Store.Forage.ForageStructure["projects"]>("projects", {
-			[title || currentProjectName]: currentProjectContent,
+			[id]: currentProjectContent,
 		});
 	};
 }

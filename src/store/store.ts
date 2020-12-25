@@ -25,6 +25,7 @@ export interface State {
 	projectOptions: {
 		title?: string,
 		activeMediaLanguage: string;
+		id?: string;
 	};
 }
 
