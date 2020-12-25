@@ -45,6 +45,7 @@ export default function LocalForageSaveMiddleware(store: MiddlewareAPI<Dispatch,
 		currentProjectContent.snapshot = { ...state };
 
 		await localForage.setItem<Store.Forage.ForageStructure["projects"]>("projects", {
+			...projects,
 			[id]: currentProjectContent,
 		});
 	};
