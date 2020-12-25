@@ -131,10 +131,16 @@ export default function App(props: Props): JSX.Element {
 		<Provider store={store}>
 			<SmoothRouter>
 				<Route path="/" exact>
-					{null}
+					{() => !isDevelopment && !Object.keys(props.projects).length
+						? <Redirect to="/select" />
+						: null
+					}
 				</Route>
 				<Route path="/select">
-					<PassSelector />
+					{() => !isDevelopment && Object.keys(props.projects).length
+						? <Redirect to="/" />
+						: <PassSelector />
+					}
 				</Route>
 				<Route path="/creator">
 					{() => !(isDevelopment || store.getState()?.pass?.kind)
