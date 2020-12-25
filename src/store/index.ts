@@ -5,3 +5,4 @@ export * as Options from "./projectOptions";
 export * as Translations from "./translations";
 export { default as reducers } from "./reducers";
 export * as middlewares from "./middlewares";
+export * as Forage from "./forage";

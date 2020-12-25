@@ -23,13 +23,6 @@ type SupportedActions =
 	| TranslActions.Remove
 	| TranslActions.SetExportState;
 
-interface ForageStructure {
-	preview: ArrayBuffer;
-	snapshot: State;
-}
-
-localForage.config();
-
 export default function LocalForageSaveMiddleware(store: MiddlewareAPI<Dispatch, State>) {
 	return (next: Dispatch<AnyAction>) => async (action: SupportedActions) => {
 		const currentProjectName = store.getState().projectOptions.title ?? "current";
@@ -39,14 +32,14 @@ export default function LocalForageSaveMiddleware(store: MiddlewareAPI<Dispatch,
 		// We should now have the updated infos
 		const state = store.getState();
 		const { projectOptions: { title } } = state;
-		const { preview: currentPreview } = await localForage.getItem<ForageStructure>(currentProjectName);
+		const { preview: currentPreview } = await localForage.getItem<Store.Forage.ForageStructure>(currentProjectName);
 
 		if (title && action.type === Store.Options.SET_OPTION && action.key === "title") {
 			// Removing old key for the new
 			localForage.removeItem(currentProjectName);
 		}
 
-		await localForage.setItem<ForageStructure>(title, {
+		await localForage.setItem<Store.Forage.ForageStructure>(title, {
 			preview: currentPreview,
 			snapshot: {
 				...state
