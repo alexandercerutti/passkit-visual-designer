@@ -27,7 +27,11 @@ const store = createStore(Store.reducers,
 	)
 );
 
-export default function App(): JSX.Element {
+interface Props {
+	projects: Store.Forage.ForageStructure["projects"];
+}
+
+export default function App(props: Props): JSX.Element {
 	/* 		{
 				media: { */
 	/*logoText: "blablabla",*/
