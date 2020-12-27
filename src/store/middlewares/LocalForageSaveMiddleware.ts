@@ -48,8 +48,10 @@ export default function LocalForageSaveMiddleware(store: MiddlewareAPI<Dispatch,
 		const passElement = document.querySelector<HTMLElement>(".viewer > .pass .content");
 
 		const canvasElement = await html2canvas(passElement, {
-			windowWidth: passElement.scrollWidth,
-			windowHeight: passElement.scrollHeight,
+			windowWidth: 230,
+			windowHeight: 370,
+			backgroundColor: null,
+			logging: false,
 			x: 0,
 			y: 0
 		});
