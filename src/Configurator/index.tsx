@@ -108,8 +108,10 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 	}
 
 	componentDidMount() {
-		/** Initializing project identifier */
-		this.props.setProjectOption("id", uuid());
+		if (!this.props.projectOptions.id) {
+			/** Initializing project identifier */
+			this.props.setProjectOption("id", uuid());
+		}
 	}
 
 	static getDerivedStateFromProps(props: ConfiguratorProps) {
