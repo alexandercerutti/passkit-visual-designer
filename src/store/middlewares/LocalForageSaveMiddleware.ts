@@ -1,6 +1,8 @@
 import { AnyAction, Dispatch, MiddlewareAPI } from "redux";
 import localForage from "localforage";
+import html2canvas from "html2canvas";
 import { State } from "../store";
+import { getArrayBuffer } from "../../utils";
 import * as Store from "..";
 
 import MediaActions = Store.Media.Actions;
@@ -43,6 +45,17 @@ export default function LocalForageSaveMiddleware(store: MiddlewareAPI<Dispatch,
 		const currentProjectContent = projects?.[id] ?? { preview: null, snapshot: null };
 
 		currentProjectContent.snapshot = { ...state };
+		const passElement = document.querySelector<HTMLElement>(".viewer > .pass .content");
+
+		const canvasElement = await html2canvas(passElement, {
+			windowWidth: passElement.scrollWidth,
+			windowHeight: passElement.scrollHeight,
+			x: 0,
+			y: 0
+		});
+
+		const blob = await new Promise<Blob>(resolve => canvasElement.toBlob(resolve, "image/*", 1));
+		currentProjectContent.preview = await getArrayBuffer(blob);
 
 		await localForage.setItem<Store.Forage.ForageStructure["projects"]>("projects", {
 			...projects,

@@ -201,8 +201,6 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 		this.props.changePassPropValue(key, valueToStore);
 
 		// @TODO: validate the input?
-		// @TODO: save to localForage - through a middleware? Dunno yet
-
 		// @TODO: return false if cannot validate the input
 		return true;
 	}
