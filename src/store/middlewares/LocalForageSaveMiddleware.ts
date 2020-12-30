@@ -32,9 +32,18 @@ export default function LocalForageSaveMiddleware(store: MiddlewareAPI<Dispatch,
 
 		// We should now have the updated infos
 		const state = store.getState();
-		const { projectOptions: { id } } = state;
+		const { projectOptions: { id, title }, pass, translations, media } = state;
 
-		if (!id) {
+		const isProjectInitialized = Boolean(
+			id && (
+				title ||
+				Object.values(pass).some(Boolean) ||
+				Object.values(translations).some(set => Object.keys(set.translations).length) ||
+				Object.values(media).some(medias => Object.keys(medias).length)
+			)
+		);
+
+		if (!isProjectInitialized) {
 			// Project has not been initialized yet.
 			// We don't want to perform any action on localForage
 			return;
