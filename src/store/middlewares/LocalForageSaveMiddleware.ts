@@ -44,7 +44,50 @@ export default function LocalForageSaveMiddleware(store: MiddlewareAPI<Dispatch,
 
 		const currentProjectContent = projects?.[id] ?? { preview: null, snapshot: null };
 
-		currentProjectContent.snapshot = { ...state };
+		/**
+		 * We want to save a snapshot of the current state
+		 * without the blob URLs we save in the state when
+		 * a media is uploaded.
+		 *
+		 * To achieve this, we have to deep-copy the
+		 * state to avoid editing by mistake the current
+		 * state.
+		 */
+
+		const stateWithoutBlobURLs = {
+			...state,
+			media: { ...state.media }
+		};
+
+		for (const [lang, _mediaSet] of Object.entries(stateWithoutBlobURLs["media"])) {
+			/** shortcutting the ref to the new copy */
+			const mediaSet = (
+				stateWithoutBlobURLs["media"][lang] = { ..._mediaSet }
+			);
+
+			for (const [media, _mediaObj] of Object.entries(mediaSet)) {
+				const mediaObj = (
+					mediaSet[media] = { ..._mediaObj }
+				);
+
+				for (const [collectionID, _collection] of Object.entries(mediaObj.collections)) {
+					const collection = (
+						mediaObj["collections"][collectionID] = { ..._collection }
+					);
+
+					for (const [resolutionID, _resolution] of Object.entries(collection.resolutions)) {
+						const resolution = (
+							collection["resolutions"][resolutionID] = { ..._resolution }
+						);
+
+						/** Removing URL by creating a whole new object with only the ArrayBuffer */
+						resolution.content = [resolution.content[0]];
+					}
+				}
+			}
+		}
+
+		currentProjectContent.snapshot = stateWithoutBlobURLs;
 		const passElement = document.querySelector<HTMLElement>(".viewer > .pass .content");
 
 		const canvasElement = await html2canvas(passElement, {
