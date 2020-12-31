@@ -8,7 +8,7 @@ import * as Store from "..";
 import MediaActions = Store.Media.Actions;
 import TranslActions = Store.Translations.Actions;
 
-type SupportedActions =
+type PossibleActions =
 	| Store.Options.Actions.Set
 	| Store.Pass.Actions.SetProp
 	| MediaActions.Create
@@ -26,11 +26,24 @@ type SupportedActions =
 	| TranslActions.SetExportState;
 
 export default function LocalForageSaveMiddleware(store: MiddlewareAPI<Dispatch, State>) {
-	return (next: Dispatch<AnyAction>) => async (action: SupportedActions) => {
+	return (next: Dispatch<AnyAction>) => async (action: PossibleActions) => {
 		// Unblocking now the middleware chain. We are performing only side-effects now.
 		next(action);
 
+		const isUnsupportedAction = (
+			action.type === Store.Media.INIT ||
+			action.type === Store.Media.CREATE ||
+			action.type === Store.Media.DESTROY ||
+			action.type === Store.Translations.INIT ||
+			action.type === Store.Translations.DESTROY
+		);
+
+		if (isUnsupportedAction) {
+			return;
+		}
+
 		// We should now have the updated infos
+		// after all the others middlewares and thunks
 		const state = store.getState();
 		const { projectOptions: { id, title }, pass, translations, media } = state;
 
@@ -111,7 +124,7 @@ export default function LocalForageSaveMiddleware(store: MiddlewareAPI<Dispatch,
 		const blob = await new Promise<Blob>(resolve => canvasElement.toBlob(resolve, "image/*", 1));
 		currentProjectContent.preview = await getArrayBuffer(blob);
 
-		await localForage.setItem<Store.Forage.ForageStructure["projects"]>("projects", {
+		localForage.setItem<Store.Forage.ForageStructure["projects"]>("projects", {
 			...projects,
 			[id]: currentProjectContent,
 		});
