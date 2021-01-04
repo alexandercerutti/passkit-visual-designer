@@ -76,9 +76,15 @@ export default function LocalForageSaveMiddleware(store: MiddlewareAPI<Dispatch,
 		 * state.
 		 */
 
-		const stateWithoutBlobURLs = {
+		const savedAtTimestamp = Date.now();
+
+		const stateWithoutBlobURLs: State = {
 			...state,
-			media: { ...state.media }
+			media: { ...state.media },
+			projectOptions: {
+				...state.projectOptions,
+				savedAtTimestamp,
+			}
 		};
 
 		for (const [lang, _mediaSet] of Object.entries(stateWithoutBlobURLs["media"])) {
@@ -124,9 +130,11 @@ export default function LocalForageSaveMiddleware(store: MiddlewareAPI<Dispatch,
 		const blob = await new Promise<Blob>(resolve => canvasElement.toBlob(resolve, "image/*", 1));
 		currentProjectContent.preview = await getArrayBuffer(blob);
 
-		localForage.setItem<Store.Forage.ForageStructure["projects"]>("projects", {
+		await localForage.setItem<Store.Forage.ForageStructure["projects"]>("projects", {
 			...projects,
 			[id]: currentProjectContent,
 		});
+
+		next(Store.Options.Set("savedAtTimestamp", savedAtTimestamp));
 	};
 }

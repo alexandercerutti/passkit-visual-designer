@@ -26,6 +26,7 @@ export interface State {
 		title?: string,
 		activeMediaLanguage: string;
 		id?: string;
+		savedAtTimestamp?: number;
 	};
 }
 

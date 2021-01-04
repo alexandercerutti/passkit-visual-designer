@@ -33,7 +33,7 @@ export default function LanguageSelectionMiddleware(store: MiddlewareAPI<Dispatc
 
 		if (!(action.value in media)) {
 			/** We have to create an empty media object */
-			thunks.push(Store.Media.Create(action.value));
+			thunks.push(Store.Media.Create(action.value as string));
 		}
 
 		const shouldDestroyCurrentMediaSet = (
@@ -47,7 +47,7 @@ export default function LanguageSelectionMiddleware(store: MiddlewareAPI<Dispatc
 		}
 
 		if (!(action.value in translations)) {
-			thunks.push(Store.Translations.Init(action.value));
+			thunks.push(Store.Translations.Init(action.value as string));
 		}
 
 		const shouldDestroyCurrentTranslation = !Object.keys(translations[activeMediaLanguage].translations).length;
