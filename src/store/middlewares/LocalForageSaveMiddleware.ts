@@ -80,36 +80,20 @@ export default function LocalForageSaveMiddleware(store: MiddlewareAPI<Dispatch,
 
 		const stateWithoutBlobURLs: State = {
 			...state,
-			media: { ...state.media },
+			media: deepClone(state["media"]) as State["media"],
 			projectOptions: {
 				...state.projectOptions,
 				savedAtTimestamp,
 			}
 		};
 
-		for (const [lang, _mediaSet] of Object.entries(stateWithoutBlobURLs["media"])) {
-			/** shortcutting the ref to the new copy */
-			const mediaSet = (
-				stateWithoutBlobURLs["media"][lang] = { ..._mediaSet }
-			);
+		for (const lang in stateWithoutBlobURLs["media"]) {
+			for (const mediaName in stateWithoutBlobURLs["media"][lang]) {
+				for (const collectionID in stateWithoutBlobURLs["media"][lang][mediaName]["collections"]) {
+					for (const resolutionID in stateWithoutBlobURLs["media"][lang][mediaName]["collections"][collectionID]["resolutions"]) {
+						const { content } = stateWithoutBlobURLs["media"][lang][mediaName]["collections"][collectionID]["resolutions"][resolutionID];
 
-			for (const [media, _mediaObj] of Object.entries(mediaSet)) {
-				const mediaObj = (
-					mediaSet[media] = { ..._mediaObj }
-				);
-
-				for (const [collectionID, _collection] of Object.entries(mediaObj.collections)) {
-					const collection = (
-						mediaObj["collections"][collectionID] = { ..._collection }
-					);
-
-					for (const [resolutionID, _resolution] of Object.entries(collection.resolutions)) {
-						const resolution = (
-							collection["resolutions"][resolutionID] = { ..._resolution }
-						);
-
-						/** Removing URL by creating a whole new object with only the ArrayBuffer */
-						resolution.content = [resolution.content[0]];
+						stateWithoutBlobURLs["media"][lang][mediaName]["collections"][collectionID]["resolutions"][resolutionID].content = [content[0]];
 					}
 				}
 			}
@@ -137,4 +121,22 @@ export default function LocalForageSaveMiddleware(store: MiddlewareAPI<Dispatch,
 
 		next(Store.Options.Set("savedAtTimestamp", savedAtTimestamp));
 	};
+}
+
+function deepClone(startingPoint: Object) {
+	const finalObject = { ...startingPoint };
+
+	for (const key in startingPoint) {
+		if (startingPoint[key] && typeof startingPoint[key] === "object" && !(startingPoint[key] instanceof ArrayBuffer)) {
+			if (startingPoint[key] instanceof Array) {
+				finalObject[key] = Object.values(deepClone(startingPoint[key]));
+			} else {
+				finalObject[key] = deepClone(startingPoint[key]);
+			}
+		} else {
+			finalObject[key] = startingPoint[key];
+		}
+	}
+
+	return finalObject;
 }
