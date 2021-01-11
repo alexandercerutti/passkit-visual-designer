@@ -1,0 +1,231 @@
+@import (reference) "../App/common.less";
+
+#recent-selector {
+	display: flex;
+	flex-direction: column;
+	color: #e6e6e6;
+	width: 100%;
+	height: 100%;
+
+	& > header {
+		flex-shrink: 0;
+		flex-grow: 0;
+
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		height: 35px;
+		background-image: linear-gradient(45deg, #014786, #0e0e0ea6);
+		// padding: 10px;
+		padding: 10px 10px 15px 10px;
+
+/* 		&::after {
+			content: "";
+			position: absolute;
+			top: 55px;
+			left: 0;
+			right: 0;
+			height: 60px;
+			display: inline-block;
+			background-image:
+				linear-gradient(180deg, transparent, #333333 20%),
+				linear-gradient(45deg, #014786, #0e0e0ea6);
+		} */
+
+		&::after {
+			content: "";
+			position: absolute;
+			top: 52px;
+			left: 0;
+			right: 0;
+			height: 22px;
+			display: inline-block;
+			background-image: linear-gradient(180deg, transparent, #333333 30%);
+		}
+
+		& div {
+			& * {
+				letter-spacing: 0.5px;
+			}
+
+			& *:hover {
+				color: #FFF;
+				transition: color .5s ease-in-out;
+			}
+
+			& a {
+				color: #e6e6e6;
+				text-decoration: none;
+				cursor: pointer;
+			}
+
+			& h4 {
+				font-weight: 500;
+			}
+		}
+	}
+
+	& > main {
+		display: flex;
+		justify-content: center;
+		width: 100%;
+		height: 100%;
+
+		& .centered-column {
+			width: 600px;
+			height: 100%;
+			display: flex;
+			justify-content: space-evenly;
+			flex-direction: column;
+			align-items: center;
+
+			& section {
+				width: 100%;
+				display: flex;
+
+				&:nth-of-type(2n+1) {
+					flex-grow: 0;
+					flex-shrink: 0;
+					align-items: center;
+					height: 25vh;
+					margin-top: 90px;
+
+					& #choices-box {
+						width: 100%;
+						height: 160px;
+						display: flex;
+						background: linear-gradient(45deg, #e6e6e6, #bfbfbf);
+						border-radius: 10px;
+						box-shadow: 0px 2px 20px 6px #272727;
+
+						& > div {
+							flex-grow: 1;
+
+							color: #3b3b3b;
+							display: flex;
+							align-items: center;
+							justify-content: center;
+							font-size: 14pt;
+							cursor: pointer;
+							background-color: transparent;
+							transition: background-color .5s ease-in-out;
+
+							&:nth-of-type(2n) {
+								border-radius: 0 10px 10px 0;
+							}
+
+							&:nth-of-type(2n+1) {
+								border-radius: 10px 0 0 10px;
+								border-right: 2px dashed #3b3b3b;
+							}
+
+							&:hover {
+								background-color: #e6e6e6;
+							}
+						}
+					}
+				}
+
+				&:nth-of-type(2n) {
+					flex-grow: 1;
+					flex-shrink: 1;
+					height: 50vh;
+					margin-top: 50px;
+
+					& .recents-box {
+						display: flex;
+						flex-direction: column;
+						align-items: center;
+						justify-content: flex-start;
+						width: 100%;
+
+						& header {
+							display: flex;
+							justify-content: space-between;
+							height: 50px;
+							width: 100%;
+
+							& h2 {
+								margin: 0;
+							}
+						}
+
+						& main {
+							.scrollableWithoutScrollbars(y);
+
+							display: flex;
+							width: 100%;
+							border-radius: 7px;
+							background: linear-gradient(45deg, #e6e6e6, #bfbfbf);
+							margin-bottom: 10px;
+
+							& ul {
+								padding: 0;
+								margin: 0;
+								width: 100%;
+
+								display: flex;
+								flex-direction: column;
+								list-style-type: none;
+								color: #3b3b3b;
+
+								& li {
+									min-height: 50px;
+									padding: 10px 5px;
+									display: flex;
+									align-items: center;
+									cursor: pointer;
+									background-color: transparent;
+									transition: background-color .5s ease-in-out;
+
+									&:not(:last-child) {
+										border-bottom: 1px solid #3b3b3b;
+									}
+
+									& img {
+										max-height: 70px;
+										margin: 0 15px;
+									}
+
+									&:hover {
+										background-color: #e6e6e6;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	& #list {
+		flex-grow: 1;
+
+		display: grid;
+		grid-template-columns: repeat(auto-fill, 210px);
+		grid-gap: 30px;
+		margin: 0 30px;
+
+		.scrollableWithoutScrollbars(y);
+
+		& div {
+			cursor: pointer;
+
+			&.new {
+				height: 337px;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				width: 210px;
+				border: 1px dashed #e6e6e6;
+				border-radius: 7px;
+			}
+
+			& span {
+				margin-top: 10px;
+				display: block;
+			}
+		}
+	}
+}
