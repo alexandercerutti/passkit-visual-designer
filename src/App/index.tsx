@@ -62,13 +62,13 @@ export default function App(): JSX.Element {
 			</CSSTransition>
 			<SmoothRouter>
 				<Route path="/" exact>
-					{() => !isDevelopment && !Object.keys(props.projects).length
-						? <Redirect to="/select" />
-						: <RecentSelector recentProjects={props.projects ?? {}} />
-					}
+					<RecentSelector
+						recentProjects={forageData?.projects ?? {}}
+						requestForageDataRequest={refreshForageCallback}
+					/>
 				</Route>
 				<Route path="/select">
-					{() => !isDevelopment && Object.keys(props.projects).length
+					{() => !isDevelopment && Object.keys(forageData?.projects).length
 						? <Redirect to="/" />
 						: <PassSelector />
 					}
