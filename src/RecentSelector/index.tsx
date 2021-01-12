@@ -6,16 +6,25 @@ import { RouteComponentProps, withRouter } from "react-router-dom";
 
 interface Props extends RouteComponentProps {
 	recentProjects: Store.Forage.ForageStructure["projects"];
+	requestForageDataRequest(): void;
 }
 
-export default class RecentSelector extends React.Component<Props> {
+class RecentSelector extends React.Component<Props> {
+	private refreshInterval: number;
 	private previewsURLList: { [id: string]: string } = {};
 
 	constructor(props: Props) {
 		super(props);
 	}
 
+	componentDidMount() {
+		this.refreshInterval = window.setInterval(() => {
+			this.props.requestForageDataRequest();
+		}, 7000);
+	}
+
 	componentWillUnmount() {
+		clearInterval(this.refreshInterval);
 		Object.values(this.previewsURLList).forEach(URL.revokeObjectURL);
 	}
 

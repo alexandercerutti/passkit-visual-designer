@@ -38,19 +38,17 @@ export default function App(): JSX.Element {
 	const refreshForageCallback = React.useCallback(async () => {
 		const slices: (keyof Store.Forage.ForageStructure)[] = ["projects"];
 
-		return Object.assign({},
+		const data = Object.assign({},
 			...(await Promise.all(
 				slices.map((slice) => localForage.getItem<Store.Forage.ForageStructure[typeof slice]>(slice))
 			))
 				.map((data, index) => ({ [slices[index]]: data }))
 		) as Store.Forage.ForageStructure;
+
+		setForageData(data);
 	}, []);
 
-	React.useEffect(() => {
-		refreshForageCallback().then((data) => {
-			setForageData(data);
-		});
-	}, []);
+	React.useEffect(() => void refreshForageCallback(), []);
 
 	return (
 		<Provider store={store}>
