@@ -2,8 +2,9 @@ import * as React from "react";
 import "./style.less";
 import * as Store from "../store";
 import { GithubLogoDarkMode, AddIcon } from "./icons";
+import { RouteComponentProps, withRouter } from "react-router-dom";
 
-interface Props {
+interface Props extends RouteComponentProps {
 	recentProjects: Store.Forage.ForageStructure["projects"];
 }
 
@@ -91,3 +92,5 @@ export default class RecentSelector extends React.Component<Props> {
 		);
 	}
 }
+
+export default withRouter(RecentSelector);
