@@ -25,9 +25,10 @@ const store = createStore(Store.reducers,
 			Store.middlewares.CollectionEditUrlMiddleware,
 			Store.middlewares.CollectionActivationMiddleware,
 			Store.middlewares.LanguageSelectionMiddleware,
-			Store.middlewares.LocalForageSaveMiddleware,
 		),
 		applyMiddleware(thunk),
+		/** Order here is important. We want to execute next mid after thunks */
+		applyMiddleware(Store.middlewares.LocalForageSaveMiddleware)
 	)
 );
 
