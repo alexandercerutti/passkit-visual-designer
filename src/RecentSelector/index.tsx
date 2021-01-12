@@ -65,7 +65,7 @@ class RecentSelector extends React.Component<Props> {
 					<div className="centered-column">
 						<section>
 							<div id="choices-box">
-								<div>
+								<div onClick={() => this.props.history.push("/select")}>
 									<AddIcon width="32px" height="32px" fill="#000" />
 									<span>Create Project</span>
 								</div>
