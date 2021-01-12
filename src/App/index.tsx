@@ -10,6 +10,7 @@ import SmoothRouter from "./SmoothRouter";
 import Configurator from "../Configurator";
 import { PKTextAlignment } from "../Pass/constants";
 import * as Store from "../store";
+import RecentSelector from "../RecentSelector";
 import LoaderFace from "../Loader";
 import { CSSTransition } from "react-transition-group";
 
