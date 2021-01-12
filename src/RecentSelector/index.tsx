@@ -90,13 +90,6 @@ class RecentSelector extends React.Component<Props> {
 						</section>
 					</div>
 				</main>
-				{/* 				<div id="list">
-					<div>
-						<div className="new"></div>
-						<span>Create new project</span>
-					</div>
-					{savedProjects}
-				</div> */}
 			</div>
 		);
 	}
