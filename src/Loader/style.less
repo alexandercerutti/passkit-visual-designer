@@ -1,0 +1,65 @@
+#loader-face {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: #272727;
+	z-index: 10;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	animation-name: disappear;
+	animation-duration: .5s;
+	animation-play-state: paused;
+	animation-fill-mode: forwards;
+	animation-timing-function: ease-out;
+
+	// CSS Transition
+	&.exit {
+		animation-play-state: running;
+	}
+
+	& svg {
+		& #content > * {
+			fill: #EDEDED;
+			opacity: 0.3;
+			animation-name: bouncing-opacity;
+			animation-duration: .7s;
+			animation-iteration-count: infinite;
+			animation-direction: alternate;
+			animation-timing-function: ease-in-out;
+		}
+
+		& #border {
+			stroke: #EDEDED;
+			stroke-width: 5;
+			stroke-linecap: round;
+			stroke-dasharray: 960 40;
+			stroke-dashoffset: 1000;
+
+			animation-name: rotation-border;
+			animation-duration: 2s;
+			animation-iteration-count: infinite;
+			animation-timing-function: linear;
+		}
+	}
+}
+
+@keyframes bouncing-opacity {
+	to {
+		opacity: 1
+	}
+}
+
+@keyframes rotation-border {
+	to {
+		stroke-dashoffset: 0;
+	}
+}
+
+@keyframes disappear {
+	to {
+		opacity: 0;
+	}
+}

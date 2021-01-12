@@ -1,5 +1,5 @@
 import * as React from "react";
-import { BrowserRouter as Router, Switch, RouteChildrenProps, withRouter, BrowserRouterProps } from "react-router-dom";
+import { BrowserRouter as Router, Switch, RouteChildrenProps, withRouter } from "react-router-dom";
 import { CSSTransition, SwitchTransition } from "react-transition-group";
 import "./style.less";
 
@@ -19,7 +19,7 @@ const RoutesSwitchWithTransition = withRouter(({ location, children }: React.Pro
 	</SwitchTransition>
 ));
 
-export default function SmoothRouter(props: React.PropsWithChildren<BrowserRouterProps>) {
+export default function SmoothRouter(props: React.PropsWithChildren<{}>) {
 	return (
 		<Router>
 			<RoutesSwitchWithTransition {...props} />
