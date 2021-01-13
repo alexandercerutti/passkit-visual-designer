@@ -3,6 +3,8 @@ import "./style.less";
 import * as Store from "../store";
 import { GithubLogoDarkMode, AddIcon } from "./icons";
 import { RouteComponentProps, withRouter } from "react-router-dom";
+import localForage from "localforage";
+import { createClassName } from "../utils";
 
 interface Props extends RouteComponentProps {
 	recentProjects: Store.Forage.ForageStructure["projects"];
@@ -81,7 +83,20 @@ class RecentSelector extends React.Component<Props, State> {
 		}));
 	}
 
+	async removeProject(id: string) {
+		const projects = await localForage.getItem<Store.Forage.ForageStructure["projects"]>("projects");
+
+		delete projects[id];
+
+		await localForage.setItem("projects", projects);
+		this.props.requestForageDataRequest();
+	}
+
 	render() {
+		const deleteButtonClassName = createClassName(["delete"], {
+			open: this.state.editMode
+		});
+
 		const savedProjects = Object.entries(this.props.recentProjects).map(([id, { snapshot }]) => {
 			const alt = `Preview of project named ${snapshot.projectOptions.title || ""} (${id})`;
 
@@ -89,6 +104,9 @@ class RecentSelector extends React.Component<Props, State> {
 				<li key={id}>
 					<img alt={alt} src={this.state.previewsURLList[id]} />
 					<span>{snapshot.projectOptions.title || "Untitled project"}</span>
+					<span className={deleteButtonClassName} onClick={() => this.removeProject(id)}>
+						Delete
+					</span>
 				</li>
 			);
 		});
@@ -123,7 +141,13 @@ class RecentSelector extends React.Component<Props, State> {
 							<div className="recents-box">
 								<header>
 									<h2>Recent Projects</h2>
-									<span>edit</span>
+									<button disabled={!savedProjects.length} onClick={this.switchEditMode}>
+										{
+											this.state.editMode
+												? "Done"
+												: "Edit"
+										}
+									</button>
 								</header>
 								<main>
 									{

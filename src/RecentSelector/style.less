@@ -177,6 +177,7 @@
 									cursor: pointer;
 									background-color: transparent;
 									transition: background-color .5s ease-in-out;
+									position: relative;
 
 									&:not(:last-child) {
 										border-bottom: 1px solid #3b3b3b;
@@ -190,10 +191,30 @@
 									&:hover {
 										background-color: #e6e6e6;
 									}
+
+									& span.delete {
+										position: absolute;
+										right: 0;
+										top: 0;
+										bottom: 0;
+										width: 0;
+										margin: 0;
+										display: flex;
+										justify-content: center;
+										align-items: center;
+										background-color: #980000;
+										color: #e6e6e6;
+										overflow: hidden;
+										transition: width .5s ease-in-out;
+
+										&.open {
+											width: 80px;
+										}
+									}
 								}
 							}
 
-							& span {
+							& > span {
 								margin-top: 15px;
 							}
 						}
