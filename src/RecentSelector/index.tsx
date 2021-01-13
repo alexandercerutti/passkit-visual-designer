@@ -11,6 +11,7 @@ interface Props extends RouteComponentProps {
 
 interface State {
 	previewsURLList: { [projectID: string]: string };
+	editMode: boolean;
 }
 
 class RecentSelector extends React.Component<Props, State> {
@@ -21,10 +22,18 @@ class RecentSelector extends React.Component<Props, State> {
 
 		this.state = {
 			previewsURLList: {},
+			editMode: false,
 		};
+
+		this.switchEditMode = this.switchEditMode.bind(this);
 	}
 
 	componentDidMount() {
+		// When going back to this page we want to request an update
+		if (!Object.keys(this.props.recentProjects || {}).length) {
+			this.props.requestForageDataRequest();
+		}
+
 		this.refreshInterval = window.setInterval(() => {
 			this.props.requestForageDataRequest();
 		}, 7000);
@@ -64,6 +73,12 @@ class RecentSelector extends React.Component<Props, State> {
 	componentWillUnmount() {
 		clearInterval(this.refreshInterval);
 		Object.values(this.state.previewsURLList).forEach(URL.revokeObjectURL);
+	}
+
+	switchEditMode() {
+		this.setState(previous => ({
+			editMode: !previous.editMode
+		}));
 	}
 
 	render() {
@@ -111,9 +126,17 @@ class RecentSelector extends React.Component<Props, State> {
 									<span>edit</span>
 								</header>
 								<main>
-									<ul>
-										{savedProjects}
-									</ul>
+									{
+										savedProjects.length && (
+											<ul>
+												{savedProjects}
+											</ul>
+										) || (
+											<span>
+												No recent projects yet. Local recent projects will appear here below.
+											</span>
+										)
+									}
 								</main>
 							</div>
 						</section>
