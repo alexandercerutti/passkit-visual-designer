@@ -9,12 +9,19 @@ interface Props extends RouteComponentProps {
 	requestForageDataRequest(): void;
 }
 
-class RecentSelector extends React.Component<Props> {
+interface State {
+	previewsURLList: { [projectID: string]: string };
+}
+
+class RecentSelector extends React.Component<Props, State> {
 	private refreshInterval: number;
-	private previewsURLList: { [id: string]: string } = {};
 
 	constructor(props: Props) {
 		super(props);
+
+		this.state = {
+			previewsURLList: {},
+		};
 	}
 
 	componentDidMount() {
@@ -23,27 +30,49 @@ class RecentSelector extends React.Component<Props> {
 		}, 7000);
 	}
 
+	static getDerivedStateFromProps(props: Props, state: State) {
+		const newState = { ...state };
+
+		const allProjectsIDs = [
+			...new Set([
+				...Object.keys(state.previewsURLList),
+				...Object.keys(props.recentProjects)
+			])
+		];
+
+		newState.previewsURLList = allProjectsIDs.reduce((acc, current) => {
+			if (state.previewsURLList[current]) {
+				URL.revokeObjectURL(state.previewsURLList[current])
+			}
+
+			if (!props.recentProjects[current]) {
+				/** When a projects gets removed*/
+				return acc;
+			}
+
+			return {
+				...acc,
+				[current]: URL.createObjectURL(
+					new Blob([props.recentProjects[current].preview], { type: "image/*" })
+				)
+			};
+		}, {});
+
+		return newState;
+	}
+
 	componentWillUnmount() {
 		clearInterval(this.refreshInterval);
-		Object.values(this.previewsURLList).forEach(URL.revokeObjectURL);
+		Object.values(this.state.previewsURLList).forEach(URL.revokeObjectURL);
 	}
 
 	render() {
-		const savedProjects = Object.entries(this.props.recentProjects).map(([id, { preview, snapshot }]) => {
-			let pictureURL = "";
-
-			if (id in this.previewsURLList) {
-				pictureURL = this.previewsURLList[id];
-			} else {
-				const blob = new Blob([preview], { type: "image/*" });
-				pictureURL = this.previewsURLList[id] = URL.createObjectURL(blob);
-			}
-
+		const savedProjects = Object.entries(this.props.recentProjects).map(([id, { snapshot }]) => {
 			const alt = `Preview of project named ${snapshot.projectOptions.title || ""} (${id})`;
 
 			return (
 				<li key={id}>
-					<img alt={alt} src={pictureURL} />
+					<img alt={alt} src={this.state.previewsURLList[id]} />
 					<span>{snapshot.projectOptions.title || "Untitled project"}</span>
 				</li>
 			);
