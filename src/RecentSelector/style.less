@@ -142,11 +142,27 @@
 						& header {
 							display: flex;
 							justify-content: space-between;
+							align-items: center;
 							height: 50px;
 							width: 100%;
+							margin-bottom: 20px;
 
 							& h2 {
 								margin: 0;
+							}
+
+							& button {
+								background: none;
+								border: 2px solid #e6e6e6;
+								width: 80px;
+								height: 100%;
+								color: #e6e6e6;
+								font-size: 11pt;
+
+								&[disabled] {
+									border-color: #5a5a5a !important;
+									color: #5a5a5a !important;
+								}
 							}
 						}
 
