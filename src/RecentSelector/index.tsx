@@ -69,6 +69,10 @@ class RecentSelector extends React.Component<Props, State> {
 			};
 		}, {});
 
+		if (!Object.keys(newState.previewsURLList).length) {
+			newState.editMode = false
+		}
+
 		return newState;
 	}
 
