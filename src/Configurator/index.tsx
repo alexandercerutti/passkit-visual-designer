@@ -43,9 +43,11 @@ interface DispatchProps {
 	editCollection: typeof Store.Media.EditCollection;
 	setMediaExportState: typeof Store.Media.SetExportState;
 	setTranslationExportState: typeof Store.Translations.SetExportState;
+	initTranslation: typeof Store.Translations.Init;
 	addTranslation: typeof Store.Translations.Add;
 	removeTranslation: typeof Store.Translations.Remove;
 	editTranslation: typeof Store.Translations.Edit;
+	createMedia: typeof Store.Media.Create;
 }
 
 interface ConfiguratorStore {
@@ -112,6 +114,9 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 			/** Initializing project identifier */
 			this.props.setProjectOption("id", uuid());
 		}
+
+		this.props.createMedia("default");
+		this.props.initTranslation("default");
 	}
 
 	static getDerivedStateFromProps(props: ConfiguratorProps) {
@@ -509,6 +514,7 @@ export default withRouter(connect(
 	{
 		changePassPropValue: Store.Pass.setProp,
 		setProjectOption: Store.Options.Set,
+		createMedia: Store.Media.Create,
 		setMediaActiveCollection: Store.Media.SetActiveCollection,
 		editCollection: Store.Media.EditCollection,
 		setMediaExportState: Store.Media.SetExportState,
@@ -516,6 +522,7 @@ export default withRouter(connect(
 		addTranslation: Store.Translations.Add,
 		removeTranslation: Store.Translations.Remove,
 		editTranslation: Store.Translations.Edit,
+		initTranslation: Store.Translations.Init,
 	}
 )(Configurator));
 

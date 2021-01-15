@@ -2,17 +2,8 @@ import type { PassMixedProps, MediaProps } from "../Pass";
 
 export const initialState: State = {
 	pass: {},
-	media: {
-		// Initializing default language because, otherwise
-		// we would need to fire a Store.Media.Create action
-		default: {}
-	},
-	translations: {
-		default: {
-			enabled: true,
-			translations: {}
-		}
-	},
+	media: {},
+	translations: {},
 	projectOptions: {
 		activeMediaLanguage: "default"
 	},

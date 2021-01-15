@@ -11,6 +11,7 @@ import TranslActions = Store.Translations.Actions;
 type PossibleActions =
 	| Store.Options.Actions.Set
 	| Store.Pass.Actions.SetProp
+	| Store.Forage.Actions.Reset
 	| MediaActions.Create
 	| MediaActions.Edit
 	| MediaActions.Init
@@ -35,7 +36,8 @@ export default function LocalForageSaveMiddleware(store: MiddlewareAPI<Dispatch,
 			action.type === Store.Media.CREATE ||
 			action.type === Store.Media.DESTROY ||
 			action.type === Store.Translations.INIT ||
-			action.type === Store.Translations.DESTROY
+			action.type === Store.Translations.DESTROY ||
+			action.type === Store.Forage.RESET
 		);
 
 		if (isUnsupportedAction) {

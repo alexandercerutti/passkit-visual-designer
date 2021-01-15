@@ -19,6 +19,7 @@ export interface ForageStructure {
 // ************************************************************************ //
 
 export const INIT = "forage/INIT";
+export const RESET = "forage/RESET";
 
 // ************************************************************************ //
 
