@@ -106,11 +106,15 @@ class RecentSelector extends React.Component<Props, State> {
 
 			return (
 				<li key={id}>
-					<img alt={alt} src={this.state.previewsURLList[id]} />
-					<span>{snapshot.projectOptions.title || "Untitled project"}</span>
-					<span className={deleteButtonClassName} onClick={() => this.removeProject(id)}>
-						Delete
-					</span>
+					<div className="left">
+						<img alt={alt} src={this.state.previewsURLList[id]} />
+						<span>{snapshot.projectOptions.title || "Untitled project"}</span>
+					</div>
+					<div className="right">
+						<span className={deleteButtonClassName} onClick={() => this.removeProject(id)}>
+							Delete
+						</span>
+					</div>
 				</li>
 			);
 		});
@@ -132,11 +136,11 @@ class RecentSelector extends React.Component<Props, State> {
 						<section>
 							<div id="choices-box">
 								<div onClick={() => this.props.history.push("/select")}>
-									<AddIcon width="32px" height="32px" fill="#000" />
+									<AddIcon width="32px" height="32px" />
 									<span>Create Project</span>
 								</div>
 								<div>
-									<AddIcon width="32px" height="32px" fill="#000" />
+									<AddIcon width="32px" height="32px" />
 									<span>Upload pass</span>
 								</div>
 							</div>
