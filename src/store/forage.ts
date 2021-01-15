@@ -46,6 +46,12 @@ export function Init(snapshot: State): Actions.Init {
 	};
 }
 
+export function Reset(): Actions.Reset {
+	return {
+		type: RESET
+	};
+}
+
 // ************************************************************************ //
 
 // ************************** //
@@ -61,4 +67,6 @@ export declare namespace Actions {
 		projectOptions: State["projectOptions"];
 		translations: State["translations"];
 	}
+
+	interface Reset extends Action<typeof RESET> { }
 }

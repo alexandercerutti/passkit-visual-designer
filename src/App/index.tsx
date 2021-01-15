@@ -35,6 +35,12 @@ const store = createStore(Store.reducers,
 export default function App(): JSX.Element {
 	const [forageData, setForageData] = React.useState<Store.Forage.ForageStructure>();
 
+	React.useLayoutEffect(() => {
+		window.addEventListener("popstate", (event) => {
+			store.dispatch(Store.Forage.Reset());
+		});
+	}, []);
+
 	const refreshForageCallback = React.useCallback(async () => {
 		const slices: (keyof Store.Forage.ForageStructure)[] = ["projects"];
 
