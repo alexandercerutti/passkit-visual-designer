@@ -37,7 +37,8 @@ export default function LocalForageSaveMiddleware(store: MiddlewareAPI<Dispatch,
 			action.type === Store.Media.DESTROY ||
 			action.type === Store.Translations.INIT ||
 			action.type === Store.Translations.DESTROY ||
-			action.type === Store.Forage.RESET
+			action.type === Store.Forage.RESET ||
+			(action.type === Store.Options.SET_OPTION && action.key === "id")
 		);
 
 		if (isUnsupportedAction) {
