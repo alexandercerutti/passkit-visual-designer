@@ -149,7 +149,7 @@ class RecentSelector extends React.Component<Props, State> {
 							<div className="recents-box">
 								<header>
 									<h2>Recent Projects</h2>
-									<button disabled={!savedProjects.length} onClick={this.switchEditMode}>
+									<button disabled={!savedProjects.length} onClick={this.switchEditMode} className={this.state.editMode ? "editing" : ""}>
 										{
 											this.state.editMode
 												? "Done"

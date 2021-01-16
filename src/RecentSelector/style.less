@@ -8,49 +8,19 @@
 	height: 100%;
 
 	& > header {
-		flex-shrink: 0;
-		flex-grow: 0;
-
+		width: 100%;
+		color: #e6e6e6;
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		height: 35px;
-		background-image: linear-gradient(45deg, #014786, #0e0e0ea6);
-		// padding: 10px;
-		padding: 10px 10px 15px 10px;
-
-/* 		&::after {
-			content: "";
-			position: absolute;
-			top: 55px;
-			left: 0;
-			right: 0;
-			height: 60px;
-			display: inline-block;
-			background-image:
-				linear-gradient(180deg, transparent, #333333 20%),
-				linear-gradient(45deg, #014786, #0e0e0ea6);
-		} */
-
-		&::after {
-			content: "";
-			position: absolute;
-			top: 52px;
-			left: 0;
-			right: 0;
-			height: 22px;
-			display: inline-block;
-			background-image: linear-gradient(180deg, transparent, #333333 30%);
-		}
+		height: auto;
+		background-image: linear-gradient(45deg, #202223, #2a2c2d);
+		padding: 15px;
+		box-sizing: border-box;
 
 		& div {
 			& * {
 				letter-spacing: 0.5px;
-			}
-
-			& *:hover {
-				color: #FFF;
-				transition: color .5s ease-in-out;
 			}
 
 			& a {
@@ -61,6 +31,12 @@
 
 			& h4 {
 				font-weight: 500;
+				margin: 0;
+				color: #c78964;
+			}
+
+			&:nth-child(2n) {
+				height: 25px;
 			}
 		}
 	}
@@ -94,9 +70,9 @@
 						width: 100%;
 						height: 160px;
 						display: flex;
-						background-image: linear-gradient(45deg, rgb(44, 47, 49), rgb(69, 75, 78));
 						border-radius: 10px;
-						box-shadow: 0px 2px 20px 6px rgb(33, 37, 38);
+						background-image: linear-gradient(-45deg, #242627, #2a2c2d);
+						box-shadow: 0px 2px 5px 0px rgb(33, 37, 38);
 
 						& > div {
 							flex-grow: 1;
@@ -108,7 +84,7 @@
 							font-size: 14pt;
 							cursor: pointer;
 							background-color: transparent;
-							transition: background-color .5s ease-in-out;
+							transition: all .5s ease-in-out;
 
 							&:nth-of-type(2n) {
 								border-radius: 0 10px 10px 0;
@@ -120,7 +96,8 @@
 							}
 
 							&:hover {
-								background-color: rgb(44, 47, 49);
+								background-color: rgb(32, 34, 35);
+								color: #c78964;
 							}
 
 							& > svg {
@@ -157,13 +134,15 @@
 
 							& button {
 								background: none;
-								border: 2px solid #bbbbbb;
+								// border: 2px solid #bbbbbb;
+								border: 0;
 								width: 80px;
 								height: 100%;
 								color: #e6e6e6;
 								font-size: 11pt;
 								cursor: pointer;
 								transition: all .2s ease-in-out;
+								background-color: #27292a;
 
 								&[disabled] {
 									border-color: #5a5a5a !important;
@@ -171,8 +150,19 @@
 									cursor: initial;
 								}
 
+								&:not([disabled]):focus {
+									outline: 1px solid #c78964;
+								}
+
 								&:not([disabled]):hover {
-									border-color: #868686 !important;
+									background-color: rgb(32, 34, 35);
+									color: #c78964;
+								}
+
+								&.editing {
+									background-color: rgb(32, 34, 35);
+									color: #c78964;
+									outline: 1px solid #c78964;
 								}
 							}
 						}
@@ -183,8 +173,8 @@
 							width: 100%;
 							border-radius: 7px;
 							margin-bottom: 10px;
-							background-image: linear-gradient(45deg, rgb(44, 47, 49), rgb(69, 75, 78));
-							box-shadow: 0px 2px 20px 6px rgb(33, 37, 38);
+							background-image: linear-gradient(-45deg, #242627, #2a2c2d);
+							box-shadow: 0px 2px 5px 0px rgb(33, 37, 38);
 
 							& ul {
 								.scrollableWithoutScrollbars(y);
@@ -224,10 +214,11 @@
 										display: flex;
 										align-items: center;
 										box-sizing: border-box;
-										transition: background-color .5s ease-in-out;
+										transition: all .5s ease-in-out;
 
 										&:hover {
-											background-color: rgb(44, 47, 49);
+											background-color: rgb(32, 34, 35);
+											color: #c78964;
 										}
 									}
 
