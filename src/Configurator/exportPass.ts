@@ -153,7 +153,7 @@ function* exportMediaCollections(): ExportGeneratorReturn {
 		const [{ resolutions }, mediaPath] = collection;
 
 		for (const res in resolutions) {
-			const { name = "1x", content: [buffer] } = resolutions[res];
+			const { name = "1x", content: buffer } = resolutions[res];
 			const fileName = `${mediaPath}${name === mediaPath || name === "1x" ? "" : name}.png`;
 
 			buffers.push([fileName, buffer]);

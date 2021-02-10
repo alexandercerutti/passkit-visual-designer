@@ -1,7 +1,7 @@
 import * as React from "react";
 import { v1 as uuid } from "uuid";
 import { CollectionEditModify, CollectionEditOperation } from "..";
-import type { IdentifiedResolutions, MediaCollection, ResolutionTuple } from "../../../store";
+import type { IdentifiedResolutions, MediaCollection } from "../../../store";
 import { getArrayBuffer } from "../../../utils";
 import { DeleteIcon, PlusIcon } from "../icons";
 import "./style.less";
@@ -200,12 +200,12 @@ async function getResolutionsFromFileList(files: FileList) {
 		Array.prototype.map.call(files, getArrayBuffer)
 	);
 
-	return buffers.reduce((acc, buffer) => {
+	return buffers.reduce((acc, content) => {
 		return {
 			...acc,
 			[uuid()]: {
 				name: "",
-				content: [buffer, null] as ResolutionTuple
+				content
 			}
 		}
 	}, {} as IdentifiedResolutions);

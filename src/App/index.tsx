@@ -40,6 +40,15 @@ export default function App(): JSX.Element {
 		window.addEventListener("popstate", (event) => {
 			store.dispatch(Store.Forage.Reset());
 		});
+
+		/**
+		 * Removing previously created records.
+		 * Otherwise we might occour in orphan blob
+		 * urls when the page is reloaded or
+		 * restored.
+		 */
+
+		sessionStorage.clear();
 	}, []);
 
 	const refreshForageCallback = React.useCallback(async () => {
