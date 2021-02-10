@@ -10,7 +10,7 @@ import { initialState, State } from ".";
 // ************************************************************************ //
 
 export const ADD = "translations/ADD";
-export const INIT = "translations/INIT";
+export const INIT = "translations/INIT_LANGUAGE";
 export const DESTROY = "translations/DESTROY";
 export const REMOVE = "translations/REMOVE";
 export const EDIT = "translations/EDIT";

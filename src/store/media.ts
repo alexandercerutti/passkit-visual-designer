@@ -10,10 +10,11 @@ import { CollectionSet, initialState, MediaCollection, State } from ".";
 
 // ************************************************************************ //
 
-export const CREATE = "media/CREATE_SET";
-export const INIT = "media/INIT_SET";
-export const DESTROY = "media/DESTROY_SET";
-export const EDIT = "media/EDIT";
+export const CREATE = "media/CREATE_LANGUAGE";
+export const INIT = "media/INIT_MEDIA";
+export const PURGE = "media/PURGE";
+export const DESTROY = "media/DESTROY_MEDIA";
+export const EDIT = "media/EDIT_MEDIA";
 export const EDIT_COLLECTION = "media/EDIT_COLLECTION";
 export const SET_EXPORT_STATE = "media/SET_EXPORT_STATE";
 export const SET_ACTIVE_COLLECTION = "media/SET_ACTIVE_COLLECTION";
@@ -31,6 +32,7 @@ type MediaActions =
 	| Actions.SetActiveCollection
 	| Actions.SetExportState
 	| Actions.Create
+	| Actions.Purge
 	| Actions.Destroy
 	| Actions.Init;
 
@@ -52,6 +54,12 @@ export default function reducer(state = initialState.media, action: MediaActions
 				enabled: true,
 			};
 
+			return newState;
+		};
+
+		case PURGE: {
+			const newState = { ...state };
+			delete newState[action.mediaLanguage][action.mediaLanguage];
 			return newState;
 		};
 
@@ -133,6 +141,14 @@ export function Init(mediaName: keyof MediaProps, mediaLanguage: string): Action
 	};
 }
 
+export function Purge(mediaLanguage: string, mediaName: keyof MediaProps): Actions.Purge {
+	return {
+		type: PURGE,
+		mediaName,
+		mediaLanguage
+	};
+}
+
 export function Destroy(mediaLanguage: string): Actions.Destroy {
 	return {
 		type: DESTROY,
@@ -207,6 +223,11 @@ export declare namespace Actions {
 	}
 
 	interface Init extends Action<typeof INIT> {
+		mediaName: keyof MediaProps;
+		mediaLanguage: string;
+	}
+
+	interface Purge extends Action<typeof PURGE> {
 		mediaName: keyof MediaProps;
 		mediaLanguage: string;
 	}
