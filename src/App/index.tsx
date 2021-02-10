@@ -21,10 +21,11 @@ const store = createStore(Store.reducers,
 	Store.initialState,
 	composeWithDevTools(
 		applyMiddleware(
-			Store.middlewares.LanguageOperationsEnsureExistingMiddleware,
+			Store.middlewares.CreationMiddleware,
 			Store.middlewares.CollectionEditUrlMiddleware,
 			Store.middlewares.CollectionActivationMiddleware,
 			Store.middlewares.LanguageSelectionMiddleware,
+			Store.middlewares.PurgeMiddleware
 		),
 		applyMiddleware(thunk),
 		/** Order here is important. We want to execute next mid after thunks */

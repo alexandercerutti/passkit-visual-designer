@@ -47,8 +47,10 @@ export default function CollectionEditUrlMiddleware(store: MiddlewareAPI<Dispatc
 			const resolutions = storeCollection.resolutions;
 
 			for (const resolutionID in resolutions) {
-				if (resolutions[resolutionID].content.length === 2) {
-					resolutionsURLRevokationQueue.push(resolutions[resolutionID].content[1]);
+				const blobUrl = sessionStorage.getItem(resolutionID);
+
+				if (blobUrl) {
+					resolutionsURLRevokationQueue.push(blobUrl);
 				}
 			}
 
@@ -68,14 +70,16 @@ export default function CollectionEditUrlMiddleware(store: MiddlewareAPI<Dispatc
 			]);
 
 			for (const resolutionID of allResolutionsIDs) {
+				// expecting currentBlobUrl to be null only if final else matches
+				const currentBlobUrl = sessionStorage.getItem(resolutionID);
 				const actionResolution = actionCollectionResolutions[resolutionID];
 				const storeResolution = storeCollectionResolutions[resolutionID];
 
 				if (actionResolution && storeResolution) {
-					if (actionResolution.content[0] !== storeResolution.content[0]) {
+					if (actionResolution.content !== storeResolution.content) {
 						/** buffers are different, old url has to be destroyed, and the new created */
-						resolutionsURLRevokationQueue.push(storeResolution.content[1]);
-						resolutionsURLCreationQueue.push([resolutionID, actionResolution.content[0]]);
+						resolutionsURLRevokationQueue.push(currentBlobUrl);
+						resolutionsURLCreationQueue.push([resolutionID, actionResolution.content]);
 					} else {
 						/**
 						 * Buffer didn't change. But name might have changed.
@@ -85,10 +89,10 @@ export default function CollectionEditUrlMiddleware(store: MiddlewareAPI<Dispatc
 					}
 				} else if (!actionResolution && storeResolution) {
 					/** Resolution has been removed by action */
-					resolutionsURLRevokationQueue.push(storeResolution.content[1]);
+					resolutionsURLRevokationQueue.push(currentBlobUrl);
 				} else {
 					/** Resolution has been added by action */
-					resolutionsURLCreationQueue.push([resolutionID, actionResolution.content[0]]);
+					resolutionsURLCreationQueue.push([resolutionID, actionResolution.content]);
 				}
 			}
 
@@ -102,7 +106,7 @@ export default function CollectionEditUrlMiddleware(store: MiddlewareAPI<Dispatc
 			const paramResolutions = action.collection.resolutions || {};
 
 			for (const resolutionID in paramResolutions) {
-				resolutionsURLCreationQueue.push([resolutionID, paramResolutions[resolutionID].content[0]]);
+				resolutionsURLCreationQueue.push([resolutionID, paramResolutions[resolutionID].content]);
 			}
 		}
 
@@ -110,10 +114,11 @@ export default function CollectionEditUrlMiddleware(store: MiddlewareAPI<Dispatc
 
 		for (const [id, buffer] of resolutionsURLCreationQueue) {
 			const bufferURL = URL.createObjectURL(new Blob([buffer], { type: "image/*" }));
+			sessionStorage.setItem(id, bufferURL);
 
 			finalCollection.resolutions[id] = {
 				name: "",
-				content: [buffer, bufferURL],
+				content: buffer,
 			};
 		}
 
