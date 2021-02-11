@@ -4,15 +4,9 @@ import * as Store from "..";
 import { MediaProps } from "../../Pass";
 import { CollectionSet, MediaCollection } from "../store";
 
-type AllowedActions =
-	| Store.Media.Actions.Edit
-	| Store.Options.Actions.Set
-	| Store.Translations.Actions.Remove
-	;
-
 export default function PurgeMiddleware(store: MiddlewareAPI<Dispatch, State>) {
-	return (next: Dispatch<AnyAction>) => (action: AllowedActions) => {
-		if (action.type !== Store.Media.EDIT && (action.type !== Store.Options.SET_OPTION || action.key !== "activeMediaLanguage") && action.type !== Store.Translations.REMOVE) {
+	return (next: Dispatch<AnyAction>) => (action: Store.Options.Actions.Set) => {
+		if ((action.type !== Store.Options.SET_OPTION || action.key !== "activeMediaLanguage")) {
 			return next(action);
 		}
 
@@ -28,17 +22,25 @@ export default function PurgeMiddleware(store: MiddlewareAPI<Dispatch, State>) {
 
 			/**
 			 * If language changed, we have to discover if
-			 * current language has medias and translations that can be purged
+			 * current language has medias and translations that can be purged.
+			 *
+			 * Language might not have been initialized. In that case we cannot
+			 * purge anything nor destroy.
 			 */
 
-			for (const [mediaName, collectionSet] of Object.entries(prepurgeMedia[activeMediaLanguage]) as [keyof MediaProps, CollectionSet][]) {
-				enqueueMediaPurgeOnEmpty(mediaGenerator, collectionSet, activeMediaLanguage, mediaName);
-			}
+			if (prepurgeMedia[activeMediaLanguage]) {
+				for (const [mediaName, collectionSet] of Object.entries(prepurgeMedia[activeMediaLanguage]) as [keyof MediaProps, CollectionSet][]) {
+					enqueueMediaPurgeOnEmpty(mediaGenerator, collectionSet, activeMediaLanguage, mediaName);
+				}
 
-			const nextState = mediaGenerator.next().value;
+				const nextState = mediaGenerator.next().value;
 
-			if (!Object.keys(nextState.media[activeMediaLanguage]).length) {
-				store.dispatch(Store.Media.Destroy(activeMediaLanguage));
+				if (!Object.keys(nextState.media[activeMediaLanguage]).length) {
+					store.dispatch(Store.Media.Destroy(activeMediaLanguage));
+				}
+			} else {
+				// finishing anyway to not leave it suspended... poor generator.
+				mediaGenerator.next();
 			}
 
 			for (const [language, translationSet] of Object.entries(translations)) {
@@ -49,27 +51,6 @@ export default function PurgeMiddleware(store: MiddlewareAPI<Dispatch, State>) {
 
 			// Completing. No need to get next state
 			translationsGenerator.next();
-		} else if (action.type === Store.Media.EDIT) {
-			const mediaGenerator = purgeGenerator(store, Store.Media.Purge);
-			mediaGenerator.next(); // startup
-
-			enqueueMediaPurgeOnEmpty(
-				mediaGenerator,
-				prepurgeMedia[action.mediaLanguage][action.mediaName],
-				action.mediaLanguage,
-				action.mediaName
-			);
-
-			// Ending
-			const nextState = mediaGenerator.next().value;
-
-			if (!Object.keys(nextState.media[activeMediaLanguage]).length) {
-				store.dispatch(Store.Media.Destroy(activeMediaLanguage));
-			}
-		} else if (action.type === Store.Translations.REMOVE) {
-			if (!Object.keys(translations[action.translationLanguage].translations).length) {
-				store.dispatch(Store.Translations.Destroy(action.translationLanguage));
-			}
 		}
 
 		return next(action);

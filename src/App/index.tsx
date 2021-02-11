@@ -24,7 +24,6 @@ const store = createStore(Store.reducers,
 			Store.middlewares.CreationMiddleware,
 			Store.middlewares.CollectionEditUrlMiddleware,
 			Store.middlewares.CollectionActivationMiddleware,
-			Store.middlewares.LanguageSelectionMiddleware,
 			Store.middlewares.PurgeMiddleware
 		),
 		applyMiddleware(thunk),
