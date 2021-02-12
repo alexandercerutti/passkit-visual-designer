@@ -139,7 +139,12 @@ export default class CollectionEditor extends React.Component<Props, State> {
 
 		const collectionItems = Object.entries(collection.resolutions)
 			.map(([resolutionID, resolution], index) => {
-				const url = resolution.content[1];
+				/**
+				 * @TODO For the sake of a good architecture, this
+				 * component should receive a mapped structure with URLs
+				 * to render instead of querying sessionStorage itself.
+				 */
+				const url = sessionStorage.getItem(resolutionID);
 
 				return (
 					<div className="resolution" key={`${url}-${index}`}>
