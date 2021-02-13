@@ -40,7 +40,7 @@ export type LocalizedTranslationsGroup = {
 export type TranslationsSet = {
 	enabled: boolean;
 	translations: {
-		[translationCoupleID: string]: [string?, string?];
+		[translationCoupleID: string]: [placeholder?: string, value?: string];
 	};
 };
 
