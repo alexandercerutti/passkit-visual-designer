@@ -12,85 +12,84 @@ import * as Store from "..";
  */
 
 export default function CollectionActivationMiddleware(store: MiddlewareAPI<Dispatch, State>) {
-	return (next: Dispatch<AnyAction>) => (action: Store.Media.Actions.Edit) => {
-		if (action.type !== Store.Media.EDIT) {
+	return (next: Dispatch<AnyAction>) => (action: Store.Media.Actions.EditCollection) => {
+		if (action.type !== Store.Media.EDIT_COLLECTION) {
 			return next(action);
 		}
 
-		const nextActionCollectionsID = Object.entries(action.collections)
-			.filter(([_, value]) => Boolean(value))
-			.map(([key]) => key);
-
-		if (nextActionCollectionsID.length === 1) {
-			/**
-			 * Only one element avaialble in the
-			 * collections. Setting it as active.
-			 */
-
-			let nextCollectionID: string;
-
-			if (!Object.keys(action.collections[nextActionCollectionsID[0]].resolutions).length) {
-				nextCollectionID = "";
-			} else {
-				nextCollectionID = nextActionCollectionsID[0];
+		const { media } = store.getState();
+		const nextCollectionSet = Object.assign({}, media[action.mediaLanguage][action.mediaName], {
+			collections: {
+				...media[action.mediaLanguage][action.mediaName].collections,
+				[action.collectionID]: action.collection
 			}
+		});
 
-			return next(createActionWithActiveID(action, nextCollectionID));
-		}
-
-		if (!nextActionCollectionsID.length) {
+		if (!action.collection) {
 			/**
-			 * No collection left. Removing
-			 * activeCollectionID
+			 * Deleting the record before it is actually deleted by reducer
+			 * so the detection is trustable
 			 */
-
-			return next(createActionWithActiveID(action, ""));
+			delete nextCollectionSet.collections[action.collectionID];
 		}
 
-		const currentState = store.getState();
-		const currentMedia = currentState.media[action.mediaLanguage][action.mediaName];
-		const { activeCollectionID: currentActiveID } = currentMedia;
+		const collections = Object.assign({}, nextCollectionSet.collections);
+		const collectionsRecords = Object.keys(collections);
+		let nextActiveCollectionID: string = null;
 
-		if (!currentActiveID) {
-			/** There is no collection active yet. Can I select one? */
+		if (!collectionsRecords.length) {
+			/** No collection available. Removing selected key */
+			nextActiveCollectionID = "";
+		} else if (collectionsRecords.length === 1) {
+			/** Only one collection available. Check if it has resolutions */
+			const collectionKey = collectionsRecords[0];
+			nextActiveCollectionID = Object.keys(collections[collectionKey].resolutions).length ? collectionKey : "";
+		} else {
+			/** More than one collections available */
 
-			for (let i = nextActionCollectionsID.length, collection: MediaCollection; collection = action.collections[nextActionCollectionsID[--i]];) {
-				if (Object.keys(collection.resolutions).length) {
-					return next(createActionWithActiveID(action, nextActionCollectionsID[i]));
+			const currentActiveID = nextCollectionSet.activeCollectionID;
+
+			if (!currentActiveID) {
+				/**
+				 * No active. Can I select one? Iterating on all the
+				 * collections and looking for the first that has resolutions;
+				 */
+
+				for (let i = collectionsRecords.length, collection: MediaCollection; collection = collections[collectionsRecords[--i]];) {
+					if (Object.keys(collection.resolutions).length) {
+						nextActiveCollectionID = collectionsRecords[i];
+						break;
+					}
+				}
+
+				nextActiveCollectionID = findNextSuitableCollectionID(collections);
+			} else {
+				/**
+				 * We have one, but current collection changed and we want to
+				 * check if it still eligible for user or automatic selection.
+				 * Otherwise select the next one.
+				 *
+				 * Comparing the resolutions before changes and after changes.
+				 */
+
+				const actionResolutionsAmount = Object.keys(collections[currentActiveID].resolutions).length;
+				const storeResolutionsAmount = Object.keys(media[action.mediaLanguage][action.mediaName].collections[currentActiveID].resolutions).length;
+
+				const isCurrentEligible = (
+					actionResolutionsAmount === storeResolutionsAmount
+				);
+
+				if (!isCurrentEligible) {
+					nextActiveCollectionID = findNextSuitableCollectionID(collections);
+				} else {
+					nextActiveCollectionID = currentActiveID;
 				}
 			}
-
-			const nextActiveCollectionID = findNextSuitableCollectionID(action.collections);
-
-			if (nextActiveCollectionID) {
-				return next(createActionWithActiveID(action, nextActiveCollectionID));
-			}
-
-			/** There is no collection with at least one element */
-			return next(action);
 		}
 
-		const action_activeCollResolutionAmount = Object.keys(action.collections[currentActiveID].resolutions).length;
-		const store_activeCollResolutionAmount = Object.keys(currentMedia.collections[currentActiveID].resolutions).length;
+		store.dispatch(Store.Media.SetActiveCollection(action.mediaName, action.mediaLanguage, nextActiveCollectionID));
 
-		const shouldSelectNextCollection = (
-			action_activeCollResolutionAmount !== store_activeCollResolutionAmount &&
-			action_activeCollResolutionAmount === 0
-		);
-
-		if (shouldSelectNextCollection) {
-			/**
-			 * Current collection changed and
-			 * we are going to have no media
-			 * in this collection. Selecting next
-			 */
-
-			const nextCollectionID = findNextSuitableCollectionID(action.collections);
-
-			return next(createActionWithActiveID(action, nextCollectionID));
-		}
-
-		return next(createActionWithActiveID(action, currentActiveID));
+		return next(action);
 	}
 }
 
@@ -102,14 +101,4 @@ function findNextSuitableCollectionID(collections: CollectionSet["collections"])
 	}
 
 	return "";
-}
-
-function createActionWithActiveID(action: Store.Media.Actions.Edit, activeCollectionID: string) {
-	return {
-		...action,
-		activeCollectionID,
-		collections: {
-			...action.collections,
-		}
-	};
 }

@@ -266,8 +266,9 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 
 	onMediaCollectionEdit(collectionID: string, collection: MediaCollection) {
 		const { showMediaModalForMedia: mediaName } = this.state;
+		const { activeMediaLanguage } = this.props.projectOptions;
 
-		this.props.editCollection(mediaName, collectionID, collection);
+		this.props.editCollection(mediaName, activeMediaLanguage, collectionID, collection);
 	}
 
 	onMediaCollectionUse(collectionID: string) {

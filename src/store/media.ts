@@ -28,7 +28,7 @@ export const SET_ACTIVE_COLLECTION = "media/SET_ACTIVE_COLLECTION";
 // ************************************************************************ //
 
 type MediaActions =
-	| Actions.Edit
+	| Actions.EditCollection
 	| Actions.SetActiveCollection
 	| Actions.SetExportState
 	| Actions.Create
@@ -70,25 +70,17 @@ export default function reducer(state = initialState.media, action: MediaActions
 			return newState;
 		};
 
-		case EDIT: {
+		case EDIT_COLLECTION: {
 			const newState = { ...state };
 
 			const selectedLanguage = newState[action.mediaLanguage];
-			const selectedMediaCollections = selectedLanguage[action.mediaName];
+			const selectedMedia = selectedLanguage[action.mediaName];
+			const collections = selectedMedia.collections;
 
-			selectedMediaCollections.activeCollectionID = action.activeCollectionID;
-
-			/**
-			 * Updating store collections
-			 * and deleting the deleted ones.
-			 */
-
-			for (const [collID, collection] of Object.entries(action.collections)) {
-				if (!collection) {
-					delete selectedMediaCollections.collections[collID];
-				} else {
-					selectedMediaCollections.collections[collID] = collection;
-				}
+			if (!action.collection) {
+				delete collections[action.collectionID];
+			} else {
+				collections[action.collectionID] = action.collection;
 			}
 
 			return newState;
@@ -156,22 +148,13 @@ export function Destroy(mediaLanguage: string): Actions.Destroy {
 	};
 }
 
-export function EditCollection(mediaName: keyof MediaProps, collectionID: string, collection: MediaCollection | null): Actions.EditCollection {
+export function EditCollection(mediaName: keyof MediaProps, mediaLanguage: string, collectionID: string, collection: MediaCollection | null): Actions.EditCollection {
 	return {
 		type: EDIT_COLLECTION,
 		mediaName,
+		mediaLanguage,
 		collectionID,
 		collection,
-	};
-}
-
-/** Middleware-only action */
-export function Edit(mediaLanguage: string, mediaName: keyof MediaProps, collections: CollectionSet["collections"]): Actions.Edit {
-	return {
-		type: EDIT,
-		collections,
-		mediaLanguage,
-		mediaName
 	};
 }
 
@@ -203,19 +186,10 @@ export function SetActiveCollection(mediaName: keyof MediaProps, mediaLanguage: 
 
 export declare namespace Actions {
 	interface EditCollection extends Action<typeof EDIT_COLLECTION> {
+		mediaLanguage: string;
 		mediaName: keyof MediaProps;
 		collectionID: string;
 		collection: MediaCollection;
-	}
-
-	/** This action is called by the middleware */
-	interface Edit extends Action<typeof EDIT> {
-		mediaLanguage: string;
-		mediaName: keyof MediaProps;
-		collections: CollectionSet["collections"];
-
-		/** To be used only from active collection middleware */
-		activeCollectionID?: string;
 	}
 
 	interface Create extends Action<typeof CREATE> {

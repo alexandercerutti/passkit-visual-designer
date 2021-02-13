@@ -122,13 +122,13 @@ export default function CollectionEditUrlMiddleware(store: MiddlewareAPI<Dispatc
 			};
 		}
 
-		return next(Store.Media.Edit(
-			activeMediaLanguage,
-			action.mediaName,
-			{
-				...selectedMedia.collections,
-				[action.collectionID]: finalCollection
-			}
-		));
+		return next(
+			Store.Media.EditCollection(
+				action.mediaName,
+				action.mediaLanguage,
+				action.collectionID,
+				finalCollection
+			)
+		);
 	}
 }
