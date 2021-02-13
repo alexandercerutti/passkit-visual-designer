@@ -35,14 +35,14 @@ export default function CollectionsList(props: Props) {
 		props.performCollectionsOperation(CollectionEditCreate);
 	}, [props.media]);
 
-	const collectionsElements = Object.entries(props.media?.collections || {})
+	const collectionsElements = !props.media?.collections ? null : Object.entries(props.media?.collections)
 		.map(([collID, collection], index) => {
 			let previewContent: React.ReactFragment;
 			const resolutionsIDs = Object.keys(collection.resolutions);
 
 			if (resolutionsIDs.length) {
 				const trimmedSet = resolutionsIDs.slice(0, 3);
-				const fallbackElementURL = collection.resolutions[trimmedSet[trimmedSet.length - 1]].content[1];
+				const fallbackElementURL = sessionStorage.getItem(trimmedSet[trimmedSet.length - 1]);
 
 				/**
 				 * Creating a sized array of resolutions.
@@ -54,7 +54,7 @@ export default function CollectionsList(props: Props) {
 				previewSet.splice(
 					0,
 					Math.min(3, resolutionsIDs.length),
-					...trimmedSet.map(key => collection.resolutions[key].content[1])
+					...trimmedSet.map(key => sessionStorage.getItem(key))
 				);
 
 				const clippers = previewSet.map((url, index) => {
