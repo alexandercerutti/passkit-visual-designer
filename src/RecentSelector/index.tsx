@@ -9,6 +9,7 @@ import { createClassName } from "../utils";
 interface Props extends RouteComponentProps {
 	recentProjects: Store.Forage.ForageStructure["projects"];
 	requestForageDataRequest(): void;
+	initStore(projectID: string): void;
 }
 
 interface State {
@@ -28,6 +29,7 @@ class RecentSelector extends React.Component<Props, State> {
 		};
 
 		this.switchEditMode = this.switchEditMode.bind(this);
+		this.selectRecent = this.selectRecent.bind(this);
 	}
 
 	componentDidMount() {
@@ -96,6 +98,11 @@ class RecentSelector extends React.Component<Props, State> {
 		this.props.requestForageDataRequest();
 	}
 
+	selectRecent(id: string) {
+		this.props.initStore(id);
+		this.props.history.push("/creator");
+	}
+
 	render() {
 		const deleteButtonClassName = createClassName(["delete"], {
 			open: this.state.editMode
@@ -106,7 +113,7 @@ class RecentSelector extends React.Component<Props, State> {
 
 			return (
 				<li key={id}>
-					<div className="left">
+					<div className="left" onClick={() => this.selectRecent(id)}>
 						<img alt={alt} src={this.state.previewsURLList[id]} />
 						<span>{snapshot.projectOptions.title || "Untitled project"}</span>
 					</div>
