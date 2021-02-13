@@ -8,20 +8,20 @@ type AllowedActions =
 
 export default function CreationMiddleware(store: MiddlewareAPI<Dispatch, State>) {
 	return (next: Dispatch<AnyAction>) => (action: AllowedActions) => {
-		let { media, translations, projectOptions: { activeMediaLanguage } } = store.getState();
+		let { media, translations } = store.getState();
 
 		if (action.type === Store.Media.EDIT_COLLECTION) {
-			if (!(activeMediaLanguage in media)) {
-				store.dispatch(Store.Media.Create(activeMediaLanguage));
+			if (!(action.mediaLanguage in media)) {
+				store.dispatch(Store.Media.Create(action.mediaLanguage));
 				media = store.getState().media;
 			}
 
-			if (!(action.mediaName in media[activeMediaLanguage])) {
-				store.dispatch(Store.Media.Init(action.mediaName, activeMediaLanguage));
+			if (!(action.mediaName in media[action.mediaLanguage])) {
+				store.dispatch(Store.Media.Init(action.mediaName, action.mediaLanguage));
 			}
 		} else if (action.type === Store.Translations.ADD) {
-			if (!(activeMediaLanguage in translations)) {
-				store.dispatch(Store.Translations.Init(activeMediaLanguage));
+			if (!(action.translationLanguage in translations)) {
+				store.dispatch(Store.Translations.Init(action.translationLanguage));
 				translations = store.getState().translations;
 			}
 		}

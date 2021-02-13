@@ -27,8 +27,8 @@ export default function CollectionEditUrlMiddleware(store: MiddlewareAPI<Dispatc
 		}
 
 		const currentStore = store.getState();
-		const { projectOptions: { activeMediaLanguage }, media } = currentStore;
-		const selectedMedia = media[activeMediaLanguage][action.mediaName] ?? {} as CollectionSet;
+		const { media } = currentStore;
+		const selectedMedia = media[action.mediaLanguage][action.mediaName] ?? {} as CollectionSet;
 		/** url string array */
 		const resolutionsURLRevokationQueue: string[] = [];
 		const resolutionsURLCreationQueue: [resolutionID: string, buffer: ArrayBuffer][] = [];

@@ -13,7 +13,6 @@ type PossibleActions =
 	| Store.Pass.Actions.SetProp
 	| Store.Forage.Actions.Reset
 	| MediaActions.Create
-	| MediaActions.Edit
 	| MediaActions.Init
 	| MediaActions.EditCollection
 	| MediaActions.SetActiveCollection
@@ -30,6 +29,16 @@ export default function LocalForageSaveMiddleware(store: MiddlewareAPI<Dispatch,
 	return (next: Dispatch<AnyAction>) => async (action: PossibleActions) => {
 		// Unblocking now the middleware chain. We are performing only side-effects now.
 		next(action);
+
+		const passElement = document.querySelector<HTMLElement>(".viewer > .pass .content");
+
+		if (!passElement) {
+			/**
+			 * U mad? :troll:
+			 * Probably still loading yet. Stopping the snapshot creation
+			 */
+			return;
+		}
 
 		const isUnsupportedAction = (
 			action.type === Store.Media.INIT ||
@@ -81,7 +90,7 @@ export default function LocalForageSaveMiddleware(store: MiddlewareAPI<Dispatch,
 
 		const savedAtTimestamp = Date.now();
 
-		const stateWithoutBlobURLs: State = {
+		const stateForSave: State = {
 			...state,
 			media: deepClone(state["media"]) as State["media"],
 			projectOptions: {
@@ -90,20 +99,7 @@ export default function LocalForageSaveMiddleware(store: MiddlewareAPI<Dispatch,
 			}
 		};
 
-		for (const lang in stateWithoutBlobURLs["media"]) {
-			for (const mediaName in stateWithoutBlobURLs["media"][lang]) {
-				for (const collectionID in stateWithoutBlobURLs["media"][lang][mediaName]["collections"]) {
-					for (const resolutionID in stateWithoutBlobURLs["media"][lang][mediaName]["collections"][collectionID]["resolutions"]) {
-						const { content } = stateWithoutBlobURLs["media"][lang][mediaName]["collections"][collectionID]["resolutions"][resolutionID];
-
-						stateWithoutBlobURLs["media"][lang][mediaName]["collections"][collectionID]["resolutions"][resolutionID].content = [content[0]];
-					}
-				}
-			}
-		}
-
-		currentProjectContent.snapshot = stateWithoutBlobURLs;
-		const passElement = document.querySelector<HTMLElement>(".viewer > .pass .content");
+		currentProjectContent.snapshot = stateForSave;
 
 		const canvasElement = await html2canvas(passElement, {
 			windowWidth: 230,
