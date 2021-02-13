@@ -56,12 +56,6 @@ export interface MediaCollection {
 export type IdentifiedResolutions = {
 	[resolutionID: string]: {
 		name: string;
-		content: ResolutionTuple;
+		content: ArrayBuffer;
 	}
 };
-
-/**
- * string is optional because we generate the
- * url in redux middleware
- */
-export type ResolutionTuple = [ArrayBuffer, string?];
