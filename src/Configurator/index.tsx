@@ -490,11 +490,6 @@ export default withRouter(connect(
 	(state: State): ConfiguratorStore => {
 		const { pass, media, projectOptions, translations } = state;
 
-		const fallbackDevelopmentPassMetadata = !pass.kind && isDevelopment && {
-			transitType: PKTransitType.Boat,
-			kind: PassKind.BOARDING_PASS
-		} || {};
-
 		const usedLanguages = new Set(
 			/**
 			 * Seeking for medias that has contents for current language
@@ -505,7 +500,7 @@ export default withRouter(connect(
 		);
 
 		return {
-			passProps: Object.assign(fallbackDevelopmentPassMetadata, pass),
+			passProps: pass,
 			media,
 			translations,
 			usedLanguages,
