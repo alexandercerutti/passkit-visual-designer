@@ -36,6 +36,7 @@ const store = createStore(Store.reducers,
 
 export default function App(): JSX.Element {
 	const [forageData, setForageData] = React.useState<Store.Forage.ForageStructure>();
+	const [isLoading, setLoading] = React.useState(true);
 
 	React.useLayoutEffect(() => {
 		window.addEventListener("popstate", (event) => {
@@ -50,6 +51,7 @@ export default function App(): JSX.Element {
 		 */
 
 		sessionStorage.clear();
+		setLoading(false);
 	}, []);
 
 	const refreshForageCallback = React.useCallback(async () => {
@@ -68,30 +70,47 @@ export default function App(): JSX.Element {
 	React.useEffect(() => void refreshForageCallback(), []);
 
 	const initializeStore = React.useCallback(async (projectID: string) => {
-		const { snapshot } = forageData.projects[projectID];
+		sessionStorage.clear();
+		setLoading(true);
 
-		store.dispatch(Store.Forage.Init(snapshot));
+		return new Promise<void>(resolve => {
+			/**
+			 * Trick to show loader, so if this takes a bit of time,
+			 * UI doesn't seems to be stuck.
+			 * @TODO Actually, what would be better is not firing Init until
+			 * we are not sure that resolutions URLs have been generated.
+			 * For the moment we are using the same normal flow, through
+			 * middlewares.
+			 */
 
-		/** Iterating through medias so we can create and set URLs for array buffers */
+			setTimeout(() => {
+				const { snapshot } = forageData.projects[projectID];
+				store.dispatch(Store.Forage.Init(snapshot));
 
-		const availableMediaLanguages = Object.entries(snapshot.media);
+				/** Iterating through medias so we can create and set URLs for array buffers */
 
-		for (let i = availableMediaLanguages.length, localized: typeof availableMediaLanguages[0]; localized = availableMediaLanguages[--i];) {
-			const [language, mediaSet] = localized;
-			const mediaEntries = Object.entries(mediaSet) as [keyof MediaProps, CollectionSet][];
+				const availableMediaLanguages = Object.entries(snapshot.media);
 
-			for (let i = mediaEntries.length, mediaEntry: typeof mediaEntries[0]; mediaEntry = mediaEntries[--i];) {
-				const [mediaName, collectionSet] = mediaEntry;
-				const collectionEntries = Object.entries(collectionSet.collections);
+				for (let i = availableMediaLanguages.length, localized: typeof availableMediaLanguages[0]; localized = availableMediaLanguages[--i];) {
+					const [language, mediaSet] = localized;
+					const mediaEntries = Object.entries(mediaSet) as [keyof MediaProps, CollectionSet][];
 
-				for (let i = collectionEntries.length, collectionEntry: typeof collectionEntries[0]; collectionEntry = collectionEntries[--i];) {
-					const [collectionID, collection] = collectionEntry;
+					for (let i = mediaEntries.length, mediaEntry: typeof mediaEntries[0]; mediaEntry = mediaEntries[--i];) {
+						const [mediaName, collectionSet] = mediaEntry;
+						const collectionEntries = Object.entries(collectionSet.collections);
 
-					store.dispatch(Store.Media.EditCollection(mediaName, language, collectionID, collection));
+						for (let i = collectionEntries.length, collectionEntry: typeof collectionEntries[0]; collectionEntry = collectionEntries[--i];) {
+							const [collectionID, collection] = collectionEntry;
+
+							store.dispatch(Store.Media.EditCollection(mediaName, language, collectionID, collection));
+						}
+					}
 				}
-			}
-		}
 
+				resolve();
+				setLoading(false);
+			}, 500);
+		});
 	}, [forageData?.projects]);
 
 	return (
@@ -99,7 +118,7 @@ export default function App(): JSX.Element {
 			<CSSTransition
 				mountOnEnter
 				unmountOnExit
-				in={!forageData}
+				in={isLoading}
 				timeout={1000}
 			>
 				<LoaderFace />
