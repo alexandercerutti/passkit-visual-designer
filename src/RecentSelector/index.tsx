@@ -9,7 +9,7 @@ import { createClassName } from "../utils";
 interface Props extends RouteComponentProps {
 	recentProjects: Store.Forage.ForageStructure["projects"];
 	requestForageDataRequest(): void;
-	initStore(projectID: string): void;
+	initStore(projectID: string): Promise<void>;
 }
 
 interface State {
@@ -99,8 +99,8 @@ class RecentSelector extends React.Component<Props, State> {
 	}
 
 	selectRecent(id: string) {
-		this.props.initStore(id);
-		this.props.history.push("/creator");
+		this.props.initStore(id)
+			.then(() => this.props.history.push("/creator"));
 	}
 
 	render() {
