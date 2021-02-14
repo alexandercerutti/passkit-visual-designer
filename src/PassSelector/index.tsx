@@ -11,7 +11,6 @@ import type { State } from "../store";
 import * as Store from "../store";
 
 interface DispatchProps {
-	setPassKind: typeof Store.Pass.setKind,
 	setPassProps: typeof Store.Pass.setPropsBatch,
 }
 
@@ -19,11 +18,15 @@ interface StoreProps {
 	selectedPassKind: PassKind;
 }
 
+interface SelectorState {
+	selectedKind: PassKind;
+}
+
 interface SelectorProps extends DispatchProps, StoreProps, RouteComponentProps<any> { }
 
 type PassKindsAlternatives = { [key in PassKind]?: PassAlternative[] };
 
-class PassSelector extends React.PureComponent<SelectorProps> {
+class PassSelector extends React.PureComponent<SelectorProps, SelectorState> {
 	private alternatives: PassKindsAlternatives = {};
 
 	private config = {
@@ -32,6 +35,10 @@ class PassSelector extends React.PureComponent<SelectorProps> {
 
 	constructor(props: SelectorProps) {
 		super(props);
+
+		this.state = {
+			selectedKind: undefined
+		};
 
 		this.registerAlternatives = this.registerAlternatives.bind(this);
 		this.onPassSelect = this.onPassSelect.bind(this);
@@ -55,24 +62,26 @@ class PassSelector extends React.PureComponent<SelectorProps> {
 	onPassSelect(passProps: PassProps) {
 		console.log("Performed selection of", passProps.kind);
 
-		if (this.props.selectedPassKind === passProps.kind) {
-			this.props.setPassKind(undefined);
+		if (this.state.selectedKind === passProps.kind) {
+			this.setState({
+				selectedKind: undefined,
+			});
 			return;
 		}
 
-		this.props.setPassKind(passProps.kind);
+		this.setState({
+			selectedKind: passProps.kind,
+		});
 	}
 
 	onAlternativeSelection(passProps: PassProps) {
-		const { kind, ...props } = passProps;
-		this.props.setPassProps(props);
-
+		this.props.setPassProps(passProps);
 		this.props.history.push("/creator");
 	}
 
 	render() {
-		const { selectedPassKind } = this.props;
-		const availableAlternatives = selectedPassKind && this.alternatives[selectedPassKind] || [];
+		const { selectedKind } = this.state;
+		const availableAlternatives = selectedKind && this.alternatives[selectedKind] || [];
 
 		const passes = Object.entries(PassKind).map(([_, pass]) => {
 			return (
@@ -90,7 +99,7 @@ class PassSelector extends React.PureComponent<SelectorProps> {
 				<NamedPass
 					key={alternative.name}
 					name={alternative.name}
-					kind={selectedPassKind}
+					kind={selectedKind}
 					{...alternative.specificProps}
 				/>
 			);
@@ -109,7 +118,7 @@ class PassSelector extends React.PureComponent<SelectorProps> {
 					<h2>{this.config.introText}</h2>
 				</header>
 				<div className="selection-window">
-					<PassList onPassSelect={this.onPassSelect} selectedKind={selectedPassKind}>
+					<PassList onPassSelect={this.onPassSelect} selectedKind={selectedKind}>
 						{passes}
 					</PassList>
 					{AlternativesListComponent}
@@ -124,7 +133,6 @@ export default withRouter(connect(
 		return { selectedPassKind };
 	},
 	{
-		setPassKind: Store.Pass.setKind,
 		setPassProps: Store.Pass.setPropsBatch
 	}
 )(PassSelector));
