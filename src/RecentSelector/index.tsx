@@ -8,13 +8,14 @@ import { createClassName } from "../utils";
 
 interface Props extends RouteComponentProps {
 	recentProjects: Store.Forage.ForageStructure["projects"];
-	requestForageDataRequest(): void;
+	requestForageDataRequest(): Promise<void>;
 	initStore(projectID: string): Promise<void>;
 }
 
 interface State {
 	previewsURLList: { [projectID: string]: string };
 	editMode: boolean;
+	refreshing: boolean;
 }
 
 class RecentSelector extends React.Component<Props, State> {
@@ -26,10 +27,12 @@ class RecentSelector extends React.Component<Props, State> {
 		this.state = {
 			previewsURLList: {},
 			editMode: false,
+			refreshing: false,
 		};
 
 		this.switchEditMode = this.switchEditMode.bind(this);
 		this.selectRecent = this.selectRecent.bind(this);
+		this.toggleRefreshing = this.toggleRefreshing.bind(this);
 	}
 
 	componentDidMount() {
@@ -39,7 +42,9 @@ class RecentSelector extends React.Component<Props, State> {
 		}
 
 		this.refreshInterval = window.setInterval(() => {
-			this.props.requestForageDataRequest();
+			this.toggleRefreshing();
+			this.props.requestForageDataRequest()
+				.then(() => setTimeout(this.toggleRefreshing, 2000))
 		}, 7000);
 	}
 
@@ -76,7 +81,7 @@ class RecentSelector extends React.Component<Props, State> {
 		}, {});
 
 		if (!Object.keys(newState.previewsURLList).length) {
-			newState.editMode = false
+			newState.editMode = false;
 		}
 
 		return newState;
@@ -85,6 +90,12 @@ class RecentSelector extends React.Component<Props, State> {
 	componentWillUnmount() {
 		clearInterval(this.refreshInterval);
 		Object.values(this.state.previewsURLList).forEach(URL.revokeObjectURL);
+	}
+
+	toggleRefreshing() {
+		this.setState((previous) => ({
+			refreshing: !previous.refreshing,
+		}));
 	}
 
 	switchEditMode() {
@@ -158,7 +169,7 @@ class RecentSelector extends React.Component<Props, State> {
 						</section>
 						<section>
 							<div className="recents-box">
-								<header>
+								<header className={this.state.refreshing ? "refreshing" : null}>
 									<h2>Recent Projects</h2>
 									<button disabled={!savedProjects.length} onClick={this.switchEditMode} className={this.state.editMode ? "editing" : ""}>
 										{

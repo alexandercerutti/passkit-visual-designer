@@ -59,7 +59,7 @@
 				width: 100%;
 				display: flex;
 
-				&:nth-of-type(2n+1) {
+				&:nth-of-type(2n + 1) {
 					flex-grow: 0;
 					flex-shrink: 0;
 					align-items: center;
@@ -84,13 +84,13 @@
 							font-size: 14pt;
 							cursor: pointer;
 							background-color: transparent;
-							transition: all .5s ease-in-out;
+							transition: all 0.5s ease-in-out;
 
 							&:nth-of-type(2n) {
 								border-radius: 0 10px 10px 0;
 							}
 
-							&:nth-of-type(2n+1) {
+							&:nth-of-type(2n + 1) {
 								border-radius: 10px 0 0 10px;
 								border-right: 2px dashed #484848;
 							}
@@ -128,6 +128,24 @@
 							width: 100%;
 							margin-bottom: 20px;
 
+							transition: border-bottom-color 0.5s ease-in-out;
+							border-bottom: 1px solid #484848;
+							border-bottom-color: #484848;
+							padding-bottom: 10px;
+
+							&.refreshing {
+								animation: bounce-loading 0.5s ease-in-out infinite alternate;
+							}
+
+							@keyframes bounce-loading {
+								from {
+									border-bottom-color: #484848;
+								}
+								to {
+									border-bottom-color: #c78964;
+								}
+							}
+
 							& h2 {
 								margin: 0;
 							}
@@ -141,7 +159,7 @@
 								color: #e6e6e6;
 								font-size: 11pt;
 								cursor: pointer;
-								transition: all .2s ease-in-out;
+								transition: all 0.2s ease-in-out;
 								background-color: #27292a;
 
 								&[disabled] {
@@ -214,7 +232,7 @@
 										display: flex;
 										align-items: center;
 										box-sizing: border-box;
-										transition: all .5s ease-in-out;
+										transition: all 0.5s ease-in-out;
 
 										&:hover {
 											background-color: rgb(32, 34, 35);
@@ -236,7 +254,7 @@
 											background-color: #752e2e;
 											color: #e6e6e6;
 											overflow: hidden;
-											transition: all .5s ease-in-out;
+											transition: all 0.5s ease-in-out;
 
 											&.open {
 												width: 80px;
