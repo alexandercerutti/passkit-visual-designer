@@ -9,30 +9,31 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	animation-name: disappear;
-	animation-duration: .5s;
-	animation-play-state: paused;
-	animation-fill-mode: forwards;
-	animation-timing-function: ease-out;
+	opacity: 0;
+	transition: opacity 1s ease-in-out;
 
 	// CSS Transition
-	&.exit {
-		animation-play-state: running;
+	&.enter-active {
+		opacity: 1;
+	}
+
+	&.exit-active {
+		opacity: 0;
 	}
 
 	& svg {
 		& #content > * {
-			fill: #EDEDED;
+			fill: #ededed;
 			opacity: 0.3;
 			animation-name: bouncing-opacity;
-			animation-duration: .7s;
+			animation-duration: 0.7s;
 			animation-iteration-count: infinite;
 			animation-direction: alternate;
 			animation-timing-function: ease-in-out;
 		}
 
 		& #border {
-			stroke: #EDEDED;
+			stroke: #ededed;
 			stroke-width: 5;
 			stroke-linecap: round;
 			stroke-dasharray: 960 40;
@@ -48,18 +49,12 @@
 
 @keyframes bouncing-opacity {
 	to {
-		opacity: 1
+		opacity: 1;
 	}
 }
 
 @keyframes rotation-border {
 	to {
 		stroke-dashoffset: 0;
-	}
-}
-
-@keyframes disappear {
-	to {
-		opacity: 0;
 	}
 }
