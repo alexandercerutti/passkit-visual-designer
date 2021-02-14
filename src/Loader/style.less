@@ -9,16 +9,22 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	opacity: 0;
-	transition: opacity 1s ease-in-out;
+	animation-duration: 0.5s;
+	animation-play-state: paused;
+	animation-fill-mode: forwards;
+	animation-timing-function: ease-out;
 
 	// CSS Transition
-	&.enter-active {
-		opacity: 1;
+	&.enter {
+		opacity: 0;
+		animation-name: appear;
+		animation-play-state: running;
 	}
 
-	&.exit-active {
-		opacity: 0;
+	&.exit {
+		opacity: 1;
+		animation-name: disappear;
+		animation-play-state: running;
 	}
 
 	& svg {
@@ -56,5 +62,17 @@
 @keyframes rotation-border {
 	to {
 		stroke-dashoffset: 0;
+	}
+}
+
+@keyframes disappear {
+	to {
+		opacity: 0;
+	}
+}
+
+@keyframes appear {
+	to {
+		opacity: 1;
 	}
 }

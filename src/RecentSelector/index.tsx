@@ -114,8 +114,8 @@ class RecentSelector extends React.Component<Props, State> {
 	}
 
 	selectRecent(id: string) {
-		this.props.initStore(id)
-			.then(() => this.props.history.push("/creator"));
+		this.props.initStore(id);
+		this.props.history.push("/creator");
 	}
 
 	render() {

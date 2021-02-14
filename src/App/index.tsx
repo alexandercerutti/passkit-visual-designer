@@ -40,7 +40,15 @@ export default function App(): JSX.Element {
 
 	React.useLayoutEffect(() => {
 		window.addEventListener("popstate", (event) => {
-			store.dispatch(Store.Forage.Reset());
+			setLoading(true);
+			setTimeout(() => {
+				/**
+				 * Delaying dispatch to avoid seeing pass reset
+				 * before the loader showing begins
+				 */
+				store.dispatch(Store.Forage.Reset());
+				setLoading(false)
+			}, 500);
 		});
 
 		/**
@@ -51,7 +59,6 @@ export default function App(): JSX.Element {
 		 */
 
 		sessionStorage.clear();
-		setLoading(false);
 	}, []);
 
 	const refreshForageCallback = React.useCallback(async () => {
@@ -67,7 +74,10 @@ export default function App(): JSX.Element {
 		setForageData(data);
 	}, []);
 
-	React.useEffect(() => void refreshForageCallback(), []);
+	React.useEffect(() => {
+		refreshForageCallback();
+		window.setTimeout(setLoading, 1000, false);
+	}, []);
 
 	const initializeStore = React.useCallback(async (projectID: string) => {
 		sessionStorage.clear();
