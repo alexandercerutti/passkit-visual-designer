@@ -469,14 +469,16 @@ function convertFieldKindToDataGroup(kind: FieldKind): DataGroup {
 function getBestResolutionForMedia(mediaSetForSelectedLanguage: MediaSet) {
 	const best = {} as MediaProps;
 
-	for (let m in mediaSetForSelectedLanguage) {
-		const key = m as keyof MediaSet;
-		const media = mediaSetForSelectedLanguage[key] as CollectionSet;
+	if (!mediaSetForSelectedLanguage) {
+		return best;
+	}
+
+	for (let [mediaName, media] of Object.entries(mediaSetForSelectedLanguage)) {
 		const { activeCollectionID = "", collections, enabled } = media ?? {};
 
 		if (media && activeCollectionID && enabled) {
-			const resolutions = Object.values(collections[activeCollectionID].resolutions);
-			best[key] = resolutions[0]?.content[1];
+			const resolutions = Object.keys(collections[activeCollectionID].resolutions);
+			best[mediaName] = sessionStorage.getItem(resolutions[0]);
 		}
 	}
 
