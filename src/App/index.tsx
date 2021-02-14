@@ -15,7 +15,6 @@ import LoaderFace from "../Loader";
 import { CSSTransition } from "react-transition-group";
 import { MediaProps, PassMixedProps } from "../Pass";
 import { CollectionSet } from "../store";
-import { POKeys, POValues } from "../store/projectOptions";
 
 // Webpack valorized
 declare const isDevelopment: boolean;
@@ -70,9 +69,12 @@ export default function App(): JSX.Element {
 
 	const initializeStore = React.useCallback(async (projectID: string) => {
 		const { snapshot } = forageData.projects[projectID];
-		const { media, pass, projectOptions, translations } = snapshot;
 
-		const availableMediaLanguages = Object.entries(media);
+		store.dispatch(Store.Forage.Init(snapshot));
+
+		/** Iterating through medias so we can create and set URLs for array buffers */
+
+		const availableMediaLanguages = Object.entries(snapshot.media);
 
 		for (let i = availableMediaLanguages.length, localized: typeof availableMediaLanguages[0]; localized = availableMediaLanguages[--i];) {
 			const [language, mediaSet] = localized;
@@ -87,40 +89,9 @@ export default function App(): JSX.Element {
 
 					store.dispatch(Store.Media.EditCollection(mediaName, language, collectionID, collection));
 				}
-
-				store.dispatch(Store.Media.SetActiveCollection(mediaName, language, collectionSet.activeCollectionID));
-				store.dispatch(Store.Media.SetExportState(mediaName, language, collectionSet.enabled));
 			}
 		}
 
-		const { kind, ...passProps } = pass;
-		const passEntries = Object.entries(passProps) as [keyof Omit<PassMixedProps, "kind">, any][] ;
-
-		store.dispatch(Store.Pass.setKind(kind));
-
-		for (let i = passEntries.length, entry: typeof passEntries[0]; entry = passEntries[--i];) {
-			store.dispatch(Store.Pass.setProp(entry[0], entry[1]));
-		}
-
-		const optionsEntries = Object.entries(projectOptions) as [POKeys, POValues][];
-
-		for (let i = optionsEntries.length, entry: typeof optionsEntries[0]; entry = optionsEntries[--i];) {
-			store.dispatch(Store.Options.Set(...entry));
-		}
-
-		const translationsEntries = Object.entries(translations);
-
-		for (let i = translationsEntries.length, entry: typeof translationsEntries[0]; entry = translationsEntries[--i];) {
-			const [language, translationSet] = entry;
-			const translationSetEntries = Object.entries(translationSet.translations);
-
-			store.dispatch(Store.Translations.SetExportState(language, translationSet.enabled));
-
-			for (let i = translationSetEntries.length, entry: typeof translationSetEntries[0]; entry = translationSetEntries[--i];) {
-				const [translationID, [ placeholder, value ]] = entry;
-				store.dispatch(Store.Translations.Edit(language, translationID, placeholder, value));
-			}
-		}
 	}, [forageData?.projects]);
 
 	return (

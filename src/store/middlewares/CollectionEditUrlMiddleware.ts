@@ -6,11 +6,13 @@ import * as Store from "..";
  * This middleware receives a collection being added, edited or deleted
  * and handles its resolutions.
  *
- * On adding, picks every resolution's buffer and creates a URI for it.
+ * On adding, picks every resolution's buffer and creates a URI for it
+ * and saves it to sessionStorage.
  *
  * On modification, compares collection in action and in store and their
  * resolutions.
- * 	- If a resolution is added, it creates URLs for them.
+ * 	- If a resolution is added, it creates URLs for them and saves them
+ * 	  to sessionStorage.
  * 	- If a resolution has different buffer, it destroys the old URL and
  * 	  creates a new one.
  *
@@ -28,15 +30,10 @@ export default function CollectionEditUrlMiddleware(store: MiddlewareAPI<Dispatc
 
 		const currentStore = store.getState();
 		const { media } = currentStore;
-		const selectedMedia = media[action.mediaLanguage][action.mediaName] ?? {} as CollectionSet;
+		const selectedMedia = media[action.mediaLanguage][action.mediaName];
 		/** url string array */
-		const resolutionsURLRevokationQueue: string[] = [];
+		const resolutionsURLRevokationQueue: [resolutionID: string, url: string][] = [];
 		const resolutionsURLCreationQueue: [resolutionID: string, buffer: ArrayBuffer][] = [];
-
-		let finalCollection: MediaCollection = {
-			name: undefined,
-			resolutions: {},
-		};
 
 		if (action.collection === null) {
 			/**
@@ -50,14 +47,14 @@ export default function CollectionEditUrlMiddleware(store: MiddlewareAPI<Dispatc
 				const blobUrl = sessionStorage.getItem(resolutionID);
 
 				if (blobUrl) {
-					resolutionsURLRevokationQueue.push(blobUrl);
+					resolutionsURLRevokationQueue.push([resolutionID, blobUrl]);
 				}
 			}
-
-			finalCollection = undefined;
 		} else if (selectedMedia.collections[action.collectionID]) {
 			/**
 			 * Collection has been edited somehow. We have to discover it.
+			 * If the edit concerns resolutions, we'll have to destroy old
+			 * references and create new if needed
 			 */
 
 			const storeCollectionResolutions = selectedMedia.collections[action.collectionID].resolutions;
@@ -70,33 +67,33 @@ export default function CollectionEditUrlMiddleware(store: MiddlewareAPI<Dispatc
 			]);
 
 			for (const resolutionID of allResolutionsIDs) {
-				// expecting currentBlobUrl to be null only if final else matches
 				const currentBlobUrl = sessionStorage.getItem(resolutionID);
 				const actionResolution = actionCollectionResolutions[resolutionID];
 				const storeResolution = storeCollectionResolutions[resolutionID];
 
 				if (actionResolution && storeResolution) {
-					if (actionResolution.content !== storeResolution.content) {
-						/** buffers are different, old url has to be destroyed, and the new created */
-						resolutionsURLRevokationQueue.push(currentBlobUrl);
-						resolutionsURLCreationQueue.push([resolutionID, actionResolution.content]);
-					} else {
+					if (!currentBlobUrl) {
 						/**
-						 * Buffer didn't change. But name might have changed.
-						 * Use action resolution values
+						 * Buffer doesn't have a blob and url associated, probably
+						 * due to initialization. Creating.
 						 */
-						finalCollection.resolutions[resolutionID] = actionResolution;
+
+						resolutionsURLCreationQueue.push([resolutionID, actionResolution.content]);
+					} else if (actionResolution.content !== storeResolution.content || !currentBlobUrl) {
+						/**
+						 * Buffers are different, old url has to be destroyed, and the new created
+						 */
+						resolutionsURLRevokationQueue.push([resolutionID, currentBlobUrl]);
+						resolutionsURLCreationQueue.push([resolutionID, actionResolution.content]);
 					}
 				} else if (!actionResolution && storeResolution) {
 					/** Resolution has been removed by action */
-					resolutionsURLRevokationQueue.push(currentBlobUrl);
+					resolutionsURLRevokationQueue.push([resolutionID, currentBlobUrl]);
 				} else {
 					/** Resolution has been added by action */
 					resolutionsURLCreationQueue.push([resolutionID, actionResolution.content]);
 				}
 			}
-
-			finalCollection.name = action.collection.name;
 		} else {
 			/**
 			 * The collection edited is new. If it has resolutions,
@@ -110,25 +107,16 @@ export default function CollectionEditUrlMiddleware(store: MiddlewareAPI<Dispatc
 			}
 		}
 
-		resolutionsURLRevokationQueue.forEach(URL.revokeObjectURL);
+		for (const [id, url] of resolutionsURLRevokationQueue) {
+			sessionStorage.removeItem(id);
+			URL.revokeObjectURL(url);
+		}
 
 		for (const [id, buffer] of resolutionsURLCreationQueue) {
 			const bufferURL = URL.createObjectURL(new Blob([buffer], { type: "image/*" }));
 			sessionStorage.setItem(id, bufferURL);
-
-			finalCollection.resolutions[id] = {
-				name: "",
-				content: buffer,
-			};
 		}
 
-		return next(
-			Store.Media.EditCollection(
-				action.mediaName,
-				action.mediaLanguage,
-				action.collectionID,
-				finalCollection
-			)
-		);
+		return next(action);
 	}
 }

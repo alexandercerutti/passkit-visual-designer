@@ -42,7 +42,7 @@ export const RESET = "forage/RESET";
 export function Init(snapshot: State): Actions.Init {
 	return {
 		type: INIT,
-		...snapshot,
+		snapshot,
 	};
 }
 
@@ -62,10 +62,7 @@ export function Reset(): Actions.Reset {
 
 export declare namespace Actions {
 	interface Init extends Action<typeof INIT> {
-		media: State["media"];
-		pass: State["pass"];
-		projectOptions: State["projectOptions"];
-		translations: State["translations"];
+		snapshot: State;
 	}
 
 	interface Reset extends Action<typeof RESET> { }

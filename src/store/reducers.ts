@@ -19,5 +19,10 @@ export default function (state: CombinedState<State>, action: AnyAction) {
 		return applicationReducers(undefined, action);
 	}
 
+	if (action.type === forage.INIT) {
+		const { snapshot } = action as forage.Actions.Init;
+		return applicationReducers(snapshot, action);
+	}
+
 	return applicationReducers(state, action);
 }
