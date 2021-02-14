@@ -54,13 +54,17 @@ class RecentSelector extends React.Component<Props, State> {
 		];
 
 		newState.previewsURLList = allProjectsIDs.reduce((acc, current) => {
-			if (state.previewsURLList[current]) {
-				URL.revokeObjectURL(state.previewsURLList[current])
-			}
-
 			if (!props.recentProjects[current]) {
+				URL.revokeObjectURL(state.previewsURLList[current]);
 				/** When a projects gets removed*/
 				return acc;
+			}
+
+			if (state.previewsURLList[current]) {
+				return {
+					...acc,
+					[current]: state.previewsURLList[current]
+				};
 			}
 
 			return {
