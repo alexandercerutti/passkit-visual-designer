@@ -17,13 +17,13 @@
 	// CSS Transition
 	&.enter {
 		opacity: 0;
-		animation-name: appear;
+		animation-name: loader-appear;
 		animation-play-state: running;
 	}
 
 	&.exit {
 		opacity: 1;
-		animation-name: disappear;
+		animation-name: loader-disappear;
 		animation-play-state: running;
 	}
 
@@ -65,13 +65,13 @@
 	}
 }
 
-@keyframes disappear {
+@keyframes loader-disappear {
 	to {
 		opacity: 0;
 	}
 }
 
-@keyframes appear {
+@keyframes loader-appear {
 	to {
 		opacity: 1;
 	}
