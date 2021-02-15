@@ -38,17 +38,22 @@ export default function App(): JSX.Element {
 	const [forageData, setForageData] = React.useState<Store.Forage.ForageStructure>();
 	const [isLoading, setLoading] = React.useState(true);
 
+	const loadAfter = React.useCallback((callback: Function, timeout: number) => {
+		setLoading(true);
+
+		setTimeout(() => {
+			Promise.resolve(callback?.())
+				.then(() => setLoading(false))
+		}, timeout);
+	}, []);
+
 	React.useLayoutEffect(() => {
 		window.addEventListener("popstate", (event) => {
-			setLoading(true);
-			setTimeout(() => {
-				/**
-				 * Delaying dispatch to avoid seeing pass reset
-				 * before the loader showing begins
-				 */
-				store.dispatch(Store.Forage.Reset());
-				setLoading(false)
-			}, 500);
+			/**
+			 * Delaying dispatch to avoid seeing pass reset
+			 * before the loader showing begins
+			 */
+			loadAfter(() => store.dispatch(Store.Forage.Reset()), 500);
 		});
 
 		/**
@@ -76,13 +81,11 @@ export default function App(): JSX.Element {
 
 	React.useEffect(() => {
 		refreshForageCallback();
-		window.setTimeout(setLoading, 1000, false);
+		loadAfter(null, 1000);
 	}, []);
 
 	const initializeStore = React.useCallback(async (projectID: string) => {
 		sessionStorage.clear();
-		setLoading(true);
-
 		return new Promise<void>(resolve => {
 			/**
 			 * Trick to show loader, so if this takes a bit of time,
@@ -93,7 +96,7 @@ export default function App(): JSX.Element {
 			 * middlewares.
 			 */
 
-			setTimeout(() => {
+			loadAfter(() => {
 				const { snapshot } = forageData.projects[projectID];
 				store.dispatch(Store.Forage.Init(snapshot));
 
@@ -118,7 +121,6 @@ export default function App(): JSX.Element {
 				}
 
 				resolve();
-				setLoading(false);
 			}, 500);
 		});
 	}, [forageData?.projects]);
