@@ -187,7 +187,7 @@ function App(props: Props): JSX.Element {
 						/>
 					</Route>
 					<Route path="/select">
-						{() => !isDevelopment && Object.keys(forageData?.projects).length
+						{() => !isDevelopment && (!forageData || !Object.keys(forageData.projects || {}).length)
 							? <Redirect to="/" />
 							: <PassSelector pushHistory={changePathWithLoading} />
 						}
