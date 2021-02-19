@@ -1,23 +1,29 @@
 import * as React from "react";
-import { Route, Redirect } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Redirect, useLocation, useHistory } from "react-router-dom";
 import thunk from "redux-thunk";
 import localForage from "localforage";
 import { Provider } from "react-redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import PassSelector from "../PassSelector";
 import { createStore, applyMiddleware } from "redux";
-import SmoothRouter from "./SmoothRouter";
 import Configurator from "../Configurator";
 import { PKTextAlignment } from "../Pass/constants";
 import * as Store from "../store";
 import RecentSelector from "../RecentSelector";
 import LoaderFace from "../Loader";
-import { CSSTransition } from "react-transition-group";
-import { MediaProps, PassMixedProps } from "../Pass";
+import { CSSTransition, SwitchTransition } from "react-transition-group";
+import { MediaProps } from "../Pass";
 import { CollectionSet } from "../store";
 
 // Webpack valorized
 declare const isDevelopment: boolean;
+
+/**
+ * Loading time is used to sync loading
+ * with animations.
+ */
+
+const LOADING_TIME_MS = 1500;
 
 const store = createStore(Store.reducers,
 	Store.initialState,
@@ -34,36 +40,59 @@ const store = createStore(Store.reducers,
 	)
 );
 
-export default function App(): JSX.Element {
-	const [forageData, setForageData] = React.useState<Store.Forage.ForageStructure>();
+/**
+ * A container that allows us to have
+ * a loading overlay with transition
+ * and to use history and location hooks
+ * in App component below
+ */
+
+export default function AppRoutingLoaderContainer() {
 	const [isLoading, setLoading] = React.useState(true);
 
-	const loadAfter = React.useCallback((callback: Function, timeout: number) => {
-		setLoading(true);
+	return (
+		<Provider store={store}>
+			<Router>
+				<CSSTransition
+					mountOnEnter
+					unmountOnExit
+					in={isLoading}
+					timeout={500}
+				>
+					<LoaderFace />
+				</CSSTransition>
+				<App setLoading={setLoading} />
+			</Router>
+		</Provider>
+	);
+}
 
-		setTimeout(() => {
-			Promise.resolve(callback?.())
-				.then(() => setLoading(false))
-		}, timeout);
+interface Props {
+	setLoading(state: React.SetStateAction<boolean>): void;
+}
+
+function App(props: Props): JSX.Element {
+	const [forageData, setForageData] = React.useState<Store.Forage.ForageStructure>();
+
+	const history = useHistory();
+	const location = useLocation();
+
+	const wrapLoading = React.useCallback(async (phase: Function, minTimeBeforeExecution?: number, minTimeBeforeCompletion?: number) => {
+		props.setLoading(true);
+
+		await Promise.all([
+			minTimeBeforeCompletion ? createDelayedPromise(minTimeBeforeCompletion, null) : Promise.resolve(),
+			minTimeBeforeExecution ? createDelayedPromise(minTimeBeforeExecution, phase) : Promise.resolve(phase())
+		]);
+
+		props.setLoading(false);
 	}, []);
 
-	React.useLayoutEffect(() => {
-		window.addEventListener("popstate", (event) => {
-			/**
-			 * Delaying dispatch to avoid seeing pass reset
-			 * before the loader showing begins
-			 */
-			loadAfter(() => store.dispatch(Store.Forage.Reset()), 500);
-		});
-
-		/**
-		 * Removing previously created records.
-		 * Otherwise we might occour in orphan blob
-		 * urls when the page is reloaded or
-		 * restored.
-		 */
-
-		sessionStorage.clear();
+	const changePathWithLoading = React.useCallback((path: string, preloadCallback?: Function) => {
+		wrapLoading(() => {
+			preloadCallback?.();
+			history.push(path);
+		}, null, LOADING_TIME_MS);
 	}, []);
 
 	const refreshForageCallback = React.useCallback(async () => {
@@ -79,86 +108,109 @@ export default function App(): JSX.Element {
 		setForageData(data);
 	}, []);
 
-	React.useEffect(() => {
-		refreshForageCallback();
-		loadAfter(null, 1000);
-	}, []);
-
 	const initializeStore = React.useCallback(async (projectID: string) => {
 		sessionStorage.clear();
-		return new Promise<void>(resolve => {
-			/**
-			 * Trick to show loader, so if this takes a bit of time,
-			 * UI doesn't seems to be stuck.
-			 * @TODO Actually, what would be better is not firing Init until
-			 * we are not sure that resolutions URLs have been generated.
-			 * For the moment we are using the same normal flow, through
-			 * middlewares.
-			 */
+		/**
+		 * Trick to show loader, so if this takes a bit of time,
+		 * UI doesn't seems to be stuck.
+		 * @TODO Actually, what would be better is not firing Init until
+		 * we are not sure that resolutions URLs have been generated.
+		 * For the moment we are using the same normal flow, through
+		 * middlewares.
+		 */
 
-			loadAfter(() => {
-				const { snapshot } = forageData.projects[projectID];
-				store.dispatch(Store.Forage.Init(snapshot));
+		const { snapshot } = forageData.projects[projectID];
+		store.dispatch(Store.Forage.Init(snapshot));
 
-				/** Iterating through medias so we can create and set URLs for array buffers */
+		/** Iterating through medias so we can create and set URLs for array buffers */
 
-				const availableMediaLanguages = Object.entries(snapshot.media);
+		const availableMediaLanguages = Object.entries(snapshot.media);
 
-				for (let i = availableMediaLanguages.length, localized: typeof availableMediaLanguages[0]; localized = availableMediaLanguages[--i];) {
-					const [language, mediaSet] = localized;
-					const mediaEntries = Object.entries(mediaSet) as [keyof MediaProps, CollectionSet][];
+		for (let i = availableMediaLanguages.length, localized: typeof availableMediaLanguages[0]; localized = availableMediaLanguages[--i];) {
+			const [language, mediaSet] = localized;
+			const mediaEntries = Object.entries(mediaSet) as [keyof MediaProps, CollectionSet][];
 
-					for (let i = mediaEntries.length, mediaEntry: typeof mediaEntries[0]; mediaEntry = mediaEntries[--i];) {
-						const [mediaName, collectionSet] = mediaEntry;
-						const collectionEntries = Object.entries(collectionSet.collections);
+			for (let i = mediaEntries.length, mediaEntry: typeof mediaEntries[0]; mediaEntry = mediaEntries[--i];) {
+				const [mediaName, collectionSet] = mediaEntry;
+				const collectionEntries = Object.entries(collectionSet.collections);
 
-						for (let i = collectionEntries.length, collectionEntry: typeof collectionEntries[0]; collectionEntry = collectionEntries[--i];) {
-							const [collectionID, collection] = collectionEntry;
+				for (let i = collectionEntries.length, collectionEntry: typeof collectionEntries[0]; collectionEntry = collectionEntries[--i];) {
+					const [collectionID, collection] = collectionEntry;
 
-							store.dispatch(Store.Media.EditCollection(mediaName, language, collectionID, collection));
-						}
-					}
+					store.dispatch(Store.Media.EditCollection(mediaName, language, collectionID, collection));
 				}
-
-				resolve();
-			}, 500);
-		});
+			}
+		}
 	}, [forageData?.projects]);
 
+	React.useEffect(() => {
+		/**
+		 * Removing previously created records.
+		 * Otherwise we might occour in orphan blob
+		 * urls when the page is reloaded or
+		 * restored.
+		 */
+
+		sessionStorage.clear();
+		wrapLoading(refreshForageCallback, null, LOADING_TIME_MS);
+
+		const unlisten = history.listen(async (location, action) => {
+			console.log("Listener:", location, action);
+
+			if (action === "POP") {
+				wrapLoading(() => {
+					if (action === "POP") {
+						store.dispatch(Store.Forage.Reset());
+					}
+				}, LOADING_TIME_MS / 2, LOADING_TIME_MS);
+			}
+		});
+
+		return unlisten;
+	}, []);
+
 	return (
-		<Provider store={store}>
+		<SwitchTransition>
 			<CSSTransition
+				// Fallback here is needed to avoid weird animation looping (https://git.io/Jvbpa)
+				key={location.key || ""}
+				timeout={LOADING_TIME_MS}
 				mountOnEnter
-				unmountOnExit
-				in={isLoading}
-				timeout={1000}
 			>
-				<LoaderFace />
+				<Switch location={location}>
+					<Route path="/" exact>
+						<RecentSelector
+							recentProjects={forageData?.projects ?? {}}
+							requestForageDataRequest={refreshForageCallback}
+							initStore={initializeStore}
+							pushHistory={changePathWithLoading}
+						/>
+					</Route>
+					<Route path="/select">
+						{() => !isDevelopment && Object.keys(forageData?.projects).length
+							? <Redirect to="/" />
+							: <PassSelector pushHistory={changePathWithLoading} />
+						}
+					</Route>
+					<Route path="/creator">
+						{() => !(isDevelopment || store.getState()?.pass?.kind)
+							? <Redirect to="/select" />
+							: <Configurator />
+						}
+					</Route>
+				</Switch>
 			</CSSTransition>
-			<SmoothRouter>
-				<Route path="/" exact>
-					<RecentSelector
-						recentProjects={forageData?.projects ?? {}}
-						requestForageDataRequest={refreshForageCallback}
-						initStore={initializeStore}
-					/>
-				</Route>
-				<Route path="/select">
-					{() => !isDevelopment && Object.keys(forageData?.projects).length
-						? <Redirect to="/" />
-						: <PassSelector />
-					}
-				</Route>
-				<Route path="/creator">
-					{() => !(isDevelopment || store.getState()?.pass?.kind)
-						? <Redirect to="/select" />
-						: <Configurator />
-					}
-				</Route>
-				<Route component={null} />
-			</SmoothRouter>
-		</Provider>
+		</SwitchTransition>
 	);
+}
+
+function createDelayedPromise(timeout: number, execution?: Function) {
+	return new Promise<void>(resolve => {
+		setTimeout(() => {
+			execution?.();
+			resolve();
+		}, timeout);
+	});
 }
 
 // Sample data

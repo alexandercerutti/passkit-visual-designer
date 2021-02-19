@@ -1,8 +1,12 @@
+@import (reference) "../App/common.less";
+
 #configurator {
 	height: 100%;
 	width: 100%;
 	display: flex;
 	overflow: hidden;
+
+	.pagetransition();
 
 	& > .screen {
 		display: flex;
@@ -29,7 +33,7 @@
 		width: 0px;
 		overflow: hidden;
 		animation-name: open-menu;
-		animation-duration: .8s;
+		animation-duration: 0.8s;
 		animation-fill-mode: forwards;
 		animation-delay: 1s;
 		animation-timing-function: ease-in-out;
@@ -38,6 +42,10 @@
 }
 
 @keyframes open-menu {
-	from { width: 0; }
-	to { width: 300px; }
+	from {
+		width: 0;
+	}
+	to {
+		width: 300px;
+	}
 }

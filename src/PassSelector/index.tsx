@@ -5,7 +5,6 @@ import { PassKind } from "../model";
 import PassList from "./PassList";
 import NamedPass from "./NamedPass";
 import { PassProps } from "../Pass";
-import { withRouter, RouteComponentProps } from "react-router-dom";
 import type { PassAlternative } from "../Pass/useAlternativesRegistration";
 import type { State } from "../store";
 import * as Store from "../store";
@@ -22,7 +21,9 @@ interface SelectorState {
 	selectedKind: PassKind;
 }
 
-interface SelectorProps extends DispatchProps, StoreProps, RouteComponentProps<any> { }
+interface SelectorProps extends DispatchProps, StoreProps {
+	pushHistory(path: string, init?: Function): void;
+}
 
 type PassKindsAlternatives = { [key in PassKind]?: PassAlternative[] };
 
@@ -75,8 +76,7 @@ class PassSelector extends React.PureComponent<SelectorProps, SelectorState> {
 	}
 
 	onAlternativeSelection(passProps: PassProps) {
-		this.props.setPassProps(passProps);
-		this.props.history.push("/creator");
+		this.props.pushHistory("/creator", () => this.props.setPassProps(passProps));
 	}
 
 	render() {
@@ -128,11 +128,11 @@ class PassSelector extends React.PureComponent<SelectorProps, SelectorState> {
 	}
 }
 
-export default withRouter(connect(
+export default connect(
 	({ pass: { kind: selectedPassKind } }: State) => {
 		return { selectedPassKind };
 	},
 	{
 		setPassProps: Store.Pass.setPropsBatch
 	}
-)(PassSelector));
+)(PassSelector);

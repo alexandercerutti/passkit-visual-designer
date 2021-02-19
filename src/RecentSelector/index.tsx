@@ -2,14 +2,14 @@ import * as React from "react";
 import "./style.less";
 import * as Store from "../store";
 import { GithubLogoDarkMode, AddIcon } from "./icons";
-import { RouteComponentProps, withRouter } from "react-router-dom";
 import localForage from "localforage";
 import { createClassName } from "../utils";
 
-interface Props extends RouteComponentProps {
+interface Props {
 	recentProjects: Store.Forage.ForageStructure["projects"];
 	requestForageDataRequest(): Promise<void>;
 	initStore(projectID: string): Promise<void>;
+	pushHistory(path: string, init?: Function): void;
 }
 
 interface State {
@@ -18,7 +18,7 @@ interface State {
 	refreshing: boolean;
 }
 
-class RecentSelector extends React.Component<Props, State> {
+export default class RecentSelector extends React.Component<Props, State> {
 	private refreshInterval: number;
 
 	constructor(props: Props) {
@@ -41,10 +41,15 @@ class RecentSelector extends React.Component<Props, State> {
 			this.props.requestForageDataRequest();
 		}
 
-		this.refreshInterval = window.setInterval(() => {
+		this.refreshInterval = window.setInterval(async () => {
 			this.toggleRefreshing();
-			this.props.requestForageDataRequest()
-				.then(() => setTimeout(this.toggleRefreshing, 2000))
+
+			await Promise.all([
+				this.props.requestForageDataRequest(),
+				new Promise(resolve => setTimeout(resolve, 2000))
+			]);
+
+			this.toggleRefreshing();
 		}, 7000);
 	}
 
@@ -113,9 +118,8 @@ class RecentSelector extends React.Component<Props, State> {
 		this.props.requestForageDataRequest();
 	}
 
-	selectRecent(id: string) {
-		this.props.initStore(id);
-		this.props.history.push("/creator");
+	async selectRecent(id: string) {
+		this.props.pushHistory("/creator", () => this.props.initStore(id));
 	}
 
 	render() {
@@ -157,7 +161,7 @@ class RecentSelector extends React.Component<Props, State> {
 					<div className="centered-column">
 						<section>
 							<div id="choices-box">
-								<div onClick={() => this.props.history.push("/select")}>
+								<div onClick={() => this.props.pushHistory("/select")}>
 									<AddIcon width="32px" height="32px" />
 									<span>Create Project</span>
 								</div>
@@ -200,5 +204,3 @@ class RecentSelector extends React.Component<Props, State> {
 		);
 	}
 }
-
-export default withRouter(RecentSelector);

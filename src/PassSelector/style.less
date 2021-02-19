@@ -5,6 +5,8 @@
 	height: 100%;
 	width: 100vw;
 
+	.pagetransition();
+
 	& header {
 		align-items: center;
 		justify-content: center;
@@ -17,7 +19,7 @@
 		width: 100vw;
 
 		& > h2 {
-			color: #FFF;
+			color: #fff;
 			font-family: Helvetiva, sans-serif;
 			font-size: 1.5em;
 			font-weight: 300;
@@ -37,7 +39,7 @@
 			box-sizing: border-box;
 			height: fit-content;
 			height: -moz-fit-content;
-			transition: opacity .5s ease-in-out;
+			transition: opacity 0.5s ease-in-out;
 
 			& #slidable {
 				.scrollableWithoutScrollbars(x);
@@ -79,7 +81,7 @@
 				}
 
 				& div.select {
-					animation: PassFade .2s ease-in;
+					animation: PassFade 0.2s ease-in;
 					animation-fill-mode: forwards;
 					opacity: 0;
 					width: 230px;
@@ -88,10 +90,18 @@
 					position: relative; // for overlay
 
 					cursor: pointer;
-					&:nth-child(2) { animation-delay: .1s }
-					&:nth-child(3) { animation-delay: .2s }
-					&:nth-child(4) { animation-delay: .3s }
-					&:nth-child(5) { animation-delay: .4s }
+					&:nth-child(2) {
+						animation-delay: 0.1s;
+					}
+					&:nth-child(3) {
+						animation-delay: 0.2s;
+					}
+					&:nth-child(4) {
+						animation-delay: 0.3s;
+					}
+					&:nth-child(5) {
+						animation-delay: 0.4s;
+					}
 
 					&:not(:last-child) {
 						margin-right: 3%;
@@ -113,8 +123,8 @@
 					& .name {
 						text-align: center;
 						margin-top: 10px;
-						color: #FFF;
-						transition: opacity .5s ease-in-out;
+						color: #fff;
+						transition: opacity 0.5s ease-in-out;
 					}
 				}
 
@@ -122,7 +132,6 @@
 					& div.select {
 						&:not(.highlighted) {
 							& .darkness-realm::after {
-
 								/**
 								* This serves to create an overlay
 								* that will obscure the pass
@@ -137,8 +146,8 @@
 								bottom: 0;
 								z-index: 2;
 								border-radius: 7px;
-								background-color: rgba(0,0,0,0.5);
-								transition: background-color .3s ease-in-out;
+								background-color: rgba(0, 0, 0, 0.5);
+								transition: background-color 0.3s ease-in-out;
 							}
 
 							&[data-pass="coupon"] .darkness-realm::after {
@@ -161,6 +170,10 @@
 }
 
 @keyframes PassFade {
-	from { opacity: 0 }
-	to { opacity: 1 }
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
 }

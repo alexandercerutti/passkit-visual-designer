@@ -15,7 +15,7 @@
 }
 
 .withImagesTrasparencyBackground(@setPositionRelative: false) {
-	@chess-color: #FFFFFF20;
+	@chess-color: #ffffff20;
 
 	& when (@setPositionRelative = true) {
 		position: relative;
@@ -32,8 +32,7 @@
 		right: 0;
 		bottom: 0;
 		z-index: 0;
-		background-image:
-			linear-gradient(45deg, @chess-color 25%, transparent 25%),
+		background-image: linear-gradient(45deg, @chess-color 25%, transparent 25%),
 			linear-gradient(-45deg, @chess-color 25%, transparent 25%),
 			linear-gradient(45deg, transparent 75%, @chess-color 75%),
 			linear-gradient(-45deg, transparent 75%, @chess-color 75%);
@@ -58,6 +57,33 @@
 	animation-fill-mode: forwards;
 
 	@keyframes appearance {
-		to { opacity: 1; }
+		to {
+			opacity: 1;
+		}
+	}
+}
+
+.pagetransition() {
+	/** Order is important **/
+
+	&.enter-active,
+	&.exit-active {
+		transition: opacity 0.5s;
+	}
+
+	&.enter {
+		opacity: 0;
+	}
+
+	&.enter-active {
+		opacity: 1;
+	}
+
+	&.exit {
+		opacity: 1;
+	}
+
+	&.exit-active {
+		opacity: 0;
 	}
 }
