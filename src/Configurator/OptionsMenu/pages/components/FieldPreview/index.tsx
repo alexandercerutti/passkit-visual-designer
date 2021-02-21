@@ -2,6 +2,7 @@ import * as React from "react";
 import "./style.less";
 import { createClassName } from "../../../../../utils";
 import { PKTextAlignment, PassFieldKeys } from "../../../../../Pass/constants";
+import CommittableTextInput from "../../../../CommittableTextInput";
 
 interface Props {
 	fieldUUID: string;
@@ -15,13 +16,11 @@ interface Props {
 export default function FieldPreview(props: Props) {
 	const [key, setKey] = React.useState(props.previewData?.key);
 
-	/** Updating parent component */
-
-	React.useEffect(() => {
-		if (props.onFieldKeyChange && key !== props.previewData.key) {
+	const onFieldKeyChange = React.useCallback((key: string) => {
+		if (key !== props.previewData.key) {
 			props.onFieldKeyChange(props.fieldUUID, key);
 		}
-	}, [key]);
+	}, [props.fieldUUID, props.previewData.key]);
 
 	/** Effect to update the state value when props changes */
 
@@ -43,11 +42,11 @@ export default function FieldPreview(props: Props) {
 
 	const fieldKeyRow = props.keyEditable
 		? (
-			<input
-				type="text"
+			<CommittableTextInput
 				onChange={(evt) => setKey(evt.target.value.replace(/\s+/, ""))}
 				value={key || ""}
 				placeholder="field's key"
+				commit={onFieldKeyChange}
 			/>
 		) : (
 			<span>

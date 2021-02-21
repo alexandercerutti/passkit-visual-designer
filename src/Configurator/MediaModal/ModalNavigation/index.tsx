@@ -1,4 +1,5 @@
 import * as React from "react";
+import CommittableTextInput from "../../CommittableTextInput";
 import { ArrowIcon, EditIcon } from "../icons";
 import "./style.less";
 
@@ -60,7 +61,7 @@ export function ModalNavigation(props: Props) {
 		}
 	}, [editing]);
 
-	const onKeyDownHandler = React.useRef((event: React.KeyboardEvent<HTMLInputElement>) => {
+	const onKeyDownHandler = React.useCallback((event: React.KeyboardEvent<HTMLInputElement>) => {
 		if (event.key === "Enter" || event.key === "Escape") {
 			event.currentTarget.blur();
 			return;
@@ -73,18 +74,14 @@ export function ModalNavigation(props: Props) {
 
 			inputRef.current.style.width = ghostSpanRef.current.offsetWidth + "px";
 		}
-	});
+	}, []);
 
-	const onBlurHandler = React.useCallback(({ currentTarget }: React.FocusEvent<HTMLInputElement>) => {
+	const onCollectionNameEditCommit = React.useCallback((value: string) => {
 		setEditing(false);
-		props.onCollectionNameEditComplete(props.collectionID, currentTarget.value);
-	}, [props]);
+		props.onCollectionNameEditComplete(props.collectionID, value);
+	}, [props.collectionID]);
 
-	const onFocusHandler = React.useRef(({ currentTarget }: React.FocusEvent<HTMLInputElement>) => {
-		currentTarget.select();
-	});
-
-	const onClickEditHandler = React.useRef(() => !editing && setEditing(true));
+	const onClickEditHandler = React.useCallback(() => !editing && setEditing(true), []);
 
 	const { mediaName, collectionID } = props;
 	const collectionName = props.collectionName || "Untitled Collection";
@@ -100,19 +97,17 @@ export function ModalNavigation(props: Props) {
 				{collectionID &&
 					<span
 						id="coll-name"
-						onClick={onClickEditHandler.current}
+						onClick={onClickEditHandler}
 					>
 						<span>
 							<span ref={ghostSpanRef}>
 								{collectionName || "Untitled collection"}
 							</span>
 							{editing &&
-								<input
-									type="text"
-									onBlur={onBlurHandler}
-									onKeyDown={onKeyDownHandler.current}
-									onFocus={onFocusHandler.current}
+								<CommittableTextInput
 									ref={inputRef}
+									commit={onCollectionNameEditCommit}
+									onKeyDown={onKeyDownHandler}
 									defaultValue={collectionName || "Untitled collection"}
 								/> || null
 							}
@@ -129,7 +124,7 @@ export function ModalNavigation(props: Props) {
 				 * It only stands on future decisions.
 				 * */
 				collectionID &&
-				<EditIcon onClick={onClickEditHandler.current} />
+				<EditIcon onClick={onClickEditHandler} />
 			}
 		</nav>
 	);

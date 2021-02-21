@@ -1,5 +1,6 @@
 import * as React from "react";
 import { TranslationsSet } from "../../store";
+import CommittableTextInput from "../CommittableTextInput";
 import Modal, { ModalProps } from "../ModalBase";
 import { Switcher } from "../Switcher";
 import { DeleteIcon, AddIcon } from "./icons";
@@ -20,13 +21,7 @@ interface Props extends Omit<ModalProps, "contentUniqueID"> {
 }
 
 export default function TranslationsModal(props: Props) {
-	const onKeyDownHandler = React.useCallback(({ key, currentTarget }: React.KeyboardEvent<HTMLInputElement>) => {
-		if (key === "Enter" || key === "Escape") {
-			currentTarget.blur();
-		}
-	}, []);
-
-	const onBlurHandler = React.useCallback((id: string, changeOP: TranslationChangeOps, content: string) => {
+	const onCommit = React.useCallback((id: string, changeOP: TranslationChangeOps, content: string) => {
 		const currentSet = props.availableTranslations.translations[id];
 
 		const placeholder = (
@@ -46,19 +41,15 @@ export default function TranslationsModal(props: Props) {
 
 	const translations = Object.entries(props.availableTranslations.translations).map(([id, [placeholder, value]], index) => (
 		<React.Fragment key={`trl-r${index}`}>
-			<input
-				type="text"
+			<CommittableTextInput
 				defaultValue={placeholder || ""}
 				placeholder="Insert localizable string placeholder"
-				onKeyDown={onKeyDownHandler}
-				onBlur={({ currentTarget }) => onBlurHandler(id, TranslationChangePlaceholder, currentTarget.value)}
+				commit={(value) => onCommit(id, TranslationChangePlaceholder, value)}
 			/>
-			<input
-				type="text"
+			<CommittableTextInput
 				defaultValue={value || ""}
 				placeholder="Insert value for this language"
-				onKeyDown={onKeyDownHandler}
-				onBlur={({ currentTarget }) => onBlurHandler(id, TranslationChangeValue, currentTarget.value)}
+				commit={(value) => onCommit(id, TranslationChangeValue, value)}
 			/>
 			<DeleteIcon onClick={() => props.removeTranslation(id)} />
 		</React.Fragment>

@@ -1,4 +1,5 @@
 import * as React from "react";
+import CommittableTextInput from "../../../../../CommittableTextInput";
 
 interface Props {
 	name: string;
@@ -8,15 +9,18 @@ interface Props {
 }
 
 export default function FieldStringPropertyPanel(props: Props) {
+	const onCommit = React.useCallback((value: string) => {
+		props.onValueChange(props.name, value);
+	}, []);
+
 	return (
 		<div className="fieldprop-string-panel">
 			<label htmlFor={props.name}>{props.name}</label>
-			<input
+			<CommittableTextInput
 				id={props.name}
-				type="text"
-				value={props.value || ""}
+				defaultValue={props.value || ""}
 				placeholder={props.placeholder}
-				onChange={(ev) => props.onValueChange(props.name, ev.currentTarget.value)}
+				commit={onCommit}
 			/>
 		</div>
 	);

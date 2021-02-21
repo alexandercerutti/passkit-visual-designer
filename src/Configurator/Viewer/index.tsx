@@ -1,8 +1,9 @@
 import * as React from "react";
 import "./style.less";
 import Pass, { PassProps } from "../../Pass";
-import InteractionContext, { InteractionContextMethods } from "../../Pass/InteractionContext";
+import InteractionContext from "../../Pass/InteractionContext";
 import { createClassName } from "../../utils";
+import CommittableTextInput from "../CommittableTextInput";
 
 export interface ViewerProps extends Pick<PassProps, "registerField" | "onFieldSelect" | "showBack"> {
 	passProps: PassProps;
@@ -20,30 +21,14 @@ export default function Viewer(props: ViewerProps) {
 		"no-empty": !props.showEmpty
 	});
 
-	const projectTitleOnFocusHandler = React.useCallback(({ currentTarget }: React.FocusEvent<HTMLInputElement>) => {
-		// To select all the text in the input - figma style
-		currentTarget.select();
-	}, []);
-
-	const projectTitleOnKeyDownHandler = React.useCallback(({ key, currentTarget }: React.KeyboardEvent<HTMLInputElement>) => {
-		key === "Enter" && currentTarget.blur();
-	}, []);
-
-	const projectTitleOnBlurHandler = React.useCallback(({ currentTarget }: React.ChangeEvent<HTMLInputElement>) => {
-		const { value } = currentTarget;
-		changeProjectTitle(value || undefined);
-	}, []);
-
 	return (
 		<div className={viewerCN} onClick={onVoidClick}>
 			<div className="project-title-box">
-				<input
-					type="text"
+				<CommittableTextInput
+					selectOnFocus
 					defaultValue={projectTitle}
 					placeholder="Untitled Project"
-					onFocus={projectTitleOnFocusHandler}
-					onKeyDown={projectTitleOnKeyDownHandler}
-					onBlur={projectTitleOnBlurHandler}
+					commit={changeProjectTitle}
 				/>
 			</div>
 			<InteractionContext.Provider value={registrationProps}>

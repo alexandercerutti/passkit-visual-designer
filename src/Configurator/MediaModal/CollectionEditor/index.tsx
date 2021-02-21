@@ -3,6 +3,7 @@ import { v1 as uuid } from "uuid";
 import { CollectionEditModify, CollectionEditOperation } from "..";
 import type { IdentifiedResolutions, MediaCollection } from "../../../store";
 import { getArrayBuffer } from "../../../utils";
+import CommittableTextInput from "../../CommittableTextInput";
 import { DeleteIcon, PlusIcon } from "../icons";
 import "./style.less";
 
@@ -30,8 +31,7 @@ export default class CollectionEditor extends React.Component<Props, State> {
 		this.onResolutionDelete = this.onResolutionDelete.bind(this);
 		this.onDropHandler = this.onDropHandler.bind(this);
 		this.onChangeHandler = this.onChangeHandler.bind(this);
-		this.onKeyDownHandler = this.onKeyDownHandler.bind(this);
-		this.onBlurHandler = this.onBlurHandler.bind(this);
+		this.onResolutionNameCommit = this.onResolutionNameCommit.bind(this);
 		this.updateResolutionsFromFiles = this.updateResolutionsFromFiles.bind(this);
 	}
 
@@ -112,13 +112,7 @@ export default class CollectionEditor extends React.Component<Props, State> {
 	// *** INPUT EVENT HANDLERS *** //
 	// **************************** //
 
-	onKeyDownHandler({ key, currentTarget }: React.KeyboardEvent<HTMLInputElement>) {
-		if (key === "Enter" || key === "Escape") {
-			currentTarget.blur();
-		}
-	}
-
-	onBlurHandler(resolutionID: string, resolutionNewName: string) {
+	onResolutionNameCommit(resolutionID: string, resolutionNewName: string) {
 		const { resolutions: currentResolutions } = this.props.collection;
 
 		if (currentResolutions[resolutionID].name === resolutionNewName) {
@@ -156,11 +150,9 @@ export default class CollectionEditor extends React.Component<Props, State> {
 								<img src={url} />
 							</div>
 						</div>
-						<input
-							type="text"
-							onKeyDown={this.onKeyDownHandler}
-							onBlur={({ currentTarget }: React.FocusEvent<HTMLInputElement>) => this.onBlurHandler(resolutionID, currentTarget.value)}
+						<CommittableTextInput
 							defaultValue={resolution.name}
+							commit={(value) => this.onResolutionNameCommit(resolutionID, value)}
 						/>
 					</div>
 				);
