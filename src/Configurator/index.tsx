@@ -365,7 +365,7 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 			<div id="configurator">
 				<div className="screen">
 					<Viewer
-						{...allPassProps}
+						passProps={allPassProps}
 						onFieldSelect={this.onFieldSelect}
 						registerField={this.registerField}
 						onVoidClick={this.onVoidClick}
