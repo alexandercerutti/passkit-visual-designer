@@ -24,6 +24,7 @@ interface State {
 
 export default class RecentSelector extends React.Component<Props, State> {
 	private refreshInterval: number;
+	private delayLoadingAnimationTimeout: number;
 
 	constructor(props: Props) {
 		super(props);
@@ -51,7 +52,7 @@ export default class RecentSelector extends React.Component<Props, State> {
 
 			await Promise.all([
 				this.props.requestForageDataRequest(),
-				new Promise(resolve => setTimeout(resolve, 2000))
+				new Promise(resolve => (this.delayLoadingAnimationTimeout = window.setTimeout(resolve, 2000)))
 			]);
 
 			this.toggleRefreshing();
@@ -99,6 +100,7 @@ export default class RecentSelector extends React.Component<Props, State> {
 
 	componentWillUnmount() {
 		clearInterval(this.refreshInterval);
+		clearTimeout(this.delayLoadingAnimationTimeout);
 		Object.values(this.state.previewsURLList).forEach(URL.revokeObjectURL);
 	}
 
