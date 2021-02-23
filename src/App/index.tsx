@@ -179,40 +179,42 @@ function App(props: Props): JSX.Element {
 					}
 				}), {});
 
+			const mediaNameCollIDMap = new Map();
+
 			const media = Object.entries(data.media)
 				.reduce<Store.LocalizedMediaGroup>((acc, [lang, contents]) => {
-					const collectionID = uuid();
-
-					/**
-					 * @TODO improve this. CollectionID is used for every mediaName, while
-					 * it should be unique for every collection in media.
-					 * We should match all fileNames and create a map.
-					 * We keep assuming that from one pass, we get out only one collection.
-					 */
-
 					return {
 						...acc,
 						[lang]: contents.reduce((acc, [fileName, buffer]) => {
-							const mediaName = fileName.replace(/(?:@x\d)?\.(.+)/, "") as keyof MediaProps;
+							const mediaNameWithoutExtOrResolution = fileName.replace(/(@\dx)?\.(.+)$/, "") as keyof MediaProps;
+							let collectionID: string = mediaNameCollIDMap.get(mediaNameWithoutExtOrResolution);
 
-							return {
-								...acc,
-								[mediaName]: {
-									activeCollectionID: collectionID,
-									enabled: true,
-									collections: {
-										[collectionID]: {
-											name: "Imported Collection",
-											resolutions: {
-												...(acc[mediaName]?.["collections"]?.[collectionID]?.resolutions || null),
-												[uuid()]: {
-													name: fileName,
-													content: buffer,
-												}
+							if (!collectionID) {
+								collectionID = uuid();
+								mediaNameCollIDMap.set(mediaNameWithoutExtOrResolution, collectionID);
+							}
+
+							const resolutionID = uuid();
+							const collectionSet = {
+								activeCollectionID: collectionID,
+								enabled: true,
+								collections: {
+									[collectionID]: {
+										name: `Imported Collection ${mediaNameWithoutExtOrResolution}`,
+										resolutions: {
+											...(acc[mediaNameWithoutExtOrResolution]?.["collections"]?.[collectionID]?.resolutions || null),
+											[resolutionID]: {
+												name: fileName,
+												content: buffer,
 											}
 										}
 									}
-								}
+								},
+							};
+
+							return {
+								...acc,
+								[mediaNameWithoutExtOrResolution]: collectionSet
 							};
 						}, {})
 					};
