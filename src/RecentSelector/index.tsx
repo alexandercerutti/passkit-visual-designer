@@ -147,7 +147,7 @@ export default class RecentSelector extends React.Component<Props, State> {
 		);
 
 		if (!firstZipFile) {
-			throw "Failed loading file. No .zip or .pkpass files found"
+			throw "Failed loading file. No .zip or .pkpass files found";
 		}
 
 		let zip: JSZip = null;
@@ -162,9 +162,11 @@ export default class RecentSelector extends React.Component<Props, State> {
 			currentTarget.value = ""; /** Resetting input */
 		}
 
-		const filesNames = Object.keys(zip.files);
+		const filesNames = Object.entries(zip.files);
 
-		for (let i = filesNames.length, filePath: typeof filesNames[0]; filePath = filesNames[--i];) {
+		for (let i = filesNames.length, file: typeof filesNames[0]; file = filesNames[--i];) {
+			const [ filePath, fileObject ] = file;
+
 			const match = filePath.match(/(?:(?<language>.+)\.lproj\/)?(?<realFileName>.+)?/);
 			const { language, realFileName } = match.groups as { language?: string, realFileName?: string };
 
@@ -185,10 +187,8 @@ export default class RecentSelector extends React.Component<Props, State> {
 
 			if (realFileName === "pass.json") {
 				try {
-					const passInfo = JSON.parse(await zip.file(filePath).async("string"));
+					const passInfo = JSON.parse(await fileObject.async("string"));
 					const { boardingPass, coupon, storeCard, eventTicket, generic, ...otherPassProps } = passInfo;
-
-					console.log(passInfo);
 
 					let kind: PassKind = null;
 					let sourceOfFields = null;
@@ -227,7 +227,7 @@ export default class RecentSelector extends React.Component<Props, State> {
 
 			if (isFileInDirectory) {
 				if (realFileName === "pass.strings") {
-					const file = await zip.file(filePath).async("string");
+					const file = await fileObject.async("string");
 
 					file.split("\n")
 						.map(row => row.match(/(?<placeholder>.+)\s=\s(?<value>.+);/))
@@ -240,13 +240,13 @@ export default class RecentSelector extends React.Component<Props, State> {
 								.push([match.groups.placeholder.replace(/"/g, ""), match.groups.value.replace(/"/g, "")]);
 						});
 				} else if (/(?<fileName>.+)\.(?<ext>(png|jpg))/.test(realFileName)) {
-					const file = await zip.file(filePath).async("arraybuffer");
+					const file = await fileObject.async("arraybuffer");
 
 					(parsedPayload.media[language] ??= [])
 						.push([realFileName, file]);
 				}
 			} else {
-				const file = await zip.file(filePath).async("arraybuffer");
+				const file = await fileObject.async("arraybuffer");
 
 				(parsedPayload.media["default"] ??= [])
 					.push([realFileName, file]);
