@@ -1,15 +1,19 @@
 import * as React from "react";
+import JSZip from "jszip";
 import "./style.less";
 import * as Store from "../store";
 import { GithubLogoDarkMode, AddIcon } from "./icons";
 import localForage from "localforage";
 import { createClassName } from "../utils";
+import { StateLookalike } from "../App";
+import { PassKind } from "../model";
 
 interface Props {
 	recentProjects: Store.Forage.ForageStructure["projects"];
 	requestForageDataRequest(): Promise<void>;
 	initStore(projectID: string): Promise<void>;
 	pushHistory(path: string, init?: Function): void;
+	createProjectFromArchive(data: StateLookalike): void;
 }
 
 interface State {
@@ -33,6 +37,7 @@ export default class RecentSelector extends React.Component<Props, State> {
 		this.switchEditMode = this.switchEditMode.bind(this);
 		this.selectRecent = this.selectRecent.bind(this);
 		this.toggleRefreshing = this.toggleRefreshing.bind(this);
+		this.processUploadedFile = this.processUploadedFile.bind(this);
 	}
 
 	componentDidMount() {
@@ -122,6 +127,133 @@ export default class RecentSelector extends React.Component<Props, State> {
 		this.props.pushHistory("/creator", () => this.props.initStore(id));
 	}
 
+	async processUploadedFile(event: React.FormEvent<HTMLInputElement>) {
+		const { currentTarget } = event;
+		const { files: uploadFiles } = currentTarget;
+
+		const parsedPayload: StateLookalike = {
+			pass: null,
+			translations: {},
+			media: {},
+			projectOptions: {
+				title: "Imported Project"
+			}
+		};
+
+		const firstZipFile = Array.prototype.find.call(uploadFiles, (file: File) =>
+			/.+\.(zip|pkpass)/.test(file.name)
+		);
+
+		if (!firstZipFile) {
+			throw "Failed loading file. No .zip or .pkpass files found"
+		}
+
+		let zip: JSZip = null;
+
+		try {
+			zip = await JSZip.loadAsync(firstZipFile, { createFolders: false });
+		} catch (err) {
+			// @TODO Handle error through popup?
+			console.error(err);
+			return;
+		} finally {
+			currentTarget.value = ""; /** Resetting input */
+		}
+
+		const filesNames = Object.keys(zip.files);
+
+		for (let i = filesNames.length, filePath: typeof filesNames[0]; filePath = filesNames[--i];) {
+			const match = filePath.match(/(?:(?<language>.+)\.lproj\/)?(?<realFileName>.+)?/);
+			const { language, realFileName } = match.groups as { language?: string, realFileName?: string };
+
+			const isIgnoredFile = /(^\.|manifest\.json|signature|personalization\.json)/.test(realFileName);
+			const isDirectoryRecord = language && !realFileName;
+			const isFileInDirectory = language && realFileName;
+
+			const shouldSkip = (
+				/** Ignoring record, it is only the folder, we don't need it */
+				isDirectoryRecord ||
+				/** Is dynamic or unsupported file */
+				isIgnoredFile
+			);
+
+			if (shouldSkip) {
+				continue;
+			}
+
+			if (realFileName === "pass.json") {
+				try {
+					const passInfo = JSON.parse(await zip.file(filePath).async("string"));
+					const { boardingPass, coupon, storeCard, eventTicket, generic, ...otherPassProps } = passInfo;
+
+					console.log(passInfo);
+
+					let kind: PassKind = null;
+					let sourceOfFields = null;
+
+					if (boardingPass) {
+						kind = PassKind.BOARDING_PASS;
+						sourceOfFields = boardingPass;
+					} else if (coupon) {
+						kind = PassKind.COUPON;
+						sourceOfFields = coupon;
+					} else if (storeCard) {
+						kind = PassKind.STORE;
+						sourceOfFields = storeCard;
+					} else if (eventTicket) {
+						kind = PassKind.EVENT;
+						sourceOfFields = eventTicket;
+					} else {
+						kind = PassKind.GENERIC;
+						sourceOfFields = generic;
+					}
+
+					parsedPayload.pass = Object.assign(otherPassProps, {
+						kind,
+						...(sourceOfFields || null)
+					});
+
+					continue;
+				} catch (err) {
+					/**
+					 * @TODO invalid json, throw error as popup?
+					 */
+					console.error(err);
+					return;
+				}
+			}
+
+			if (isFileInDirectory) {
+				if (realFileName === "pass.strings") {
+					const file = await zip.file(filePath).async("string");
+
+					file.split("\n")
+						.map(row => row.match(/(?<placeholder>.+)\s=\s(?<value>.+);/))
+						.forEach((match) => {
+							if (!match?.groups) {
+								return;
+							}
+
+							(parsedPayload.translations[language] ??= [])
+								.push([match.groups.placeholder.replace(/"/g, ""), match.groups.value.replace(/"/g, "")]);
+						});
+				} else if (/(?<fileName>.+)\.(?<ext>(png|jpg))/.test(realFileName)) {
+					const file = await zip.file(filePath).async("arraybuffer");
+
+					(parsedPayload.media[language] ??= [])
+						.push([realFileName, file]);
+				}
+			} else {
+				const file = await zip.file(filePath).async("arraybuffer");
+
+				(parsedPayload.media["default"] ??= [])
+					.push([realFileName, file]);
+			}
+		}
+
+		return this.props.createProjectFromArchive(parsedPayload);
+	}
+
 	render() {
 		const deleteButtonClassName = createClassName(["delete"], {
 			open: this.state.editMode
@@ -165,10 +297,11 @@ export default class RecentSelector extends React.Component<Props, State> {
 									<AddIcon width="32px" height="32px" />
 									<span>Create Project</span>
 								</div>
-								<div>
+								<label htmlFor="zip-upload">
 									<AddIcon width="32px" height="32px" />
 									<span>Upload pass</span>
-								</div>
+									<input id="zip-upload" hidden type="file" onChange={this.processUploadedFile} />
+								</label>
 							</div>
 						</section>
 						<section>

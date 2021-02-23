@@ -76,7 +76,8 @@
 						background-image: linear-gradient(-45deg, #242627, #2a2c2d);
 						box-shadow: 0px 2px 5px 0px rgb(33, 37, 38);
 
-						& > div {
+						& > div,
+						& > label {
 							flex-grow: 1;
 
 							color: #e6e6e6;
@@ -88,11 +89,11 @@
 							background-color: transparent;
 							transition: all 0.5s ease-in-out;
 
-							&:nth-of-type(2n) {
+							&:nth-child(2n) {
 								border-radius: 0 10px 10px 0;
 							}
 
-							&:nth-of-type(2n + 1) {
+							&:nth-child(2n + 1) {
 								border-radius: 10px 0 0 10px;
 								border-right: 2px dashed #484848;
 							}

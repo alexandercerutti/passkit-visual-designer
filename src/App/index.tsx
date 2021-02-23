@@ -7,13 +7,26 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import PassSelector from "../PassSelector";
 import { createStore, applyMiddleware } from "redux";
 import Configurator from "../Configurator";
-import { PKTextAlignment } from "../Pass/constants";
 import * as Store from "../store";
 import RecentSelector from "../RecentSelector";
 import LoaderFace from "../Loader";
 import { CSSTransition, SwitchTransition } from "react-transition-group";
-import { MediaProps } from "../Pass";
+import { MediaProps, PassMixedProps } from "../Pass";
 import { CollectionSet } from "../store";
+import { v1 as uuid } from "uuid";
+
+export interface StateLookalike {
+	pass: Partial<PassMixedProps>,
+	translations: {
+		[language: string]: [placeholder: string, value: string][];
+	};
+	media: {
+		[language: string]: [fileName: string, buffer: ArrayBuffer][];
+	};
+	projectOptions: {
+		title: string;
+	};
+}
 
 // Webpack valorized
 declare const isDevelopment: boolean;
@@ -108,7 +121,7 @@ function App(props: Props): JSX.Element {
 		setForageData(data);
 	}, []);
 
-	const initializeStore = React.useCallback(async (projectID: string) => {
+	const initializeStore = React.useCallback(async (snapshot: Store.State) => {
 		sessionStorage.clear();
 		/**
 		 * Trick to show loader, so if this takes a bit of time,
@@ -119,7 +132,6 @@ function App(props: Props): JSX.Element {
 		 * middlewares.
 		 */
 
-		const { snapshot } = forageData.projects[projectID];
 		store.dispatch(Store.Forage.Init(snapshot));
 
 		/** Iterating through medias so we can create and set URLs for array buffers */
@@ -142,6 +154,84 @@ function App(props: Props): JSX.Element {
 			}
 		}
 	}, [forageData?.projects]);
+
+	const initializeStoreByProjectID = React.useCallback((projectID: string) => {
+		if (!forageData.projects[projectID]) {
+			throw `No project with id ${projectID}. Is there any kind of caching happening?`;
+		}
+
+		const { snapshot } = forageData.projects[projectID];
+
+		return initializeStore(snapshot);
+	}, [initializeStore]);
+
+	const createProjectFromArchive = React.useCallback((data: StateLookalike) => {
+		wrapLoading(() => {
+			const translations = Object.entries(data.translations)
+				.reduce<Store.LocalizedTranslationsGroup>((acc, [lang, contents]) => ({
+					...acc,
+					[lang]: {
+						enabled: true,
+						translations: contents.reduce((acc, content) => ({
+							...acc,
+							[uuid()]: content
+						}), {})
+					}
+				}), {});
+
+			const media = Object.entries(data.media)
+				.reduce<Store.LocalizedMediaGroup>((acc, [lang, contents]) => {
+					const collectionID = uuid();
+
+					/**
+					 * @TODO improve this. CollectionID is used for every mediaName, while
+					 * it should be unique for every collection in media.
+					 * We should match all fileNames and create a map.
+					 * We keep assuming that from one pass, we get out only one collection.
+					 */
+
+					return {
+						...acc,
+						[lang]: contents.reduce((acc, [fileName, buffer]) => {
+							const mediaName = fileName.replace(/(?:@x\d)?\.(.+)/, "") as keyof MediaProps;
+
+							return {
+								...acc,
+								[mediaName]: {
+									activeCollectionID: collectionID,
+									enabled: true,
+									collections: {
+										[collectionID]: {
+											name: "Imported Collection",
+											resolutions: {
+												...(acc[mediaName]?.["collections"]?.[collectionID]?.resolutions || null),
+												[uuid()]: {
+													name: fileName,
+													content: buffer,
+												}
+											}
+										}
+									}
+								}
+							};
+						}, {})
+					};
+				}, {});
+
+			const snapshot: Store.State = Object.assign({}, Store.initialState, {
+				pass: data.pass,
+				translations,
+				projectOptions: {
+					title: data.projectOptions.title,
+					activeMediaLanguage: "default"
+				},
+				media
+			});
+
+			initializeStore(snapshot);
+			history.push("/creator");
+		}, LOADING_TIME_MS, LOADING_TIME_MS);
+	}, [initializeStore, history]);
 
 	React.useEffect(() => {
 		/**
@@ -197,8 +287,9 @@ function App(props: Props): JSX.Element {
 						<RecentSelector
 							recentProjects={forageData?.projects ?? {}}
 							requestForageDataRequest={refreshForageCallback}
-							initStore={initializeStore}
+							initStore={initializeStoreByProjectID}
 							pushHistory={changePathWithLoading}
+							createProjectFromArchive={createProjectFromArchive}
 						/>
 					</Route>
 					<Route path="/select">
