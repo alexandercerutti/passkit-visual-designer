@@ -8,6 +8,12 @@ import { createClassName } from "../utils";
 import { StateLookalike } from "../App";
 import { PassKind } from "../model";
 
+const ZIP_FILE_PATH_SPLIT_REGEX = /(?:(?<language>.+)\.lproj\/)?(?<realFileName>.+)?/;
+const ZIP_FILE_IGNORE_REGEX = /(^\.|manifest\.json|signature|personalization\.json)/;
+const ZIP_FILE_STRINGS_PV_SPLIT_REGEX = /(?<placeholder>.+)\s=\s(?<value>.+);/;
+const ZIP_FILE_STRINGS_PV_QUOTES_REPLACE_REGEX = /"/g;
+const ZIP_FILE_NAME_EXT_REGEX = /(?<fileName>.+)\.(?<ext>(png|jpg))/;
+
 interface Props {
 	recentProjects: Store.Forage.ForageStructure["projects"];
 	requestForageDataRequest(): Promise<void>;
@@ -167,10 +173,10 @@ export default class RecentSelector extends React.Component<Props, State> {
 		for (let i = filesNames.length, file: typeof filesNames[0]; file = filesNames[--i];) {
 			const [ filePath, fileObject ] = file;
 
-			const match = filePath.match(/(?:(?<language>.+)\.lproj\/)?(?<realFileName>.+)?/);
+			const match = filePath.match(ZIP_FILE_PATH_SPLIT_REGEX);
 			const { language, realFileName } = match.groups as { language?: string, realFileName?: string };
 
-			const isIgnoredFile = /(^\.|manifest\.json|signature|personalization\.json)/.test(realFileName);
+			const isIgnoredFile = ZIP_FILE_IGNORE_REGEX.test(realFileName);
 			const isDirectoryRecord = language && !realFileName;
 			const isFileInDirectory = language && realFileName;
 
@@ -230,16 +236,19 @@ export default class RecentSelector extends React.Component<Props, State> {
 					const file = await fileObject.async("string");
 
 					file.split("\n")
-						.map(row => row.match(/(?<placeholder>.+)\s=\s(?<value>.+);/))
+						.map(row => row.match(ZIP_FILE_STRINGS_PV_SPLIT_REGEX))
 						.forEach((match) => {
 							if (!match?.groups) {
 								return;
 							}
 
 							(parsedPayload.translations[language] ??= [])
-								.push([match.groups.placeholder.replace(/"/g, ""), match.groups.value.replace(/"/g, "")]);
+								.push([
+									match.groups.placeholder.replace(ZIP_FILE_STRINGS_PV_QUOTES_REPLACE_REGEX, ""),
+									match.groups.value.replace(ZIP_FILE_STRINGS_PV_QUOTES_REPLACE_REGEX, "")
+								]);
 						});
-				} else if (/(?<fileName>.+)\.(?<ext>(png|jpg))/.test(realFileName)) {
+				} else if (ZIP_FILE_NAME_EXT_REGEX.test(realFileName)) {
 					const file = await fileObject.async("arraybuffer");
 
 					(parsedPayload.media[language] ??= [])
