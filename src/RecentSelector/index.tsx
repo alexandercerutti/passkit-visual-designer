@@ -193,15 +193,24 @@ export default class RecentSelector extends React.Component<Props, State> {
 
 			if (realFileName === "pass.json") {
 				try {
-					const passInfo = JSON.parse(await fileObject.async("string"));
+					let passInfo;
+
+					try {
+						passInfo = JSON.parse(await fileObject.async("string"));
+					} catch(err) {
+						throw `Bad JSON (${err})`;
+					}
+
 					const { boardingPass, coupon, storeCard, eventTicket, generic, ...otherPassProps } = passInfo;
+					const { transitType } = boardingPass || {};
 
 					let kind: PassKind = null;
 					let sourceOfFields = null;
 
 					if (boardingPass) {
 						kind = PassKind.BOARDING_PASS;
-						sourceOfFields = boardingPass;
+						const { transitType, ...boarding } = boardingPass;
+						sourceOfFields = boarding;
 					} else if (coupon) {
 						kind = PassKind.COUPON;
 						sourceOfFields = coupon;
@@ -211,23 +220,22 @@ export default class RecentSelector extends React.Component<Props, State> {
 					} else if (eventTicket) {
 						kind = PassKind.EVENT;
 						sourceOfFields = eventTicket;
-					} else {
+					} else if (generic) {
 						kind = PassKind.GENERIC;
 						sourceOfFields = generic;
+					} else {
+						throw "Missing kind (boardingPass, coupon, storeCard, eventTicket, generic)";
 					}
 
 					parsedPayload.pass = Object.assign(otherPassProps, {
 						kind,
+						transitType,
 						...(sourceOfFields || null)
 					});
 
 					continue;
 				} catch (err) {
-					/**
-					 * @TODO invalid json, throw error as popup?
-					 */
-					console.error(err);
-					return;
+					throw new Error(`Cannot parse pass.json: ${err}`);
 				}
 			}
 
