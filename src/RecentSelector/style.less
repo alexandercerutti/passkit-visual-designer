@@ -151,9 +151,14 @@
 							&:hover {
 								background-color: rgb(32, 34, 35);
 								color: #c78964;
+
+								& > svg {
+									fill: #c78964;
+								}
 							}
 
 							& > svg {
+								transition: fill 0.5s ease-in-out;
 								fill: #e6e6e6;
 							}
 						}
@@ -161,7 +166,14 @@
 						& > label {
 							position: relative;
 
+							&:hover {
+								& sub {
+									color: #c78964;
+								}
+							}
+
 							& sub {
+								transition: color 0.5s ease-in-out;
 								position: absolute;
 								bottom: 7px;
 								color: #7d7d7d;
