@@ -341,7 +341,14 @@ export default class RecentSelector extends React.Component<Props, State> {
 								<label htmlFor="zip-upload">
 									<AddIcon width="32px" height="32px" />
 									<span>Upload pass</span>
-									<input id="zip-upload" hidden type="file" accept=".zip,.pkpass" onChange={this.processUploadedFile} />
+									<input
+										hidden
+										type="file"
+										accept=".zip,.pkpass"
+										id="zip-upload"
+										disabled={this.state.isProcessingZipFile}
+										onChange={this.processUploadedFile}
+									/>
 									<sub>Supported types: .zip, .pkpass</sub>
 								</label>
 							</div>
