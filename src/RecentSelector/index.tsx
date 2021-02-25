@@ -26,6 +26,7 @@ interface State {
 	previewsURLList: { [projectID: string]: string };
 	editMode: boolean;
 	refreshing: boolean;
+	errorMessage: string;
 }
 
 export default class RecentSelector extends React.Component<Props, State> {
@@ -39,6 +40,7 @@ export default class RecentSelector extends React.Component<Props, State> {
 			previewsURLList: {},
 			editMode: false,
 			refreshing: false,
+			errorMessage: null
 		};
 
 		this.switchEditMode = this.switchEditMode.bind(this);
@@ -139,138 +141,150 @@ export default class RecentSelector extends React.Component<Props, State> {
 		const { currentTarget } = event;
 		const { files: uploadFiles } = currentTarget;
 
-		const parsedPayload: StateLookalike = {
-			pass: null,
-			translations: {},
-			media: {},
-			projectOptions: {
-				title: "Imported Project"
-			}
-		};
-
-		const firstZipFile = Array.prototype.find.call(uploadFiles, (file: File) =>
-			/.+\.(zip|pkpass)/.test(file.name)
-		);
-
-		if (!firstZipFile) {
-			throw "Failed loading file. No .zip or .pkpass files found";
-		}
-
-		let zip: JSZip = null;
+		this.setState({
+			errorMessage: null,
+		});
 
 		try {
-			zip = await JSZip.loadAsync(firstZipFile, { createFolders: false });
-		} catch (err) {
-			// @TODO Handle error through popup?
-			console.error(err);
-			return;
-		} finally {
-			currentTarget.value = ""; /** Resetting input */
-		}
+			const parsedPayload: StateLookalike = {
+				pass: null,
+				translations: {},
+				media: {},
+				projectOptions: {
+					title: "Imported Project"
+				}
+			};
 
-		const filesNames = Object.entries(zip.files);
-
-		for (let i = filesNames.length, file: typeof filesNames[0]; file = filesNames[--i];) {
-			const [ filePath, fileObject ] = file;
-
-			const match = filePath.match(ZIP_FILE_PATH_SPLIT_REGEX);
-			const { language, realFileName } = match.groups as { language?: string, realFileName?: string };
-
-			const isIgnoredFile = ZIP_FILE_IGNORE_REGEX.test(realFileName);
-			const isDirectoryRecord = language && !realFileName;
-			const isFileInDirectory = language && realFileName;
-
-			const shouldSkip = (
-				/** Ignoring record, it is only the folder, we don't need it */
-				isDirectoryRecord ||
-				/** Is dynamic or unsupported file */
-				isIgnoredFile
+			const firstZipFile = Array.prototype.find.call(uploadFiles, (file: File) =>
+				/.+\.(zip|pkpass)/.test(file.name)
 			);
 
-			if (shouldSkip) {
-				continue;
+			if (!firstZipFile) {
+				throw new Error("Usupported type: upload a .zip or a .pkpass");
 			}
 
-			if (realFileName === "pass.json") {
-				try {
-					let passInfo;
+			let zip: JSZip = null;
 
-					try {
-						passInfo = JSON.parse(await fileObject.async("string"));
-					} catch(err) {
-						throw `Bad JSON (${err})`;
-					}
+			try {
+				zip = await JSZip.loadAsync(firstZipFile, { createFolders: false });
+			} catch (err) {
+				throw new Error(`Zip loading error (${err})`);
+			} finally {
+				currentTarget.value = ""; /** Resetting input */
+			}
 
-					const { boardingPass, coupon, storeCard, eventTicket, generic, ...otherPassProps } = passInfo;
-					const { transitType } = boardingPass || {};
+			const filesNames = Object.entries(zip.files);
 
-					let kind: PassKind = null;
-					let sourceOfFields = null;
+			for (let i = filesNames.length, file: typeof filesNames[0]; file = filesNames[--i];) {
+				const [ filePath, fileObject ] = file;
 
-					if (boardingPass) {
-						kind = PassKind.BOARDING_PASS;
-						const { transitType, ...boarding } = boardingPass;
-						sourceOfFields = boarding;
-					} else if (coupon) {
-						kind = PassKind.COUPON;
-						sourceOfFields = coupon;
-					} else if (storeCard) {
-						kind = PassKind.STORE;
-						sourceOfFields = storeCard;
-					} else if (eventTicket) {
-						kind = PassKind.EVENT;
-						sourceOfFields = eventTicket;
-					} else if (generic) {
-						kind = PassKind.GENERIC;
-						sourceOfFields = generic;
-					} else {
-						throw "Missing kind (boardingPass, coupon, storeCard, eventTicket, generic)";
-					}
+				const match = filePath.match(ZIP_FILE_PATH_SPLIT_REGEX);
+				const { language, realFileName } = match.groups as { language?: string, realFileName?: string };
 
-					parsedPayload.pass = Object.assign(otherPassProps, {
-						kind,
-						transitType,
-						...(sourceOfFields || null)
-					});
+				const isIgnoredFile = ZIP_FILE_IGNORE_REGEX.test(realFileName);
+				const isDirectoryRecord = language && !realFileName;
+				const isFileInDirectory = language && realFileName;
 
+				const shouldSkip = (
+					/** Ignoring record, it is only the folder, we don't need it */
+					isDirectoryRecord ||
+					/** Is dynamic or unsupported file */
+					isIgnoredFile
+				);
+
+				if (shouldSkip) {
 					continue;
-				} catch (err) {
-					throw new Error(`Cannot parse pass.json: ${err}`);
 				}
-			}
 
-			if (isFileInDirectory) {
-				if (realFileName === "pass.strings") {
-					const file = await fileObject.async("string");
+				if (realFileName === "pass.json") {
+					try {
+						let passInfo;
 
-					file.split("\n")
-						.map(row => row.match(ZIP_FILE_STRINGS_PV_SPLIT_REGEX))
-						.forEach((match) => {
-							if (!match?.groups) {
-								return;
-							}
+						try {
+							passInfo = JSON.parse(await fileObject.async("string"));
+						} catch(err) {
+							throw `Bad JSON (${err})`;
+						}
 
-							(parsedPayload.translations[language] ??= [])
-								.push([
-									match.groups.placeholder.replace(ZIP_FILE_STRINGS_PV_QUOTES_REPLACE_REGEX, ""),
-									match.groups.value.replace(ZIP_FILE_STRINGS_PV_QUOTES_REPLACE_REGEX, "")
-								]);
+						const { boardingPass, coupon, storeCard, eventTicket, generic, ...otherPassProps } = passInfo;
+						const { transitType } = boardingPass || {};
+
+						let kind: PassKind = null;
+						let sourceOfFields = null;
+
+						if (boardingPass) {
+							kind = PassKind.BOARDING_PASS;
+							const { transitType, ...boarding } = boardingPass;
+							sourceOfFields = boarding;
+						} else if (coupon) {
+							kind = PassKind.COUPON;
+							sourceOfFields = coupon;
+						} else if (storeCard) {
+							kind = PassKind.STORE;
+							sourceOfFields = storeCard;
+						} else if (eventTicket) {
+							kind = PassKind.EVENT;
+							sourceOfFields = eventTicket;
+						} else if (generic) {
+							kind = PassKind.GENERIC;
+							sourceOfFields = generic;
+						} else {
+							throw "Missing kind (boardingPass, coupon, storeCard, eventTicket, generic)";
+						}
+
+						parsedPayload.pass = Object.assign(otherPassProps, {
+							kind,
+							transitType,
+							...(sourceOfFields || null)
 						});
-				} else if (ZIP_FILE_NAME_EXT_REGEX.test(realFileName)) {
+
+						continue;
+					} catch (err) {
+						throw new Error(`Cannot parse pass.json: ${err}`);
+					}
+				}
+
+				if (isFileInDirectory) {
+					if (realFileName === "pass.strings") {
+						const file = await fileObject.async("string");
+
+						file.split("\n")
+							.map(row => row.match(ZIP_FILE_STRINGS_PV_SPLIT_REGEX))
+							.forEach((match) => {
+								if (!match?.groups) {
+									return;
+								}
+
+								(parsedPayload.translations[language] ??= [])
+									.push([
+										match.groups.placeholder.replace(ZIP_FILE_STRINGS_PV_QUOTES_REPLACE_REGEX, ""),
+										match.groups.value.replace(ZIP_FILE_STRINGS_PV_QUOTES_REPLACE_REGEX, "")
+									]);
+							});
+					} else if (ZIP_FILE_NAME_EXT_REGEX.test(realFileName)) {
+						const file = await fileObject.async("arraybuffer");
+
+						(parsedPayload.media[language] ??= [])
+							.push([realFileName, file]);
+					}
+				} else {
 					const file = await fileObject.async("arraybuffer");
 
-					(parsedPayload.media[language] ??= [])
+					(parsedPayload.media["default"] ??= [])
 						.push([realFileName, file]);
 				}
-			} else {
-				const file = await fileObject.async("arraybuffer");
-
-				(parsedPayload.media["default"] ??= [])
-					.push([realFileName, file]);
 			}
-		}
 
-		return this.props.createProjectFromArchive(parsedPayload);
+			if (!parsedPayload.pass) {
+				throw new Error("Missing pass.json");
+			}
+
+			return this.props.createProjectFromArchive(parsedPayload);
+		} catch (err) {
+			this.setState({
+				errorMessage: `Unable to complete import - ${err.message}`
+			});
+		}
 	}
 
 	render() {
@@ -309,6 +323,14 @@ export default class RecentSelector extends React.Component<Props, State> {
 					</div>
 				</header>
 				<main>
+					{ this.state.errorMessage && (
+						<div className="error-area">
+							<div id="error-box">
+								<h2>Import error</h2>
+								<span>{this.state.errorMessage}</span>
+							</div>
+						</div>
+					) || null}
 					<div className="centered-column">
 						<section>
 							<div id="choices-box">
