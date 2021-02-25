@@ -7,6 +7,7 @@ import localForage from "localforage";
 import { createClassName } from "../utils";
 import { StateLookalike } from "../App";
 import { PassKind } from "../model";
+import { CSSTransition } from "react-transition-group";
 
 const ZIP_FILE_PATH_SPLIT_REGEX = /(?:(?<language>.+)\.lproj\/)?(?<realFileName>.+)?/;
 const ZIP_FILE_IGNORE_REGEX = /(^\.|manifest\.json|signature|personalization\.json)/;
@@ -27,6 +28,7 @@ interface State {
 	editMode: boolean;
 	refreshing: boolean;
 	errorMessage: string;
+	isProcessingZipFile: boolean;
 }
 
 export default class RecentSelector extends React.Component<Props, State> {
@@ -40,7 +42,8 @@ export default class RecentSelector extends React.Component<Props, State> {
 			previewsURLList: {},
 			editMode: false,
 			refreshing: false,
-			errorMessage: null
+			errorMessage: null,
+			isProcessingZipFile: false,
 		};
 
 		this.switchEditMode = this.switchEditMode.bind(this);
@@ -143,6 +146,7 @@ export default class RecentSelector extends React.Component<Props, State> {
 
 		this.setState({
 			errorMessage: null,
+			isProcessingZipFile: true
 		});
 
 		try {
@@ -280,10 +284,15 @@ export default class RecentSelector extends React.Component<Props, State> {
 				throw new Error("Missing pass.json");
 			}
 
+			this.setState({
+				isProcessingZipFile: false,
+			});
+
 			return this.props.createProjectFromArchive(parsedPayload);
 		} catch (err) {
 			this.setState({
 				errorMessage: `Unable to complete import. ${err.message}`,
+				isProcessingZipFile: false,
 			});
 		}
 	}
@@ -324,17 +333,22 @@ export default class RecentSelector extends React.Component<Props, State> {
 					</div>
 				</header>
 				<main>
-					{ this.state.errorMessage && (
-						<div className="error-area">
+					<CSSTransition
+						in={this.state.showError}
+						timeout={1000}
+						unmountOnExit
+						mountOnEnter
+					>
+						<div className="error-area" onClick={() => this.toggleErrorOverlay()}>
 							<div id="error-box">
 								<h2>Import error</h2>
-								<span>{this.state.errorMessage}</span>
+								<span>{this.errorMessage}</span>
 							</div>
 						</div>
-					) || null}
+					</CSSTransition>
 					<div className="centered-column">
 						<section>
-							<div id="choices-box">
+							<div id="choices-box" className={this.state.isProcessingZipFile ? "loading" : ""}>
 								<div onClick={() => this.props.pushHistory("/select")}>
 									<AddIcon width="32px" height="32px" />
 									<span>Create Project</span>
