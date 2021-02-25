@@ -349,7 +349,7 @@ export default class RecentSelector extends React.Component<Props, State> {
 					<div className="centered-column">
 						<section>
 							<div id="choices-box" className={this.state.isProcessingZipFile ? "loading" : ""}>
-								<div onClick={() => this.props.pushHistory("/select")}>
+								<div onClick={() => !this.state.isProcessingZipFile && this.props.pushHistory("/select")}>
 									<AddIcon width="32px" height="32px" />
 									<span>Create Project</span>
 								</div>
