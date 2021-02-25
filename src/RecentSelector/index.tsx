@@ -160,7 +160,8 @@ export default class RecentSelector extends React.Component<Props, State> {
 			);
 
 			if (!firstZipFile) {
-				throw new Error("Usupported type: upload a .zip or a .pkpass");
+				const ext = uploadFiles[0].name.match(/\.(.+)/g)[0];
+				throw new Error(`Unsupported file type (${ext}). Only .zip and .pkpass can be used as starting point.`);
 			}
 
 			let zip: JSZip = null;
@@ -168,7 +169,7 @@ export default class RecentSelector extends React.Component<Props, State> {
 			try {
 				zip = await JSZip.loadAsync(firstZipFile, { createFolders: false });
 			} catch (err) {
-				throw new Error(`Zip loading error (${err})`);
+				throw new Error(`Zip loading error (${err}).`);
 			} finally {
 				currentTarget.value = ""; /** Resetting input */
 			}
@@ -203,7 +204,7 @@ export default class RecentSelector extends React.Component<Props, State> {
 						try {
 							passInfo = JSON.parse(await fileObject.async("string"));
 						} catch(err) {
-							throw `Bad JSON (${err})`;
+							throw `Bad JSON. (${err})`;
 						}
 
 						const { boardingPass, coupon, storeCard, eventTicket, generic, ...otherPassProps } = passInfo;
@@ -229,7 +230,7 @@ export default class RecentSelector extends React.Component<Props, State> {
 							kind = PassKind.GENERIC;
 							sourceOfFields = generic;
 						} else {
-							throw "Missing kind (boardingPass, coupon, storeCard, eventTicket, generic)";
+							throw "Missing kind (boardingPass, coupon, storeCard, eventTicket, generic) to start from.";
 						}
 
 						parsedPayload.pass = Object.assign(otherPassProps, {
@@ -282,7 +283,7 @@ export default class RecentSelector extends React.Component<Props, State> {
 			return this.props.createProjectFromArchive(parsedPayload);
 		} catch (err) {
 			this.setState({
-				errorMessage: `Unable to complete import - ${err.message}`
+				errorMessage: `Unable to complete import. ${err.message}`,
 			});
 		}
 	}
