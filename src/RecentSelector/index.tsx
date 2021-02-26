@@ -27,13 +27,14 @@ interface State {
 	previewsURLList: { [projectID: string]: string };
 	editMode: boolean;
 	refreshing: boolean;
-	errorMessage: string;
 	isProcessingZipFile: boolean;
+	showError: boolean;
 }
 
 export default class RecentSelector extends React.Component<Props, State> {
 	private refreshInterval: number;
 	private delayLoadingAnimationTimeout: number;
+	private errorMessage: string = "";
 
 	constructor(props: Props) {
 		super(props);
@@ -42,7 +43,7 @@ export default class RecentSelector extends React.Component<Props, State> {
 			previewsURLList: {},
 			editMode: false,
 			refreshing: false,
-			errorMessage: null,
+			showError: false,
 			isProcessingZipFile: false,
 		};
 
@@ -50,6 +51,7 @@ export default class RecentSelector extends React.Component<Props, State> {
 		this.selectRecent = this.selectRecent.bind(this);
 		this.toggleRefreshing = this.toggleRefreshing.bind(this);
 		this.processUploadedFile = this.processUploadedFile.bind(this);
+		this.toggleErrorOverlay = this.toggleErrorOverlay.bind(this);
 	}
 
 	componentDidMount() {
@@ -145,7 +147,7 @@ export default class RecentSelector extends React.Component<Props, State> {
 		const { files: uploadFiles } = currentTarget;
 
 		this.setState({
-			errorMessage: null,
+			showError: false,
 			isProcessingZipFile: true
 		});
 
@@ -290,11 +292,34 @@ export default class RecentSelector extends React.Component<Props, State> {
 
 			return this.props.createProjectFromArchive(parsedPayload);
 		} catch (err) {
+			this.toggleErrorOverlay(`Unable to complete import. ${err.message}`);
+
 			this.setState({
-				errorMessage: `Unable to complete import. ${err.message}`,
 				isProcessingZipFile: false,
 			});
 		}
+	}
+
+	/**
+	 * Shows or hides error message. We want to
+	 * show it before opening animation and remove
+	 * it after closing animation.
+	 *
+	 * @param errorMessage
+	 */
+
+	toggleErrorOverlay(errorMessage: string = "") {
+		if (!this.errorMessage) {
+			this.errorMessage = errorMessage;
+		}
+
+		this.setState(previous => ({
+			showError: !previous.showError,
+		}), () => {
+			if (!errorMessage) {
+				this.errorMessage = errorMessage;
+			}
+		});
 	}
 
 	render() {
