@@ -365,7 +365,7 @@ export default class RecentSelector extends React.Component<Props, State> {
 						mountOnEnter
 					>
 						<div className="error-area" onClick={() => this.toggleErrorOverlay()}>
-							<div id="error-box">
+							<div id="error-box" onClick={(e) => e.stopPropagation()}>
 								<h2>Import error</h2>
 								<span>{this.errorMessage}</span>
 							</div>
