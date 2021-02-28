@@ -53,11 +53,13 @@
 		& > #translations-content {
 			flex-grow: 1;
 			padding: 0 30px;
- 			position: relative;
+			position: relative;
 			display: grid;
 			grid-template-columns: 1fr 1fr 50px;
-			grid-template-rows: repeat(auto-fill, 40px);
+			grid-auto-rows: 40px;
 			gap: 5px 2px;
+
+			.scrollableWithoutScrollbars(y);
 
 			& > header {
 				display: grid;
@@ -81,7 +83,7 @@
 				border-bottom: 1px solid transparent;
 				padding-left: 10px;
 				cursor: pointer;
-				transition: all .3s ease-in-out;
+				transition: all 0.3s ease-in-out;
 				outline: none;
 
 				&:nth-of-type(2n) {
@@ -89,7 +91,7 @@
 					grid-column: ~"2 / 3";
 				}
 
-				&:nth-of-type(2n+1) {
+				&:nth-of-type(2n + 1) {
 					border-radius: 3px 0px 0px 3px;
 					grid-column: ~"1 / 2";
 				}
@@ -112,7 +114,7 @@
 				justify-self: center;
 				align-self: center;
 				cursor: pointer;
-				transition: fill .3s ease-in-out;
+				transition: fill 0.3s ease-in-out;
 
 				&:hover {
 					fill: #bb0000;
@@ -129,7 +131,7 @@
 				z-index: 10;
 				background-color: rgba(0, 0, 0, 0.5);
 				opacity: 0;
-				transition: opacity .3s ease-in-out;
+				transition: opacity 0.3s ease-in-out;
 				pointer-events: none;
 			}
 
