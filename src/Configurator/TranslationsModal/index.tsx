@@ -43,7 +43,7 @@ export default function TranslationsModal(props: Props) {
 	}, [props.availableTranslations]);
 
 	const translationsFragments = Object.entries(translations).map(([id, [placeholder, value]], index) => (
-		<React.Fragment key={`trl-r${index}`}>
+		<React.Fragment key={`trl-${props.currentLanguage}-r${index}`}>
 			<CommittableTextInput
 				defaultValue={placeholder || ""}
 				placeholder="Insert localizable string placeholder"
