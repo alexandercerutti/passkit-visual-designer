@@ -355,16 +355,12 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 			showTranslationsModal,
 		} = this.state;
 
-		const allPassProps = Object.assign({},
-			passProps,
-			getBestResolutionForMedia(media[activeMediaLanguage]),
-		);
-
 		return (
 			<div id="configurator">
 				<div className="screen">
 					<Viewer
-						passProps={allPassProps}
+						passProps={passProps}
+						translationSet={translations[activeMediaLanguage]}
 						onFieldSelect={this.onFieldSelect}
 						registerField={this.registerField}
 						onVoidClick={this.onVoidClick}
@@ -382,7 +378,7 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 				</div>
 				<div className="config-panel">
 					<OptionsMenu
-						data={allPassProps}
+						data={passProps}
 						selectedFieldID={selectedFieldId}
 						fields={registeredFields}
 						onValueChange={this.onValueChange}
@@ -404,7 +400,7 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 				}
 				{showMediaModalForMedia &&
 					<MediaModal
-						passProps={allPassProps}
+						passProps={passProps}
 						currentLanguage={activeMediaLanguage}
 						mediaName={showMediaModalForMedia}
 						mediaContent={media?.[activeMediaLanguage]?.[showMediaModalForMedia]}
@@ -500,8 +496,13 @@ export default withRouter(connect(
 				.map(([language]) => language)
 		);
 
+		const passPropsWithSelectedMediaUrl = Object.assign({},
+			pass,
+			getBestResolutionForMedia(media[projectOptions.activeMediaLanguage])
+		);
+
 		return {
-			passProps: pass,
+			passProps: passPropsWithSelectedMediaUrl,
 			media,
 			translations,
 			usedLanguages,
