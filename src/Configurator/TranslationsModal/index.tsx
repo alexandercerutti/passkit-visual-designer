@@ -21,6 +21,9 @@ interface Props extends Omit<ModalProps, "contentUniqueID"> {
 }
 
 export default function TranslationsModal(props: Props) {
+	const isEnabled = props.availableTranslations?.enabled ?? true;
+	const translations = isEnabled && props.availableTranslations?.translations || {};
+
 	const onCommit = React.useCallback((id: string, changeOP: TranslationChangeOps, content: string) => {
 		const currentSet = props.availableTranslations.translations[id];
 
@@ -39,7 +42,7 @@ export default function TranslationsModal(props: Props) {
 		props.editTranslation(id, placeholder, value);
 	}, [props.availableTranslations]);
 
-	const translations = Object.entries(props.availableTranslations.translations).map(([id, [placeholder, value]], index) => (
+	const translationsFragments = Object.entries(translations).map(([id, [placeholder, value]], index) => (
 		<React.Fragment key={`trl-r${index}`}>
 			<CommittableTextInput
 				defaultValue={placeholder || ""}
@@ -61,21 +64,21 @@ export default function TranslationsModal(props: Props) {
 				<h2>Translations</h2>
 				<AddIcon
 					onClick={() => props.addTranslation()}
-					data-disabled={!props.availableTranslations.enabled}
+					data-disabled={!isEnabled}
 				/>
 			</header>
-			<div id="translations-content" data-disabled={!props.availableTranslations.enabled}>
+			<div id="translations-content" data-disabled={!isEnabled}>
 				<header>
 					<div>Placeholder</div>
 					<div>Value</div>
 				</header>
-				{translations}
+				{translationsFragments}
 			</div>
 			<footer>
 				<Switcher
 					labelPosition="after"
 					onToggle={props.setExportState}
-					checked={props.availableTranslations.enabled}
+					checked={isEnabled}
 				>
 					Export
 				</Switcher>
