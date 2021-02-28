@@ -253,7 +253,15 @@ export default class RecentSelector extends React.Component<Props, State> {
 
 				if (isFileInDirectory) {
 					if (realFileName === "pass.strings") {
-						const file = await fileObject.async("string");
+						/**
+						 * Replacing BOM (Byte order mark).
+						 * This could affect matching between
+						 * fields and placeholders.
+						 */
+
+						const file = (
+							await fileObject.async("string")
+						).replace(/\uFEFF/g, "");
 
 						file.split("\n")
 							.map(row => row.match(ZIP_FILE_STRINGS_PV_SPLIT_REGEX))
