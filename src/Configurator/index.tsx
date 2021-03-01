@@ -487,14 +487,16 @@ export default withRouter(connect(
 	(state: State): ConfiguratorStore => {
 		const { pass, media, projectOptions, translations } = state;
 
-		const usedLanguages = new Set(
+		const usedLanguages = new Set([
 			/**
-			 * Seeking for medias that has contents for current language
+			 * Seeking for medias or translations that have
+			 * contents for current language
 			 */
-			Object.entries(media)
-				.filter(([_, mediaSet]) => hasMediaContents(mediaSet))
-				.map(([language]) => language)
-		);
+			...Object.entries(media)
+				.filter(([_, mediaSet]) => hasMediaContents(mediaSet)),
+			...Object.entries(translations)
+				.filter(([_, translationSet]) => Object.keys(translationSet.translations).length)
+		].map(([language]) => language));
 
 		const passPropsWithSelectedMediaUrl = Object.assign({},
 			pass,
