@@ -42,21 +42,42 @@ export default function TranslationsModal(props: Props) {
 		props.editTranslation(id, placeholder, value);
 	}, [props.availableTranslations]);
 
-	const translationsFragments = Object.entries(translations).map(([id, [placeholder, value]], index) => (
-		<React.Fragment key={`trl-${props.currentLanguage}-r${index}`}>
-			<CommittableTextInput
-				defaultValue={placeholder || ""}
-				placeholder="Insert localizable string placeholder"
-				commit={(value) => onCommit(id, TranslationChangePlaceholder, value)}
-			/>
-			<CommittableTextInput
-				defaultValue={value || ""}
-				placeholder="Insert value for this language"
-				commit={(value) => onCommit(id, TranslationChangeValue, value)}
-			/>
-			<DeleteIcon onClick={() => props.removeTranslation(id)} />
-		</React.Fragment>
-	));
+	let content: JSX.Element;
+
+	if (props.currentLanguage !== "default") {
+		const translationsFragments = Object.entries(translations).map(([id, [placeholder, value]], index) => (
+			<React.Fragment key={`trl-${props.currentLanguage}-r${index}`}>
+				<CommittableTextInput
+					defaultValue={placeholder || ""}
+					placeholder="Insert localizable string placeholder"
+					commit={(value) => onCommit(id, TranslationChangePlaceholder, value)}
+				/>
+				<CommittableTextInput
+					defaultValue={value || ""}
+					placeholder="Insert value for this language"
+					commit={(value) => onCommit(id, TranslationChangeValue, value)}
+				/>
+				<DeleteIcon onClick={() => props.removeTranslation(id)} />
+			</React.Fragment>
+		));
+
+		content = (
+			<div id="translations-content" data-language={props.currentLanguage} data-disabled={!isEnabled}>
+				<header>
+					<div>Placeholder</div>
+					<div>Value</div>
+				</header>
+				{translationsFragments}
+			</div>
+		);
+	} else {
+		content = (
+			<div id="translations-content" data-language={props.currentLanguage}>
+				<h3>Select a language to add translations.</h3>
+				<p>Then add a translation and set placeholders to localizable fields to see them on pass.</p>
+			</div>
+		);
+	}
 
 	return (
 		<Modal closeModal={props.closeModal} contentUniqueID="translations">
@@ -64,21 +85,16 @@ export default function TranslationsModal(props: Props) {
 				<h2>Translations</h2>
 				<AddIcon
 					onClick={() => props.addTranslation()}
-					data-disabled={!isEnabled}
+					data-disabled={!isEnabled || props.currentLanguage === "default"}
 				/>
 			</header>
-			<div id="translations-content" data-disabled={!isEnabled}>
-				<header>
-					<div>Placeholder</div>
-					<div>Value</div>
-				</header>
-				{translationsFragments}
-			</div>
+			{content}
 			<footer>
 				<Switcher
 					labelPosition="after"
 					onToggle={props.setExportState}
 					checked={isEnabled}
+					disabled={props.currentLanguage === "default"}
 				>
 					Export
 				</Switcher>
