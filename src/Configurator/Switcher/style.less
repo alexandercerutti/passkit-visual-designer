@@ -3,14 +3,14 @@
 .the-switcher {
 	display: flex;
 	align-items: center;
-	margin: 0 .5rem;
+	margin: 0 0.5rem;
 	cursor: pointer;
 	-webkit-tap-highlight-color: transparent;
 
 	& i {
 		position: relative;
 		display: inline-block;
-		margin-right: .5rem;
+		margin-right: 0.5rem;
 		width: 46px;
 		height: 26px;
 		background-color: #444444;
@@ -46,7 +46,7 @@
 	& input {
 		&:checked {
 			& + i {
-				background-color: #4BD763;
+				background-color: #4bd763;
 
 				&::before {
 					transform: translate3d(18px, 2px, 0) scale3d(0, 0, 0);
@@ -55,6 +55,12 @@
 				&::after {
 					transform: translate3d(22px, 2px, 0);
 				}
+			}
+		}
+
+		&[disabled] {
+			& + i {
+				background-color: grey;
 			}
 		}
 	}
@@ -66,7 +72,7 @@
 		 * Also decrease tx value below
 		 */
 
-/*		& i::after {
+		/*& i::after {
  			width: 28px;
 			transform: translate3d(2px, 2px, 0);
 		}*/
