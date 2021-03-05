@@ -12,12 +12,12 @@
 
 	// Animation
 
- 	& .fade-enter {
+	& .fade-enter {
 		opacity: 0;
 
 		&.fade-enter-active {
 			opacity: 1;
-			transition: opacity .3s ease-in;
+			transition: opacity 0.3s ease-in;
 		}
 	}
 
@@ -26,7 +26,7 @@
 
 		&.fade-exit-active {
 			opacity: 0;
-			transition: opacity .3s ease-in;
+			transition: opacity 0.3s ease-in;
 		}
 	}
 
@@ -42,7 +42,7 @@
 		z-index: 10;
 		background-color: rgba(0, 0, 0, 0.5);
 		opacity: 0;
-		transition: opacity .3s ease-in-out;
+		transition: opacity 0.3s ease-in-out;
 		pointer-events: none;
 	}
 
@@ -71,18 +71,20 @@
 			border-width: 3px;
 			border-style: solid;
 			border-color: transparent;
-			transition: border-color .3s ease-in-out;
+			transition: border-color 0.3s ease-in-out;
 			border-radius: 3px;
 
 			&.selected {
 				border-color: #d85600;
 			}
 
-			&:not(.empty-coll), &.add-coll {
+			&:not(.empty-coll),
+			&.add-coll {
 				cursor: pointer;
 			}
 
-			&.empty-coll, &.add-coll {
+			&.empty-coll,
+			&.add-coll {
 				border-color: #5c5c5c;
 				border-style: dashed;
 				border-width: 1px;
@@ -93,7 +95,7 @@
 				 * be of the same height
 				 */
 
-				 padding-bottom: 8px;
+				padding-bottom: 8px;
 
 				& div:first-child {
 					display: flex;
@@ -124,7 +126,9 @@
 					}
 
 					@keyframes fade-blinking {
-						to { opacity: 0; }
+						to {
+							opacity: 0;
+						}
 					}
 				}
 			}
@@ -140,12 +144,13 @@
 			}
 
 			& .collection-actions {
-				transition: opacity .3s ease-in-out;
+				transition: opacity 0.3s ease-in-out;
 				display: flex;
 				justify-content: center;
 				align-items: center;
 
-				&, &::before {
+				&,
+				&::before {
 					position: absolute;
 					top: 0;
 					left: 0;
@@ -162,7 +167,7 @@
 				& > svg {
 					width: 35px;
 					height: 35px;
-					transition: fill .1s;
+					transition: fill 0.1s;
 					cursor: pointer;
 					z-index: 5;
 
@@ -187,7 +192,8 @@
 				&:not(.edit-mode-active) {
 					opacity: 0;
 
-					&, & > svg {
+					&,
+					& > svg {
 						pointer-events: none;
 					}
 				}
@@ -220,22 +226,6 @@
 
 		& > .the-switcher {
 			margin-left: 0;
-		}
-
-		& > #select-lang {
-			cursor: pointer;
-
-			&:after {
-				content: "";
-				display: inline-block;
-				width: 0;
-				height: 0;
-				border-style: solid;
-				border-width: 5px 5px 0 5px;
-				border-color: #e6e6e6 transparent transparent transparent;
-				vertical-align: middle;
-				margin-left: 5px;
-			}
 		}
 	}
 }

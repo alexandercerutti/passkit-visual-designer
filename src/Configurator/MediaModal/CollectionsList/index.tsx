@@ -6,6 +6,7 @@ import type { CollectionEditOperation } from "..";
 import { CollectionEditCreate, CollectionEditDelete } from "..";
 import { createClassName } from "../../../utils";
 import { Switcher } from "../../Switcher";
+import LanguageSelectionButton from "../../LanguageSelectionButton";
 
 interface Props {
 	media: CollectionSet;
@@ -121,13 +122,7 @@ export default function CollectionsList(props: Props) {
 				>
 					Export
 				</Switcher>
-				<span
-					id="select-lang"
-					onClick={props.requestForLanguageChange}
-					title="Click here to switch language"
-				>
-					{props.currentLanguage}
-				</span>
+				<LanguageSelectionButton label={props.currentLanguage} onClick={props.requestForLanguageChange} />
 			</footer>
 		</div>
 	);
