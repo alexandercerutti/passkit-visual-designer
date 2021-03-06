@@ -1,6 +1,7 @@
 import * as React from "react";
 import { TranslationsSet } from "../../store";
 import CommittableTextInput from "../CommittableTextInput";
+import LanguageSelectionButton from "../LanguageSelectionButton";
 import Modal, { ModalProps } from "../ModalBase";
 import { Switcher } from "../Switcher";
 import { DeleteIcon, AddIcon } from "./icons";
@@ -62,19 +63,32 @@ export default function TranslationsModal(props: Props) {
 		));
 
 		content = (
-			<div id="translations-content" data-language={props.currentLanguage} data-disabled={!isEnabled}>
-				<header>
-					<div>Placeholder</div>
-					<div>Value</div>
-				</header>
-				{translationsFragments}
-			</div>
+			<>
+				<div id="translations-content" data-language={props.currentLanguage} data-disabled={!isEnabled}>
+					<header>
+						<div>Placeholder</div>
+						<div>Value</div>
+					</header>
+					{translationsFragments}
+				</div>
+				<footer>
+					<Switcher
+						labelPosition="after"
+						onToggle={props.setExportState}
+						checked={isEnabled}
+					>
+						Export
+					</Switcher>
+					<LanguageSelectionButton label={props.currentLanguage} onClick={props.requestForLanguageChange} />
+				</footer>
+			</>
 		);
 	} else {
 		content = (
 			<div id="translations-content" data-language={props.currentLanguage}>
 				<h3>Select a language to add translations.</h3>
 				<p>Then add a translation and set placeholders to localizable fields to see them on pass.</p>
+				<LanguageSelectionButton label={props.currentLanguage} onClick={props.requestForLanguageChange} />
 			</div>
 		);
 	}
@@ -89,23 +103,6 @@ export default function TranslationsModal(props: Props) {
 				/>
 			</header>
 			{content}
-			<footer>
-				<Switcher
-					labelPosition="after"
-					onToggle={props.setExportState}
-					checked={isEnabled}
-					disabled={props.currentLanguage === "default"}
-				>
-					Export
-				</Switcher>
-				<span
-					id="select-lang"
-					onClick={props.requestForLanguageChange}
-					title="Click here to switch language"
-				>
-					{props.currentLanguage}
-				</span>
-			</footer>
 		</Modal>
 	);
 }

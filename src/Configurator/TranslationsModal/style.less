@@ -12,7 +12,7 @@
 
 		& > header {
 			display: flex;
-			padding: 30px;
+			padding: 30px 30px 10px 30px;
 			justify-content: space-between;
 			align-items: center;
 
@@ -55,11 +55,16 @@
 			flex-direction: column;
 			align-items: center;
 			justify-content: center;
+			margin-bottom: 10%;
 
 			& p {
 				margin: 5px 0;
 				max-width: 400px;
 				text-align: center;
+			}
+
+			& > .language-select-btn {
+				margin-top: 20px;
 			}
 		}
 
@@ -173,22 +178,6 @@
 
 			& > .the-switcher {
 				margin-left: 0;
-			}
-
-			& > #select-lang {
-				cursor: pointer;
-
-				&:after {
-					content: "";
-					display: inline-block;
-					width: 0;
-					height: 0;
-					border-style: solid;
-					border-width: 5px 5px 0 5px;
-					border-color: #e6e6e6 transparent transparent transparent;
-					vertical-align: middle;
-					margin-left: 5px;
-				}
 			}
 		}
 	}
