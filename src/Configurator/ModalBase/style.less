@@ -4,7 +4,8 @@
 
 .modal {
 	z-index: 999;
-	.lookMumIamAppearing(.5s, ease-in-out);
+
+	.pagetransition();
 
 	& svg#closeIcon {
 		position: absolute;
@@ -33,6 +34,8 @@
 		cursor: pointer;
 		box-shadow: inset 0 0px 3000px 20px #000;
 		filter: blur(10px);
+
+		.lookMumIamAppearing(0.5s, ease-in-out);
 	}
 
 	& > .modal-content {
@@ -40,8 +43,6 @@
 		z-index: 999;
 		display: flex;
 		color: #e6e6e6;
-
-		.lookMumIamAppearing(.5s, ease-in-out, .2s);
 
 		@media screen and (max-width: @fullscreen-size) {
 			top: 40px !important; // For close icon

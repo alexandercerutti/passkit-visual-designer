@@ -1,6 +1,7 @@
 import * as React from "react";
 import "./style.less";
 import { RouteComponentProps, withRouter } from "react-router-dom";
+import { CSSTransition } from "react-transition-group";
 import Viewer from "./Viewer";
 import OptionsBar from "./OptionsBar";
 import OptionsMenu, { RegisteredFieldsMap } from "./OptionsMenu";
@@ -69,6 +70,17 @@ interface ConfiguratorState {
 	showLanguageModal: boolean;
 	showTranslationsModal: boolean;
 }
+
+/**
+ * 200 milliseconds seems to be enough to allow
+ * react-transition-group to perform animation and
+ * unmounting without letting us closing the modals
+ * without mistakenly toggling them again while clicking
+ * on the cross icon, that becomes invisible until
+ * the modal is unmounted
+ */
+
+const MODAL_TIMEOUT = 200;
 
 class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState> implements InteractionContextMethods {
 	constructor(props: ConfiguratorProps) {
@@ -387,7 +399,12 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 						onMediaEditRequest={this.toggleMediaModal}
 					/>
 				</div>
-				{showExportModal &&
+				<CSSTransition
+					mountOnEnter
+					unmountOnExit
+					in={showExportModal}
+					timeout={MODAL_TIMEOUT}
+				>
 					<ExportModal
 						partners={[{
 							name: "Passkit-generator",
@@ -397,8 +414,13 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 						dataBank={passProps}
 						closeModal={this.toggleExportModal}
 					/>
-				}
-				{showMediaModalForMedia &&
+				</CSSTransition>
+				<CSSTransition
+					mountOnEnter
+					unmountOnExit
+					in={Boolean(showMediaModalForMedia)}
+					timeout={MODAL_TIMEOUT}
+				>
 					<MediaModal
 						passProps={passProps}
 						currentLanguage={activeMediaLanguage}
@@ -410,8 +432,13 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 						setMediaExportState={this.onMediaExportStateChange}
 						closeModal={() => this.toggleMediaModal(showMediaModalForMedia)}
 					/>
-				}
-				{showTranslationsModal &&
+				</CSSTransition>
+				<CSSTransition
+					mountOnEnter
+					unmountOnExit
+					in={showTranslationsModal}
+					timeout={MODAL_TIMEOUT}
+				>
 					<TranslationsModal
 						closeModal={this.toggleTranslationsModal}
 						availableTranslations={translations?.[activeMediaLanguage]}
@@ -422,15 +449,20 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 						removeTranslation={this.onTranslationRemove}
 						setExportState={this.onTranslationExportStateChange}
 					/>
-				}
-				{showLanguageModal &&
+				</CSSTransition>
+				<CSSTransition
+					mountOnEnter
+					unmountOnExit
+					in={showLanguageModal}
+					timeout={MODAL_TIMEOUT}
+				>
 					<LanguageModal
 						closeModal={this.toggleLanguageModal}
 						currentLanguage={activeMediaLanguage}
 						usedLanguages={usedLanguages}
 						selectLanguage={this.onActiveMediaLanguageChange}
 					/>
-				}
+				</CSSTransition>
 			</div>
 		);
 	}
