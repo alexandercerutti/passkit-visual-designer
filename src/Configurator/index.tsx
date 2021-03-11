@@ -9,7 +9,7 @@ import { FieldKind } from "../model";
 import { InteractionContextMethods } from "../Pass/InteractionContext";
 import { connect } from "react-redux";
 import { MediaProps, PassMixedProps } from "../Pass";
-import type { MediaCollection, MediaSet, State } from "../store";
+import type { CollectionSet, LocalizedMediaGroup, MediaCollection, MediaSet, State } from "../store";
 import * as Store from "../store";
 import DefaultFields from "./staticFields";
 import { DataGroup } from "./OptionsMenu/pages/PanelsPage";
@@ -489,23 +489,48 @@ function convertFieldKindToDataGroup(kind: FieldKind): DataGroup {
  * It should select the best resolution to use, but currently
  * we don't have a well-defined criteria to use.
  *
+ * The first criteria we apply is fallback-ing to default
+ * when we don't have a media for the current language.
+ * 
+ * Another criteria should be about selecting best resolution...
+ * but are we ready yet?
+ *
  * @param mediaSetForSelectedLanguage
- * @TODO Use a selection criteria to select the best resolution
  */
 
-function getBestResolutionForMedia(mediaSetForSelectedLanguage: MediaSet) {
+function getBestResolutionForMedia(mediaGroup: LocalizedMediaGroup, selectedLanguage: string) {
 	const best = {} as MediaProps;
 
-	if (!mediaSetForSelectedLanguage) {
+	/**
+	 * If we don't have a media initialized for this language,
+	 * we directly fallback to default.
+	 */
+
+	const firstGroupToCheck = mediaGroup[selectedLanguage] || mediaGroup["default"];
+
+	if (!firstGroupToCheck) {
 		return best;
 	}
 
-	for (let [mediaName, media] of Object.entries(mediaSetForSelectedLanguage)) {
-		const { activeCollectionID = "", collections, enabled } = media ?? {};
+	for (let [mediaName, media] of Object.entries(firstGroupToCheck) as [keyof MediaProps, CollectionSet][]) {
+		if (media) {
+			const { activeCollectionID = "", collections, enabled } = media;
 
-		if (media && activeCollectionID && enabled) {
-			const resolutions = Object.keys(collections[activeCollectionID].resolutions);
-			best[mediaName] = sessionStorage.getItem(resolutions[0]);
+			let searchResolutionArea: Store.IdentifiedResolutions;
+
+			if (activeCollectionID && enabled) {
+				searchResolutionArea = collections[activeCollectionID].resolutions;
+			} else if (firstGroupToCheck !== mediaGroup["default"]) {
+				const group = mediaGroup["default"];
+				const media = group?.[mediaName];
+				const defaultActiveCollectionId = media?.activeCollectionID;
+
+				searchResolutionArea = defaultActiveCollectionId && media?.collections?.[defaultActiveCollectionId]?.resolutions || {};
+			} else {
+				searchResolutionArea = {};
+			}
+
+			best[mediaName] = sessionStorage.getItem(Object.keys(searchResolutionArea)[0]);
 		}
 	}
 
@@ -532,7 +557,7 @@ export default withRouter(connect(
 
 		const passPropsWithSelectedMediaUrl = Object.assign({},
 			pass,
-			getBestResolutionForMedia(media[projectOptions.activeMediaLanguage])
+			getBestResolutionForMedia(media, projectOptions.activeMediaLanguage)
 		);
 
 		return {
