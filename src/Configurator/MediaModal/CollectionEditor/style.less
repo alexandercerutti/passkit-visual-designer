@@ -23,6 +23,7 @@
 					border-color: #5c5c5c;
 					border-style: dashed;
 					border-width: 1px;
+					-webkit-user-select: none;
 					user-select: none;
 					cursor: pointer;
 
@@ -57,7 +58,7 @@
 					justify-content: center;
 					align-items: center;
 					opacity: 0;
-					transition: opacity .3s ease-in-out;
+					transition: opacity 0.3s ease-in-out;
 					position: absolute;
 					top: 0;
 					left: 0;
@@ -72,7 +73,7 @@
 						left: 0;
 						right: 0;
 						bottom: 0;
-						background-color: rgba(25,25,25,0.8);
+						background-color: rgba(25, 25, 25, 0.8);
 						z-index: 2;
 						pointer-events: none;
 					}
@@ -110,7 +111,7 @@
 				border: 0;
 				outline: none;
 				border-bottom: 1px solid #313131;
-				transition: border-bottom .5s ease-in-out;
+				transition: border-bottom 0.5s ease-in-out;
 				text-align: center;
 				background: transparent;
 				color: #e6e6e6;
@@ -154,10 +155,8 @@
 		opacity: 0;
 		box-sizing: border-box;
 		border-radius: 5px;
-		transition:
-			opacity .5s ease-in-out,
-			visibility 0s linear;
-		transition-delay: 0s, .5s;
+		transition: opacity 0.5s ease-in-out, visibility 0s linear;
+		transition-delay: 0s, 0.5s;
 		border-width: 4px;
 		border-style: dashed;
 		border-color: #333;

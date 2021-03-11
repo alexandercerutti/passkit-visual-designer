@@ -491,7 +491,7 @@ function convertFieldKindToDataGroup(kind: FieldKind): DataGroup {
  *
  * The first criteria we apply is fallback-ing to default
  * when we don't have a media for the current language.
- * 
+ *
  * Another criteria should be about selecting best resolution...
  * but are we ready yet?
  *
