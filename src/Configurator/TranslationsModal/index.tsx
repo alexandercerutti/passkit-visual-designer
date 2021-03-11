@@ -23,7 +23,7 @@ interface Props extends Omit<ModalProps, "contentUniqueID"> {
 
 export default function TranslationsModal(props: Props) {
 	const isEnabled = props.availableTranslations?.enabled ?? true;
-	const translations = isEnabled && props.availableTranslations?.translations || {};
+	const translations = props.availableTranslations?.translations || {};
 
 	const onCommit = React.useCallback((id: string, changeOP: TranslationChangeOps, content: string) => {
 		const currentSet = props.availableTranslations.translations[id];
@@ -76,6 +76,7 @@ export default function TranslationsModal(props: Props) {
 						labelPosition="after"
 						onToggle={props.setExportState}
 						checked={isEnabled}
+						disabled={!translationsFragments.length}
 					>
 						Export
 					</Switcher>
