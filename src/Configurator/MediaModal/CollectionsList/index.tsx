@@ -119,6 +119,7 @@ export default function CollectionsList(props: Props) {
 					labelPosition="after"
 					checked={props.media?.enabled ?? true}
 					onToggle={props.setMediaExportState}
+					disabled={!collectionsElements?.length}
 				>
 					Export
 				</Switcher>
