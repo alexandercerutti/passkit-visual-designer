@@ -535,9 +535,6 @@ function getBestResolutionForMedia(mediaGroup: LocalizedMediaGroup, selectedLang
 	return best;
 }
 
-// Webpack defined
-declare const isDevelopment: boolean;
-
 export default withRouter(connect(
 	(state: State): ConfiguratorStore => {
 		const { pass, media, projectOptions, translations } = state;
