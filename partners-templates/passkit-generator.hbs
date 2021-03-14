@@ -2,7 +2,7 @@ import { createPass } from "passkit-generator";
 
 try {
 	const examplePass = await createPass({
-		model: "path/to/exported/model/{{#if store.projectOptions.title}}{{ store.projectOptions.title }}{{else}}Untitled Project{{/if}}.zip",
+		model: "path/to/exported/model/{{#if store.projectOptions.title}}{{ store.projectOptions.title }}{{else}}Untitled Project{{/if}}.pkpass",
 		certificates: {
 			wwdr: "./certs/wwdr.pem",
 			signerCert: "./certs/signercert.pem",
