@@ -2,9 +2,13 @@ import * as React from "react";
 import "./style.less";
 import Prism from "prismjs";
 import { createClassName } from "../../utils";
-import { replaceAllBlock } from "./transformers";
 import { PassMixedProps } from "../../Pass";
 import Modal, { ModalProps } from "../ModalBase";
+import * as Store from "../../store";
+import * as templates from "../../../partners-templates";
+
+/** Defined by Webpack */
+declare const partners: Partner[];
 
 /**
  * This modal must receive some data to generate, for each "partner"
@@ -16,14 +20,16 @@ import Modal, { ModalProps } from "../ModalBase";
  */
 
 interface Partner {
-	name: string;
-	lang: string; // @TODO to evaluate the insertion of language
-	template: string;
+	showName: string;
+	lang: string;
+	templateName: string;
 }
 
 interface Props extends Omit<ModalProps, "contentUniqueID"> {
-	partners: Partner[];
-	dataBank: PassMixedProps;
+	passProps: PassMixedProps;
+	translations: Store.LocalizedTranslationsGroup;
+	projectOptions: Store.ProjectOptions;
+	media: Store.LocalizedMediaGroup;
 }
 
 export default function ExportModal(props: Props) {
@@ -36,7 +42,7 @@ export default function ExportModal(props: Props) {
 		Prism.highlightElement(codeRef.current);
 	}, [activePartnerTab]);
 
-	const partnerTabs = props.partners.map((partner, index) => {
+	const partnerTabs = partners.map((partner, index) => {
 		const className = createClassName(["tab"], {
 			"active": index === activePartnerTab
 		});
@@ -47,14 +53,18 @@ export default function ExportModal(props: Props) {
 				onClick={() => setActivePartnerTab(index)}
 				key={`tab${index}`}
 			>
-				{partner.name}
+				{partner.showName}
 			</div>
 		);
 	});
 
-	const { template, lang } = props.partners[activePartnerTab];
-
-	const partnerFilledContent = replaceAllBlock(template, props.dataBank || {});
+	const { templateName, lang } = partners[activePartnerTab];
+	const partnerFilledContent = templates[templateName]({ store: {
+		pass: props.passProps,
+		translations: props.translations,
+		projectOptions: props.projectOptions,
+		media: props.media
+	}});
 
 	const codeLanguage = `language-${lang}`;
 

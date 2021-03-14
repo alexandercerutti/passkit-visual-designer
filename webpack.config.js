@@ -2,6 +2,7 @@ const path = require("path");
 const { DefinePlugin } = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const forkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
+const partners = require("./partners-templates/index.json");
 
 module.exports = {
 	mode: process.env.NODE_ENV === "dev" ? "development" : "production",
@@ -52,6 +53,19 @@ module.exports = {
 		}, {
 			test: /\.otf$/,
 			loader: "file-loader"
+		}, {
+			test: /\.(hbs|handlebars)$/,
+			loader: "handlebars-loader",
+			options: {
+				rootRelative: path.resolve(__dirname, "partners-templates"),
+				helperDirs: [
+					path.resolve(__dirname, "partners-templates/helpers")
+				],
+				knownHelpers: [
+					"hasContent",
+					"isDefaultLanguage"
+				],
+			}
 		}]
 	},
 	devtool: "source-map",
@@ -71,7 +85,8 @@ module.exports = {
 		}),
 		new forkTsCheckerWebpackPlugin(),
 		new DefinePlugin({
-			isDevelopment: process.env.NODE_ENV === "dev"
+			isDevelopment: process.env.NODE_ENV === "dev",
+			partners: JSON.stringify(partners),
 		}),
 	]
 };

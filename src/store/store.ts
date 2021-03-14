@@ -25,26 +25,28 @@ export interface State {
 	pass: Partial<PassMixedProps>;
 	media: LocalizedMediaGroup;
 	translations: LocalizedTranslationsGroup;
-	projectOptions: {
-		title?: string,
-		activeMediaLanguage: string;
-		id?: string;
-		savedAtTimestamp?: number;
-	};
+	projectOptions: ProjectOptions;
 }
 
-export type LocalizedTranslationsGroup = {
+export interface ProjectOptions {
+	title?: string,
+	activeMediaLanguage: string;
+	id?: string;
+	savedAtTimestamp?: number;
+}
+
+export interface LocalizedTranslationsGroup {
 	[languageOrDefault: string]: TranslationsSet;
 }
 
-export type TranslationsSet = {
+export interface TranslationsSet {
 	enabled: boolean;
 	translations: {
 		[translationCoupleID: string]: [placeholder?: string, value?: string];
 	};
 };
 
-export type LocalizedMediaGroup = {
+export interface LocalizedMediaGroup {
 	[languageOrDefault: string]: MediaSet;
 };
 
@@ -52,7 +54,7 @@ export type MediaSet = {
 	[K in keyof MediaProps]: CollectionSet;
 };
 
-export type CollectionSet = {
+export interface CollectionSet {
 	activeCollectionID: string;
 	enabled: boolean;
 	collections: {
@@ -65,7 +67,7 @@ export interface MediaCollection {
 	resolutions: IdentifiedResolutions;
 };
 
-export type IdentifiedResolutions = {
+export interface IdentifiedResolutions {
 	[resolutionID: string]: {
 		name: string;
 		content: ArrayBuffer;

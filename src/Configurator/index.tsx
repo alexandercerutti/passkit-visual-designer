@@ -346,12 +346,14 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 
 	render() {
 		const {
-			projectOptions: { title, activeMediaLanguage },
+			projectOptions,
 			usedLanguages,
 			translations,
 			passProps,
 			media
 		} = this.props;
+
+		const { title, activeMediaLanguage } = projectOptions;
 
 		const {
 			shouldShowPassBack,
@@ -404,13 +406,11 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 					timeout={MODAL_TIMEOUT}
 				>
 					<ExportModal
-						partners={[{
-							name: "Passkit-generator",
-							lang: "javascript",
-							template: `var x = {\n\tdescription: <!PKVD:inline description !>,\n\tserialNumber: <!PKVD:inline serialNumber !>\n}`
-						}]}
-						dataBank={passProps}
 						closeModal={this.toggleExportModal}
+						passProps={passProps}
+						media={media}
+						translations={translations}
+						projectOptions={projectOptions}
 					/>
 				</CSSTransition>
 				<CSSTransition

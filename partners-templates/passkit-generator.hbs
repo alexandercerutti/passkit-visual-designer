@@ -1,0 +1,37 @@
+import { createPass } from "passkit-generator";
+
+try {
+	const examplePass = await createPass({
+		model: "path/to/exported/model/{{#if store.projectOptions.title}}{{ store.projectOptions.title }}{{else}}Untitled Project{{/if}}.zip",
+		certificates: {
+			wwdr: "./certs/wwdr.pem",
+			signerCert: "./certs/signercert.pem",
+			signerKey: {
+				keyFile: "./certs/signerkey.pem",
+				passphrase: "123456"
+			}
+		},
+	});
+
+	{{#each store.translations}}
+	{{#unless (isDefaultLanguage @key)}}
+	examplePass.localize("{{@key}}"{{#if (hasContent this.translations) }}, {
+		/**
+		 * These translations will add-up to the ones inside {{@key}}.lproj/pass.strings.
+		 * These are actually here just as example, but they are the same inside pass.strings
+		 */
+		{{#each this.translations}}
+		{{! placeholder : value}}
+		{{this.[0]}}: "{{this.[1]}}",
+		{{/each}}
+	}{{~/if}});
+	{{/unless}}
+	{{/each}}
+
+	// Generate the stream, which gets returned through a Promise
+	const stream: Stream = examplePass.generate();
+
+	doSomethingWithTheStream(stream);
+} catch (err) {
+	doSomethingWithTheError(err);
+}
