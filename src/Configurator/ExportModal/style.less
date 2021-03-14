@@ -1,4 +1,5 @@
 @import (reference) "../ModalBase/common.less";
+@import (reference) "../../App/common.less";
 
 .modal {
 	& > .modal-content#export {
@@ -10,6 +11,7 @@
 		background-color: @modal-background-color;
 		border-radius: 3px;
 		padding: 30px;
+		overflow: hidden;
 
 		box-shadow: 0px 0px 10px 0px #131313;
 
@@ -17,33 +19,30 @@
 			margin: 10px 0 0;
 			font-size: 3em;
 			letter-spacing: 3px;
-			transition: all .5s ease-in-out 1.5s;
+			transition: all 0.5s ease-in-out 1.5s;
 			position: relative;
 
 			&:hover {
 				cursor: wait;
 
-				&, & > span {
+				&,
+				& > span {
 					letter-spacing: 20px;
 					text-shadow: 0 1px 8px #000;
 				}
 
 				& span {
-					transition:
-						width .5s ease-in-out 3s,
-						opacity .5s ease-in-out 3.2s;
+					transition: width 0.5s ease-in-out 3s, opacity 0.5s ease-in-out 3.2s;
 					opacity: 1;
 					width: 190px;
 				}
 			}
 
 			&:not(:hover) {
-				transition: all .5s ease-in-out 3s;
+				transition: all 0.5s ease-in-out 3s;
 
 				& span {
-					transition:
-						opacity .5s ease-in-out 1s,
-						width .5s ease-in-out 1.5s;
+					transition: opacity 0.5s ease-in-out 1s, width 0.5s ease-in-out 1.5s;
 				}
 			}
 
@@ -90,12 +89,21 @@
 			}
 		}
 
-		& pre {
-			margin-left: -15px;
-			margin-right: -15px;
+		& .partner-example {
+			overflow: hidden;
 		}
 
-		& code[class*="language-"], & pre[class*="language-"] {
+		& pre {
+			overflow: scroll;
+			height: 100%;
+			padding-bottom: 16px;
+			box-sizing: border-box;
+
+			.scrollableWithoutScrollbars(both);
+		}
+
+		& code[class*="language-"],
+		& pre[class*="language-"] {
 			text-shadow: none;
 			border-radius: 3px;
 
