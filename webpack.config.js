@@ -2,6 +2,7 @@ const path = require("path");
 const { DefinePlugin } = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const forkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
+const { version } = require("./package.json");
 const partners = require("./partners-templates/index.json");
 
 module.exports = {
@@ -87,6 +88,7 @@ module.exports = {
 		new DefinePlugin({
 			isDevelopment: process.env.NODE_ENV === "dev",
 			partners: JSON.stringify(partners),
+			version: JSON.stringify(version),
 		}),
 	]
 };

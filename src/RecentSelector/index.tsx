@@ -9,6 +9,9 @@ import { StateLookalike } from "../App";
 import { PassKind } from "../model";
 import { CSSTransition } from "react-transition-group";
 
+// Defined by webpack
+declare const version: string;
+
 const ZIP_FILE_PATH_SPLIT_REGEX = /(?:(?<language>.+)\.lproj\/)?(?<realFileName>.+)?/;
 const ZIP_FILE_IGNORE_REGEX = /(^\.|manifest\.json|signature|personalization\.json)/;
 const ZIP_FILE_STRINGS_PV_SPLIT_REGEX = /(?<placeholder>.+)\s=\s(?<value>.+);/;
@@ -357,7 +360,7 @@ export default class RecentSelector extends React.Component<Props, State> {
 			<div id="recent-selector">
 				<header>
 					<div>
-						<h4>Passkit Visual Designer</h4>
+						<h4>Passkit Visual Designer <span id="version">v{version}</span></h4>
 					</div>
 					<div>
 						<a href="https://git.io/JLNCQ">
