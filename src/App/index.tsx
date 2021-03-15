@@ -295,14 +295,21 @@ function App(props: Props): JSX.Element {
 						/>
 					</Route>
 					<Route path="/select">
-						{() => !isDevelopment && (!forageData || !Object.keys(forageData.projects || {}).length)
-							? <Redirect to="/" />
-							: <PassSelector pushHistory={changePathWithLoading} />
-						}
+						{() => {
+							/**
+							 * This condition is for startup. The navigation from
+							 * /creation will be handled by history.listen above
+							 */
+							return (!isDevelopment && history.action === "POP"
+								? <Redirect to="/" />
+								: <PassSelector pushHistory={changePathWithLoading} />
+							);
+						}}
 					</Route>
 					<Route path="/creator">
+						{/** Let's play monopoly. You landed to /creator. Go to home without passing Go! */}
 						{() => !(isDevelopment || store.getState()?.pass?.kind)
-							? <Redirect to="/select" />
+							? <Redirect to="/" />
 							: <Configurator />
 						}
 					</Route>
