@@ -82,7 +82,8 @@ module.exports = {
 		new HtmlWebpackPlugin({
 			title: "Passkit Visual Designer",
 			template: "./src/public/index.html",
-			filename: "./index.html"
+			filename: "./index.html",
+			description: "A web tool to make it easier designing Apple Wallet Passes graphically"
 		}),
 		new forkTsCheckerWebpackPlugin(),
 		new DefinePlugin({

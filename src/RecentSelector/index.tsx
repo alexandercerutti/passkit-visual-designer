@@ -363,7 +363,7 @@ export default class RecentSelector extends React.Component<Props, State> {
 						<h4>Passkit Visual Designer <span id="version">v{version}</span></h4>
 					</div>
 					<div>
-						<a href="https://git.io/JLNCQ" target="_blank">
+						<a href="https://git.io/JLNCQ" target="_blank" rel="noopener">
 							<GithubLogoDarkMode width="25px" height="25px" />
 						</a>
 					</div>
