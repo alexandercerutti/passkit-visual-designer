@@ -29,7 +29,7 @@ export interface StateLookalike {
 }
 
 // Webpack valorized
-declare const isDevelopment: boolean;
+declare const __DEV__: boolean;
 
 /**
  * Loading time is used to sync loading
@@ -300,7 +300,7 @@ function App(props: Props): JSX.Element {
 							 * This condition is for startup. The navigation from
 							 * /creation will be handled by history.listen above
 							 */
-							return (!isDevelopment && history.action === "POP"
+							return (!__DEV__ && history.action === "POP"
 								? <Redirect to="/" />
 								: <PassSelector pushHistory={changePathWithLoading} />
 							);
@@ -308,7 +308,7 @@ function App(props: Props): JSX.Element {
 					</Route>
 					<Route path="/creator">
 						{/** Let's play monopoly. You landed to /creator. Go to home without passing Go! */}
-						{() => !(isDevelopment || store.getState()?.pass?.kind)
+						{() => !(__DEV__ || store.getState()?.pass?.kind)
 							? <Redirect to="/" />
 							: <Configurator />
 						}

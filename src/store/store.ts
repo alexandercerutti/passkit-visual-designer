@@ -3,9 +3,9 @@ import type { PassMixedProps, MediaProps } from "../Pass";
 import { PKTextAlignment, PKTransitType } from "../Pass/constants";
 
 /** Webpack defined */
-declare const isDevelopment: boolean;
+declare const __DEV__: boolean;
 
-const __DEV_DEFAULT_PASS_PROPS = isDevelopment ? {
+const __DEV_DEFAULT_PASS_PROPS = __DEV__ ? {
 	transitType: PKTransitType.Boat,
 	kind: PassKind.BOARDING_PASS,
 } : null;

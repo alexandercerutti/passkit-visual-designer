@@ -86,7 +86,7 @@ module.exports = {
 		}),
 		new forkTsCheckerWebpackPlugin(),
 		new DefinePlugin({
-			isDevelopment: process.env.NODE_ENV === "dev",
+			__DEV__: process.env.NODE_ENV === "dev",
 			partners: JSON.stringify(partners),
 			version: JSON.stringify(version),
 		}),
