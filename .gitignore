@@ -1,1 +1,4 @@
 node_modules/
+assets/
+.vercel
+dist/
