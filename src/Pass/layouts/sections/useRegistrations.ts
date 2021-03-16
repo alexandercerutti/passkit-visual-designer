@@ -24,6 +24,8 @@ export interface RegistrableComponent {
 
 type RegistrationDescriptor = [kind: FieldKind, fieldName: string];
 
+const noop = () => {};
+
 export function useRegistrations(registerFn: onRegister, components: RegistrationDescriptor[]): FieldSelectHandler[] {
 	const [handlers, setHandlers] = React.useState<FieldSelectHandler[]>([]);
 
@@ -34,7 +36,9 @@ export function useRegistrations(registerFn: onRegister, components: Registratio
 		 */
 
 		if (!registerFn) {
-			return setHandlers([]);
+			return setHandlers(
+				components.map(() => noop)
+			);
 		}
 
 		return setHandlers(
