@@ -57,21 +57,18 @@ export default class RecentSelector extends React.Component<Props, State> {
 		this.toggleErrorOverlay = this.toggleErrorOverlay.bind(this);
 	}
 
-	componentDidMount() {
-		// When going back to this page we want to request an update
-		if (!Object.keys(this.props.recentProjects || {}).length) {
-			this.props.requestForageDataRequest();
-		}
-
+	async componentDidMount() {
 		this.refreshInterval = window.setInterval(async () => {
-			this.toggleRefreshing();
+			try {
+				this.toggleRefreshing();
 
-			await Promise.all([
-				this.props.requestForageDataRequest(),
-				new Promise(resolve => (this.delayLoadingAnimationTimeout = window.setTimeout(resolve, 2000)))
-			]);
-
-			this.toggleRefreshing();
+				await Promise.all([
+					this.props.requestForageDataRequest(),
+					new Promise(resolve => (this.delayLoadingAnimationTimeout = window.setTimeout(resolve, 2000)))
+				]);
+			} finally {
+				this.toggleRefreshing();
+			}
 		}, 7000);
 	}
 
