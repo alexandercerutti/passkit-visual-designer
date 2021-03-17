@@ -27,14 +27,13 @@ import "prismjs/plugins/line-numbers/prism-line-numbers.css";
 import "prismjs/themes/prism.css";
 import "prismjs/themes/prism-tomorrow.css";
 
-/**
- * Filters out from B the keys that not match the type of T.
- * @see https://medium.com/dailyjs/typescript-create-a-condition-based-subset-types-9d902cea5b8c
- */
-
-type FilterOutUnmatchedType<B extends Object, T extends any> = {
-	[K in keyof B]: B[K] extends T ? K : never;
-}[keyof B]
+const enum ModalIdentifier {
+	None /******/= 0b00000,
+	Translations = 0b00001,
+	Language /**/= 0b00010,
+	Media/******/= 0b00100,
+	Export/*****/= 0b01000,
+}
 
 interface DispatchProps {
 	changePassPropValue: typeof Store.Pass.setProp;
@@ -62,11 +61,9 @@ interface ConfiguratorState {
 	registeredFields: RegisteredFieldsMap;
 	shouldShowPassBack: boolean;
 	emptyFieldsVisible: boolean;
-	showExportModal: boolean;
 	canBeExported: boolean;
 	viewingMediaName: keyof MediaProps;
-	showLanguageModal: boolean;
-	showTranslationsModal: boolean;
+	modalIdentifier: number;
 }
 
 /**
@@ -90,15 +87,12 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 		this.onValueChange = this.onValueChange.bind(this);
 		this.onShowPassBackRequest = this.onShowPassBackRequest.bind(this);
 		this.toggleEmptyVisibility = this.toggleEmptyVisibility.bind(this);
-		this.toggleExportModal = this.toggleExportModal.bind(this);
 		this.requestExport = this.requestExport.bind(this);
 		this.changeProjectTitle = this.changeProjectTitle.bind(this);
 		this.toggleMediaModal = this.toggleMediaModal.bind(this);
 		this.onMediaCollectionEdit = this.onMediaCollectionEdit.bind(this);
 		this.onMediaCollectionUse = this.onMediaCollectionUse.bind(this);
 		this.onMediaExportStateChange = this.onMediaExportStateChange.bind(this);
-		this.toggleLanguageModal = this.toggleLanguageModal.bind(this);
-		this.toggleTranslationsModal = this.toggleTranslationsModal.bind(this);
 		this.onActiveMediaLanguageChange = this.onActiveMediaLanguageChange.bind(this);
 		this.onTranslationEdit = this.onTranslationEdit.bind(this);
 		this.onTranslationAdd = this.onTranslationAdd.bind(this);
@@ -110,11 +104,9 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 			registeredFields: new Map(DefaultFields),
 			shouldShowPassBack: false,
 			emptyFieldsVisible: true,
-			showExportModal: false,
 			canBeExported: false,
 			viewingMediaName: null,
-			showLanguageModal: false,
-			showTranslationsModal: false,
+			modalIdentifier: ModalIdentifier.None,
 		};
 	}
 
@@ -140,12 +132,6 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 		return {
 			canBeExported: true
 		};
-	}
-
-	private StateToggler(property: FilterOutUnmatchedType<ConfiguratorState, boolean>) {
-		this.setState((previous) => ({
-			[property]: !previous[property]
-		} as Record<typeof property, boolean>));
 	}
 
 	/**
@@ -238,29 +224,28 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 	}
 
 	onShowPassBackRequest() {
-		this.StateToggler("shouldShowPassBack");
+		this.setState(previous => ({
+			shouldShowPassBack: !previous.shouldShowPassBack
+		}));
 	}
 
 	toggleEmptyVisibility() {
-		this.StateToggler("emptyFieldsVisible");
-	}
-
-	toggleExportModal() {
-		this.StateToggler("showExportModal");
-	}
-
-	toggleTranslationsModal() {
-		this.StateToggler("showTranslationsModal");
+		this.setState(previous => ({
+			emptyFieldsVisible: !previous.emptyFieldsVisible
+		}));
 	}
 
 	toggleMediaModal(mediaName?: keyof MediaProps) {
 		this.setState((previous) => ({
-			viewingMediaName: previous.viewingMediaName ? null : mediaName
+			modalIdentifier: previous.modalIdentifier ^ ModalIdentifier.Media,
+			viewingMediaName: previous.viewingMediaName ? null : mediaName,
 		}));
 	}
 
-	toggleLanguageModal() {
-		this.StateToggler("showLanguageModal");
+	toggleModal(mask: ModalIdentifier) {
+		this.setState(previous => ({
+			modalIdentifier: previous.modalIdentifier ^ mask,
+		}));
 	}
 
 	changeProjectTitle(title: string) {
@@ -270,7 +255,7 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 	onActiveMediaLanguageChange(language: string) {
 		console.log("Selected new language:", language);
 		this.props.setProjectOption("activeMediaLanguage", language);
-		this.toggleLanguageModal();
+		this.toggleModal(ModalIdentifier.Language);
 	}
 
 	onMediaCollectionEdit(collectionID: string, collection: MediaCollection) {
@@ -327,7 +312,7 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 		// @TODO: check requirements for exporting
 		// so all the basic fields and so on.
 
-		this.toggleExportModal();
+		this.toggleModal(ModalIdentifier.Export);
 
 		const { projectOptions, passProps, media, translations } = this.props;
 
@@ -362,9 +347,7 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 			selectedFieldId,
 			canBeExported,
 			viewingMediaName,
-			showExportModal,
-			showLanguageModal,
-			showTranslationsModal,
+			modalIdentifier
 		} = this.state;
 
 		return (
@@ -385,7 +368,7 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 						rotatePass={this.onShowPassBackRequest}
 						isEmptyVisible={emptyFieldsVisible}
 						toggleEmptyVisibility={this.toggleEmptyVisibility}
-						toggleTranslationsModal={this.toggleTranslationsModal}
+						toggleTranslationsModal={() => this.toggleModal(ModalIdentifier.Translations)}
 					/>
 				</div>
 				<div className="config-panel">
@@ -402,11 +385,11 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 				<CSSTransition
 					mountOnEnter
 					unmountOnExit
-					in={showExportModal}
+					in={Boolean(modalIdentifier & ModalIdentifier.Export)}
 					timeout={MODAL_TIMEOUT}
 				>
 					<ExportModal
-						closeModal={this.toggleExportModal}
+						closeModal={() => this.toggleModal(ModalIdentifier.Export)}
 						passProps={passProps}
 						media={media}
 						translations={translations}
@@ -416,7 +399,7 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 				<CSSTransition
 					mountOnEnter
 					unmountOnExit
-					in={Boolean(viewingMediaName)}
+					in={Boolean(modalIdentifier & ModalIdentifier.Media)}
 					timeout={MODAL_TIMEOUT}
 				>
 					<MediaModal
@@ -424,7 +407,7 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 						currentLanguage={activeMediaLanguage}
 						mediaName={viewingMediaName}
 						mediaContent={media?.[activeMediaLanguage]?.[viewingMediaName]}
-						requestForLanguageChange={this.toggleLanguageModal}
+						requestForLanguageChange={() => this.toggleModal(ModalIdentifier.Language)}
 						updateCollection={this.onMediaCollectionEdit}
 						useCollection={this.onMediaCollectionUse}
 						setMediaExportState={this.onMediaExportStateChange}
@@ -434,14 +417,14 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 				<CSSTransition
 					mountOnEnter
 					unmountOnExit
-					in={showTranslationsModal}
+					in={Boolean(modalIdentifier & ModalIdentifier.Translations)}
 					timeout={MODAL_TIMEOUT}
 				>
 					<TranslationsModal
-						closeModal={this.toggleTranslationsModal}
+						closeModal={() => this.toggleModal(ModalIdentifier.Translations)}
 						availableTranslations={translations?.[activeMediaLanguage]}
 						currentLanguage={activeMediaLanguage}
-						requestForLanguageChange={this.toggleLanguageModal}
+						requestForLanguageChange={() => this.toggleModal(ModalIdentifier.Language)}
 						editTranslation={this.onTranslationEdit}
 						addTranslation={this.onTranslationAdd}
 						removeTranslation={this.onTranslationRemove}
@@ -451,11 +434,11 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 				<CSSTransition
 					mountOnEnter
 					unmountOnExit
-					in={showLanguageModal}
+					in={Boolean(modalIdentifier & ModalIdentifier.Language)}
 					timeout={MODAL_TIMEOUT}
 				>
 					<LanguageModal
-						closeModal={this.toggleLanguageModal}
+						closeModal={() => this.toggleModal(ModalIdentifier.Language)}
 						currentLanguage={activeMediaLanguage}
 						usedLanguages={usedLanguages}
 						selectLanguage={this.onActiveMediaLanguageChange}
