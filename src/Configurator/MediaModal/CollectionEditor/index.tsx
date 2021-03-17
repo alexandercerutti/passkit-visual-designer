@@ -153,6 +153,7 @@ export default class CollectionEditor extends React.Component<Props, State> {
 						<CommittableTextInput
 							defaultValue={resolution.name}
 							commit={(value) => this.onResolutionNameCommit(resolutionID, value)}
+							placeholder="(@1x, @2x, @3x)"
 						/>
 					</div>
 				);
