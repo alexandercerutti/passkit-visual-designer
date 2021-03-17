@@ -6,16 +6,17 @@
 	box-sizing: border-box;
 	padding: 5px 10px;
 	box-shadow: -3px -3px 5px #2b2b2b;
+	background-color: #333;
 	height: 55px;
 	position: absolute;
 	bottom: 0;
-	color: #FFF;
+	color: #fff;
 
-	transition: trasform .5s ease-in-out 2s;
+	transition: trasform 0.5s ease-in-out 2s;
 	transform: translateY(100%);
 
 	animation-name: option-bar-show;
-	animation-duration: .8s;
+	animation-duration: 0.8s;
 	animation-fill-mode: forwards;
 	animation-delay: 2s;
 
@@ -28,7 +29,7 @@
 
 		& svg {
 			cursor: pointer;
-			transition: fill .5s;
+			transition: fill 0.5s;
 			border-radius: 50%;
 
 			& > path {
@@ -36,7 +37,7 @@
 			}
 
 			& > * {
-				transition: fill .5s;
+				transition: fill 0.5s;
 			}
 		}
 
@@ -47,6 +48,10 @@
 }
 
 @keyframes option-bar-show {
-	from { transform: translateY(100%); }
-	to { transform: translateY(0%); }
+	from {
+		transform: translateY(100%);
+	}
+	to {
+		transform: translateY(0%);
+	}
 }
