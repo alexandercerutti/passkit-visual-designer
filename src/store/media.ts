@@ -80,6 +80,19 @@ export default function reducer(state = initialState.media, action: MediaActions
 			if (!action.collection) {
 				delete collections[action.collectionID];
 			} else {
+				action.collection.resolutions = Object.entries(action.collection.resolutions || {})
+					.reduce((acc, [id, resolution]) => {
+						// If null, it has been removed
+						if (!resolution) {
+							return acc;
+						}
+
+						return {
+							...acc,
+							[id]: resolution
+						};
+					}, {});
+
 				collections[action.collectionID] = action.collection;
 			}
 
