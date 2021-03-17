@@ -17,7 +17,7 @@ import {
 import { InteractionContextMethods } from "./InteractionContext";
 import { createClassName } from "../utils";
 import Backfields from "./layouts/sections/BackFields";
-import useCSSCustomProperty from "./changeCSSCustomProperty";
+import useCSSCustomProperty from "./useCSSCustomProperty";
 
 export { default as InteractionContext } from "./InteractionContext";
 
