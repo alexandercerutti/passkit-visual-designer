@@ -66,8 +66,6 @@ export default class MediaModal extends React.Component<Props, State> {
 	 */
 
 	onCollectionEditSelect(collectionID?: string) {
-		console.log("onEdit", collectionID);
-
 		this.setState({
 			editingCollection: collectionID || "",
 		});
@@ -81,7 +79,6 @@ export default class MediaModal extends React.Component<Props, State> {
 	 */
 
 	onCollectionUse(collectionID: string) {
-		console.log("onUse", collectionID);
 		return this.props.useCollection(collectionID);
 	}
 

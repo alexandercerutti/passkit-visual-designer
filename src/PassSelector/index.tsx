@@ -9,6 +9,9 @@ import type { PassAlternative } from "../Pass/useAlternativesRegistration";
 import type { State } from "../store";
 import * as Store from "../store";
 
+// Webpack declared
+declare const __DEV__: boolean;
+
 interface DispatchProps {
 	setPassProps: typeof Store.Pass.setPropsBatch,
 }
@@ -57,11 +60,16 @@ class PassSelector extends React.PureComponent<SelectorProps, SelectorState> {
 
 	registerAlternatives(kind: PassKind, ...alternatives: PassAlternative[]) {
 		this.alternatives[kind] = alternatives;
-		console.log("Registering alternatives for", kind, alternatives);
+
+		if (__DEV__) {
+			console.log("Registering alternatives for", kind, alternatives);
+		}
 	}
 
 	onPassSelect(passProps: PassProps) {
-		console.log("Performed selection of", passProps.kind);
+		if (__DEV__) {
+			console.log("Performed selection of", passProps.kind);
+		}
 
 		if (this.state.selectedKind === passProps.kind) {
 			this.setState({
@@ -103,7 +111,7 @@ class PassSelector extends React.PureComponent<SelectorProps, SelectorState> {
 					{...alternative.specificProps}
 				/>
 			);
-		}) || null;
+		});
 
 		const AlternativesListComponent = (
 			alternativesList.length &&

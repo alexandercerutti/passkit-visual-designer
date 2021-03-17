@@ -27,6 +27,9 @@ import "prismjs/plugins/line-numbers/prism-line-numbers.css";
 import "prismjs/themes/prism.css";
 import "prismjs/themes/prism-tomorrow.css";
 
+// Webpack defined
+declare const __DEV__: boolean;
+
 const enum ModalIdentifier {
 	None /******/= 0b00000,
 	Translations = 0b00001,
@@ -144,7 +147,10 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 
 	registerField(kind: FieldKind, id: keyof PassMixedProps): FieldSelectHandler {
 		if (this.state.registeredFields.get(DataGroup.DATA).find(data => data.name === id)) {
-			console.log("...but failed due to duplicate already available");
+			if (__DEV__) {
+				console.log("...but failed due to duplicate already available");
+			}
+
 			return null;
 		}
 
@@ -180,7 +186,10 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 	onFieldSelect(id: keyof PassMixedProps, key: string | null): void {
 		// @TODO: Resolve key in id
 		this.setState({ selectedFieldId: id });
-		console.log(id, "selected, with key", key);
+
+		if (__DEV__) {
+			console.log(id, "selected, with key", key);
+		}
 	}
 
 	/**
@@ -192,7 +201,9 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 	 */
 
 	async onValueChange<T extends Object | string>(key: keyof PassMixedProps, value: T): Promise<boolean> {
-		console.log("Panel with name", key, "tried to save", value);
+		if (__DEV__) {
+			console.log("Panel with name", key, "tried to save", value);
+		}
 
 		let valueToStore: any = value;
 
@@ -253,7 +264,10 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 	}
 
 	onActiveMediaLanguageChange(language: string) {
-		console.log("Selected new language:", language);
+		if (__DEV__) {
+			console.log("Selected new language:", language);
+		}
+
 		this.props.setProjectOption("activeMediaLanguage", language);
 		this.toggleModal(ModalIdentifier.Language);
 	}

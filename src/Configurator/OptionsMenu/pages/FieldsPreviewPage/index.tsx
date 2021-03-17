@@ -9,6 +9,9 @@ import PageHeader from "../components/Header";
 import { PageProps, PageNavigation } from "../usePageFactory";
 import DrawerJSONEditor from "./DrawerJSONEditor";
 
+// Webpack declared
+declare const __DEV__: boolean;
+
 interface Props extends PageProps, PageNavigation {
 	value?: PassFieldKeys[];
 	onChange(fieldData: PassFieldKeys[]): void;
@@ -122,7 +125,9 @@ export default class FieldsPreviewPage extends React.Component<Props, State> {
 				Object.assign(fields[fieldIndex], fieldProps)
 			);
 
-			console.log("onFieldChange for", fieldProps, fieldUUID);
+			if (__DEV__) {
+				console.log("onFieldChange for", fieldProps, fieldUUID);
+			}
 
 			return { fields };
 		});
