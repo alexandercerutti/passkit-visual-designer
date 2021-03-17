@@ -64,7 +64,7 @@ interface ConfiguratorState {
 	emptyFieldsVisible: boolean;
 	showExportModal: boolean;
 	canBeExported: boolean;
-	showMediaModalForMedia: keyof MediaProps;
+	viewingMediaName: keyof MediaProps;
 	showLanguageModal: boolean;
 	showTranslationsModal: boolean;
 }
@@ -112,7 +112,7 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 			emptyFieldsVisible: true,
 			showExportModal: false,
 			canBeExported: false,
-			showMediaModalForMedia: null,
+			viewingMediaName: null,
 			showLanguageModal: false,
 			showTranslationsModal: false,
 		};
@@ -253,9 +253,9 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 		this.StateToggler("showTranslationsModal");
 	}
 
-	toggleMediaModal(mediaName: keyof MediaProps) {
+	toggleMediaModal(mediaName?: keyof MediaProps) {
 		this.setState((previous) => ({
-			showMediaModalForMedia: previous.showMediaModalForMedia ? null : mediaName
+			viewingMediaName: previous.viewingMediaName ? null : mediaName
 		}));
 	}
 
@@ -274,7 +274,7 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 	}
 
 	onMediaCollectionEdit(collectionID: string, collection: MediaCollection) {
-		const { showMediaModalForMedia: mediaName } = this.state;
+		const { viewingMediaName: mediaName } = this.state;
 		const { activeMediaLanguage } = this.props.projectOptions;
 
 		this.props.editCollection(mediaName, activeMediaLanguage, collectionID, collection);
@@ -282,7 +282,7 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 
 	onMediaCollectionUse(collectionID: string) {
 		this.props.setMediaActiveCollection(
-			this.state.showMediaModalForMedia,
+			this.state.viewingMediaName,
 			this.props.projectOptions.activeMediaLanguage,
 			collectionID
 		);
@@ -290,7 +290,7 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 
 	onMediaExportStateChange(enabled: boolean) {
 		this.props.setMediaExportState(
-			this.state.showMediaModalForMedia,
+			this.state.viewingMediaName,
 			this.props.projectOptions.activeMediaLanguage,
 			enabled
 		);
@@ -361,7 +361,7 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 			registeredFields,
 			selectedFieldId,
 			canBeExported,
-			showMediaModalForMedia,
+			viewingMediaName,
 			showExportModal,
 			showLanguageModal,
 			showTranslationsModal,
@@ -416,19 +416,19 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 				<CSSTransition
 					mountOnEnter
 					unmountOnExit
-					in={Boolean(showMediaModalForMedia)}
+					in={Boolean(viewingMediaName)}
 					timeout={MODAL_TIMEOUT}
 				>
 					<MediaModal
 						passProps={passProps}
 						currentLanguage={activeMediaLanguage}
-						mediaName={showMediaModalForMedia}
-						mediaContent={media?.[activeMediaLanguage]?.[showMediaModalForMedia]}
+						mediaName={viewingMediaName}
+						mediaContent={media?.[activeMediaLanguage]?.[viewingMediaName]}
 						requestForLanguageChange={this.toggleLanguageModal}
 						updateCollection={this.onMediaCollectionEdit}
 						useCollection={this.onMediaCollectionUse}
 						setMediaExportState={this.onMediaExportStateChange}
-						closeModal={() => this.toggleMediaModal(showMediaModalForMedia)}
+						closeModal={this.toggleMediaModal}
 					/>
 				</CSSTransition>
 				<CSSTransition
