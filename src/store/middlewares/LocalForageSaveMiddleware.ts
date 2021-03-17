@@ -40,15 +40,14 @@ export default function LocalForageSaveMiddleware(store: MiddlewareAPI<Dispatch,
 			return;
 		}
 
-		const isUnsupportedAction = (
+		const isUnsupportedAction =
 			action.type === Store.Media.INIT ||
 			action.type === Store.Media.CREATE ||
 			action.type === Store.Media.DESTROY ||
 			action.type === Store.Translations.INIT ||
 			action.type === Store.Translations.DESTROY ||
 			action.type === Store.Forage.RESET ||
-			(action.type === Store.Options.SET_OPTION && action.key === "id")
-		);
+			(action.type === Store.Options.SET_OPTION && action.key === "id");
 
 		if (isUnsupportedAction) {
 			return;
@@ -57,15 +56,19 @@ export default function LocalForageSaveMiddleware(store: MiddlewareAPI<Dispatch,
 		// We should now have the updated infos
 		// after all the others middlewares and thunks
 		const state = store.getState();
-		const { projectOptions: { id, title }, pass, translations, media } = state;
+		const {
+			projectOptions: { id, title },
+			pass,
+			translations,
+			media,
+		} = state;
 
 		const isProjectInitialized = Boolean(
-			id && (
-				title ||
-				Object.values(pass).some(Boolean) ||
-				Object.values(translations).some(set => Object.keys(set.translations).length) ||
-				Object.values(media).some(medias => Object.keys(medias).length)
-			)
+			id &&
+				(title ||
+					Object.values(pass).some(Boolean) ||
+					Object.values(translations).some((set) => Object.keys(set.translations).length) ||
+					Object.values(media).some((medias) => Object.keys(medias).length))
 		);
 
 		if (!isProjectInitialized) {
@@ -74,7 +77,9 @@ export default function LocalForageSaveMiddleware(store: MiddlewareAPI<Dispatch,
 			return;
 		}
 
-		const projects = await localForage.getItem<Store.Forage.ForageStructure["projects"]>("projects");
+		const projects = await localForage.getItem<Store.Forage.ForageStructure["projects"]>(
+			"projects"
+		);
 
 		const currentProjectContent = projects?.[id] ?? { preview: null, snapshot: null };
 
@@ -96,7 +101,7 @@ export default function LocalForageSaveMiddleware(store: MiddlewareAPI<Dispatch,
 			projectOptions: {
 				...state.projectOptions,
 				savedAtTimestamp,
-			}
+			},
 		};
 
 		currentProjectContent.snapshot = stateForSave;
@@ -107,10 +112,10 @@ export default function LocalForageSaveMiddleware(store: MiddlewareAPI<Dispatch,
 			backgroundColor: null,
 			logging: false,
 			x: 0,
-			y: 0
+			y: 0,
 		});
 
-		const blob = await new Promise<Blob>(resolve => canvasElement.toBlob(resolve, "image/*", 1));
+		const blob = await new Promise<Blob>((resolve) => canvasElement.toBlob(resolve, "image/*", 1));
 		currentProjectContent.preview = await getArrayBuffer(blob);
 
 		await localForage.setItem<Store.Forage.ForageStructure["projects"]>("projects", {
@@ -126,7 +131,11 @@ function deepClone(startingPoint: Object) {
 	const finalObject = { ...startingPoint };
 
 	for (const key in startingPoint) {
-		if (startingPoint[key] && typeof startingPoint[key] === "object" && !(startingPoint[key] instanceof ArrayBuffer)) {
+		if (
+			startingPoint[key] &&
+			typeof startingPoint[key] === "object" &&
+			!(startingPoint[key] instanceof ArrayBuffer)
+		) {
 			if (startingPoint[key] instanceof Array) {
 				finalObject[key] = Object.values(deepClone(startingPoint[key]));
 			} else {

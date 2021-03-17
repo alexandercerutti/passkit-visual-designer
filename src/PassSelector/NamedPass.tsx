@@ -23,9 +23,7 @@ export default function NamedPass(props: NamedPassProps): JSX.Element {
 			<div className="darkness-realm">
 				<Pass {...passProps} />
 			</div>
-			<div className="name">
-				{name}
-			</div>
+			<div className="name">{name}</div>
 		</>
 	);
 }

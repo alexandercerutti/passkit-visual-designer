@@ -3,11 +3,11 @@ export const DEFAULT_FOREGROUND_COLOR = "#000";
 export const DEFAULT_LABEL_COLOR = "#cecece";
 
 export enum PKDateStyle {
-	None = "PKDateStyleNone", /** ??? */
-	Short = "PKDateStyleShort", /** “11/23/37” or “3:30 PM”. */
-	Medium = "PKDateStyleMedium", /** “Nov 23, 1937” or “3:30:32 PM” */
-	Long = "PKDateStyleLong", /** “November 23, 1937” or “3:30:32 PM PST” */
-	Full = "PKDateStyleFull" 	/** “Tuesday, April 12, 1952 AD” or “3:30:42 PM Pacific Standard Time” */
+	None = "PKDateStyleNone" /** ??? */,
+	Short = "PKDateStyleShort" /** “11/23/37” or “3:30 PM”. */,
+	Medium = "PKDateStyleMedium" /** “Nov 23, 1937” or “3:30:32 PM” */,
+	Long = "PKDateStyleLong" /** “November 23, 1937” or “3:30:32 PM PST” */,
+	Full = "PKDateStyleFull" /** “Tuesday, April 12, 1952 AD” or “3:30:42 PM Pacific Standard Time” */,
 }
 
 export enum PKTransitType {
@@ -15,7 +15,7 @@ export enum PKTransitType {
 	Boat = "PKTransitTypeBoat",
 	Bus = "PKTransitTypeBus",
 	Generic = "PKTransitTypeGeneric",
-	Train = "PKTransitTypeTrain"
+	Train = "PKTransitTypeTrain",
 }
 
 export enum PKTextAlignment {
@@ -41,21 +41,21 @@ export enum PKBarcodeFormat {
 
 	/** Generic descriptors */
 	Square = "PKBarcodeFormatSquare",
-	Rectangle = "PKBarcodeFormatRectangle"
+	Rectangle = "PKBarcodeFormatRectangle",
 }
 
 export enum PKDataDetectorType {
 	PhoneNumber = "PKDataDetectorTypePhoneNumber",
 	Link = "PKDataDetectorTypeLink",
 	Address = "PKDataDetectorTypeAddress",
-	CalendarEvent = "PKDataDetectorTypeCalendarEvent"
+	CalendarEvent = "PKDataDetectorTypeCalendarEvent",
 }
 
 export enum PKNumberStyle {
 	Decimal = "PKNumberStyleDecimal",
 	Percent = "PKNumberStylePercent",
 	Scientific = "PKNumberStyleScientific",
-	SpellOut = "PKNumberStyleSpellOut"
+	SpellOut = "PKNumberStyleSpellOut",
 }
 
 export enum PKEventType {
@@ -66,7 +66,7 @@ export enum PKEventType {
 	Conference = "PKEventTypeConference",
 	Convention = "PKEventTypeConvention",
 	Workshop = "PKEventTypeWorkshop",
-	SocialGathering = "PKEventTypeSocialGathering"
+	SocialGathering = "PKEventTypeSocialGathering",
 }
 
 export namespace WalletPassFormat {
@@ -84,10 +84,10 @@ export namespace WalletPassFormat {
 		transitType: PKTransitType;
 	}
 
-	export interface Coupon extends PassFields { }
-	export interface EventTicket extends PassFields { }
-	export interface Generic extends PassFields { }
-	export interface StoreCard extends PassFields { }
+	export interface Coupon extends PassFields {}
+	export interface EventTicket extends PassFields {}
+	export interface Generic extends PassFields {}
+	export interface StoreCard extends PassFields {}
 
 	export interface NFC {
 		encryptionPublicKey: string;
@@ -140,10 +140,10 @@ export namespace PassFields {
 		row?: 0 | 1;
 	}
 
-	export interface BackFields extends PassFieldKeys { }
-	export interface HeaderFields extends PassFieldKeys { }
-	export interface PrimaryFields extends PassFieldKeys { }
-	export interface SecondaryFields extends PassFieldKeys { }
+	export interface BackFields extends PassFieldKeys {}
+	export interface HeaderFields extends PassFieldKeys {}
+	export interface PrimaryFields extends PassFieldKeys {}
+	export interface SecondaryFields extends PassFieldKeys {}
 }
 
 export interface PassFields {
@@ -180,7 +180,7 @@ export namespace SemanticTagTypes {
 	}
 
 	export interface Seat {
-		seatDescription?: string
+		seatDescription?: string;
 		seatIdentifier?: string;
 		seatNumber?: string;
 		seatRow?: string;

@@ -1,7 +1,14 @@
 import * as React from "react";
 
 export default () => (
-	<svg x="0" y="0" width="100%" height="85" viewBox="0 0 5.0270 5.0270" xmlns="http://www.w3.org/2000/svg">
+	<svg
+		x="0"
+		y="0"
+		width="100%"
+		height="85"
+		viewBox="0 0 5.0270 5.0270"
+		xmlns="http://www.w3.org/2000/svg"
+	>
 		<g fill="rgb(0%,0%,0%)">
 			<rect x="0.0000" y="0" width="0.2646" height="0.2646" />
 			<rect x="0.2646" y="0" width="0.2646" height="0.2646" />

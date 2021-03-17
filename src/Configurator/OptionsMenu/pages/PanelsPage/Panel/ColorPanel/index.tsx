@@ -10,12 +10,24 @@ interface ColorPanelProps extends PanelProps {
 }
 
 export default function ColorPanel(props: ColorPanelProps) {
-	const [color, onContentChangeHandler] = useContentSavingHandler(props.onValueChange, props.name, props.value || "rgb(0,0,0)");
+	const [color, onContentChangeHandler] = useContentSavingHandler(
+		props.onValueChange,
+		props.name,
+		props.value || "rgb(0,0,0)"
+	);
 
 	// Default react-color hashes
 	const { current: colorHistory } = React.useRef<string[]>([
-		"#ff6900", "#fcb900", "#7bdcb5", "#00d084", "#8ed1fc",
-		"#0693e3", "#abb8c3", "#eb144c", "#f78da7", "#9900ef"
+		"#ff6900",
+		"#fcb900",
+		"#7bdcb5",
+		"#00d084",
+		"#8ed1fc",
+		"#0693e3",
+		"#abb8c3",
+		"#eb144c",
+		"#f78da7",
+		"#9900ef",
 	]);
 
 	const onColorChange = React.useRef(({ rgb, hex }: ColorState) => {

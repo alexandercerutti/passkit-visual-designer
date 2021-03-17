@@ -43,7 +43,7 @@ export default function reducer(state = initialState.media, action: MediaActions
 			newState[action.mediaLanguage] = {};
 
 			return newState;
-		};
+		}
 
 		case INIT: {
 			const newState = { ...state };
@@ -55,20 +55,20 @@ export default function reducer(state = initialState.media, action: MediaActions
 			};
 
 			return newState;
-		};
+		}
 
 		case PURGE: {
 			const newState = { ...state };
 			delete newState[action.mediaLanguage][action.mediaLanguage];
 			return newState;
-		};
+		}
 
 		case DESTROY: {
 			const newState = { ...state };
 			delete newState[action.mediaLanguage];
 
 			return newState;
-		};
+		}
 
 		case EDIT_COLLECTION: {
 			const newState = { ...state };
@@ -80,8 +80,8 @@ export default function reducer(state = initialState.media, action: MediaActions
 			if (!action.collection) {
 				delete collections[action.collectionID];
 			} else {
-				action.collection.resolutions = Object.entries(action.collection.resolutions || {})
-					.reduce((acc, [id, resolution]) => {
+				action.collection.resolutions = Object.entries(action.collection.resolutions || {}).reduce(
+					(acc, [id, resolution]) => {
 						// If null, it has been removed
 						if (!resolution) {
 							return acc;
@@ -89,15 +89,17 @@ export default function reducer(state = initialState.media, action: MediaActions
 
 						return {
 							...acc,
-							[id]: resolution
+							[id]: resolution,
 						};
-					}, {});
+					},
+					{}
+				);
 
 				collections[action.collectionID] = action.collection;
 			}
 
 			return newState;
-		};
+		}
 
 		case SET_ACTIVE_COLLECTION: {
 			const newState = { ...state };
@@ -106,8 +108,8 @@ export default function reducer(state = initialState.media, action: MediaActions
 			const selectedMediaCollections = selectedLanguage[action.mediaName];
 			selectedMediaCollections.activeCollectionID = action.collectionID;
 
-			return newState
-		};
+			return newState;
+		}
 
 		case SET_EXPORT_STATE: {
 			const newState = { ...state };
@@ -115,11 +117,11 @@ export default function reducer(state = initialState.media, action: MediaActions
 			selectedMedia.enabled = action.enabled;
 
 			return newState;
-		};
+		}
 
 		default: {
 			return state;
-		};
+		}
 	}
 }
 
@@ -150,7 +152,7 @@ export function Purge(mediaLanguage: string, mediaName: keyof MediaProps): Actio
 	return {
 		type: PURGE,
 		mediaName,
-		mediaLanguage
+		mediaLanguage,
 	};
 }
 
@@ -161,7 +163,12 @@ export function Destroy(mediaLanguage: string): Actions.Destroy {
 	};
 }
 
-export function EditCollection(mediaName: keyof MediaProps, mediaLanguage: string, collectionID: string, collection: MediaCollection | null): Actions.EditCollection {
+export function EditCollection(
+	mediaName: keyof MediaProps,
+	mediaLanguage: string,
+	collectionID: string,
+	collection: MediaCollection | null
+): Actions.EditCollection {
 	return {
 		type: EDIT_COLLECTION,
 		mediaName,
@@ -171,7 +178,11 @@ export function EditCollection(mediaName: keyof MediaProps, mediaLanguage: strin
 	};
 }
 
-export function SetExportState(mediaName: keyof MediaProps, mediaLanguage: string, enabled: boolean): Actions.SetExportState {
+export function SetExportState(
+	mediaName: keyof MediaProps,
+	mediaLanguage: string,
+	enabled: boolean
+): Actions.SetExportState {
 	return {
 		type: SET_EXPORT_STATE,
 		mediaLanguage,
@@ -180,12 +191,16 @@ export function SetExportState(mediaName: keyof MediaProps, mediaLanguage: strin
 	};
 }
 
-export function SetActiveCollection(mediaName: keyof MediaProps, mediaLanguage: string, collectionID: string): Actions.SetActiveCollection {
+export function SetActiveCollection(
+	mediaName: keyof MediaProps,
+	mediaLanguage: string,
+	collectionID: string
+): Actions.SetActiveCollection {
 	return {
 		type: SET_ACTIVE_COLLECTION,
 		mediaLanguage,
 		mediaName,
-		collectionID
+		collectionID,
 	};
 }
 

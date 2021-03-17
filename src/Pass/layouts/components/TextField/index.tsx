@@ -13,13 +13,16 @@ export interface TextFieldProps extends Partial<SelectableComponent> {
 export default function TextField(props: TextFieldProps) {
 	const { content, className: sourceClassName, onClick } = props;
 
-	return useClickEvent(onClick, useFallback(() => {
-		const className = createClassName(["text-field", sourceClassName]);
+	return useClickEvent(
+		onClick,
+		useFallback(() => {
+			const className = createClassName(["text-field", sourceClassName]);
 
-		return (
-			<div className={className}>
-				<span>{content}</span>
-			</div>
-		);
-	}, [content]));
+			return (
+				<div className={className}>
+					<span>{content}</span>
+				</div>
+			);
+		}, [content])
+	);
 }

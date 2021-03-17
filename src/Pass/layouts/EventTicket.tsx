@@ -14,20 +14,26 @@ import { FieldKind } from "../../model";
 
 type EventTicketProps = PassMixedProps & AlternativesRegistrationSignature;
 
-type PrimaryFieldPropsKind = Parameters<(typeof StripPrimaryFields | typeof ThumbnailPrimaryField)>[0]
+type PrimaryFieldPropsKind = Parameters<
+	typeof StripPrimaryFields | typeof ThumbnailPrimaryField
+>[0];
 
 export function EventTicket(props: EventTicketProps): JSX.Element {
-	useAlternativesRegistration(props.registerAlternatives, {
-		name: "With background image",
-		specificProps: {
-			backgroundImage: null,
+	useAlternativesRegistration(
+		props.registerAlternatives,
+		{
+			name: "With background image",
+			specificProps: {
+				backgroundImage: null,
+			},
 		},
-	}, {
-		name: "With strip image",
-		specificProps: {
-			stripImage: null,
-		},
-	});
+		{
+			name: "With strip image",
+			specificProps: {
+				stripImage: null,
+			},
+		}
+	);
 
 	const {
 		secondaryFields = [],
@@ -39,7 +45,7 @@ export function EventTicket(props: EventTicketProps): JSX.Element {
 		logo,
 		icon,
 		stripImage,
-		thumbnailImage
+		thumbnailImage,
 	} = props;
 
 	let fieldsFragment: React.ReactElement<PrimaryFieldPropsKind>;
@@ -72,9 +78,7 @@ export function EventTicket(props: EventTicketProps): JSX.Element {
 		);
 	} else if (props.hasOwnProperty("backgroundImage")) {
 		if (Object.keys(context).length) {
-			useRegistrations(context.registerField, [
-				[FieldKind.IMAGE, "backgroundImage"]
-			]);
+			useRegistrations(context.registerField, [[FieldKind.IMAGE, "backgroundImage"]]);
 		}
 
 		fieldsFragment = (
@@ -106,14 +110,8 @@ export function EventTicket(props: EventTicketProps): JSX.Element {
 				onClick={onFieldSelect}
 				register={registerField}
 			/>
-			<Footer
-				icon={icon}
-				register={registerField}
-			>
-				<Barcodes
-					format={barcode?.format}
-					fallbackShape="square"
-				/>
+			<Footer icon={icon} register={registerField}>
+				<Barcodes format={barcode?.format} fallbackShape="square" />
 			</Footer>
 		</>
 	);

@@ -15,19 +15,13 @@ export default function OptionsBar(props: Props) {
 	return (
 		<div className="options-bar">
 			<div title="Open translations tool">
-				<TranslationsIcon
-					onClick={props.toggleTranslationsModal}
-				/>
+				<TranslationsIcon onClick={props.toggleTranslationsModal} />
 			</div>
 			<div title="Hide empty fields">
-				<EyeIcon
-					onClick={() => props.toggleEmptyVisibility()}
-				/>
+				<EyeIcon onClick={() => props.toggleEmptyVisibility()} />
 			</div>
 			<div title="Show back fields">
-				<ShowMoreIcon
-					onClick={() => props.rotatePass()}
-				/>
+				<ShowMoreIcon onClick={() => props.rotatePass()} />
 			</div>
 		</div>
 	);

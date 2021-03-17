@@ -16,7 +16,7 @@ type StoreCardProps = PassMixedProps & AlternativesRegistrationSignature;
 export function StoreCard(props: StoreCardProps): JSX.Element {
 	useAlternativesRegistration(props.registerAlternatives, {
 		name: "StoreCard",
-		specificProps: {}
+		specificProps: {},
 	});
 
 	const {
@@ -28,7 +28,7 @@ export function StoreCard(props: StoreCardProps): JSX.Element {
 		logo,
 		logoText,
 		stripImage,
-		icon
+		icon,
 	} = props;
 
 	const { onFieldSelect, registerField } = React.useContext(InteractionContext);
@@ -62,10 +62,7 @@ export function StoreCard(props: StoreCardProps): JSX.Element {
 				onClick={onFieldSelect}
 				register={registerField}
 			/>
-			<Footer
-				icon={icon}
-				register={registerField}
-			>
+			<Footer icon={icon} register={registerField}>
 				<Barcodes format={barcode?.format} fallbackShape="rect" />
 			</Footer>
 		</>

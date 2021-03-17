@@ -38,7 +38,6 @@ export default function Panel(props: PanelProps) {
 
 function resolvePanelKind({ kind }: PanelProps): React.FunctionComponent<PanelProps> {
 	switch (kind) {
-
 		// Each panel should use memoization to its non-targeted value
 		// So if it is targeted, it gets rerendered.
 		// This is needed only if it will change somehow, like... focus on text insertion?

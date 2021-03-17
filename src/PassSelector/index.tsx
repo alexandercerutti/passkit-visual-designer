@@ -13,7 +13,7 @@ import * as Store from "../store";
 declare const __DEV__: boolean;
 
 interface DispatchProps {
-	setPassProps: typeof Store.Pass.setPropsBatch,
+	setPassProps: typeof Store.Pass.setPropsBatch;
 }
 
 interface StoreProps {
@@ -34,14 +34,14 @@ class PassSelector extends React.PureComponent<SelectorProps, SelectorState> {
 	private alternatives: PassKindsAlternatives = {};
 
 	private config = {
-		introText: "Select your pass model"
+		introText: "Select your pass model",
 	};
 
 	constructor(props: SelectorProps) {
 		super(props);
 
 		this.state = {
-			selectedKind: undefined
+			selectedKind: undefined,
 		};
 
 		this.registerAlternatives = this.registerAlternatives.bind(this);
@@ -89,7 +89,7 @@ class PassSelector extends React.PureComponent<SelectorProps, SelectorState> {
 
 	render() {
 		const { selectedKind } = this.state;
-		const availableAlternatives = selectedKind && this.alternatives[selectedKind] || [];
+		const availableAlternatives = (selectedKind && this.alternatives[selectedKind]) || [];
 
 		const passes = Object.entries(PassKind).map(([_, pass]) => {
 			return (
@@ -113,12 +113,13 @@ class PassSelector extends React.PureComponent<SelectorProps, SelectorState> {
 			);
 		});
 
-		const AlternativesListComponent = (
-			alternativesList.length &&
-			<PassList requiresAttention onPassSelect={this.onAlternativeSelection}>
-				{alternativesList}
-			</PassList>
-		) || null;
+		const AlternativesListComponent =
+			(alternativesList.length && (
+				<PassList requiresAttention onPassSelect={this.onAlternativeSelection}>
+					{alternativesList}
+				</PassList>
+			)) ||
+			null;
 
 		return (
 			<div id="selector-app">
@@ -141,6 +142,6 @@ export default connect(
 		return { selectedPassKind };
 	},
 	{
-		setPassProps: Store.Pass.setPropsBatch
+		setPassProps: Store.Pass.setPropsBatch,
 	}
 )(PassSelector);

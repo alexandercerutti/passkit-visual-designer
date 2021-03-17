@@ -11,9 +11,13 @@ export interface ModalProps {
 	contentUniqueID: string;
 }
 
-export default function Modal({ children, closeModal, contentUniqueID }: React.PropsWithChildren<ModalProps>) {
-	const onKeyDownEventRef = React.useRef(({ key }: KeyboardEvent) =>
-		key === "Escape" && closeModal()
+export default function Modal({
+	children,
+	closeModal,
+	contentUniqueID,
+}: React.PropsWithChildren<ModalProps>) {
+	const onKeyDownEventRef = React.useRef(
+		({ key }: KeyboardEvent) => key === "Escape" && closeModal()
 	);
 
 	React.useEffect(() => {

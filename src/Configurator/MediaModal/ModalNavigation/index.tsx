@@ -41,18 +41,18 @@ export function ModalNavigation(props: Props) {
 		}
 
 		const hiddenSpanStyleSet = editing
-			// hiding span and using it as a ghost element
-			? {
-				visibility: "hidden",
-				pointerEvents: "none",
-				position: "absolute"
-			}
-			// Restoring usability and visibility
-			: {
-				position: "initial",
-				visibility: "visible",
-				pointerEvents: "auto",
-			};
+			? // hiding span and using it as a ghost element
+			  {
+					visibility: "hidden",
+					pointerEvents: "none",
+					position: "absolute",
+			  }
+			: // Restoring usability and visibility
+			  {
+					position: "initial",
+					visibility: "visible",
+					pointerEvents: "auto",
+			  };
 
 		Object.assign(ghostSpanRef.current.style, hiddenSpanStyleSet);
 
@@ -76,10 +76,13 @@ export function ModalNavigation(props: Props) {
 		}
 	}, []);
 
-	const onCollectionNameEditCommit = React.useCallback((value: string) => {
-		setEditing(false);
-		props.onCollectionNameEditComplete(props.collectionID, value);
-	}, [props.collectionID]);
+	const onCollectionNameEditCommit = React.useCallback(
+		(value: string) => {
+			setEditing(false);
+			props.onCollectionNameEditComplete(props.collectionID, value);
+		},
+		[props.collectionID]
+	);
 
 	const onClickEditHandler = React.useCallback(() => !editing && setEditing(true), []);
 
@@ -87,33 +90,27 @@ export function ModalNavigation(props: Props) {
 	const collectionName = props.collectionName || "Untitled Collection";
 
 	return (
-		<nav className={collectionID && "allow-back-nav" || ""}>
-			<ArrowIcon
-				className="back"
-				onClick={() => props.collectionID && props.onBack()}
-			/>
+		<nav className={(collectionID && "allow-back-nav") || ""}>
+			<ArrowIcon className="back" onClick={() => props.collectionID && props.onBack()} />
 			<div>
 				<span>{mediaName}</span>
-				{collectionID &&
-					<span
-						id="coll-name"
-						onClick={onClickEditHandler}
-					>
+				{(collectionID && (
+					<span id="coll-name" onClick={onClickEditHandler}>
 						<span>
-							<span ref={ghostSpanRef}>
-								{collectionName || "Untitled collection"}
-							</span>
-							{editing &&
+							<span ref={ghostSpanRef}>{collectionName || "Untitled collection"}</span>
+							{(editing && (
 								<CommittableTextInput
 									ref={inputRef}
 									commit={onCollectionNameEditCommit}
 									onKeyDown={onKeyDownHandler}
 									defaultValue={collectionName || "Untitled collection"}
-								/> || null
-							}
+								/>
+							)) ||
+								null}
 						</span>
-					</span> || null
-				}
+					</span>
+				)) ||
+					null}
 			</div>
 			{
 				/**
@@ -123,8 +120,7 @@ export function ModalNavigation(props: Props) {
 				 * ellipsis will never happen (like, thx to responsiveness).
 				 * It only stands on future decisions.
 				 * */
-				collectionID &&
-				<EditIcon onClick={onClickEditHandler} />
+				collectionID && <EditIcon onClick={onClickEditHandler} />
 			}
 		</nav>
 	);

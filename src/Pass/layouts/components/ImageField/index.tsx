@@ -14,13 +14,16 @@ export interface ImageFieldProps extends Partial<SelectableComponent> {
 export default function ImageField(props: ImageFieldProps) {
 	const { src, width, height, className: sourceClassName, onClick } = props;
 
-	return useClickEvent(onClick, useFallback(() => {
-		const className = createClassName(["image-field", sourceClassName]);
+	return useClickEvent(
+		onClick,
+		useFallback(() => {
+			const className = createClassName(["image-field", sourceClassName]);
 
-		return (
-			<div className={className}>
-				<img {...{ src, width, height }} />
-			</div>
-		);
-	}, [src]));
+			return (
+				<div className={className}>
+					<img {...{ src, width, height }} />
+				</div>
+			);
+		}, [src])
+	);
 }

@@ -10,7 +10,11 @@
 
 import { PassFieldKeys } from "../../../constants";
 
-export function getFilteredFieldData(data: PassFieldKeys[] = [], minAmount: number = 0, maxAmount: number = 0) {
+export function getFilteredFieldData(
+	data: PassFieldKeys[] = [],
+	minAmount: number = 0,
+	maxAmount: number = 0
+) {
 	if (!data.length) {
 		return createFilledPassFieldKeysArray(minAmount);
 	}
@@ -23,7 +27,7 @@ export function getFilteredFieldData(data: PassFieldKeys[] = [], minAmount: numb
 
 	const showableFields = data
 		.filter(({ value, label }) => value || label)
-		.slice(0, maxAmount > 0 && maxAmount || undefined);
+		.slice(0, (maxAmount > 0 && maxAmount) || undefined);
 
 	if (!showableFields.length) {
 		return createFilledPassFieldKeysArray(minAmount);

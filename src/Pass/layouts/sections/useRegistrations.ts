@@ -5,8 +5,10 @@ import { FieldKind } from "../../../model";
 // I actually not really understood how does conditional distributed types work...
 // But what I wanted to achieve is to obtain a "forced" no-parameter function
 // If a SelectableComponent does not return
-export type FieldSelectHandler<P = any> = [P] extends [never] ? () => void : (fieldIdentifier: string | null) => void;
-export type onRegister = (kind: FieldKind, id: (keyof PassMixedProps) | string) => FieldSelectHandler;
+export type FieldSelectHandler<P = any> = [P] extends [never]
+	? () => void
+	: (fieldIdentifier: string | null) => void;
+export type onRegister = (kind: FieldKind, id: keyof PassMixedProps | string) => FieldSelectHandler;
 export type onComponentSelection = (id: keyof PassMixedProps, key: string | null) => void;
 
 export interface SelectableComponent<P = any> {
@@ -26,7 +28,10 @@ type RegistrationDescriptor = [kind: FieldKind, fieldName: string];
 
 const noop = () => {};
 
-export function useRegistrations(registerFn: onRegister, components: RegistrationDescriptor[]): FieldSelectHandler[] {
+export function useRegistrations(
+	registerFn: onRegister,
+	components: RegistrationDescriptor[]
+): FieldSelectHandler[] {
 	const [handlers, setHandlers] = React.useState<FieldSelectHandler[]>([]);
 
 	React.useEffect(() => {
@@ -36,14 +41,10 @@ export function useRegistrations(registerFn: onRegister, components: Registratio
 		 */
 
 		if (!registerFn) {
-			return setHandlers(
-				components.map(() => noop)
-			);
+			return setHandlers(components.map(() => noop));
 		}
 
-		return setHandlers(
-			components.map(([kind, id]) => registerFn(kind, id))
-		);
+		return setHandlers(components.map(([kind, id]) => registerFn(kind, id)));
 	}, []);
 
 	return handlers;

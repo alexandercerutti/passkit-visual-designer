@@ -1,6 +1,11 @@
 import * as React from "react";
 import "./style.less";
-import { PKTextAlignment, PKDateStyle, PKDataDetectorType, PassFieldKeys } from "../../../../../Pass/constants";
+import {
+	PKTextAlignment,
+	PKDateStyle,
+	PKDataDetectorType,
+	PassFieldKeys,
+} from "../../../../../Pass/constants";
 import { FieldPropertiesDetails } from "../../FieldsPreviewPage/DrawerElement/FieldPropertiesDetails";
 import FieldStringPropertyPanel from "./FieldPropertyPanels/String";
 import FieldCheckboxPropertyPanel from "./FieldPropertyPanels/Checkbox";
@@ -22,7 +27,7 @@ export default function FieldPropertiesEditList(props: FieldPropertiesEditListPr
 					name={name}
 					options={type}
 					onValueChange={props.onValueChange}
-					value={valueFromData as string ?? defaultValue}
+					value={(valueFromData as string) ?? defaultValue}
 					defaultValue={defaultValue}
 				/>
 			);
@@ -52,11 +57,7 @@ export default function FieldPropertiesEditList(props: FieldPropertiesEditListPr
 		}
 	});
 
-	return (
-		<div className="field-properties-edit-list">
-			{properties}
-		</div>
-	);
+	return <div className="field-properties-edit-list">{properties}</div>;
 }
 
 function isPanelTypeEnum(type: Object) {

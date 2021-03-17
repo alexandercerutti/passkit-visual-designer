@@ -13,7 +13,11 @@ interface Props extends PanelProps {
 }
 
 export default function FieldPanel(props: Props) {
-	const [fields, onFieldsChanged] = useContentSavingHandler(props.onValueChange, props.name, props.value || []);
+	const [fields, onFieldsChanged] = useContentSavingHandler(
+		props.onValueChange,
+		props.name,
+		props.value || []
+	);
 	const pageCreationHandler = usePageFactory(FieldsPreviewPage, { value: fields }, onFieldsChanged);
 
 	const pageCreationClickHandler = React.useCallback(() => {
@@ -22,7 +26,7 @@ export default function FieldPanel(props: Props) {
 
 	if (props.isSelected) {
 		setTimeout(() => {
-			pageCreationHandler(props.name, props.requestPageCreation)
+			pageCreationHandler(props.name, props.requestPageCreation);
 		}, 500);
 	}
 

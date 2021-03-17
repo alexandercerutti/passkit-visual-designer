@@ -9,7 +9,13 @@ import { FieldKind } from "../model";
 import { InteractionContextMethods } from "../Pass/InteractionContext";
 import { connect } from "react-redux";
 import { MediaProps, PassMixedProps } from "../Pass";
-import type { CollectionSet, LocalizedMediaGroup, MediaCollection, MediaSet, State } from "../store";
+import type {
+	CollectionSet,
+	LocalizedMediaGroup,
+	MediaCollection,
+	MediaSet,
+	State,
+} from "../store";
 import * as Store from "../store";
 import DefaultFields from "./staticFields";
 import { DataGroup } from "./OptionsMenu/pages/PanelsPage";
@@ -21,7 +27,7 @@ import { getArrayBuffer } from "../utils";
 import LanguageModal from "./LanguageModal";
 import TranslationsModal from "./TranslationsModal";
 import { v1 as uuid } from "uuid";
-import 'prismjs/components/prism-json';
+import "prismjs/components/prism-json";
 import "prismjs/plugins/line-numbers/prism-line-numbers";
 import "prismjs/plugins/line-numbers/prism-line-numbers.css";
 import "prismjs/themes/prism.css";
@@ -31,11 +37,11 @@ import "prismjs/themes/prism-tomorrow.css";
 declare const __DEV__: boolean;
 
 const enum ModalIdentifier {
-	None /******/= 0b00000,
+	None /******/ = 0b00000,
 	Translations = 0b00001,
-	Language /**/= 0b00010,
-	Media/******/= 0b00100,
-	Export/*****/= 0b01000,
+	Language /**/ = 0b00010,
+	Media /******/ = 0b00100,
+	Export /*****/ = 0b01000,
 }
 
 interface DispatchProps {
@@ -58,7 +64,7 @@ interface ConfiguratorStore {
 	translations: State["translations"];
 }
 
-interface ConfiguratorProps extends ConfiguratorStore, DispatchProps, RouteComponentProps<any> { }
+interface ConfiguratorProps extends ConfiguratorStore, DispatchProps, RouteComponentProps<any> {}
 interface ConfiguratorState {
 	selectedFieldId?: keyof PassMixedProps;
 	registeredFields: RegisteredFieldsMap;
@@ -80,7 +86,9 @@ interface ConfiguratorState {
 
 const MODAL_TIMEOUT = 200;
 
-class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState> implements InteractionContextMethods {
+class Configurator
+	extends React.Component<ConfiguratorProps, ConfiguratorState>
+	implements InteractionContextMethods {
 	constructor(props: ConfiguratorProps) {
 		super(props);
 
@@ -124,16 +132,17 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 	}
 
 	static getDerivedStateFromProps(props: ConfiguratorProps) {
-		const { description, organizationName, passTypeIdentifier, teamIdentifier } = props?.passProps ?? {};
+		const { description, organizationName, passTypeIdentifier, teamIdentifier } =
+			props?.passProps ?? {};
 
 		if (!(description && organizationName && passTypeIdentifier && teamIdentifier)) {
 			return {
-				canBeExported: false
+				canBeExported: false,
 			};
 		}
 
 		return {
-			canBeExported: true
+			canBeExported: true,
 		};
 	}
 
@@ -146,7 +155,7 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 	 */
 
 	registerField(kind: FieldKind, id: keyof PassMixedProps): FieldSelectHandler {
-		if (this.state.registeredFields.get(DataGroup.DATA).find(data => data.name === id)) {
+		if (this.state.registeredFields.get(DataGroup.DATA).find((data) => data.name === id)) {
 			if (__DEV__) {
 				console.log("...but failed due to duplicate already available");
 			}
@@ -154,24 +163,21 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 			return null;
 		}
 
-		this.setState(previous => {
+		this.setState((previous) => {
 			const updatedFields = new Map(previous.registeredFields);
 			const fieldDataGroup = convertFieldKindToDataGroup(kind);
 
 			if (!fieldDataGroup) {
 				return {
-					registeredFields: updatedFields
+					registeredFields: updatedFields,
 				};
 			}
 
 			return {
-				registeredFields: updatedFields.set(
-					fieldDataGroup,
-					[
-						...updatedFields.get(fieldDataGroup),
-						{ name: id, kind }
-					]
-				)
+				registeredFields: updatedFields.set(fieldDataGroup, [
+					...updatedFields.get(fieldDataGroup),
+					{ name: id, kind },
+				]),
 			};
 		});
 
@@ -200,7 +206,10 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 	 * @param value
 	 */
 
-	async onValueChange<T extends Object | string>(key: keyof PassMixedProps, value: T): Promise<boolean> {
+	async onValueChange<T extends Object | string>(
+		key: keyof PassMixedProps,
+		value: T
+	): Promise<boolean> {
 		if (__DEV__) {
 			console.log("Panel with name", key, "tried to save", value);
 		}
@@ -235,14 +244,14 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 	}
 
 	onShowPassBackRequest() {
-		this.setState(previous => ({
-			shouldShowPassBack: !previous.shouldShowPassBack
+		this.setState((previous) => ({
+			shouldShowPassBack: !previous.shouldShowPassBack,
 		}));
 	}
 
 	toggleEmptyVisibility() {
-		this.setState(previous => ({
-			emptyFieldsVisible: !previous.emptyFieldsVisible
+		this.setState((previous) => ({
+			emptyFieldsVisible: !previous.emptyFieldsVisible,
 		}));
 	}
 
@@ -254,7 +263,7 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 	}
 
 	toggleModal(mask: ModalIdentifier) {
-		this.setState(previous => ({
+		this.setState((previous) => ({
 			modalIdentifier: previous.modalIdentifier ^ mask,
 		}));
 	}
@@ -309,17 +318,11 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 	}
 
 	onTranslationRemove(id: string) {
-		this.props.removeTranslation(
-			this.props.projectOptions.activeMediaLanguage,
-			id
-		);
+		this.props.removeTranslation(this.props.projectOptions.activeMediaLanguage, id);
 	}
 
 	onTranslationExportStateChange(enabled: boolean) {
-		this.props.setTranslationExportState(
-			this.props.projectOptions.activeMediaLanguage,
-			enabled
-		);
+		this.props.setTranslationExportState(this.props.projectOptions.activeMediaLanguage, enabled);
 	}
 
 	async requestExport() {
@@ -335,7 +338,7 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 
 		Object.assign(document.createElement("a"), {
 			download: `${projectOptions.title ?? "untitled project"}.zip`,
-			href: fileURL
+			href: fileURL,
 		}).click();
 
 		// @TODO discuss if a setTimeout is needed here
@@ -344,13 +347,7 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 	}
 
 	render() {
-		const {
-			projectOptions,
-			usedLanguages,
-			translations,
-			passProps,
-			media
-		} = this.props;
+		const { projectOptions, usedLanguages, translations, passProps, media } = this.props;
 
 		const { title, activeMediaLanguage } = projectOptions;
 
@@ -361,7 +358,7 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 			selectedFieldId,
 			canBeExported,
 			viewingMediaName,
-			modalIdentifier
+			modalIdentifier,
 		} = this.state;
 
 		return (
@@ -392,7 +389,7 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 						fields={registeredFields}
 						onValueChange={this.onValueChange}
 						cancelFieldSelection={this.onVoidClick}
-						requestExport={canBeExported && this.requestExport || null}
+						requestExport={(canBeExported && this.requestExport) || null}
 						onMediaEditRequest={this.toggleMediaModal}
 					/>
 				</div>
@@ -476,7 +473,7 @@ function convertFieldKindToDataGroup(kind: FieldKind): DataGroup {
 		return DataGroup.DATA;
 	}
 
-	return undefined
+	return undefined;
 }
 
 /**
@@ -507,7 +504,10 @@ function getBestResolutionForMedia(mediaGroup: LocalizedMediaGroup, selectedLang
 		return best;
 	}
 
-	for (let [mediaName, media] of Object.entries(firstGroupToCheck) as [keyof MediaProps, CollectionSet][]) {
+	for (let [mediaName, media] of Object.entries(firstGroupToCheck) as [
+		keyof MediaProps,
+		CollectionSet
+	][]) {
 		if (media) {
 			const { activeCollectionID = "", collections, enabled } = media;
 
@@ -520,7 +520,10 @@ function getBestResolutionForMedia(mediaGroup: LocalizedMediaGroup, selectedLang
 				const media = group?.[mediaName];
 				const defaultActiveCollectionId = media?.activeCollectionID;
 
-				searchResolutionArea = defaultActiveCollectionId && media?.collections?.[defaultActiveCollectionId]?.resolutions || {};
+				searchResolutionArea =
+					(defaultActiveCollectionId &&
+						media?.collections?.[defaultActiveCollectionId]?.resolutions) ||
+					{};
 			} else {
 				searchResolutionArea = {};
 			}
@@ -532,48 +535,54 @@ function getBestResolutionForMedia(mediaGroup: LocalizedMediaGroup, selectedLang
 	return best;
 }
 
-export default withRouter(connect(
-	(state: State): ConfiguratorStore => {
-		const { pass, media, projectOptions, translations } = state;
+export default withRouter(
+	connect(
+		(state: State): ConfiguratorStore => {
+			const { pass, media, projectOptions, translations } = state;
 
-		const usedLanguages = new Set([
-			/**
-			 * Seeking for medias or translations that have
-			 * contents for current language
-			 */
-			...Object.entries(media)
-				.filter(([_, mediaSet]) => hasMediaContents(mediaSet)),
-			...Object.entries(translations)
-				.filter(([_, translationSet]) => Object.keys(translationSet.translations).length)
-		].map(([language]) => language));
+			const usedLanguages = new Set(
+				[
+					/**
+					 * Seeking for medias or translations that have
+					 * contents for current language
+					 */
+					...Object.entries(media).filter(([_, mediaSet]) => hasMediaContents(mediaSet)),
+					...Object.entries(translations).filter(
+						([_, translationSet]) => Object.keys(translationSet.translations).length
+					),
+				].map(([language]) => language)
+			);
 
-		const passPropsWithSelectedMediaUrl = Object.assign({},
-			pass,
-			getBestResolutionForMedia(media, projectOptions.activeMediaLanguage)
-		);
+			const passPropsWithSelectedMediaUrl = Object.assign(
+				{},
+				pass,
+				getBestResolutionForMedia(media, projectOptions.activeMediaLanguage)
+			);
 
-		return {
-			passProps: passPropsWithSelectedMediaUrl,
-			media,
-			translations,
-			usedLanguages,
-			projectOptions
-		};
-	},
-	{
-		changePassPropValue: Store.Pass.setProp,
-		setProjectOption: Store.Options.Set,
-		setMediaActiveCollection: Store.Media.SetActiveCollection,
-		editCollection: Store.Media.EditCollection,
-		setMediaExportState: Store.Media.SetExportState,
-		setTranslationExportState: Store.Translations.SetExportState,
-		addTranslation: Store.Translations.Add,
-		removeTranslation: Store.Translations.Remove,
-		editTranslation: Store.Translations.Edit,
-	} as DispatchProps
-)(Configurator));
+			return {
+				passProps: passPropsWithSelectedMediaUrl,
+				media,
+				translations,
+				usedLanguages,
+				projectOptions,
+			};
+		},
+		{
+			changePassPropValue: Store.Pass.setProp,
+			setProjectOption: Store.Options.Set,
+			setMediaActiveCollection: Store.Media.SetActiveCollection,
+			editCollection: Store.Media.EditCollection,
+			setMediaExportState: Store.Media.SetExportState,
+			setTranslationExportState: Store.Translations.SetExportState,
+			addTranslation: Store.Translations.Add,
+			removeTranslation: Store.Translations.Remove,
+			editTranslation: Store.Translations.Edit,
+		} as DispatchProps
+	)(Configurator)
+);
 
 function hasMediaContents(media: MediaSet) {
-	return Object.values(media)
-		.some((collectionSet) => Object.keys(collectionSet.collections).length)
+	return Object.values(media).some(
+		(collectionSet) => Object.keys(collectionSet.collections).length
+	);
 }

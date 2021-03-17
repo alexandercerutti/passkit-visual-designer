@@ -24,14 +24,16 @@ interface State {
 }
 
 export default class FieldsPreviewPage extends React.Component<Props, State> {
-	private readonly pageName = `${this.props.name.slice(0, 1).toUpperCase()}${this.props.name.slice(1)}`;
+	private readonly pageName = `${this.props.name.slice(0, 1).toUpperCase()}${this.props.name.slice(
+		1
+	)}`;
 
 	constructor(props: Props) {
 		super(props);
 
 		this.state = {
 			fields: props.value ?? [],
-			fieldsUUIDs: props.value?.map(_ => uuid()) ?? [],
+			fieldsUUIDs: props.value?.map((_) => uuid()) ?? [],
 			isJSONMode: false,
 		};
 
@@ -51,7 +53,7 @@ export default class FieldsPreviewPage extends React.Component<Props, State> {
 
 	onFieldDeleteHandler(fieldUUID: string) {
 		this.setState(({ fields, fieldsUUIDs }) => {
-			const fieldIndex = fieldsUUIDs.findIndex(uuid => uuid === fieldUUID);
+			const fieldIndex = fieldsUUIDs.findIndex((uuid) => uuid === fieldUUID);
 
 			if (fieldIndex < 0) {
 				return null;
@@ -64,7 +66,7 @@ export default class FieldsPreviewPage extends React.Component<Props, State> {
 
 			return {
 				fields: newFields,
-				fieldsUUIDs: newUUIDs
+				fieldsUUIDs: newUUIDs,
 			};
 		});
 	}
@@ -72,21 +74,15 @@ export default class FieldsPreviewPage extends React.Component<Props, State> {
 	onFieldAddHandler() {
 		this.setState(({ fields, fieldsUUIDs: uuids }) => {
 			return {
-				fields: [
-					...fields,
-					{} as PassFieldKeys
-				],
-				fieldsUUIDs: [
-					...uuids,
-					uuid()
-				]
-			}
+				fields: [...fields, {} as PassFieldKeys],
+				fieldsUUIDs: [...uuids, uuid()],
+			};
 		});
 	}
 
 	onFieldOrderChange(fieldUUID: string, of: number): void {
 		this.setState(({ fields: previousFields, fieldsUUIDs: prevUUIDs }) => {
-			const fromIndex = prevUUIDs.findIndex(uuid => uuid === fieldUUID);
+			const fromIndex = prevUUIDs.findIndex((uuid) => uuid === fieldUUID);
 
 			// Creating a copy of the array and swapping two elements
 			const nextFields = [...previousFields];
@@ -94,12 +90,12 @@ export default class FieldsPreviewPage extends React.Component<Props, State> {
 
 			nextFields[fromIndex] = [
 				nextFields[fromIndex + of],
-				nextFields[fromIndex + of] = nextFields[fromIndex]
+				(nextFields[fromIndex + of] = nextFields[fromIndex]),
 			][0];
 
 			nextUUIDs[fromIndex] = [
 				nextUUIDs[fromIndex + of],
-				nextUUIDs[fromIndex + of] = nextUUIDs[fromIndex]
+				(nextUUIDs[fromIndex + of] = nextUUIDs[fromIndex]),
 			][0];
 
 			return {
@@ -111,7 +107,7 @@ export default class FieldsPreviewPage extends React.Component<Props, State> {
 
 	onFieldChangeHandler(fieldUUID: string, fieldProps: PassFieldKeys) {
 		this.setState(({ fields: previousFields, fieldsUUIDs }) => {
-			const fieldIndex = fieldsUUIDs.findIndex(uuid => uuid === fieldUUID);
+			const fieldIndex = fieldsUUIDs.findIndex((uuid) => uuid === fieldUUID);
 
 			if (fieldIndex < 0) {
 				return null;
@@ -119,11 +115,7 @@ export default class FieldsPreviewPage extends React.Component<Props, State> {
 
 			const fields = [...previousFields];
 			// Adding to fields itself with new props but removing its old version before
-			fields.splice(
-				fieldIndex,
-				1,
-				Object.assign(fields[fieldIndex], fieldProps)
-			);
+			fields.splice(fieldIndex, 1, Object.assign(fields[fieldIndex], fieldProps));
 
 			if (__DEV__) {
 				console.log("onFieldChange for", fieldProps, fieldUUID);
@@ -147,7 +139,7 @@ export default class FieldsPreviewPage extends React.Component<Props, State> {
 				 * These uuids are only for this components, so we
 				 * can safely recreate them.
 				 */
-				fieldsUUIDs: fields.map(_ => uuid()),
+				fieldsUUIDs: fields.map((_) => uuid()),
 			});
 		} catch (err) {
 			console.error(err);
@@ -156,14 +148,16 @@ export default class FieldsPreviewPage extends React.Component<Props, State> {
 
 	toggleJSONMode() {
 		this.setState(({ isJSONMode }) => ({
-			isJSONMode: !isJSONMode
+			isJSONMode: !isJSONMode,
 		}));
 	}
 
 	render() {
 		const { fields, fieldsUUIDs, isJSONMode } = this.state;
 
-		let contentElement: React.ReactElement<typeof DrawerJSONEditor | typeof Drawer | typeof DrawerPlaceholder>;
+		let contentElement: React.ReactElement<
+			typeof DrawerJSONEditor | typeof Drawer | typeof DrawerPlaceholder
+		>;
 
 		if (isJSONMode) {
 			contentElement = (
@@ -184,9 +178,7 @@ export default class FieldsPreviewPage extends React.Component<Props, State> {
 				/>
 			);
 		} else {
-			contentElement = (
-				<DrawerPlaceholder />
-			);
+			contentElement = <DrawerPlaceholder />;
 		}
 
 		return (
@@ -197,7 +189,7 @@ export default class FieldsPreviewPage extends React.Component<Props, State> {
 				{contentElement}
 				<footer>
 					<button
-						className={isJSONMode && "json-mode-active" || ""}
+						className={(isJSONMode && "json-mode-active") || ""}
 						onClick={this.toggleJSONMode}
 					>
 						JSON

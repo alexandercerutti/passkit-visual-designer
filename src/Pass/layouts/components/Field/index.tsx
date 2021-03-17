@@ -10,28 +10,33 @@ import { PassFieldKeys } from "../../../constants";
 export { default as FieldLabel } from "./FieldLabel";
 export { default as FieldValue } from "./FieldValue";
 
-type Props = StylingProps & Partial<SelectableComponent> & {
-	fieldData: PassFieldKeys;
-};
+type Props = StylingProps &
+	Partial<SelectableComponent> & {
+		fieldData: PassFieldKeys;
+	};
 
 export function Field(props: React.PropsWithChildren<Props>) {
 	/**
 	 * We don't want to pass the click event to children.
 	 * They will still accept it but only if used separately.
 	 */
-	const { onClick, className: sourceClassName, fieldData: { key, label, value }, style = {}, children } = props;
+	const {
+		onClick,
+		className: sourceClassName,
+		fieldData: { key, label, value },
+		style = {},
+		children,
+	} = props;
 
-	return useClickEvent(onClick,
+	return useClickEvent(
+		onClick,
 		useFallback(() => {
 			const className = createClassName(["field", sourceClassName], {
-				[`field-${key ?? ""}`]: key
+				[`field-${key ?? ""}`]: key,
 			});
 
 			return (
-				<div
-					style={style}
-					className={className}
-				>
+				<div style={style} className={className}>
 					{children}
 				</div>
 			);
@@ -48,15 +53,16 @@ export function Field(props: React.PropsWithChildren<Props>) {
  */
 
 export function GhostField(props: React.PropsWithChildren<Props>) {
-	const { onClick, fieldData: { key, label, value }, children } = props;
+	const {
+		onClick,
+		fieldData: { key, label, value },
+		children,
+	} = props;
 
-	return useClickEvent(onClick,
+	return useClickEvent(
+		onClick,
 		useFallback(() => {
-			return (
-				<>
-					{children}
-				</>
-			);
+			return <>{children}</>;
 		}, [label, value, key])
 	);
 }

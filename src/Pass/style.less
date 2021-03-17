@@ -1,4 +1,3 @@
-
 .pass {
 	border-radius: 7px;
 	width: 100%;
@@ -13,7 +12,7 @@
 	height: 369.59px;
 
 	position: relative;
-	transition: box-shadow .5s;
+	transition: box-shadow 0.5s;
 
 	&:not(:last-child) {
 		margin-right: 30px;
@@ -38,7 +37,7 @@
 			}
 
 			& > .back-fields {
-				z-index: 99
+				z-index: 99;
 			}
 		}
 
@@ -92,7 +91,8 @@
 
 .pass[data-kind="boardingPass"] {
 	& .decorations {
-		&::before, &::after {
+		&::before,
+		&::after {
 			content: "";
 			width: 10px;
 			height: 10px;
@@ -100,17 +100,17 @@
 			top: 112px;
 			border-radius: 50%;
 			z-index: 999;
-			transition: opacity .5s;
+			transition: opacity 0.5s;
 		}
 
 		&::before {
 			left: -6px;
-			background: linear-gradient(to left, #333 0%,#333 70%);
+			background: linear-gradient(to left, #333 0%, #333 70%);
 		}
 
 		&::after {
 			right: -6px;
-			background: linear-gradient(to right, #333 0%,#333 70%);
+			background: linear-gradient(to right, #333 0%, #333 70%);
 		}
 	}
 }
@@ -147,7 +147,8 @@
 	}
 
 	& .decorations {
-		&::before, &::after {
+		&::before,
+		&::after {
 			content: "";
 			width: 100%;
 			height: 6px;
@@ -159,16 +160,14 @@
 
 		&::before {
 			top: -3px;
-			background-image:
-				linear-gradient(140deg, #333 50%, transparent 50%),
+			background-image: linear-gradient(140deg, #333 50%, transparent 50%),
 				linear-gradient(220deg, #333 50%, transparent 50%);
 			background-position: top left, top left;
 		}
 
 		&::after {
 			bottom: -3px;
-			background-image:
-				linear-gradient(40deg, #222222 50%, transparent 50%),
+			background-image: linear-gradient(40deg, #222222 50%, transparent 50%),
 				linear-gradient(-40deg, #222222 50%, transparent 50%);
 			background-position: bottom left, bottom left;
 		}

@@ -1,15 +1,18 @@
 import { PKTextAlignment, PassFieldKeys } from "../../../constants";
 import { StylingProps } from "../../../../model";
 
-export function composeLabelValueStylesFromProps(props: Partial<FieldProperties>, origin: "label" | "value"): React.CSSProperties {
+export function composeLabelValueStylesFromProps(
+	props: Partial<FieldProperties>,
+	origin: "label" | "value"
+): React.CSSProperties {
 	const textAlignment = props.textAlignment || PKTextAlignment.Natural;
 
 	return {
 		textAlign: transformPKTextAlignmentToCSS(textAlignment),
-		color: String(origin === "value" && props.textColor || props.labelColor) || "#000",
+		color: String((origin === "value" && props.textColor) || props.labelColor) || "#000",
 		overflow: "hidden",
 		textOverflow: "ellipsis",
-	}
+	};
 }
 
 function transformPKTextAlignmentToCSS(textAlignment: PKTextAlignment) {
@@ -33,18 +36,23 @@ type LabelSpecificProps = {
 type ValueSpecificProps = {
 	value: any;
 	textColor?: string;
-}
+};
 
 export const enum FieldTypes {
 	LABEL,
 	VALUE,
-	BOTH
+	BOTH,
 }
 
-export type FieldProperties<T extends FieldTypes = FieldTypes.BOTH> =
-	Omit<PassFieldKeys, "value" | "label"> &
-	StylingProps & (
-		T extends FieldTypes.LABEL ? LabelSpecificProps :
-		T extends FieldTypes.VALUE ? ValueSpecificProps :
-		T extends FieldTypes.BOTH ? LabelSpecificProps & ValueSpecificProps : never
-	);
+export type FieldProperties<T extends FieldTypes = FieldTypes.BOTH> = Omit<
+	PassFieldKeys,
+	"value" | "label"
+> &
+	StylingProps &
+	(T extends FieldTypes.LABEL
+		? LabelSpecificProps
+		: T extends FieldTypes.VALUE
+		? ValueSpecificProps
+		: T extends FieldTypes.BOTH
+		? LabelSpecificProps & ValueSpecificProps
+		: never);

@@ -5,7 +5,7 @@ import CapitalHeaderTitle from "../CapitalHeaderTitle";
 import { PageProps } from "../../usePageFactory";
 import PageNavigationContext from "../../PageNavigationContext";
 
-interface Props extends Partial<PageProps> { }
+interface Props extends Partial<PageProps> {}
 
 export default function PageHeader(props: React.PropsWithChildren<Props>) {
 	return (

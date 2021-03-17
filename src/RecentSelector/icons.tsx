@@ -7,11 +7,7 @@ import * as React from "react";
 
 export function GithubLogoDarkMode(props: React.SVGProps<SVGSVGElement>) {
 	return (
-		<svg
-			xmlns="http://www.w3.org/2000/svg"
-			viewBox="0 0 120.78 117.79"
-			{...props}
-		>
+		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120.78 117.79" {...props}>
 			<defs>
 				<style>{".Github-logo-dark-official_svg__cls-2{fill:#fff}"}</style>
 			</defs>

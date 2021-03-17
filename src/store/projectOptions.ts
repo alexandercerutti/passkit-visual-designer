@@ -22,7 +22,10 @@ export const SET_OPTION = "options/SET_OPTION";
 
 // ************************************************************************ //
 
-export default function reducer(state = initialState.projectOptions, action: Actions.Set): State["projectOptions"] {
+export default function reducer(
+	state = initialState.projectOptions,
+	action: Actions.Set
+): State["projectOptions"] {
 	switch (action.type) {
 		case SET_OPTION: {
 			if (!action.value) {
@@ -34,9 +37,9 @@ export default function reducer(state = initialState.projectOptions, action: Act
 
 			return {
 				...state,
-				[action.key]: action.value
+				[action.key]: action.value,
 			};
-		};
+		}
 
 		default: {
 			return state;

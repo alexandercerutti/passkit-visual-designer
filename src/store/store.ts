@@ -5,11 +5,12 @@ import { PKTextAlignment, PKTransitType } from "../Pass/constants";
 /** Webpack defined */
 declare const __DEV__: boolean;
 
-const __DEV_DEFAULT_PASS_PROPS = __DEV__ ? {
-	transitType: PKTransitType.Boat,
-	kind: PassKind.BOARDING_PASS,
-	/** FEW TESTING DATA **/
-	/**
+const __DEV_DEFAULT_PASS_PROPS = __DEV__
+	? {
+			transitType: PKTransitType.Boat,
+			kind: PassKind.BOARDING_PASS,
+			/** FEW TESTING DATA **/
+			/**
 
 	backgroundColor: "rgb(255,99,22)",
 	labelColor: "rgb(0,0,0)",
@@ -82,16 +83,17 @@ const __DEV_DEFAULT_PASS_PROPS = __DEV__ ? {
 		}
 	]
 	*/
-} : null;
+	  }
+	: null;
 
 export const initialState: State = {
 	pass: {
-		...__DEV_DEFAULT_PASS_PROPS
+		...__DEV_DEFAULT_PASS_PROPS,
 	},
 	media: {},
 	translations: {},
 	projectOptions: {
-		activeMediaLanguage: "default"
+		activeMediaLanguage: "default",
 	},
 };
 
@@ -103,7 +105,7 @@ export interface State {
 }
 
 export interface ProjectOptions {
-	title?: string,
+	title?: string;
 	activeMediaLanguage: string;
 	id?: string;
 	savedAtTimestamp?: number;
@@ -118,11 +120,11 @@ export interface TranslationsSet {
 	translations: {
 		[translationCoupleID: string]: [placeholder?: string, value?: string];
 	};
-};
+}
 
 export interface LocalizedMediaGroup {
 	[languageOrDefault: string]: MediaSet;
-};
+}
 
 export type MediaSet = {
 	[K in keyof MediaProps]: CollectionSet;
@@ -134,16 +136,16 @@ export interface CollectionSet {
 	collections: {
 		[collectionID: string]: MediaCollection;
 	};
-};
+}
 
 export interface MediaCollection {
 	name: string;
 	resolutions: IdentifiedResolutions;
-};
+}
 
 export interface IdentifiedResolutions {
 	[resolutionID: string]: {
 		name: string;
 		content: ArrayBuffer;
-	}
-};
+	};
+}

@@ -17,14 +17,15 @@ export default function Drawer(props: Props) {
 	const [isThereMoreAfterTheSkyline, setMoreAvailability] = React.useState(false);
 	const drawerRef = React.useRef<HTMLDivElement>();
 
-	const onListScrollHandler = React.useRef(({ currentTarget }: Partial<React.UIEvent<HTMLDivElement>>) => {
-		// Tollerance of 25px before showing the indicator
-		const didReachEndOfScroll = (
-			currentTarget.scrollHeight - currentTarget.scrollTop <= currentTarget.clientHeight + 25
-		);
-		// We want to hide "more" icon if we reached end of the scroll
-		setMoreAvailability(!didReachEndOfScroll);
-	});
+	const onListScrollHandler = React.useRef(
+		({ currentTarget }: Partial<React.UIEvent<HTMLDivElement>>) => {
+			// Tollerance of 25px before showing the indicator
+			const didReachEndOfScroll =
+				currentTarget.scrollHeight - currentTarget.scrollTop <= currentTarget.clientHeight + 25;
+			// We want to hide "more" icon if we reached end of the scroll
+			setMoreAvailability(!didReachEndOfScroll);
+		}
+	);
 
 	React.useEffect(() => {
 		const { current: currentTarget } = drawerRef;
@@ -52,16 +53,12 @@ export default function Drawer(props: Props) {
 					/>
 				)}
 			</PageNavigationContext.Consumer>
-		)
+		);
 	});
 
 	return (
 		<>
-			<div
-				id="drawer"
-				ref={drawerRef}
-				onScroll={onListScrollHandler.current}
-			>
+			<div id="drawer" ref={drawerRef} onScroll={onListScrollHandler.current}>
 				{panels}
 			</div>
 			<div className="more-items-indicator" style={{ opacity: Number(isThereMoreAfterTheSkyline) }}>

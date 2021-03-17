@@ -9,11 +9,12 @@ interface Props<E extends Object> {
 }
 
 export default function FieldEnumPropertyPanel<T>(props: Props<T>) {
-	const [selectedValue, changeSelectedValue] = React.useState<string>(props.value || props.defaultValue || null);
+	const [selectedValue, changeSelectedValue] = React.useState<string>(
+		props.value || props.defaultValue || null
+	);
 
 	const isDefaultValueAnOption = Boolean(
-		props.defaultValue &&
-		Object.values(props.options).includes(props.defaultValue)
+		props.defaultValue && Object.values(props.options).includes(props.defaultValue)
 	);
 
 	React.useEffect(() => {
@@ -23,22 +24,17 @@ export default function FieldEnumPropertyPanel<T>(props: Props<T>) {
 	}, [selectedValue]);
 
 	const options = [
-		!isDefaultValueAnOption && (
-			<option
-				key={props.defaultValue}
-				value={props.defaultValue}
-			>
+		(!isDefaultValueAnOption && (
+			<option key={props.defaultValue} value={props.defaultValue}>
 				{props.defaultValue}
 			</option>
-		) || null,
+		)) ||
+			null,
 		...Object.entries(props.options).map(([key, object]) => (
-			<option
-				key={key}
-				value={object}
-			>
+			<option key={key} value={object}>
 				{key}
 			</option>
-		))
+		)),
 	];
 
 	return (

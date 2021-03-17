@@ -1,7 +1,7 @@
 @import (reference) "../../../App/common.less";
 
 .modal-content#media-collection > #media-collector > header {
-	border-bottom: 0.5px solid #292929;;
+	border-bottom: 0.5px solid #292929;
 
 	& > nav {
 		display: flex;
@@ -19,7 +19,7 @@
 
 		&:not(.allow-back-nav) .back {
 			opacity: 0;
-			transition-delay: .5s, 0s;
+			transition-delay: 0.5s, 0s;
 			margin-left: -25px;
 
 			& ~ span {
@@ -29,8 +29,7 @@
 		}
 
 		& svg.back {
-			transition: all .5s ease-in-out,
-						opacity .5s ease-in-out .5s;
+			transition: all 0.5s ease-in-out, opacity 0.5s ease-in-out 0.5s;
 			opacity: 1;
 			transform: rotate(180deg);
 			fill: #e6e6e6;
@@ -40,7 +39,7 @@
 			flex-shrink: 0;
 
 			& ~ span {
-				transition: margin-left .5s ease-in-out .3s;
+				transition: margin-left 0.5s ease-in-out 0.3s;
 			}
 		}
 
@@ -67,7 +66,7 @@
 					font-size: 1.7em;
 					font-weight: 400;
 					pointer-events: none;
-					.lookMumIamAppearing(.5s, ease-in-out);
+					.lookMumIamAppearing(0.5s, ease-in-out);
 				}
 
 				/**
@@ -77,13 +76,13 @@
 
 				& > span {
 					position: relative;
-					.lookMumIamAppearing(.5s, ease-in-out, .5s);
+					.lookMumIamAppearing(0.5s, ease-in-out, 0.5s);
 
 					&::after {
 						content: "";
 						position: absolute;
 						width: 0%;
-						transition: width .4s ease-in-out;
+						transition: width 0.4s ease-in-out;
 						border-bottom: 1px solid #e6e6e6;
 						left: 0;
 						bottom: -3px;
@@ -98,7 +97,7 @@
 						background: transparent;
 						color: #e6e6e6;
 						font-size: 1em;
-						font-family: 'SF Display';
+						font-family: "SF Display";
 						font-weight: 200;
 						outline: none;
 						border-radius: 0;
@@ -113,7 +112,7 @@
 			}
 
 			& + svg {
-				.lookMumIamAppearing(.5s, ease-in-out, .5s);
+				.lookMumIamAppearing(0.5s, ease-in-out, 0.5s);
 				width: 15px;
 				height: 15px;
 				flex-shrink: 0;

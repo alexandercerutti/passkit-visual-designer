@@ -21,8 +21,8 @@ export default function CollectionActivationMiddleware(store: MiddlewareAPI<Disp
 		const nextCollectionSet = Object.assign({}, media[action.mediaLanguage][action.mediaName], {
 			collections: {
 				...media[action.mediaLanguage][action.mediaName].collections,
-				[action.collectionID]: action.collection
-			}
+				[action.collectionID]: action.collection,
+			},
 		});
 
 		if (!action.collection) {
@@ -43,7 +43,9 @@ export default function CollectionActivationMiddleware(store: MiddlewareAPI<Disp
 		} else if (collectionsRecords.length === 1) {
 			/** Only one collection available. Check if it has resolutions */
 			const collectionKey = collectionsRecords[0];
-			nextActiveCollectionID = Object.keys(collections[collectionKey].resolutions).length ? collectionKey : "";
+			nextActiveCollectionID = Object.keys(collections[collectionKey].resolutions).length
+				? collectionKey
+				: "";
 		} else {
 			/** More than one collections available */
 
@@ -55,7 +57,11 @@ export default function CollectionActivationMiddleware(store: MiddlewareAPI<Disp
 				 * collections and looking for the first that has resolutions;
 				 */
 
-				for (let i = collectionsRecords.length, collection: MediaCollection; collection = collections[collectionsRecords[--i]];) {
+				for (
+					let i = collectionsRecords.length, collection: MediaCollection;
+					(collection = collections[collectionsRecords[--i]]);
+
+				) {
 					if (Object.keys(collection.resolutions).length) {
 						nextActiveCollectionID = collectionsRecords[i];
 						break;
@@ -72,12 +78,13 @@ export default function CollectionActivationMiddleware(store: MiddlewareAPI<Disp
 				 * Comparing the resolutions before changes and after changes.
 				 */
 
-				const actionResolutionsAmount = Object.keys(collections[currentActiveID].resolutions).length;
-				const storeResolutionsAmount = Object.keys(media[action.mediaLanguage][action.mediaName].collections[currentActiveID].resolutions).length;
+				const actionResolutionsAmount = Object.keys(collections[currentActiveID].resolutions)
+					.length;
+				const storeResolutionsAmount = Object.keys(
+					media[action.mediaLanguage][action.mediaName].collections[currentActiveID].resolutions
+				).length;
 
-				const isCurrentEligible = (
-					actionResolutionsAmount === storeResolutionsAmount
-				);
+				const isCurrentEligible = actionResolutionsAmount === storeResolutionsAmount;
 
 				if (!isCurrentEligible) {
 					nextActiveCollectionID = findNextSuitableCollectionID(collections);
@@ -87,10 +94,16 @@ export default function CollectionActivationMiddleware(store: MiddlewareAPI<Disp
 			}
 		}
 
-		store.dispatch(Store.Media.SetActiveCollection(action.mediaName, action.mediaLanguage, nextActiveCollectionID));
+		store.dispatch(
+			Store.Media.SetActiveCollection(
+				action.mediaName,
+				action.mediaLanguage,
+				nextActiveCollectionID
+			)
+		);
 
 		return next(action);
-	}
+	};
 }
 
 function findNextSuitableCollectionID(collections: CollectionSet["collections"]): string {

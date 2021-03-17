@@ -1,13 +1,14 @@
 import * as React from "react";
 
-export type ContextPropsGetter<P extends Object> =
-	() => ContextProps<P>
+export type ContextPropsGetter<P extends Object> = () => ContextProps<P>;
 
-export type ContextProps<T extends Object> = Partial<{
-	[key in keyof T]: T[key];
-}> & {
+export type ContextProps<T extends Object> = Partial<
+	{
+		[key in keyof T]: T[key];
+	}
+> & {
 	onChange: Function;
-}
+};
 
 export interface PageProps {
 	name: string;
@@ -52,18 +53,21 @@ type PAGE_COMPONENT_SIGNATURE = Parameters<RequestPageCreationFunction>[1];
 export default function usePageFactory<T extends PAGE_COMPONENT_SIGNATURE>(
 	component: T,
 	initProps: Partial<React.ComponentProps<T>>,
-	onChange: ContextProps<typeof initProps>["onChange"] = () => { }
+	onChange: ContextProps<typeof initProps>["onChange"] = () => {}
 ) {
 	const getContextProps = React.useCallback((): ContextProps<typeof initProps> => {
 		return {
 			...initProps,
-			onChange
+			onChange,
 		};
 	}, [initProps, onChange]);
 
-	const creationHandler = React.useCallback((key: string, requestFunction: RequestPageCreationFunction) => {
-		requestFunction(key, component, getContextProps);
-	}, [initProps, getContextProps]);
+	const creationHandler = React.useCallback(
+		(key: string, requestFunction: RequestPageCreationFunction) => {
+			requestFunction(key, component, getContextProps);
+		},
+		[initProps, getContextProps]
+	);
 
 	return creationHandler;
 }

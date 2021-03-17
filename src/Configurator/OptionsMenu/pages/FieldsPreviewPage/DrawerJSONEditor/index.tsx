@@ -51,7 +51,9 @@ export default function DrawerJSONEditor(props: Props) {
 			const lastestRow = rows[rows.length - 1];
 			const previousIndentation = lastestRow.match(/^[\t]+/g)?.[0]?.length || 0;
 
-			event.currentTarget.value = `${value.substring(0, start)}\n${"\t".repeat(previousIndentation)}${value.substring(end)}`;
+			event.currentTarget.value = `${value.substring(0, start)}\n${"\t".repeat(
+				previousIndentation
+			)}${value.substring(end)}`;
 			// put caret at right position again
 			event.currentTarget.selectionStart = event.currentTarget.selectionEnd = start + 1;
 			return;
@@ -73,25 +75,33 @@ export default function DrawerJSONEditor(props: Props) {
 			<pre className="language-json">
 				<code
 					ref={codeRef}
-					dangerouslySetInnerHTML={{ __html: Prism.highlight(openingContent, Prism.languages["json"], "json") }}
+					dangerouslySetInnerHTML={{
+						__html: Prism.highlight(openingContent, Prism.languages["json"], "json"),
+					}}
 				/>
 			</pre>
 			<textarea
 				ref={textAreaRef}
 				spellCheck={false}
 				onKeyDown={onKeyDownHandler}
-				defaultValue={props.content.map((content) => JSON.stringify(content, null, "\t")).join(",\n")}
+				defaultValue={props.content
+					.map((content) => JSON.stringify(content, null, "\t"))
+					.join(",\n")}
 			/>
 			<pre className="language-json">
 				<code
 					ref={codeRef}
-					dangerouslySetInnerHTML={{ __html: Prism.highlight(closingContent, Prism.languages["json"], "json") }}
+					dangerouslySetInnerHTML={{
+						__html: Prism.highlight(closingContent, Prism.languages["json"], "json"),
+					}}
 				/>
 			</pre>
-			<div className={createClassName(["json-validity-alert"], {
-				valid: jsonValid,
-				invalid: !jsonValid
-			})} />
+			<div
+				className={createClassName(["json-validity-alert"], {
+					valid: jsonValid,
+					invalid: !jsonValid,
+				})}
+			/>
 		</div>
 	);
 }

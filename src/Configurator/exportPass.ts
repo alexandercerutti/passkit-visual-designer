@@ -1,8 +1,18 @@
 import JSZip from "jszip";
 import { PassMixedProps } from "../Pass";
-import type { LocalizedMediaGroup, LocalizedTranslationsGroup, MediaCollection, MediaSet, TranslationsSet } from "../store";
+import type {
+	LocalizedMediaGroup,
+	LocalizedTranslationsGroup,
+	MediaCollection,
+	MediaSet,
+	TranslationsSet,
+} from "../store";
 
-export async function exportPass(props: PassMixedProps, media: LocalizedMediaGroup, translations: LocalizedTranslationsGroup) {
+export async function exportPass(
+	props: PassMixedProps,
+	media: LocalizedMediaGroup,
+	translations: LocalizedTranslationsGroup
+) {
 	const zip = new JSZip();
 
 	/**
@@ -15,13 +25,12 @@ export async function exportPass(props: PassMixedProps, media: LocalizedMediaGro
 	[
 		...createPhysicalFilesBuffers(mediaLanguagesMap),
 		...createTranslationsFiles(translationsLanguagesMap),
-		createPassJSON(props)
-	]
-		.forEach(([name, value]) =>
-			zip.file(name, value, {
-				binary: value instanceof ArrayBuffer
-			})
-		);
+		createPassJSON(props),
+	].forEach(([name, value]) =>
+		zip.file(name, value, {
+			binary: value instanceof ArrayBuffer,
+		})
+	);
 
 	return await zip.generateAsync({ type: "blob" });
 }
@@ -36,8 +45,20 @@ function createPassJSON(passProps: PassMixedProps): [string, string] {
 	 */
 
 	const {
-		headerFields, auxiliaryFields, primaryFields, secondaryFields, backFields, transitType,
-		kind, logo, backgroundImage, thumbnailImage, stripImage, icon, footerImage, ...topLevelProps
+		headerFields,
+		auxiliaryFields,
+		primaryFields,
+		secondaryFields,
+		backFields,
+		transitType,
+		kind,
+		logo,
+		backgroundImage,
+		thumbnailImage,
+		stripImage,
+		icon,
+		footerImage,
+		...topLevelProps
 	} = passProps;
 
 	const passJSONObject = {
@@ -49,8 +70,8 @@ function createPassJSON(passProps: PassMixedProps): [string, string] {
 			primaryFields,
 			secondaryFields,
 			backFields,
-			transitType
-		}
+			transitType,
+		},
 	};
 
 	return ["pass.json", JSON.stringify(passJSONObject)];
@@ -81,11 +102,13 @@ function createTranslationsFiles(languagesTranslationsMap: Map<string, Translati
 }
 
 function stringsTag(strings: TemplateStringsArray, placeholder: string, value: string) {
-	return `"${escapeStringsCharacters(placeholder)}"${strings[1]}"${escapeStringsCharacters(value)}";\n`;
+	return `"${escapeStringsCharacters(placeholder)}"${strings[1]}"${escapeStringsCharacters(
+		value
+	)}";\n`;
 }
 
 function escapeStringsCharacters(content: string) {
-	const sequences = ["\\", "\n", "\t", "\""];
+	const sequences = ["\\", "\n", "\t", '"'];
 	let newContent = content;
 
 	for (let seq of sequences) {
@@ -102,22 +125,23 @@ function escapeStringsCharacters(content: string) {
  * @param languagesMediaMap
  */
 
-function createPhysicalFilesBuffers(languagesMediaMap: Map<string, MediaSet>): [string, ArrayBuffer][] {
+function createPhysicalFilesBuffers(
+	languagesMediaMap: Map<string, MediaSet>
+): [string, ArrayBuffer][] {
 	const buffersGenerator = exportMediaCollections();
 	buffersGenerator.next(); // Init
 
 	for (const [lang, mediaSet] of languagesMediaMap) {
-
 		/**
 		 * if lang is "default", we insert the
 		 * files in root folder
 		 */
 
-		const folderPath = `${lang !== "default" && `${lang}.lproj/` || ""}`;
+		const folderPath = `${(lang !== "default" && `${lang}.lproj/`) || ""}`;
 
 		for (const [mediaName, collection] of Object.entries(mediaSet)) {
 			const { enabled, activeCollectionID, collections } = collection;
-			const mediaPath = `${folderPath}${mediaName.replace(/image/ig, "")}`;
+			const mediaPath = `${folderPath}${mediaName.replace(/image/gi, "")}`;
 
 			if (enabled && activeCollectionID) {
 				buffersGenerator.next([collections[activeCollectionID], mediaPath]);
@@ -142,14 +166,18 @@ type ExportGeneratorReturn = Generator<
 
 function* exportMediaCollections(): ExportGeneratorReturn {
 	const rawCollections: CollectionWithZipPath[] = [];
-	const buffers: [string, ArrayBuffer][] = []
+	const buffers: [string, ArrayBuffer][] = [];
 	let value: CollectionWithZipPath = null;
 
 	while ((value = yield) !== undefined) {
 		rawCollections.push(value);
 	}
 
-	for (let i = rawCollections.length, collection: CollectionWithZipPath; collection = rawCollections[--i];) {
+	for (
+		let i = rawCollections.length, collection: CollectionWithZipPath;
+		(collection = rawCollections[--i]);
+
+	) {
 		const [{ resolutions }, mediaPath] = collection;
 
 		for (const res in resolutions) {

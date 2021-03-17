@@ -32,13 +32,16 @@ type TranslationsActions =
 	| Actions.Add
 	| Actions.Remove;
 
-export default function reducer(state = initialState.translations, action: TranslationsActions): State["translations"] {
+export default function reducer(
+	state = initialState.translations,
+	action: TranslationsActions
+): State["translations"] {
 	switch (action.type) {
 		case ADD: {
 			const newState = { ...state };
 			newState[action.translationLanguage].translations[action.translationID] = ["", ""];
 			return newState;
-		};
+		}
 
 		case INIT: {
 			const newState = { ...state };
@@ -48,7 +51,7 @@ export default function reducer(state = initialState.translations, action: Trans
 			};
 
 			return newState;
-		};
+		}
 
 		case DESTROY: {
 			const newState = { ...state };
@@ -61,18 +64,18 @@ export default function reducer(state = initialState.translations, action: Trans
 			delete newState[action.translationLanguage].translations[action.translationID];
 
 			return newState;
-		};
+		}
 
 		case EDIT: {
 			const newState = { ...state };
 
 			newState[action.translationLanguage].translations[action.translationID] = [
 				action.placeholderContent,
-				action.valueContent
+				action.valueContent,
 			];
 
 			return newState;
-		};
+		}
 
 		case SET_EXPORT_STATE: {
 			const newState = { ...state };
@@ -80,11 +83,11 @@ export default function reducer(state = initialState.translations, action: Trans
 			selectedMedia.enabled = action.enabled;
 
 			return newState;
-		};
+		}
 
 		default: {
 			return state;
-		};
+		}
 	}
 }
 
@@ -108,12 +111,17 @@ export function Remove(translationLanguage: string, translationID: string): Acti
 	return {
 		type: REMOVE,
 		translationLanguage,
-		translationID
+		translationID,
 	};
 }
 
 /** Middleware-only action */
-export function Edit(translationLanguage: string, translationID: string, placeholderContent: string, valueContent: string): Actions.Edit {
+export function Edit(
+	translationLanguage: string,
+	translationID: string,
+	placeholderContent: string,
+	valueContent: string
+): Actions.Edit {
 	return {
 		type: EDIT,
 		translationLanguage,
@@ -126,7 +134,7 @@ export function Edit(translationLanguage: string, translationID: string, placeho
 export function Init(translationLanguage: string): Actions.Init {
 	return {
 		type: INIT,
-		translationLanguage
+		translationLanguage,
 	};
 }
 
@@ -137,7 +145,10 @@ export function Destroy(translationLanguage: string): Actions.Destroy {
 	};
 }
 
-export function SetExportState(translationLanguage: string, enabled: boolean): Actions.SetExportState {
+export function SetExportState(
+	translationLanguage: string,
+	enabled: boolean
+): Actions.SetExportState {
 	return {
 		type: SET_EXPORT_STATE,
 		translationLanguage,

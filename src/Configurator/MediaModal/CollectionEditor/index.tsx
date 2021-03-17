@@ -10,7 +10,11 @@ import "./style.less";
 interface Props {
 	collectionID: string;
 	collection: MediaCollection;
-	onResolutionChange(operation: CollectionEditOperation, collectionID: string, collection: MediaCollection): void;
+	onResolutionChange(
+		operation: CollectionEditOperation,
+		collectionID: string,
+		collection: MediaCollection
+	): void;
 }
 
 interface State {
@@ -49,7 +53,7 @@ export default class CollectionEditor extends React.Component<Props, State> {
 
 		if (!this.state.draggingOver) {
 			this.setState({
-				draggingOver: true
+				draggingOver: true,
 			});
 		}
 	}
@@ -58,7 +62,7 @@ export default class CollectionEditor extends React.Component<Props, State> {
 		CollectionEditor.preventEventDefaultPropagation(event);
 
 		this.setState({
-			draggingOver: false
+			draggingOver: false,
 		});
 	}
 
@@ -66,7 +70,7 @@ export default class CollectionEditor extends React.Component<Props, State> {
 		CollectionEditor.preventEventDefaultPropagation(event);
 
 		this.setState({
-			draggingOver: false
+			draggingOver: false,
 		});
 
 		this.updateResolutionsFromFiles(event.dataTransfer.files);
@@ -84,7 +88,7 @@ export default class CollectionEditor extends React.Component<Props, State> {
 
 		this.onResolutionsEdit({
 			...collection.resolutions,
-			...newResolutions
+			...newResolutions,
 		});
 	}
 
@@ -93,7 +97,7 @@ export default class CollectionEditor extends React.Component<Props, State> {
 
 		this.onResolutionsEdit({
 			...collection.resolutions,
-			[resolutionID]: null
+			[resolutionID]: null,
 		});
 	}
 
@@ -123,16 +127,16 @@ export default class CollectionEditor extends React.Component<Props, State> {
 			...currentResolutions,
 			[resolutionID]: {
 				name: resolutionNewName,
-				content: currentResolutions[resolutionID].content
-			}
+				content: currentResolutions[resolutionID].content,
+			},
 		});
 	}
 
 	render() {
 		const { collection } = this.props;
 
-		const collectionItems = Object.entries(collection.resolutions)
-			.map(([resolutionID, resolution], index) => {
+		const collectionItems = Object.entries(collection.resolutions).map(
+			([resolutionID, resolution], index) => {
 				/**
 				 * @TODO For the sake of a good architecture, this
 				 * component should receive a mapped structure with URLs
@@ -157,10 +161,12 @@ export default class CollectionEditor extends React.Component<Props, State> {
 						/>
 					</div>
 				);
-			});
+			}
+		);
 
 		return (
-			<div className={`list collection-editor ${this.state.draggingOver && "dragOver" || ""}`}
+			<div
+				className={`list collection-editor ${(this.state.draggingOver && "dragOver") || ""}`}
 				onDragEnter={this.onDragEnterHandler}
 				// To avoid for children pictures to be dragged and trigger the onDragEnter
 				onDragStart={CollectionEditor.preventEventDefaultPropagation}
@@ -194,17 +200,15 @@ export default class CollectionEditor extends React.Component<Props, State> {
 }
 
 async function getResolutionsFromFileList(files: FileList) {
-	const buffers = await Promise.all<ArrayBuffer>(
-		Array.prototype.map.call(files, getArrayBuffer)
-	);
+	const buffers = await Promise.all<ArrayBuffer>(Array.prototype.map.call(files, getArrayBuffer));
 
 	return buffers.reduce((acc, content) => {
 		return {
 			...acc,
 			[uuid()]: {
 				name: "",
-				content
-			}
-		}
+				content,
+			},
+		};
 	}, {} as IdentifiedResolutions);
 }

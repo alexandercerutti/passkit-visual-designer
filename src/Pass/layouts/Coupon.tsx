@@ -16,7 +16,7 @@ type CouponProps = PassMixedProps & AlternativesRegistrationSignature;
 export function Coupon(props: CouponProps): JSX.Element {
 	useAlternativesRegistration(props.registerAlternatives, {
 		name: "Coupon Pass",
-		specificProps: {}
+		specificProps: {},
 	});
 
 	const {
@@ -28,7 +28,7 @@ export function Coupon(props: CouponProps): JSX.Element {
 		stripImage,
 		logo,
 		logoText,
-		icon
+		icon,
 	} = props;
 
 	const { onFieldSelect, registerField } = React.useContext(InteractionContext);
@@ -62,14 +62,8 @@ export function Coupon(props: CouponProps): JSX.Element {
 				register={registerField}
 				id="secondary-auxiliary"
 			/>
-			<Footer
-				icon={icon}
-				register={registerField}
-			>
-				<Barcode
-					format={barcode?.format}
-					fallbackShape="square"
-				/>
+			<Footer icon={icon} register={registerField}>
+				<Barcode format={barcode?.format} fallbackShape="square" />
 			</Footer>
 		</>
 	);

@@ -48,7 +48,8 @@
 
 	&.hidden {
 		& .preview-main-box {
-			& span.label, & span.value {
+			& span.label,
+			& span.value {
 				color: #757575;
 			}
 
@@ -70,18 +71,27 @@
 		margin: 20px auto 10px auto;
 		max-width: 100%;
 
-		&.align-right > * { text-align: right; }
-		&.align-left > * { text-align: left; }
-		&.align-center > * { text-align: center; }
-		&.align-natural > * { text-align: start; }
+		&.align-right > * {
+			text-align: right;
+		}
+		&.align-left > * {
+			text-align: left;
+		}
+		&.align-center > * {
+			text-align: center;
+		}
+		&.align-natural > * {
+			text-align: start;
+		}
 
-		& span.label, & span.value {
+		& span.label,
+		& span.value {
 			color: @base-background-color;
 			overflow: hidden;
 			text-overflow: ellipsis;
 			white-space: nowrap;
 			flex-grow: 1;
-			padding: 3px 6px;;
+			padding: 3px 6px;
 		}
 
 		& span.label {

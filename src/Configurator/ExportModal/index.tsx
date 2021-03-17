@@ -44,45 +44,45 @@ export default function ExportModal(props: Props) {
 
 	const partnerTabs = partners.map((partner, index) => {
 		const className = createClassName(["tab"], {
-			"active": index === activePartnerTab
+			active: index === activePartnerTab,
 		});
 
 		return (
-			<div
-				className={className}
-				onClick={() => setActivePartnerTab(index)}
-				key={`tab${index}`}
-			>
+			<div className={className} onClick={() => setActivePartnerTab(index)} key={`tab${index}`}>
 				{partner.showName}
 			</div>
 		);
 	});
 
 	const { templateName, lang } = partners[activePartnerTab];
-	const partnerFilledContent = templates[templateName]({ store: {
-		pass: props.passProps,
-		translations: props.translations,
-		projectOptions: props.projectOptions,
-		media: props.media
-	}});
+	const partnerFilledContent = templates[templateName]({
+		store: {
+			pass: props.passProps,
+			translations: props.translations,
+			projectOptions: props.projectOptions,
+			media: props.media,
+		},
+	});
 
 	const codeLanguage = `language-${lang}`;
 
 	return (
-		<Modal
-			closeModal={props.closeModal}
-			contentUniqueID="export"
-		>
-			<h2>Great <span>Pass</span>!</h2>
-			<p>Your model is now being exported. Here below you can see some open source libraries examples to generate programmatically passes with your mock data compiled. Enjoy!</p>
-			<div className="tabs">
-				{partnerTabs}
-			</div>
+		<Modal closeModal={props.closeModal} contentUniqueID="export">
+			<h2>
+				Great <span>Pass</span>!
+			</h2>
+			<p>
+				Your model is now being exported. Here below you can see some open source libraries examples
+				to generate programmatically passes with your mock data compiled. Enjoy!
+			</p>
+			<div className="tabs">{partnerTabs}</div>
 			<div className="partner-example">
 				<pre className={`line-numbers ${codeLanguage}`}>
 					<code
 						ref={codeRef}
-						dangerouslySetInnerHTML={{ __html: Prism.highlight(partnerFilledContent, Prism.languages[lang], lang) }}
+						dangerouslySetInnerHTML={{
+							__html: Prism.highlight(partnerFilledContent, Prism.languages[lang], lang),
+						}}
 					/>
 				</pre>
 			</div>

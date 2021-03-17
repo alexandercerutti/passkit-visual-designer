@@ -21,25 +21,24 @@ export function PassHeader(props: HeaderProps) {
 	 */
 	const [logoClickHandler, logoTextClickHandler] = useRegistrations(props.register, [
 		[FieldKind.IMAGE, "logo"],
-		[FieldKind.TEXT, "logoText"]
+		[FieldKind.TEXT, "logoText"],
 	]);
 
 	/**
 	 * This is to make fallback growing and be visible
 	 * We need to have at least one element that have value or label
 	 */
-	const canGrowRowCN = !(
-		props.headerFields.length &&
-		props.headerFields.some(field => field.value || field.label)
-	) && "can-grow" || "";
+	const canGrowRowCN =
+		(!(
+			props.headerFields.length && props.headerFields.some((field) => field.value || field.label)
+		) &&
+			"can-grow") ||
+		"";
 
 	return (
 		<div className="header-container">
 			<div className="inner">
-				<ImageField
-					src={props.logo}
-					onClick={() => logoClickHandler(null)}
-				/>
+				<ImageField src={props.logo} onClick={() => logoClickHandler(null)} />
 				<TextField
 					className="logo-text"
 					content={props.logoText || ""}

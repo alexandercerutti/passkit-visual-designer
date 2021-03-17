@@ -13,12 +13,14 @@ interface FieldOptionsProps {
 }
 
 export default function FieldOptionsBar(props: FieldOptionsProps) {
-	const allowedMovingDirections = (
-		props.isLowerBoundary && props.isUpperBoundary ? Directions.NONE :
-			props.isLowerBoundary ? Directions.UP :
-				props.isUpperBoundary ? Directions.DOWN :
-					Directions.BOTH
-	);
+	const allowedMovingDirections =
+		props.isLowerBoundary && props.isUpperBoundary
+			? Directions.NONE
+			: props.isLowerBoundary
+			? Directions.UP
+			: props.isUpperBoundary
+			? Directions.DOWN
+			: Directions.BOTH;
 
 	return (
 		<>
@@ -28,12 +30,11 @@ export default function FieldOptionsBar(props: FieldOptionsProps) {
 				</div>
 				<FieldOrderHandler
 					allowedDirections={allowedMovingDirections}
-					requestFieldOrderChange={(amount) => props.requestFieldOrderChange(props.fieldUUID, amount)}
+					requestFieldOrderChange={(amount) =>
+						props.requestFieldOrderChange(props.fieldUUID, amount)
+					}
 				/>
-				<div
-					className="property-add-row"
-					onClick={props.onPropsEditClick}
-				>
+				<div className="property-add-row" onClick={props.onPropsEditClick}>
 					<ListAddProp className="add" />
 				</div>
 			</div>

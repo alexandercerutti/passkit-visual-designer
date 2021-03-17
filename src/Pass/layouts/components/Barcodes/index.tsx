@@ -24,7 +24,7 @@ export default function Barcodes(props: BarcodeProps) {
 	}
 
 	const className = createClassName(["barcode", barcodeFormat, props.fallbackShape], {
-		"content": barcodeFormat !== PKBarcodeFormat.None && props.message
+		content: barcodeFormat !== PKBarcodeFormat.None && props.message,
 	});
 
 	return (
@@ -35,14 +35,20 @@ export default function Barcodes(props: BarcodeProps) {
 			</div>
 		</div>
 	);
-};
+}
 
 export function isSquareBarcode(kind: PKBarcodeFormat) {
-	return kind === PKBarcodeFormat.Square || kind === PKBarcodeFormat.QR || kind === PKBarcodeFormat.Aztec;
+	return (
+		kind === PKBarcodeFormat.Square || kind === PKBarcodeFormat.QR || kind === PKBarcodeFormat.Aztec
+	);
 }
 
 export function isRectangularBarcode(kind: PKBarcodeFormat) {
-	return kind === PKBarcodeFormat.Rectangle || kind === PKBarcodeFormat.Code128 || kind === PKBarcodeFormat.PDF417;
+	return (
+		kind === PKBarcodeFormat.Rectangle ||
+		kind === PKBarcodeFormat.Code128 ||
+		kind === PKBarcodeFormat.PDF417
+	);
 }
 
 function selectComponentFromFormat(format: PKBarcodeFormat, fallbackFormat: "square" | "rect") {

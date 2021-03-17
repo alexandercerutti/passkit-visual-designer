@@ -11,36 +11,28 @@ interface PFStripProps extends PrimaryFieldsProps {
 	stripSrc?: string;
 }
 
-export default function StripPrimaryFields(props: React.PropsWithChildren<PFStripProps>): JSX.Element {
+export default function StripPrimaryFields(
+	props: React.PropsWithChildren<PFStripProps>
+): JSX.Element {
 	const { register, fields, stripSrc } = props;
 	const [primaryFieldsClickHandler, stripImageClickHandler] = useRegistrations(register, [
 		[FieldKind.FIELDS, "primaryFields"],
-		[FieldKind.IMAGE, "stripImage"]
+		[FieldKind.IMAGE, "stripImage"],
 	]);
 
-	const data = getFilteredFieldData(fields, 1, 1)
-		.map(data => {
-			return (
-				<GhostField
-					key="primaryField"
-					onClick={primaryFieldsClickHandler}
-					fieldData={data}
-				>
-					<FieldValue fieldData={data} />
-					<FieldLabel fieldData={data} />
-				</GhostField>
-			);
-		});
+	const data = getFilteredFieldData(fields, 1, 1).map((data) => {
+		return (
+			<GhostField key="primaryField" onClick={primaryFieldsClickHandler} fieldData={data}>
+				<FieldValue fieldData={data} />
+				<FieldLabel fieldData={data} />
+			</GhostField>
+		);
+	});
 
 	return (
 		<div className="strip-primaryFields">
-			<div className="row">
-				{data}
-			</div>
-			<ImageField
-				src={stripSrc}
-				onClick={stripImageClickHandler}
-			/>
+			<div className="row">{data}</div>
+			<ImageField src={stripSrc} onClick={stripImageClickHandler} />
 		</div>
 	);
 }

@@ -35,7 +35,7 @@ export default function FieldsPropertiesEditPage(props: Props) {
 				onValueChange={(prop, value) => {
 					setData({
 						...data,
-						[prop]: value
+						[prop]: value,
 					});
 				}}
 			/>

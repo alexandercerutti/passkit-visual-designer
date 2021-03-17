@@ -64,7 +64,9 @@ export default class RecentSelector extends React.Component<Props, State> {
 
 				await Promise.all([
 					this.props.requestForageDataRequest(),
-					new Promise(resolve => (this.delayLoadingAnimationTimeout = window.setTimeout(resolve, 2000)))
+					new Promise(
+						(resolve) => (this.delayLoadingAnimationTimeout = window.setTimeout(resolve, 2000))
+					),
 				]);
 			} finally {
 				this.toggleRefreshing();
@@ -76,10 +78,7 @@ export default class RecentSelector extends React.Component<Props, State> {
 		const newState = { ...state };
 
 		const allProjectsIDs = [
-			...new Set([
-				...Object.keys(state.previewsURLList),
-				...Object.keys(props.recentProjects)
-			])
+			...new Set([...Object.keys(state.previewsURLList), ...Object.keys(props.recentProjects)]),
 		];
 
 		newState.previewsURLList = allProjectsIDs.reduce((acc, current) => {
@@ -92,7 +91,7 @@ export default class RecentSelector extends React.Component<Props, State> {
 			if (state.previewsURLList[current]) {
 				return {
 					...acc,
-					[current]: state.previewsURLList[current]
+					[current]: state.previewsURLList[current],
 				};
 			}
 
@@ -100,7 +99,7 @@ export default class RecentSelector extends React.Component<Props, State> {
 				...acc,
 				[current]: URL.createObjectURL(
 					new Blob([props.recentProjects[current].preview], { type: "image/*" })
-				)
+				),
 			};
 		}, {});
 
@@ -124,13 +123,15 @@ export default class RecentSelector extends React.Component<Props, State> {
 	}
 
 	switchEditMode() {
-		this.setState(previous => ({
-			editMode: !previous.editMode
+		this.setState((previous) => ({
+			editMode: !previous.editMode,
 		}));
 	}
 
 	async removeProject(id: string) {
-		const projects = await localForage.getItem<Store.Forage.ForageStructure["projects"]>("projects");
+		const projects = await localForage.getItem<Store.Forage.ForageStructure["projects"]>(
+			"projects"
+		);
 
 		delete projects[id];
 
@@ -148,7 +149,7 @@ export default class RecentSelector extends React.Component<Props, State> {
 
 		this.setState({
 			showError: false,
-			isProcessingZipFile: true
+			isProcessingZipFile: true,
 		});
 
 		try {
@@ -157,8 +158,8 @@ export default class RecentSelector extends React.Component<Props, State> {
 				translations: {},
 				media: {},
 				projectOptions: {
-					title: "Imported Project"
-				}
+					title: "Imported Project",
+				},
 			};
 
 			const firstZipFile = Array.prototype.find.call(uploadFiles, (file: File) =>
@@ -167,7 +168,9 @@ export default class RecentSelector extends React.Component<Props, State> {
 
 			if (!firstZipFile) {
 				const ext = uploadFiles[0].name.match(/\.(.+)/g)[0];
-				throw new Error(`Unsupported file type (${ext}). Only .zip and .pkpass can be used as starting point.`);
+				throw new Error(
+					`Unsupported file type (${ext}). Only .zip and .pkpass can be used as starting point.`
+				);
 			}
 
 			let zip: JSZip = null;
@@ -182,22 +185,24 @@ export default class RecentSelector extends React.Component<Props, State> {
 
 			const filesNames = Object.entries(zip.files);
 
-			for (let i = filesNames.length, file: typeof filesNames[0]; file = filesNames[--i];) {
-				const [ filePath, fileObject ] = file;
+			for (let i = filesNames.length, file: typeof filesNames[0]; (file = filesNames[--i]); ) {
+				const [filePath, fileObject] = file;
 
 				const match = filePath.match(ZIP_FILE_PATH_SPLIT_REGEX);
-				const { language, realFileName } = match.groups as { language?: string, realFileName?: string };
+				const { language, realFileName } = match.groups as {
+					language?: string;
+					realFileName?: string;
+				};
 
 				const isIgnoredFile = ZIP_FILE_IGNORE_REGEX.test(realFileName);
 				const isDirectoryRecord = language && !realFileName;
 				const isFileInDirectory = language && realFileName;
 
-				const shouldSkip = (
+				const shouldSkip =
 					/** Ignoring record, it is only the folder, we don't need it */
 					isDirectoryRecord ||
 					/** Is dynamic or unsupported file */
-					isIgnoredFile
-				);
+					isIgnoredFile;
 
 				if (shouldSkip) {
 					continue;
@@ -209,11 +214,18 @@ export default class RecentSelector extends React.Component<Props, State> {
 
 						try {
 							passInfo = JSON.parse(await fileObject.async("string"));
-						} catch(err) {
+						} catch (err) {
 							throw `Bad JSON. (${err})`;
 						}
 
-						const { boardingPass, coupon, storeCard, eventTicket, generic, ...otherPassProps } = passInfo;
+						const {
+							boardingPass,
+							coupon,
+							storeCard,
+							eventTicket,
+							generic,
+							...otherPassProps
+						} = passInfo;
 						const { transitType } = boardingPass || {};
 
 						let kind: PassKind = null;
@@ -242,7 +254,7 @@ export default class RecentSelector extends React.Component<Props, State> {
 						parsedPayload.pass = Object.assign(otherPassProps, {
 							kind,
 							transitType,
-							...(sourceOfFields || null)
+							...(sourceOfFields || null),
 						});
 
 						continue;
@@ -259,34 +271,30 @@ export default class RecentSelector extends React.Component<Props, State> {
 						 * fields and placeholders.
 						 */
 
-						const file = (
-							await fileObject.async("string")
-						).replace(/\uFEFF/g, "");
+						const file = (await fileObject.async("string")).replace(/\uFEFF/g, "");
 
-						file.split("\n")
-							.map(row => row.match(ZIP_FILE_STRINGS_PV_SPLIT_REGEX))
+						file
+							.split("\n")
+							.map((row) => row.match(ZIP_FILE_STRINGS_PV_SPLIT_REGEX))
 							.forEach((match) => {
 								if (!match?.groups) {
 									return;
 								}
 
-								(parsedPayload.translations[language] ??= [])
-									.push([
-										match.groups.placeholder.replace(ZIP_FILE_STRINGS_PV_QUOTES_REPLACE_REGEX, ""),
-										match.groups.value.replace(ZIP_FILE_STRINGS_PV_QUOTES_REPLACE_REGEX, "")
-									]);
+								(parsedPayload.translations[language] ??= []).push([
+									match.groups.placeholder.replace(ZIP_FILE_STRINGS_PV_QUOTES_REPLACE_REGEX, ""),
+									match.groups.value.replace(ZIP_FILE_STRINGS_PV_QUOTES_REPLACE_REGEX, ""),
+								]);
 							});
 					} else if (ZIP_FILE_NAME_EXT_REGEX.test(realFileName)) {
 						const file = await fileObject.async("arraybuffer");
 
-						(parsedPayload.media[language] ??= [])
-							.push([realFileName, file]);
+						(parsedPayload.media[language] ??= []).push([realFileName, file]);
 					}
 				} else {
 					const file = await fileObject.async("arraybuffer");
 
-					(parsedPayload.media["default"] ??= [])
-						.push([realFileName, file]);
+					(parsedPayload.media["default"] ??= []).push([realFileName, file]);
 				}
 			}
 
@@ -321,18 +329,21 @@ export default class RecentSelector extends React.Component<Props, State> {
 			this.errorMessage = errorMessage;
 		}
 
-		this.setState(previous => ({
-			showError: !previous.showError,
-		}), () => {
-			if (!errorMessage) {
-				this.errorMessage = errorMessage;
+		this.setState(
+			(previous) => ({
+				showError: !previous.showError,
+			}),
+			() => {
+				if (!errorMessage) {
+					this.errorMessage = errorMessage;
+				}
 			}
-		});
+		);
 	}
 
 	render() {
 		const deleteButtonClassName = createClassName(["delete"], {
-			open: this.state.editMode
+			open: this.state.editMode,
 		});
 
 		const savedProjects = Object.entries(this.props.recentProjects).map(([id, { snapshot }]) => {
@@ -357,7 +368,9 @@ export default class RecentSelector extends React.Component<Props, State> {
 			<div id="recent-selector">
 				<header>
 					<div>
-						<h4>Passkit Visual Designer <span id="version">v{version}</span></h4>
+						<h4>
+							Passkit Visual Designer <span id="version">v{version}</span>
+						</h4>
 					</div>
 					<div>
 						<a href="https://git.io/JLNCQ" target="_blank" rel="noopener">
@@ -366,12 +379,7 @@ export default class RecentSelector extends React.Component<Props, State> {
 					</div>
 				</header>
 				<main>
-					<CSSTransition
-						in={this.state.showError}
-						timeout={1000}
-						unmountOnExit
-						mountOnEnter
-					>
+					<CSSTransition in={this.state.showError} timeout={1000} unmountOnExit mountOnEnter>
 						<div className="error-area" onClick={() => this.toggleErrorOverlay()}>
 							<div id="error-box" onClick={(e) => e.stopPropagation()}>
 								<h2>Import error</h2>
@@ -382,7 +390,11 @@ export default class RecentSelector extends React.Component<Props, State> {
 					<div className="centered-column">
 						<section>
 							<div id="choices-box" className={this.state.isProcessingZipFile ? "loading" : ""}>
-								<div onClick={() => !this.state.isProcessingZipFile && this.props.pushHistory("/select")}>
+								<div
+									onClick={() =>
+										!this.state.isProcessingZipFile && this.props.pushHistory("/select")
+									}
+								>
 									<AddIcon width="32px" height="32px" />
 									<span>Create Project</span>
 								</div>
@@ -405,26 +417,20 @@ export default class RecentSelector extends React.Component<Props, State> {
 							<div className="recents-box">
 								<header className={this.state.refreshing ? "refreshing" : null}>
 									<h2>Recent Projects</h2>
-									<button disabled={!savedProjects.length} onClick={this.switchEditMode} className={this.state.editMode ? "editing" : ""}>
-										{
-											this.state.editMode
-												? "Done"
-												: "Edit"
-										}
+									<button
+										disabled={!savedProjects.length}
+										onClick={this.switchEditMode}
+										className={this.state.editMode ? "editing" : ""}
+									>
+										{this.state.editMode ? "Done" : "Edit"}
 									</button>
 								</header>
 								<main>
-									{
-										savedProjects.length && (
-											<ul>
-												{savedProjects}
-											</ul>
-										) || (
-											<span>
-												No recent projects yet. Local recent projects will appear here below.
-											</span>
-										)
-									}
+									{(savedProjects.length && <ul>{savedProjects}</ul>) || (
+										<span>
+											No recent projects yet. Local recent projects will appear here below.
+										</span>
+									)}
 								</main>
 							</div>
 						</section>

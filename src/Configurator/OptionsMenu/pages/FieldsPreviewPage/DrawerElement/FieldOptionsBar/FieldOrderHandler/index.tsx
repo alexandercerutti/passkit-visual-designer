@@ -6,7 +6,7 @@ export const enum Directions {
 	UP,
 	DOWN,
 	BOTH,
-	NONE
+	NONE,
 }
 
 interface Props {
@@ -21,11 +21,11 @@ export default function FieldOrderHandler(props: Props) {
 	return (
 		<div className="field-order-handler">
 			<FieldsArrowIcon
-				className={!canMoveUp && "disabled" || undefined}
+				className={(!canMoveUp && "disabled") || undefined}
 				onClick={() => canMoveUp && props.requestFieldOrderChange(-1)}
 			/>
 			<FieldsArrowIcon
-				className={!canMoveDown && "disabled" || undefined}
+				className={(!canMoveDown && "disabled") || undefined}
 				onClick={() => canMoveDown && props.requestFieldOrderChange(1)}
 			/>
 		</div>
@@ -34,9 +34,7 @@ export default function FieldOrderHandler(props: Props) {
 
 function canMoveInDirection(directionProp: Directions, targetDirection: Directions) {
 	return (
-		directionProp !== Directions.NONE && (
-			directionProp === targetDirection ||
-			directionProp === Directions.BOTH
-		)
+		directionProp !== Directions.NONE &&
+		(directionProp === targetDirection || directionProp === Directions.BOTH)
 	);
 }

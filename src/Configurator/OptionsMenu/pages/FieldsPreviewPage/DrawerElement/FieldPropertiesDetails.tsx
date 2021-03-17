@@ -1,8 +1,18 @@
-import { PKDataDetectorType, PKTextAlignment, PKDateStyle, PassFieldKeys } from "../../../../../Pass/constants";
+import {
+	PKDataDetectorType,
+	PKTextAlignment,
+	PKDateStyle,
+	PassFieldKeys,
+} from "../../../../../Pass/constants";
 
 type FieldPropertyDetail = {
-	name: keyof PassFieldKeys,
-	type: typeof String | typeof Boolean | typeof PKTextAlignment | typeof PKDateStyle | typeof PKDataDetectorType,
+	name: keyof PassFieldKeys;
+	type:
+		| typeof String
+		| typeof Boolean
+		| typeof PKTextAlignment
+		| typeof PKDateStyle
+		| typeof PKDataDetectorType;
 	placeholder?: string;
 	optional?: boolean;
 	defaultValue?: string;
@@ -35,7 +45,7 @@ export const FieldPropertiesDetails: FieldPropertyDetail[] = [
 		name: "dataDetectorTypes",
 		type: PKDataDetectorType,
 		optional: true,
-		defaultValue: "None"
+		defaultValue: "None",
 	},
 	{
 		name: "textAlignment",
@@ -47,13 +57,13 @@ export const FieldPropertiesDetails: FieldPropertyDetail[] = [
 		name: "dateStyle",
 		type: PKDateStyle,
 		optional: true,
-		defaultValue: PKDateStyle.None
+		defaultValue: PKDateStyle.None,
 	},
 	{
 		name: "timeStyle",
 		type: PKDateStyle,
 		optional: true,
-		defaultValue: PKDateStyle.None
+		defaultValue: PKDateStyle.None,
 	},
 	{
 		name: "ignoresTimeZone",
@@ -64,5 +74,5 @@ export const FieldPropertiesDetails: FieldPropertyDetail[] = [
 		name: "isRelative",
 		type: Boolean,
 		optional: true,
-	}
+	},
 ];

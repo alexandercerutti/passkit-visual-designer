@@ -1,5 +1,12 @@
 import * as React from "react";
-import { BrowserRouter as Router, Switch, Route, Redirect, useLocation, useHistory } from "react-router-dom";
+import {
+	BrowserRouter as Router,
+	Switch,
+	Route,
+	Redirect,
+	useLocation,
+	useHistory,
+} from "react-router-dom";
 import thunk from "redux-thunk";
 import localForage from "localforage";
 import { Provider } from "react-redux";
@@ -16,7 +23,7 @@ import { CollectionSet } from "../store";
 import { v1 as uuid } from "uuid";
 
 export interface StateLookalike {
-	pass: Partial<PassMixedProps>,
+	pass: Partial<PassMixedProps>;
 	translations: {
 		[language: string]: [placeholder: string, value: string][];
 	};
@@ -38,7 +45,8 @@ declare const __DEV__: boolean;
 
 const LOADING_TIME_MS = 1500;
 
-const store = createStore(Store.reducers,
+const store = createStore(
+	Store.reducers,
 	Store.initialState,
 	composeWithDevTools(
 		applyMiddleware(
@@ -66,12 +74,7 @@ export default function AppRoutingLoaderContainer() {
 	return (
 		<Provider store={store}>
 			<Router>
-				<CSSTransition
-					mountOnEnter
-					unmountOnExit
-					in={isLoading}
-					timeout={500}
-				>
+				<CSSTransition mountOnEnter unmountOnExit in={isLoading} timeout={500}>
 					<LoaderFace />
 				</CSSTransition>
 				<App setLoading={setLoading} />
@@ -90,150 +93,207 @@ function App(props: Props): JSX.Element {
 	const history = useHistory();
 	const location = useLocation();
 
-	const wrapLoading = React.useCallback(async (phase: Function, minTimeBeforeExecution?: number, minTimeBeforeCompletion?: number) => {
-		props.setLoading(true);
+	const wrapLoading = React.useCallback(
+		async (phase: Function, minTimeBeforeExecution?: number, minTimeBeforeCompletion?: number) => {
+			props.setLoading(true);
 
-		await Promise.all([
-			minTimeBeforeCompletion ? createDelayedPromise(minTimeBeforeCompletion, null) : Promise.resolve(),
-			minTimeBeforeExecution ? createDelayedPromise(minTimeBeforeExecution, phase) : Promise.resolve(phase())
-		]);
+			await Promise.all([
+				minTimeBeforeCompletion
+					? createDelayedPromise(minTimeBeforeCompletion, null)
+					: Promise.resolve(),
+				minTimeBeforeExecution
+					? createDelayedPromise(minTimeBeforeExecution, phase)
+					: Promise.resolve(phase()),
+			]);
 
-		props.setLoading(false);
-	}, []);
+			props.setLoading(false);
+		},
+		[]
+	);
 
 	const changePathWithLoading = React.useCallback((path: string, preloadCallback?: Function) => {
-		wrapLoading(() => {
-			preloadCallback?.();
-			history.push(path);
-		}, null, LOADING_TIME_MS);
+		wrapLoading(
+			() => {
+				preloadCallback?.();
+				history.push(path);
+			},
+			null,
+			LOADING_TIME_MS
+		);
 	}, []);
 
 	const refreshForageCallback = React.useCallback(async () => {
 		const slices: (keyof Store.Forage.ForageStructure)[] = ["projects"];
 
-		const data = Object.assign({},
-			...(await Promise.all(
-				slices.map((slice) => localForage.getItem<Store.Forage.ForageStructure[typeof slice]>(slice))
-			))
-				.map((data, index) => ({ [slices[index]]: data }))
+		const data = Object.assign(
+			{},
+			...(
+				await Promise.all(
+					slices.map((slice) =>
+						localForage.getItem<Store.Forage.ForageStructure[typeof slice]>(slice)
+					)
+				)
+			).map((data, index) => ({ [slices[index]]: data }))
 		) as Store.Forage.ForageStructure;
 
 		setForageData(data);
 	}, []);
 
-	const initializeStore = React.useCallback(async (snapshot: Store.State) => {
-		sessionStorage.clear();
-		/**
-		 * Trick to show loader, so if this takes a bit of time,
-		 * UI doesn't seems to be stuck.
-		 * @TODO Actually, what would be better is not firing Init until
-		 * we are not sure that resolutions URLs have been generated.
-		 * For the moment we are using the same normal flow, through
-		 * middlewares.
-		 */
+	const initializeStore = React.useCallback(
+		async (snapshot: Store.State) => {
+			sessionStorage.clear();
+			/**
+			 * Trick to show loader, so if this takes a bit of time,
+			 * UI doesn't seems to be stuck.
+			 * @TODO Actually, what would be better is not firing Init until
+			 * we are not sure that resolutions URLs have been generated.
+			 * For the moment we are using the same normal flow, through
+			 * middlewares.
+			 */
 
-		store.dispatch(Store.Forage.Init(snapshot));
+			store.dispatch(Store.Forage.Init(snapshot));
 
-		/** Iterating through medias so we can create and set URLs for array buffers */
+			/** Iterating through medias so we can create and set URLs for array buffers */
 
-		const availableMediaLanguages = Object.entries(snapshot.media);
+			const availableMediaLanguages = Object.entries(snapshot.media);
 
-		for (let i = availableMediaLanguages.length, localized: typeof availableMediaLanguages[0]; localized = availableMediaLanguages[--i];) {
-			const [language, mediaSet] = localized;
-			const mediaEntries = Object.entries(mediaSet) as [keyof MediaProps, CollectionSet][];
+			for (
+				let i = availableMediaLanguages.length, localized: typeof availableMediaLanguages[0];
+				(localized = availableMediaLanguages[--i]);
 
-			for (let i = mediaEntries.length, mediaEntry: typeof mediaEntries[0]; mediaEntry = mediaEntries[--i];) {
-				const [mediaName, collectionSet] = mediaEntry;
-				const collectionEntries = Object.entries(collectionSet.collections);
+			) {
+				const [language, mediaSet] = localized;
+				const mediaEntries = Object.entries(mediaSet) as [keyof MediaProps, CollectionSet][];
 
-				for (let i = collectionEntries.length, collectionEntry: typeof collectionEntries[0]; collectionEntry = collectionEntries[--i];) {
-					const [collectionID, collection] = collectionEntry;
+				for (
+					let i = mediaEntries.length, mediaEntry: typeof mediaEntries[0];
+					(mediaEntry = mediaEntries[--i]);
 
-					store.dispatch(Store.Media.EditCollection(mediaName, language, collectionID, collection));
+				) {
+					const [mediaName, collectionSet] = mediaEntry;
+					const collectionEntries = Object.entries(collectionSet.collections);
+
+					for (
+						let i = collectionEntries.length, collectionEntry: typeof collectionEntries[0];
+						(collectionEntry = collectionEntries[--i]);
+
+					) {
+						const [collectionID, collection] = collectionEntry;
+
+						store.dispatch(
+							Store.Media.EditCollection(mediaName, language, collectionID, collection)
+						);
+					}
 				}
 			}
-		}
-	}, [forageData?.projects]);
+		},
+		[forageData?.projects]
+	);
 
-	const initializeStoreByProjectID = React.useCallback((projectID: string) => {
-		if (!forageData.projects[projectID]) {
-			throw `No project with id ${projectID}. Is there any kind of caching happening?`;
-		}
+	const initializeStoreByProjectID = React.useCallback(
+		(projectID: string) => {
+			if (!forageData.projects[projectID]) {
+				throw `No project with id ${projectID}. Is there any kind of caching happening?`;
+			}
 
-		const { snapshot } = forageData.projects[projectID];
+			const { snapshot } = forageData.projects[projectID];
 
-		return initializeStore(snapshot);
-	}, [initializeStore]);
+			return initializeStore(snapshot);
+		},
+		[initializeStore]
+	);
 
-	const createProjectFromArchive = React.useCallback((data: StateLookalike) => {
-		wrapLoading(() => {
-			const translations = Object.entries(data.translations)
-				.reduce<Store.LocalizedTranslationsGroup>((acc, [lang, contents]) => ({
-					...acc,
-					[lang]: {
-						enabled: true,
-						translations: contents.reduce((acc, content) => ({
+	const createProjectFromArchive = React.useCallback(
+		(data: StateLookalike) => {
+			wrapLoading(
+				() => {
+					const translations = Object.entries(
+						data.translations
+					).reduce<Store.LocalizedTranslationsGroup>(
+						(acc, [lang, contents]) => ({
 							...acc,
-							[uuid()]: content
-						}), {})
-					}
-				}), {});
-
-			const mediaNameCollIDMap = new Map();
-
-			const media = Object.entries(data.media)
-				.reduce<Store.LocalizedMediaGroup>((acc, [lang, contents]) => {
-					return {
-						...acc,
-						[lang]: contents.reduce((acc, [fileName, buffer]) => {
-							const mediaNameWithoutExtOrResolution = fileName.replace(/(@\dx)?\.(.+)$/, "") as keyof MediaProps;
-							let collectionID: string = mediaNameCollIDMap.get(mediaNameWithoutExtOrResolution);
-
-							if (!collectionID) {
-								collectionID = uuid();
-								mediaNameCollIDMap.set(mediaNameWithoutExtOrResolution, collectionID);
-							}
-
-							const resolutionID = uuid();
-							const collectionSet = {
-								activeCollectionID: collectionID,
+							[lang]: {
 								enabled: true,
-								collections: {
-									[collectionID]: {
-										name: `Imported Collection ${mediaNameWithoutExtOrResolution}`,
-										resolutions: {
-											...(acc[mediaNameWithoutExtOrResolution]?.["collections"]?.[collectionID]?.resolutions || null),
-											[resolutionID]: {
-												name: fileName,
-												content: buffer,
-											}
-										}
-									}
-								},
-							};
+								translations: contents.reduce(
+									(acc, content) => ({
+										...acc,
+										[uuid()]: content,
+									}),
+									{}
+								),
+							},
+						}),
+						{}
+					);
 
+					const mediaNameCollIDMap = new Map();
+
+					const media = Object.entries(data.media).reduce<Store.LocalizedMediaGroup>(
+						(acc, [lang, contents]) => {
 							return {
 								...acc,
-								[mediaNameWithoutExtOrResolution]: collectionSet
+								[lang]: contents.reduce((acc, [fileName, buffer]) => {
+									const mediaNameWithoutExtOrResolution = fileName.replace(
+										/(@\dx)?\.(.+)$/,
+										""
+									) as keyof MediaProps;
+									let collectionID: string = mediaNameCollIDMap.get(
+										mediaNameWithoutExtOrResolution
+									);
+
+									if (!collectionID) {
+										collectionID = uuid();
+										mediaNameCollIDMap.set(mediaNameWithoutExtOrResolution, collectionID);
+									}
+
+									const resolutionID = uuid();
+									const collectionSet = {
+										activeCollectionID: collectionID,
+										enabled: true,
+										collections: {
+											[collectionID]: {
+												name: `Imported Collection ${mediaNameWithoutExtOrResolution}`,
+												resolutions: {
+													...(acc[mediaNameWithoutExtOrResolution]?.["collections"]?.[collectionID]
+														?.resolutions || null),
+													[resolutionID]: {
+														name: fileName,
+														content: buffer,
+													},
+												},
+											},
+										},
+									};
+
+									return {
+										...acc,
+										[mediaNameWithoutExtOrResolution]: collectionSet,
+									};
+								}, {}),
 							};
-						}, {})
-					};
-				}, {});
+						},
+						{}
+					);
 
-			const snapshot: Store.State = Object.assign({}, Store.initialState, {
-				pass: data.pass,
-				translations,
-				projectOptions: {
-					title: data.projectOptions.title,
-					activeMediaLanguage: "default"
+					const snapshot: Store.State = Object.assign({}, Store.initialState, {
+						pass: data.pass,
+						translations,
+						projectOptions: {
+							title: data.projectOptions.title,
+							activeMediaLanguage: "default",
+						},
+						media,
+					});
+
+					initializeStore(snapshot);
+					history.push("/creator");
 				},
-				media
-			});
-
-			initializeStore(snapshot);
-			history.push("/creator");
-		}, LOADING_TIME_MS, LOADING_TIME_MS);
-	}, [initializeStore, history]);
+				LOADING_TIME_MS,
+				LOADING_TIME_MS
+			);
+		},
+		[initializeStore, history]
+	);
 
 	React.useEffect(() => {
 		/**
@@ -254,9 +314,13 @@ function App(props: Props): JSX.Element {
 					history.replace("/");
 				}
 
-				wrapLoading(() => {
-					store.dispatch(Store.Forage.Reset());
-				}, LOADING_TIME_MS, LOADING_TIME_MS);
+				wrapLoading(
+					() => {
+						store.dispatch(Store.Forage.Reset());
+					},
+					LOADING_TIME_MS,
+					LOADING_TIME_MS
+				);
 			}
 		});
 
@@ -300,17 +364,17 @@ function App(props: Props): JSX.Element {
 							 * This condition is for startup. The navigation from
 							 * /creation will be handled by history.listen above
 							 */
-							return (!__DEV__ && history.action === "POP"
-								? <Redirect to="/" />
-								: <PassSelector pushHistory={changePathWithLoading} />
+							return !__DEV__ && history.action === "POP" ? (
+								<Redirect to="/" />
+							) : (
+								<PassSelector pushHistory={changePathWithLoading} />
 							);
 						}}
 					</Route>
 					<Route path="/creator">
 						{/** Let's play monopoly. You landed to /creator. Go to home without passing Go! */}
-						{() => !(__DEV__ || store.getState()?.pass?.kind)
-							? <Redirect to="/" />
-							: <Configurator />
+						{() =>
+							!(__DEV__ || store.getState()?.pass?.kind) ? <Redirect to="/" /> : <Configurator />
 						}
 					</Route>
 				</Switch>
@@ -320,7 +384,7 @@ function App(props: Props): JSX.Element {
 }
 
 function createDelayedPromise(timeout: number, execution?: Function) {
-	return new Promise<void>(resolve => {
+	return new Promise<void>((resolve) => {
 		setTimeout(() => {
 			execution?.();
 			resolve();

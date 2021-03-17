@@ -12,6 +12,9 @@ export interface AlternativesRegistrationSignature {
 	registerAlternatives?: RegisterAlternatives;
 }
 
-export default function useAlternativesRegistration(register: RegisterAlternatives, ...alternatives: PassAlternative[]) {
+export default function useAlternativesRegistration(
+	register: RegisterAlternatives,
+	...alternatives: PassAlternative[]
+) {
 	useEffect(() => void (register && register(...alternatives)), []);
 }

@@ -6,7 +6,4 @@ import localForage from "localforage";
 
 localForage.config();
 
-ReactDOM.render(
-	<App />,
-	document.getElementById("root"),
-);
+ReactDOM.render(<App />, document.getElementById("root"));

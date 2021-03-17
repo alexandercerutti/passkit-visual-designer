@@ -17,25 +17,22 @@ export default function PrimaryFields(props: PFTravelProps) {
 	const { register, fields, transitType, className: PFClassName } = props;
 	const parentId = "primaryFields";
 
-	const [primaryFieldsClickHandler] = useRegistrations(register, [
-		[FieldKind.FIELDS, parentId]
-	]);
+	const [primaryFieldsClickHandler] = useRegistrations(register, [[FieldKind.FIELDS, parentId]]);
 
-	const [from, to] = getFilteredFieldData(fields, 2, 2)
-		.map((fieldData, index) => {
-			const id = `${parentId}.${index}`;
+	const [from, to] = getFilteredFieldData(fields, 2, 2).map((fieldData, index) => {
+		const id = `${parentId}.${index}`;
 
-			return (
-				<GhostField
-					key={id}
-					onClick={() => primaryFieldsClickHandler(fieldData?.key ?? null)}
-					fieldData={fieldData}
-				>
-					<FieldLabel fieldData={fieldData} />
-					<FieldValue fieldData={fieldData} />
-				</GhostField>
-			);
-		});
+		return (
+			<GhostField
+				key={id}
+				onClick={() => primaryFieldsClickHandler(fieldData?.key ?? null)}
+				fieldData={fieldData}
+			>
+				<FieldLabel fieldData={fieldData} />
+				<FieldValue fieldData={fieldData} />
+			</GhostField>
+		);
+	});
 
 	const className = createClassName(["travel-primaryFields", PFClassName]);
 
@@ -43,7 +40,7 @@ export default function PrimaryFields(props: PFTravelProps) {
 		<div className={className}>
 			{from}
 			<PKTransitIcon
-				type={transitType === undefined && PKTransitType.Generic || transitType}
+				type={(transitType === undefined && PKTransitType.Generic) || transitType}
 				width={30}
 				height={30}
 			/>

@@ -1,6 +1,10 @@
 import * as React from "react";
 
-export default function useCSSCustomProperty(ref: React.RefObject<HTMLDivElement>, name: string, value: string) {
+export default function useCSSCustomProperty(
+	ref: React.RefObject<HTMLDivElement>,
+	name: string,
+	value: string
+) {
 	React.useLayoutEffect(() => {
 		const { current } = ref;
 

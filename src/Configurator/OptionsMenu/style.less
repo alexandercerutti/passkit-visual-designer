@@ -3,9 +3,9 @@
 #pages-navigator {
 	width: 100%;
 	height: 100%;
-	transition: transform .5s ease-in-out;
+	transition: transform 0.5s ease-in-out;
 	display: flex;
-	.lookMumIamAppearing(.5s, ease-in-out, 2s);
+	.lookMumIamAppearing(0.5s, ease-in-out, 2s);
 
 	& > .page {
 		width: 100%;
@@ -23,9 +23,7 @@
 			align-items: center;
 			padding: 0 15px;
 			min-height: 55px;
-			transition:
-				border-left .5s ease-in-out,
-				border-bottom .5s ease-in-out;
+			transition: border-left 0.5s ease-in-out, border-bottom 0.5s ease-in-out;
 			border-left: 0px solid #444;
 
 			&.disabled {
@@ -44,14 +42,14 @@
 				font-weight: 300;
 				color: #d2d2d2;
 				margin: 0;
-				transition: color .5s ease-in-out;
+				transition: color 0.5s ease-in-out;
 			}
 
 			& .icon {
 				width: 21px;
 				height: 21px;
 				fill: #d2d2d2;
-				transition: fill .5s ease-in-out;
+				transition: fill 0.5s ease-in-out;
 			}
 		}
 	}

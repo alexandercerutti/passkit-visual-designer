@@ -36,7 +36,7 @@ export default function reducer(state = initialState.pass, action: Actions.SetPr
 
 			return {
 				...state,
-				[action.key]: action.value
+				[action.key]: action.value,
 			};
 		}
 
@@ -54,11 +54,14 @@ export default function reducer(state = initialState.pass, action: Actions.SetPr
 
 // ************************************************************************ //
 
-export function setProp(key: Actions.SetProp["key"], value: Actions.SetProp["value"]): Actions.SetProp {
+export function setProp(
+	key: Actions.SetProp["key"],
+	value: Actions.SetProp["value"]
+): Actions.SetProp {
 	return {
 		type: SET_PROP,
 		key,
-		value
+		value,
 	};
 }
 
@@ -69,11 +72,8 @@ export function setKind(kind: PassKind) {
 export function setPropsBatch(props: PassMixedProps): ThunkAction<any, any, any, Actions.SetProp> {
 	return (dispatch) => {
 		const keys = Object.keys(props) as (keyof PassMixedProps)[];
-		for (let i = keys.length, key: keyof PassMixedProps; key = keys[--i];) {
-			dispatch(setProp(
-				key,
-				props[key]
-			));
+		for (let i = keys.length, key: keyof PassMixedProps; (key = keys[--i]); ) {
+			dispatch(setProp(key, props[key]));
 		}
 	};
 }

@@ -5,7 +5,7 @@
 	color: #e6e6e6;
 	opacity: 0.3;
 	transform: scale(0.95);
-	animation: appear .5s ease-in-out .1s forwards;
+	animation: appear 0.5s ease-in-out 0.1s forwards;
 	/* To scroll flexbox along with its props */
 	overflow: auto;
 	position: relative;
@@ -18,7 +18,7 @@
 		display: flex;
 		justify-content: center;
 		opacity: 0;
-		transition: .3s ease-in-out;
+		transition: 0.3s ease-in-out;
 		pointer-events: none;
 
 		& svg {
@@ -26,7 +26,7 @@
 			width: 50px;
 
 			& circle {
-				fill: #FFF;
+				fill: #fff;
 			}
 		}
 	}
@@ -44,7 +44,7 @@
 			border: 0;
 			color: #e6e6e6;
 			padding: 4px;
-			transition: background-color .2s ease-in-out;
+			transition: background-color 0.2s ease-in-out;
 			cursor: pointer;
 
 			&.json-mode-active {

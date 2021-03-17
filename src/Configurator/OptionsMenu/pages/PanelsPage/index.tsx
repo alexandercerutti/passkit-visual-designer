@@ -11,7 +11,7 @@ export enum DataGroup {
 	METADATA = "Metadata",
 	IMAGES = "Images",
 	COLORS = "Colors",
-	DATA = "Data"
+	DATA = "Data",
 }
 
 const MenuVoices = [DataGroup.METADATA, DataGroup.IMAGES, DataGroup.COLORS, DataGroup.DATA];

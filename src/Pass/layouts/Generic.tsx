@@ -15,21 +15,25 @@ import { FieldKind } from "../../model";
 type GenericProps = PassMixedProps & AlternativesRegistrationSignature;
 
 export function Generic(props: GenericProps): JSX.Element {
-	useAlternativesRegistration(props.registerAlternatives, {
-		name: "With rectangular barcode",
-		specificProps: {
-			barcode: {
-				format: PKBarcodeFormat.Rectangle
+	useAlternativesRegistration(
+		props.registerAlternatives,
+		{
+			name: "With rectangular barcode",
+			specificProps: {
+				barcode: {
+					format: PKBarcodeFormat.Rectangle,
+				},
+			},
+		},
+		{
+			name: "With square barcode",
+			specificProps: {
+				barcode: {
+					format: PKBarcodeFormat.Square,
+				},
 			},
 		}
-	}, {
-		name: "With square barcode",
-		specificProps: {
-			barcode: {
-				format: PKBarcodeFormat.Square
-			}
-		}
-	});
+	);
 
 	const {
 		secondaryFields = [],
@@ -40,40 +44,39 @@ export function Generic(props: GenericProps): JSX.Element {
 		logoText,
 		logo,
 		thumbnailImage,
-		icon
+		icon,
 	} = props;
 
 	const { onFieldSelect, registerField } = React.useContext(InteractionContext);
 
 	const isSquaredBarcode = isSquareBarcode(barcode?.format);
 
-	const middleFragment = isSquaredBarcode &&
-		(
+	const middleFragment = (isSquaredBarcode && (
+		<FieldsRow
+			elements={[...secondaryFields, ...auxiliaryFields]}
+			maximumElementsAmount={4}
+			onClick={onFieldSelect}
+			register={registerField}
+			id="secondary-auxiliary"
+		/>
+	)) || (
+		<>
 			<FieldsRow
-				elements={[...secondaryFields, ...auxiliaryFields]}
+				id="secondaryFields"
+				elements={secondaryFields}
 				maximumElementsAmount={4}
 				onClick={onFieldSelect}
 				register={registerField}
-				id="secondary-auxiliary"
 			/>
-		) || (
-			<>
-				<FieldsRow
-					id="secondaryFields"
-					elements={secondaryFields}
-					maximumElementsAmount={4}
-					onClick={onFieldSelect}
-					register={registerField}
-				/>
-				<FieldsRow
-					id="auxiliaryFields"
-					elements={auxiliaryFields}
-					maximumElementsAmount={4}
-					onClick={onFieldSelect}
-					register={registerField}
-				/>
-			</>
-		);
+			<FieldsRow
+				id="auxiliaryFields"
+				elements={auxiliaryFields}
+				maximumElementsAmount={4}
+				onClick={onFieldSelect}
+				register={registerField}
+			/>
+		</>
+	);
 
 	return (
 		<>
@@ -91,14 +94,8 @@ export function Generic(props: GenericProps): JSX.Element {
 				register={registerField}
 			/>
 			{middleFragment}
-			<Footer
-				icon={icon}
-				register={registerField}
-			>
-				<Barcodes
-					fallbackShape={isSquaredBarcode ? "square" : "rect"}
-					format={barcode?.format}
-				/>
+			<Footer icon={icon} register={registerField}>
+				<Barcodes fallbackShape={isSquaredBarcode ? "square" : "rect"} format={barcode?.format} />
 			</Footer>
 		</>
 	);

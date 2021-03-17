@@ -10,13 +10,14 @@ interface TextPanelProps extends PanelProps {
 }
 
 export default function TextPanel(props: TextPanelProps) {
-	const [content, onContentSave] = useContentSavingHandler(props.onValueChange, props.name, props.value);
+	const [content, onContentSave] = useContentSavingHandler(
+		props.onValueChange,
+		props.name,
+		props.value
+	);
 	const inputRef = React.useRef<HTMLInputElement>();
 
-	const required = (
-		props.data.required &&
-		<span className="required" />
-	) || null;
+	const required = (props.data.required && <span className="required" />) || null;
 
 	if (props.isSelected) {
 		inputRef.current?.focus();

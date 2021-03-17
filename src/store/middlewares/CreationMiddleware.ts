@@ -2,9 +2,7 @@ import { MiddlewareAPI, AnyAction, Dispatch } from "redux";
 import { State } from "..";
 import * as Store from "..";
 
-type AllowedActions =
-	| Store.Media.Actions.EditCollection
-	| Store.Translations.Actions.Add
+type AllowedActions = Store.Media.Actions.EditCollection | Store.Translations.Actions.Add;
 
 export default function CreationMiddleware(store: MiddlewareAPI<Dispatch, State>) {
 	return (next: Dispatch<AnyAction>) => (action: AllowedActions) => {
@@ -27,5 +25,5 @@ export default function CreationMiddleware(store: MiddlewareAPI<Dispatch, State>
 		}
 
 		return next(action);
-	}
+	};
 }

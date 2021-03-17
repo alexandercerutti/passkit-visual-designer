@@ -2,7 +2,11 @@ import * as React from "react";
 import "./style.less";
 import PanelsPage, { DataGroup } from "./pages/PanelsPage";
 import PageNavigationContext from "./pages/PageNavigationContext";
-import { RequestPageCreationFunction, PageNavigation, ContextPropsGetter } from "./pages/usePageFactory";
+import {
+	RequestPageCreationFunction,
+	PageNavigation,
+	ContextPropsGetter,
+} from "./pages/usePageFactory";
 import { MediaProps, PassMixedProps } from "../../Pass";
 import { ShareIcon } from "./pages/PanelsPage/icons";
 import { createClassName } from "../../utils";
@@ -24,7 +28,9 @@ interface NavigatorProps {
 	onMediaEditRequest(mediaName: keyof MediaProps): void;
 }
 
-export default class OptionsMenu extends React.Component<NavigatorProps, NavigatorState> implements PageNavigation {
+export default class OptionsMenu
+	extends React.Component<NavigatorProps, NavigatorState>
+	implements PageNavigation {
 	constructor(props: NavigatorProps) {
 		super(props);
 
@@ -37,14 +43,20 @@ export default class OptionsMenu extends React.Component<NavigatorProps, Navigat
 	}
 
 	componentDidUpdate(prevProps: NavigatorProps) {
-		const isCurrentPageSelected = this.state.pagesHierarchy[this.state.pagesHierarchy.length - 1]?.[0] === this.props.selectedFieldID;
+		const isCurrentPageSelected =
+			this.state.pagesHierarchy[this.state.pagesHierarchy.length - 1]?.[0] ===
+			this.props.selectedFieldID;
 		if (prevProps.selectedFieldID !== this.props.selectedFieldID && !isCurrentPageSelected) {
 			this.requestPageClosing();
 			return;
 		}
 	}
 
-	requestPageCreation(identifier: string, PageElement: Parameters<RequestPageCreationFunction>[1], getContextProps?: ContextPropsGetter<React.ComponentProps<typeof PageElement>>) {
+	requestPageCreation(
+		identifier: string,
+		PageElement: Parameters<RequestPageCreationFunction>[1],
+		getContextProps?: ContextPropsGetter<React.ComponentProps<typeof PageElement>>
+	) {
 		const page = this.state.pagesHierarchy.find(([id]) => id === identifier);
 
 		if (page) {
@@ -69,7 +81,7 @@ export default class OptionsMenu extends React.Component<NavigatorProps, Navigat
 			this.props.cancelFieldSelection();
 		}
 
-		this.setState(previousState => {
+		this.setState((previousState) => {
 			const pagesHierarchy = previousState.pagesHierarchy;
 			pagesHierarchy.pop();
 			return { pagesHierarchy };
@@ -91,15 +103,18 @@ export default class OptionsMenu extends React.Component<NavigatorProps, Navigat
 		});
 
 		const exportButtonClassName = createClassName(["export-btn"], {
-			disabled: !this.props.requestExport
+			disabled: !this.props.requestExport,
 		});
 
 		return (
-			<div id="pages-navigator" style={{ transform: `translate(-${this.state.pagesHierarchy.length * 100}%)` }}>
+			<div
+				id="pages-navigator"
+				style={{ transform: `translate(-${this.state.pagesHierarchy.length * 100}%)` }}
+			>
 				<PageNavigationContext.Provider
 					value={{
 						requestPageClosing: this.requestPageClosing,
-						requestPageCreation: this.requestPageCreation
+						requestPageCreation: this.requestPageCreation,
 					}}
 				>
 					<div className="page" key="panel-depth0">
@@ -116,8 +131,8 @@ export default class OptionsMenu extends React.Component<NavigatorProps, Navigat
 						</div>
 					</div>
 					{pages}
-				</PageNavigationContext.Provider >
-			</div >
+				</PageNavigationContext.Provider>
+			</div>
 		);
 	}
 }

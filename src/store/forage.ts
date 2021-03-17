@@ -48,7 +48,7 @@ export function Init(snapshot: State): Actions.Init {
 
 export function Reset(): Actions.Reset {
 	return {
-		type: RESET
+		type: RESET,
 	};
 }
 
@@ -65,5 +65,5 @@ export declare namespace Actions {
 		snapshot: State;
 	}
 
-	interface Reset extends Action<typeof RESET> { }
+	interface Reset extends Action<typeof RESET> {}
 }

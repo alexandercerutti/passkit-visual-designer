@@ -5,12 +5,12 @@ import { SelectableComponent } from "../../sections/useRegistrations";
 import format from "date-fns/format";
 
 type ValueProps = Partial<SelectableComponent<never>> & {
-	fieldData: Partial<FieldProperties<FieldTypes.VALUE>>
+	fieldData: Partial<FieldProperties<FieldTypes.VALUE>>;
 };
 
 /**
-* @TODO use svg text to allow it to resize manually?
-*/
+ * @TODO use svg text to allow it to resize manually?
+ */
 
 export default function FieldValue(props: ValueProps) {
 	const { fieldData } = props;
@@ -18,28 +18,20 @@ export default function FieldValue(props: ValueProps) {
 	const parsedValue = getValueFromProps(props);
 
 	return (
-		<span
-			className="value"
-			style={style}
-			onClick={props.onClick}
-		>
+		<span className="value" style={style} onClick={props.onClick}>
 			{parsedValue}
 		</span>
 	);
 }
 
 function getValueFromProps(props: ValueProps) {
-	const { fieldData: { value, dateStyle, timeStyle } } = props;
+	const {
+		fieldData: { value, dateStyle, timeStyle },
+	} = props;
 	const valueAsDate = new Date(value);
 
-	const shouldShowDate = (
-		dateStyle !== undefined &&
-		dateStyle !== PKDateStyle.None
-	);
-	const shouldShowTime = (
-		timeStyle !== undefined &&
-		timeStyle !== PKDateStyle.None
-	);
+	const shouldShowDate = dateStyle !== undefined && dateStyle !== PKDateStyle.None;
+	const shouldShowTime = timeStyle !== undefined && timeStyle !== PKDateStyle.None;
 
 	if (isNaN(valueAsDate.getTime()) || (!shouldShowTime && !shouldShowDate)) {
 		/**

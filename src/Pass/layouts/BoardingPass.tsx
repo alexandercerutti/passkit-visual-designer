@@ -15,32 +15,39 @@ import { FieldKind } from "../../model";
 type BoardingPassProps = PassMixedProps & AlternativesRegistrationSignature;
 
 export function BoardingPass(props: BoardingPassProps) {
-	useAlternativesRegistration(props.registerAlternatives, {
-		name: "Generic Boarding Pass",
-		specificProps: {
-			transitType: PKTransitType.Generic
+	useAlternativesRegistration(
+		props.registerAlternatives,
+		{
+			name: "Generic Boarding Pass",
+			specificProps: {
+				transitType: PKTransitType.Generic,
+			},
+		},
+		{
+			name: "Air Boarding Pass",
+			specificProps: {
+				transitType: PKTransitType.Air,
+			},
+		},
+		{
+			name: "Boat Boarding Pass",
+			specificProps: {
+				transitType: PKTransitType.Boat,
+			},
+		},
+		{
+			name: "Bus Boarding Pass",
+			specificProps: {
+				transitType: PKTransitType.Bus,
+			},
+		},
+		{
+			name: "Train Boarding Pass",
+			specificProps: {
+				transitType: PKTransitType.Train,
+			},
 		}
-	}, {
-		name: "Air Boarding Pass",
-		specificProps: {
-			transitType: PKTransitType.Air
-		}
-	}, {
-		name: "Boat Boarding Pass",
-		specificProps: {
-			transitType: PKTransitType.Boat
-		}
-	}, {
-		name: "Bus Boarding Pass",
-		specificProps: {
-			transitType: PKTransitType.Bus
-		}
-	}, {
-		name: "Train Boarding Pass",
-		specificProps: {
-			transitType: PKTransitType.Train
-		}
-	});
+	);
 
 	const {
 		secondaryFields = [],
@@ -52,7 +59,7 @@ export function BoardingPass(props: BoardingPassProps) {
 		logo,
 		logoText,
 		footerImage,
-		icon
+		icon,
 	} = props;
 
 	const { onFieldSelect, registerField } = React.useContext(InteractionContext);
@@ -86,16 +93,8 @@ export function BoardingPass(props: BoardingPassProps) {
 				register={registerField}
 				id="secondaryFields"
 			/>
-			<Footer
-				allowFooterImage
-				icon={icon}
-				register={registerField}
-				src={footerImage}
-			>
-				<Barcode
-					format={barcode?.format}
-					fallbackShape="rect"
-				/>
+			<Footer allowFooterImage icon={icon} register={registerField} src={footerImage}>
+				<Barcode format={barcode?.format} fallbackShape="rect" />
 			</Footer>
 		</>
 	);

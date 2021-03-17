@@ -9,7 +9,9 @@ import "./style.less";
 
 const TranslationChangePlaceholder = 0b001;
 const TranslationChangeValue = 0b010;
-export type TranslationChangeOps = typeof TranslationChangePlaceholder | typeof TranslationChangeValue;
+export type TranslationChangeOps =
+	| typeof TranslationChangePlaceholder
+	| typeof TranslationChangeValue;
 
 interface Props extends Omit<ModalProps, "contentUniqueID"> {
 	currentLanguage: string;
@@ -25,46 +27,51 @@ export default function TranslationsModal(props: Props) {
 	const isEnabled = props.availableTranslations?.enabled ?? true;
 	const translations = props.availableTranslations?.translations || {};
 
-	const onCommit = React.useCallback((id: string, changeOP: TranslationChangeOps, content: string) => {
-		const currentSet = props.availableTranslations.translations[id];
+	const onCommit = React.useCallback(
+		(id: string, changeOP: TranslationChangeOps, content: string) => {
+			const currentSet = props.availableTranslations.translations[id];
 
-		const placeholder = (
-			changeOP & TranslationChangePlaceholder &&
-			content !== currentSet[0] &&
-			content
-		) || currentSet[0];
+			const placeholder =
+				(changeOP & TranslationChangePlaceholder && content !== currentSet[0] && content) ||
+				currentSet[0];
 
-		const value = (
-			changeOP & TranslationChangeValue &&
-			content !== currentSet[1] &&
-			content
-		) || currentSet[1];
+			const value =
+				(changeOP & TranslationChangeValue && content !== currentSet[1] && content) ||
+				currentSet[1];
 
-		props.editTranslation(id, placeholder, value);
-	}, [props.availableTranslations]);
+			props.editTranslation(id, placeholder, value);
+		},
+		[props.availableTranslations]
+	);
 
 	let content: JSX.Element;
 
 	if (props.currentLanguage !== "default") {
-		const translationsFragments = Object.entries(translations).map(([id, [placeholder, value]], index) => (
-			<React.Fragment key={`trl-${props.currentLanguage}-r${index}`}>
-				<CommittableTextInput
-					defaultValue={placeholder || ""}
-					placeholder="Insert localizable string placeholder"
-					commit={(value) => onCommit(id, TranslationChangePlaceholder, value)}
-				/>
-				<CommittableTextInput
-					defaultValue={value || ""}
-					placeholder="Insert value for this language"
-					commit={(value) => onCommit(id, TranslationChangeValue, value)}
-				/>
-				<DeleteIcon onClick={() => props.removeTranslation(id)} />
-			</React.Fragment>
-		));
+		const translationsFragments = Object.entries(translations).map(
+			([id, [placeholder, value]], index) => (
+				<React.Fragment key={`trl-${props.currentLanguage}-r${index}`}>
+					<CommittableTextInput
+						defaultValue={placeholder || ""}
+						placeholder="Insert localizable string placeholder"
+						commit={(value) => onCommit(id, TranslationChangePlaceholder, value)}
+					/>
+					<CommittableTextInput
+						defaultValue={value || ""}
+						placeholder="Insert value for this language"
+						commit={(value) => onCommit(id, TranslationChangeValue, value)}
+					/>
+					<DeleteIcon onClick={() => props.removeTranslation(id)} />
+				</React.Fragment>
+			)
+		);
 
 		content = (
 			<>
-				<div id="translations-content" data-language={props.currentLanguage} data-disabled={!isEnabled}>
+				<div
+					id="translations-content"
+					data-language={props.currentLanguage}
+					data-disabled={!isEnabled}
+				>
 					<header>
 						<div>Placeholder</div>
 						<div>Value</div>
@@ -80,7 +87,10 @@ export default function TranslationsModal(props: Props) {
 					>
 						Export
 					</Switcher>
-					<LanguageSelectionButton label={props.currentLanguage} onClick={props.requestForLanguageChange} />
+					<LanguageSelectionButton
+						label={props.currentLanguage}
+						onClick={props.requestForLanguageChange}
+					/>
 				</footer>
 			</>
 		);
@@ -88,8 +98,13 @@ export default function TranslationsModal(props: Props) {
 		content = (
 			<div id="translations-content" data-language={props.currentLanguage}>
 				<h3>Select a language to add translations.</h3>
-				<p>Then add a translation and set placeholders to localizable fields to see them on pass.</p>
-				<LanguageSelectionButton label={props.currentLanguage} onClick={props.requestForLanguageChange} />
+				<p>
+					Then add a translation and set placeholders to localizable fields to see them on pass.
+				</p>
+				<LanguageSelectionButton
+					label={props.currentLanguage}
+					onClick={props.requestForLanguageChange}
+				/>
 			</div>
 		);
 	}

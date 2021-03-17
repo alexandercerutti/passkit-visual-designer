@@ -3,14 +3,18 @@ import { FieldKind } from "../model";
 import { DataGroup } from "./OptionsMenu/pages/PanelsPage";
 
 const StaticFields: Array<[DataGroup, FieldDetails[]]> = [
-	[DataGroup.METADATA, [{
-		name: "description",
-		kind: FieldKind.TEXT,
-		mockable: false,
-		tooltipText: "",
-		disabled: false,
-		required: true
-	},/* {
+	[
+		DataGroup.METADATA,
+		[
+			{
+				name: "description",
+				kind: FieldKind.TEXT,
+				mockable: false,
+				tooltipText: "",
+				disabled: false,
+				required: true,
+			},
+			/* {
 		name: "formatVersion",
 		kind: FieldKind.SWITCH,
 		mockable: false,
@@ -18,33 +22,40 @@ const StaticFields: Array<[DataGroup, FieldDetails[]]> = [
 		disabled: true,
 		required: true
 	},*/ {
-		name: "organizationName",
-		kind: FieldKind.TEXT,
-		required: true
-	}, {
-		name: "passTypeIdentifier",
-		kind: FieldKind.TEXT,
-		required: true,
-	}, {
-		name: "teamIdentifier",
-		kind: FieldKind.TEXT,
-		required: true
-	}, {
-		name: "appLaunchURL",
-		kind: FieldKind.TEXT,
-	}, {
-		name: "associatedStoreIdentifiers",
-		kind: FieldKind.TEXT,
-	}, {
-		name: "authenticationToken",
-		kind: FieldKind.TEXT,
-	}, {
-		name: "webServiceURL",
-		kind: FieldKind.TEXT,
-	}, {
-		name: "groupingIdentifier",
-		kind: FieldKind.TEXT,
-	}/*, {
+				name: "organizationName",
+				kind: FieldKind.TEXT,
+				required: true,
+			},
+			{
+				name: "passTypeIdentifier",
+				kind: FieldKind.TEXT,
+				required: true,
+			},
+			{
+				name: "teamIdentifier",
+				kind: FieldKind.TEXT,
+				required: true,
+			},
+			{
+				name: "appLaunchURL",
+				kind: FieldKind.TEXT,
+			},
+			{
+				name: "associatedStoreIdentifiers",
+				kind: FieldKind.TEXT,
+			},
+			{
+				name: "authenticationToken",
+				kind: FieldKind.TEXT,
+			},
+			{
+				name: "webServiceURL",
+				kind: FieldKind.TEXT,
+			},
+			{
+				name: "groupingIdentifier",
+				kind: FieldKind.TEXT,
+			} /*, {
 			name: "becons",
 			kind: FieldKind.JSON,
 			jsonKeys: ["major", "minor", "proximityUUID", "relevantText"]
@@ -52,20 +63,28 @@ const StaticFields: Array<[DataGroup, FieldDetails[]]> = [
 			name: "locations",
 			kind: FieldKind.JSON,
 			jsonKeys: ["altitude", "latitude", "longitude", "relevantText"]
-		}, */
-	]],
-	[DataGroup.COLORS, [{
-		name: "backgroundColor",
-		kind: FieldKind.COLOR,
-	}, {
-		name: "foregroundColor",
-		kind: FieldKind.COLOR,
-	}, {
-		name: "labelColor",
-		kind: FieldKind.COLOR,
-	}]],
+		}, */,
+		],
+	],
+	[
+		DataGroup.COLORS,
+		[
+			{
+				name: "backgroundColor",
+				kind: FieldKind.COLOR,
+			},
+			{
+				name: "foregroundColor",
+				kind: FieldKind.COLOR,
+			},
+			{
+				name: "labelColor",
+				kind: FieldKind.COLOR,
+			},
+		],
+	],
 	[DataGroup.IMAGES, []],
-	[DataGroup.DATA, []]
+	[DataGroup.DATA, []],
 ];
 
 export default StaticFields;

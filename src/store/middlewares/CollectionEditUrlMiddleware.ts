@@ -63,7 +63,7 @@ export default function CollectionEditUrlMiddleware(store: MiddlewareAPI<Dispatc
 			/** Removing duplicates */
 			const allResolutionsIDs = new Set([
 				...Object.keys(storeCollectionResolutions),
-				...Object.keys(actionCollectionResolutions)
+				...Object.keys(actionCollectionResolutions),
 			]);
 
 			for (const resolutionID of allResolutionsIDs) {
@@ -118,5 +118,5 @@ export default function CollectionEditUrlMiddleware(store: MiddlewareAPI<Dispatc
 		}
 
 		return next(action);
-	}
+	};
 }

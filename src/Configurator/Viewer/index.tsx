@@ -7,7 +7,8 @@ import CommittableTextInput from "../CommittableTextInput";
 import type { TranslationsSet } from "../../store";
 import { PassFieldKeys } from "../../Pass/constants";
 
-export interface ViewerProps extends Pick<PassProps, "registerField" | "onFieldSelect" | "showBack"> {
+export interface ViewerProps
+	extends Pick<PassProps, "registerField" | "onFieldSelect" | "showBack"> {
 	passProps: PassProps;
 	translationSet: TranslationsSet;
 	showEmpty: boolean;
@@ -17,11 +18,19 @@ export interface ViewerProps extends Pick<PassProps, "registerField" | "onFieldS
 }
 
 export default function Viewer(props: ViewerProps) {
-	const { changeProjectTitle, onVoidClick, projectTitle = "", showBack, registerField, onFieldSelect, passProps } = props;
+	const {
+		changeProjectTitle,
+		onVoidClick,
+		projectTitle = "",
+		showBack,
+		registerField,
+		onFieldSelect,
+		passProps,
+	} = props;
 	const registrationProps = { registerField, onFieldSelect };
 
 	const viewerCN = createClassName(["viewer"], {
-		"no-empty": !props.showEmpty
+		"no-empty": !props.showEmpty,
 	});
 
 	const passUIProps = { ...passProps };
@@ -49,16 +58,16 @@ export default function Viewer(props: ViewerProps) {
 				/>
 			</div>
 			<InteractionContext.Provider value={registrationProps}>
-				<Pass
-					{...passUIProps}
-					showBack={showBack}
-				/>
+				<Pass {...passUIProps} showBack={showBack} />
 			</InteractionContext.Provider>
 		</div>
 	);
 }
 
-function localizeFieldContent(field: PassFieldKeys[], translations: Array<TranslationsSet["translations"][0]>) {
+function localizeFieldContent(
+	field: PassFieldKeys[],
+	translations: Array<TranslationsSet["translations"][0]>
+) {
 	if (!field) {
 		return field;
 	}
@@ -69,7 +78,7 @@ function localizeFieldContent(field: PassFieldKeys[], translations: Array<Transl
 		return [
 			...acc,
 			Object.assign(
-				{...field },
+				{ ...field },
 				Object.entries(localizableElements).reduce((acc, [key, element]) => {
 					if (!element) {
 						return acc;

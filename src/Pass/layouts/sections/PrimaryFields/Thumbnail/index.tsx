@@ -17,24 +17,23 @@ export default function ThumbnailPrimaryField(props: React.PropsWithChildren<PFT
 
 	const [primaryFieldsClickHandler, thumbnailClickHandler] = useRegistrations(register, [
 		[FieldKind.FIELDS, parentId],
-		[FieldKind.IMAGE, "thumbnailImage"]
+		[FieldKind.IMAGE, "thumbnailImage"],
 	]);
 
-	const data = getFilteredFieldData(fields, 1, 1)
-		.map((fieldData, index) => {
-			const key = `${parentId}.${index}`;
+	const data = getFilteredFieldData(fields, 1, 1).map((fieldData, index) => {
+		const key = `${parentId}.${index}`;
 
-			return (
-				<Field
-					key={key}
-					onClick={() => primaryFieldsClickHandler(fieldData?.key ?? null)}
-					fieldData={fieldData}
-				>
-					<FieldLabel fieldData={fieldData} />
-					<FieldValue fieldData={fieldData} />
-				</Field>
-			);
-		});
+		return (
+			<Field
+				key={key}
+				onClick={() => primaryFieldsClickHandler(fieldData?.key ?? null)}
+				fieldData={fieldData}
+			>
+				<FieldLabel fieldData={fieldData} />
+				<FieldValue fieldData={fieldData} />
+			</Field>
+		);
+	});
 
 	return (
 		<div className="thumbnail-primaryFields">
@@ -51,5 +50,5 @@ export default function ThumbnailPrimaryField(props: React.PropsWithChildren<PFT
 				/>
 			</div>
 		</div>
-	)
+	);
 }

@@ -16,11 +16,14 @@ interface Props {
 export default function FieldPreview(props: Props) {
 	const [key, setKey] = React.useState(props.previewData?.key);
 
-	const onFieldKeyChange = React.useCallback((key: string) => {
-		if (key !== props.previewData.key) {
-			props.onFieldKeyChange(props.fieldUUID, key);
-		}
-	}, [props.fieldUUID, props.previewData.key]);
+	const onFieldKeyChange = React.useCallback(
+		(key: string) => {
+			if (key !== props.previewData.key) {
+				props.onFieldKeyChange(props.fieldUUID, key);
+			}
+		},
+		[props.fieldUUID, props.previewData.key]
+	);
 
 	/** Effect to update the state value when props changes */
 
@@ -32,27 +35,24 @@ export default function FieldPreview(props: Props) {
 	}, [props.previewData.key]);
 
 	const FPClassName = createClassName(["field-preview"], {
-		"hidden": props.isFieldHidden,
-		"editable": props.keyEditable
+		hidden: props.isFieldHidden,
+		editable: props.keyEditable,
 	});
 
 	const previewKeyClassName = createClassName(["preview-field-key"], {
-		"none": !key
+		none: !key,
 	});
 
-	const fieldKeyRow = props.keyEditable
-		? (
-			<CommittableTextInput
-				onChange={(evt) => setKey(evt.target.value.replace(/\s+/, ""))}
-				value={key || ""}
-				placeholder="field's key"
-				commit={onFieldKeyChange}
-			/>
-		) : (
-			<span>
-				{!key ? "not setted" : key}
-			</span>
-		);
+	const fieldKeyRow = props.keyEditable ? (
+		<CommittableTextInput
+			onChange={(evt) => setKey(evt.target.value.replace(/\s+/, ""))}
+			value={key || ""}
+			placeholder="field's key"
+			commit={onFieldKeyChange}
+		/>
+	) : (
+		<span>{!key ? "not setted" : key}</span>
+	);
 
 	const { textAlignment } = props.previewData ?? {};
 
@@ -65,13 +65,8 @@ export default function FieldPreview(props: Props) {
 	});
 
 	return (
-		<div
-			className={FPClassName}
-			onClick={props?.onClick}
-		>
-			<div className={previewKeyClassName}>
-				{fieldKeyRow}
-			</div>
+		<div className={FPClassName} onClick={props?.onClick}>
+			<div className={previewKeyClassName}>{fieldKeyRow}</div>
 			<div className={fieldStylesClassName}>
 				<span className="label">{props.previewData?.label || "label"}</span>
 				<span className="value">{props.previewData?.value || "value"}</span>

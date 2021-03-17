@@ -36,10 +36,7 @@ export default function DrawerElement(props: DrawerElementProps) {
 	}, [fieldData]);
 
 	return (
-		<div
-			className="field-edit-item"
-			data-key={fieldData.key || props.fieldUUID}
-		>
+		<div className="field-edit-item" data-key={fieldData.key || props.fieldUUID}>
 			<FieldPreview
 				fieldUUID={props.fieldUUID}
 				previewData={fieldData}

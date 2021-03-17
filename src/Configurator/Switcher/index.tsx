@@ -20,15 +20,9 @@ interface Props {
 export function Switcher(props: React.PropsWithChildren<Props>) {
 	const id = `ths-input${props.index || ""}`;
 
-	const beforeLabel = (
-		props.labelPosition === "before" &&
-		props.children
-	) || "";
+	const beforeLabel = (props.labelPosition === "before" && props.children) || "";
 
-	const afterLabel = (
-		props.labelPosition === "after" &&
-		props.children
-	) || ""
+	const afterLabel = (props.labelPosition === "after" && props.children) || "";
 
 	return (
 		<label className="the-switcher" htmlFor={id}>

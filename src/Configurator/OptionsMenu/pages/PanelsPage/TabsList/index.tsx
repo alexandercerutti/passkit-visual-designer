@@ -4,9 +4,9 @@ import { createClassName } from "../../../../../utils";
 import { DataGroup } from "..";
 
 enum ShadowMode {
-	START, /** Carriage is scrolled to end */
+	START /** Carriage is scrolled to end */,
 	MIDDLE,
-	END, /** Carriage is scrolled to begin */
+	END /** Carriage is scrolled to begin */,
 }
 
 interface Props {
@@ -29,7 +29,7 @@ export default function TabsList(props: Props) {
 		 */
 
 		setTimeout(() => {
-			if (shadowsRef.current.offsetWidth === (Math.round(shadowsRef.current.scrollWidth / 10) * 10)) {
+			if (shadowsRef.current.offsetWidth === Math.round(shadowsRef.current.scrollWidth / 10) * 10) {
 				setShadowMode(undefined);
 			}
 		}, 2000);
@@ -74,7 +74,10 @@ export default function TabsList(props: Props) {
 	}, [props.selectedIndex]);
 
 	const onWheelEventHandler = React.useCallback((event: React.WheelEvent<HTMLUListElement>) => {
-		const { currentTarget: { scrollWidth, offsetWidth, childNodes }, deltaY } = event;
+		const {
+			currentTarget: { scrollWidth, offsetWidth, childNodes },
+			deltaY,
+		} = event;
 
 		if (scrollWidth === offsetWidth) {
 			/** No scroll available */
@@ -89,7 +92,13 @@ export default function TabsList(props: Props) {
 			event.currentTarget.scrollBy(deltaY, 0);
 		}
 
-		setShadowMode(computeShadowMode(childNodes[props.selectedIndex] as HTMLLIElement, undefined, shadowsRef.current.scrollLeft));
+		setShadowMode(
+			computeShadowMode(
+				childNodes[props.selectedIndex] as HTMLLIElement,
+				undefined,
+				shadowsRef.current.scrollLeft
+			)
+		);
 	}, []);
 
 	const shadowClassName = createClassName([], {
@@ -99,18 +108,15 @@ export default function TabsList(props: Props) {
 
 	return (
 		<ul onWheel={onWheelEventHandler} ref={shadowsRef} className={shadowClassName}>
-			{
-				props.menuVoices
-					.map((value, index) => (
-						<li
-							key={value}
-							className={index === props.selectedIndex && "active" || null}
-							onClick={() => props.onSelect(index)}
-						>
-							{value}
-						</li>
-					))
-			}
+			{props.menuVoices.map((value, index) => (
+				<li
+					key={value}
+					className={(index === props.selectedIndex && "active") || null}
+					onClick={() => props.onSelect(index)}
+				>
+					{value}
+				</li>
+			))}
 		</ul>
 	);
 }
@@ -125,7 +131,11 @@ export default function TabsList(props: Props) {
  * @param element Active child
  */
 
-function computeShadowMode(element: HTMLLIElement, previousParentScrollLeft: number, nextParentScrollLeft: number) {
+function computeShadowMode(
+	element: HTMLLIElement,
+	previousParentScrollLeft: number,
+	nextParentScrollLeft: number
+) {
 	const parentNode = element.parentNode as HTMLUListElement;
 	const parentScrollLeft = Math.floor(parentNode.scrollLeft);
 	const MAX_PARENT_SCROLL_LEFT = parentNode.scrollWidth - parentNode.clientWidth;
@@ -133,11 +143,10 @@ function computeShadowMode(element: HTMLLIElement, previousParentScrollLeft: num
 	// If condition is true, scrollLeft have not been updated - therefore there's still the bug.
 	const IS_CHROMIUM_BUG = previousParentScrollLeft === nextParentScrollLeft;
 
-	const scrollLeft = IS_CHROMIUM_BUG
-		? element.offsetLeft
-		: Math.floor(parentNode.scrollLeft);
+	const scrollLeft = IS_CHROMIUM_BUG ? element.offsetLeft : Math.floor(parentNode.scrollLeft);
 
-	const canParentStillScrollRight = parentScrollLeft !== parentNode.scrollWidth - parentNode.offsetWidth;
+	const canParentStillScrollRight =
+		parentScrollLeft !== parentNode.scrollWidth - parentNode.offsetWidth;
 
 	/**
 	 * We need a tolerance before showing the the shadow.

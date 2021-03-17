@@ -1,7 +1,10 @@
 import * as React from "react";
 import { FieldSelectHandler } from "../sections/useRegistrations";
 
-export default function useClickEvent(onClick: FieldSelectHandler, element: React.ReactElement<any>) {
+export default function useClickEvent(
+	onClick: FieldSelectHandler,
+	element: React.ReactElement<any>
+) {
 	if (!onClick) {
 		return element;
 	}

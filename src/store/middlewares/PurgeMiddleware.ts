@@ -6,11 +6,15 @@ import { CollectionSet, MediaCollection } from "../store";
 
 export default function PurgeMiddleware(store: MiddlewareAPI<Dispatch, State>) {
 	return (next: Dispatch<AnyAction>) => (action: Store.Options.Actions.Set) => {
-		if ((action.type !== Store.Options.SET_OPTION || action.key !== "activeMediaLanguage")) {
+		if (action.type !== Store.Options.SET_OPTION || action.key !== "activeMediaLanguage") {
 			return next(action);
 		}
 
-		const { media: prepurgeMedia, projectOptions: { activeMediaLanguage }, translations } = store.getState();
+		const {
+			media: prepurgeMedia,
+			projectOptions: { activeMediaLanguage },
+			translations,
+		} = store.getState();
 
 		if (action.type === Store.Options.SET_OPTION) {
 			const mediaGenerator = purgeGenerator(store, Store.Media.Purge);
@@ -29,7 +33,9 @@ export default function PurgeMiddleware(store: MiddlewareAPI<Dispatch, State>) {
 			 */
 
 			if (prepurgeMedia[activeMediaLanguage]) {
-				for (const [mediaName, collectionSet] of Object.entries(prepurgeMedia[activeMediaLanguage]) as [keyof MediaProps, CollectionSet][]) {
+				for (const [mediaName, collectionSet] of Object.entries(
+					prepurgeMedia[activeMediaLanguage]
+				) as [keyof MediaProps, CollectionSet][]) {
 					enqueueMediaPurgeOnEmpty(mediaGenerator, collectionSet, activeMediaLanguage, mediaName);
 				}
 
@@ -61,7 +67,12 @@ function areAllCollectionsEmpty(collectionsEntry: [string, MediaCollection][]) {
 	return collectionsEntry.every(([_, collection]) => Object.keys(collection.resolutions).length);
 }
 
-function enqueueMediaPurgeOnEmpty(generator: ReturnType<typeof purgeGenerator>, collectionSet: Store.CollectionSet, language: string, mediaName: keyof MediaProps): void {
+function enqueueMediaPurgeOnEmpty(
+	generator: ReturnType<typeof purgeGenerator>,
+	collectionSet: Store.CollectionSet,
+	language: string,
+	mediaName: keyof MediaProps
+): void {
 	const collectionEntries = Object.entries(collectionSet.collections);
 
 	if (!collectionEntries.length || areAllCollectionsEmpty(collectionEntries)) {
@@ -71,7 +82,10 @@ function enqueueMediaPurgeOnEmpty(generator: ReturnType<typeof purgeGenerator>, 
 
 type GeneratorElement = [setID: string, mediaID?: keyof MediaProps];
 
-function* purgeGenerator(store: MiddlewareAPI<Dispatch, State>, actionFactory: (...args: any[]) => AnyAction): Generator<State, State, GeneratorElement> {
+function* purgeGenerator(
+	store: MiddlewareAPI<Dispatch, State>,
+	actionFactory: (...args: any[]) => AnyAction
+): Generator<State, State, GeneratorElement> {
 	const purgeIdentifiers: GeneratorElement[] = [];
 	let value: typeof purgeIdentifiers[0];
 
@@ -79,7 +93,7 @@ function* purgeGenerator(store: MiddlewareAPI<Dispatch, State>, actionFactory: (
 		purgeIdentifiers.push(value);
 	}
 
-	for (let i = purgeIdentifiers.length, set: typeof value; set = purgeIdentifiers[--i];) {
+	for (let i = purgeIdentifiers.length, set: typeof value; (set = purgeIdentifiers[--i]); ) {
 		store.dispatch(actionFactory(...set));
 	}
 

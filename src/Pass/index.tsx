@@ -6,7 +6,14 @@ import { Coupon } from "./layouts/Coupon";
 import { EventTicket } from "./layouts/EventTicket";
 import { Generic } from "./layouts/Generic";
 import { StoreCard } from "./layouts/StoreCard";
-import { PKTransitType, PassFields, WalletPassFormat, DEFAULT_BACKGROUND_COLOR, DEFAULT_FOREGROUND_COLOR, DEFAULT_LABEL_COLOR } from "./constants";
+import {
+	PKTransitType,
+	PassFields,
+	WalletPassFormat,
+	DEFAULT_BACKGROUND_COLOR,
+	DEFAULT_FOREGROUND_COLOR,
+	DEFAULT_LABEL_COLOR,
+} from "./constants";
 import { InteractionContextMethods } from "./InteractionContext";
 import { createClassName } from "../utils";
 import Backfields from "./layouts/sections/BackFields";
@@ -35,7 +42,7 @@ export interface PassMixedProps {
 	teamIdentifier?: string;
 	formatVersion?: 1;
 	groupingIdentifier?: string;
-	webServiceURL?: string,
+	webServiceURL?: string;
 	authenticationToken?: string;
 	associatedStoreIdentifiers?: string;
 	appLaunchURL?: string;
@@ -49,7 +56,10 @@ export interface PassMixedProps {
 	footerImage?: string;
 }
 
-export type MediaProps = Pick<PassMixedProps, "backgroundImage" | "footerImage" | "logo" | "thumbnailImage" | "stripImage" | "icon">;
+export type MediaProps = Pick<
+	PassMixedProps,
+	"backgroundImage" | "footerImage" | "logo" | "thumbnailImage" | "stripImage" | "icon"
+>;
 
 export interface PassProps extends PassMixedProps, Partial<InteractionContextMethods> {
 	showBack?: boolean;
@@ -60,7 +70,7 @@ const PassKindsLayoutsMap = new Map<PassKind, React.FunctionComponent<PassMixedP
 	[PassKind.COUPON, Coupon],
 	[PassKind.EVENT, EventTicket],
 	[PassKind.GENERIC, Generic],
-	[PassKind.STORE, StoreCard]
+	[PassKind.STORE, StoreCard],
 ]);
 
 export default function Pass(props: PassProps) {
@@ -82,17 +92,21 @@ export default function Pass(props: PassProps) {
 	 */
 
 	const cardRef = React.useRef<HTMLDivElement>();
-	useCSSCustomProperty(cardRef, "background", backgroundImage || backgroundColor || DEFAULT_BACKGROUND_COLOR);
+	useCSSCustomProperty(
+		cardRef,
+		"background",
+		backgroundImage || backgroundColor || DEFAULT_BACKGROUND_COLOR
+	);
 	useCSSCustomProperty(cardRef, "foreground-color", foregroundColor || DEFAULT_FOREGROUND_COLOR);
 	useCSSCustomProperty(cardRef, "label-color", labelColor || DEFAULT_LABEL_COLOR);
 
 	/** To avoid blur effect if no background is available */
 	const contentClassName = createClassName(["content"], {
-		"bg-image": Boolean(backgroundImage)
+		"bg-image": Boolean(backgroundImage),
 	});
 
 	const passCardClassName = createClassName(["card"], {
-		"show-back": props.showBack
+		"show-back": props.showBack,
 	});
 
 	return (

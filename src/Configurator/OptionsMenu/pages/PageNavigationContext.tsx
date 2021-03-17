@@ -5,5 +5,5 @@ const noop = () => void 0;
 
 export default React.createContext<PageNavigation>({
 	requestPageClosing: noop,
-	requestPageCreation: noop
+	requestPageCreation: noop,
 });
