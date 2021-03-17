@@ -6,227 +6,211 @@
 @grid-gap: 10px;
 @placeholder-color: #5c5c5c;
 
-.collections-list > #grid {
-	flex-grow: 2;
-	position: relative;
+.collections-list {
+	.pagetransition();
 
-	// Animation
+	& > #grid {
+		flex-grow: 2;
+		position: relative;
 
-	& .fade-enter {
-		opacity: 0;
-
-		&.fade-enter-active {
-			opacity: 1;
-			transition: opacity 0.3s ease-in;
-		}
-	}
-
-	& .fade-exit {
-		opacity: 1;
-
-		&.fade-exit-active {
-			opacity: 0;
-			transition: opacity 0.3s ease-in;
-		}
-	}
-
-	// Disable overlay
-
-	&::before {
-		content: "";
-		position: absolute;
-		top: 0;
-		right: 0;
-		bottom: 0;
-		left: 0;
-		z-index: 10;
-		background-color: rgba(0, 0, 0, 0.5);
-		opacity: 0;
-		transition: opacity 0.3s ease-in-out;
-		pointer-events: none;
-	}
-
-	&[data-disabled="true"] {
-		overflow-y: hidden !important;
+		// Disable overlay
 
 		&::before {
-			opacity: 1;
-			pointer-events: all;
+			content: "";
+			position: absolute;
+			top: 0;
+			right: 0;
+			bottom: 0;
+			left: 0;
+			z-index: 10;
+			background-color: rgba(0, 0, 0, 0.5);
+			opacity: 0;
+			transition: opacity 0.3s ease-in-out;
+			pointer-events: none;
 		}
-	}
 
-	// Children (Robert Miles, R.i.p.)
+		&[data-disabled="true"] {
+			overflow-y: hidden !important;
 
-	& .collection {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-
-		& .preview {
-			position: relative;
-			width: 140px + @clips-v-offset * @clips;
-			height: 120px;
-			padding: 4px;
-			border-width: 3px;
-			border-style: solid;
-			border-color: transparent;
-			transition: border-color 0.3s ease-in-out;
-			border-radius: 3px;
-
-			&.selected {
-				border-color: #d85600;
+			&::before {
+				opacity: 1;
+				pointer-events: all;
 			}
+		}
 
-			&:not(.empty-coll),
-			&.add-coll {
-				cursor: pointer;
-			}
+		// Children (Robert Miles, R.i.p.)
 
-			&.empty-coll,
-			&.add-coll {
-				border-color: #5c5c5c;
-				border-style: dashed;
-				border-width: 1px;
-				-webkit-user-select: none;
-				user-select: none;
+		& .collection {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
 
-				/**
-				 * To make this border and selection border
-				 * be of the same height
-				 */
+			& .preview {
+				position: relative;
+				width: 140px + @clips-v-offset * @clips;
+				height: 120px;
+				padding: 4px;
+				border-width: 3px;
+				border-style: solid;
+				border-color: transparent;
+				transition: border-color 0.3s ease-in-out;
+				border-radius: 3px;
 
-				padding-bottom: 8px;
-
-				& div:first-child {
-					display: flex;
-					align-items: center;
-					justify-content: center;
-					width: 100%;
-					height: 100%;
-				}
-			}
-
-			&.add-coll {
-				& div:first-child > svg {
-					width: 40px;
-					height: 40px;
-					fill: #5c5c5c;
-				}
-			}
-
-			&.empty-coll {
-				& div:first-child {
-					& span.fade-blink {
-						opacity: 1;
-						animation-name: fade-blinking;
-						animation-duration: 1s;
-						animation-timing-function: ease-in-out;
-						animation-direction: alternate-reverse;
-						animation-iteration-count: infinite;
-					}
-
-					@keyframes fade-blinking {
-						to {
-							opacity: 0;
-						}
-					}
-				}
-			}
-
-			& .clipper {
-				.clipper-shifter(@clips + 1);
-
-				position: absolute;
-				width: 130px;
-				height: 100px;
-				overflow: hidden;
-				.withImagesTrasparencyBackground(false);
-			}
-
-			& .collection-actions {
-				transition: opacity 0.3s ease-in-out;
-				display: flex;
-				justify-content: center;
-				align-items: center;
-
-				&,
-				&::before {
-					position: absolute;
-					top: 0;
-					left: 0;
-					right: 0px;
-					bottom: 0px;
-					z-index: 4;
+				&.selected {
+					border-color: #d85600;
 				}
 
-				&::before {
-					content: "";
-					background-color: rgba(25, 25, 25, 0.8);
-				}
-
-				& > svg {
-					width: 35px;
-					height: 35px;
-					transition: fill 0.1s;
+				&:not(.empty-coll),
+				&.add-coll {
 					cursor: pointer;
-					z-index: 5;
+				}
 
-					&#edit-coll {
-						fill: #e6e6e6;
+				&.empty-coll,
+				&.add-coll {
+					border-color: #5c5c5c;
+					border-style: dashed;
+					border-width: 1px;
+					-webkit-user-select: none;
+					user-select: none;
 
-						&:hover {
-							fill: #929292;
-						}
+					/**
+					* To make this border and selection border
+					* be of the same height
+					*/
+
+					padding-bottom: 8px;
+
+					& div:first-child {
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						width: 100%;
+						height: 100%;
 					}
+				}
 
-					&#delete-coll {
-						fill: #d82c2c;
-						margin-left: 15px;
+				&.add-coll {
+					& div:first-child > svg {
+						width: 40px;
+						height: 40px;
+						fill: #5c5c5c;
+					}
+				}
 
-						&:hover {
-							fill: #8c1d1d;
+				&.empty-coll {
+					& div:first-child {
+						& span.fade-blink {
+							opacity: 1;
+							animation-name: fade-blinking;
+							animation-duration: 1s;
+							animation-timing-function: ease-in-out;
+							animation-direction: alternate-reverse;
+							animation-iteration-count: infinite;
+						}
+
+						@keyframes fade-blinking {
+							to {
+								opacity: 0;
+							}
 						}
 					}
 				}
 
-				&:not(.edit-mode-active) {
-					opacity: 0;
+				& .clipper {
+					.clipper-shifter(@clips + 1);
+
+					position: absolute;
+					width: 130px;
+					height: 100px;
+					overflow: hidden;
+					.withImagesTrasparencyBackground(false);
+				}
+
+				& .collection-actions {
+					transition: opacity 0.3s ease-in-out;
+					display: flex;
+					justify-content: center;
+					align-items: center;
 
 					&,
+					&::before {
+						position: absolute;
+						top: 0;
+						left: 0;
+						right: 0px;
+						bottom: 0px;
+						z-index: 4;
+					}
+
+					&::before {
+						content: "";
+						background-color: rgba(25, 25, 25, 0.8);
+					}
+
 					& > svg {
-						pointer-events: none;
+						width: 35px;
+						height: 35px;
+						transition: fill 0.1s;
+						cursor: pointer;
+						z-index: 5;
+
+						&#edit-coll {
+							fill: #e6e6e6;
+
+							&:hover {
+								fill: #929292;
+							}
+						}
+
+						&#delete-coll {
+							fill: #d82c2c;
+							margin-left: 15px;
+
+							&:hover {
+								fill: #8c1d1d;
+							}
+						}
+					}
+
+					&:not(.edit-mode-active) {
+						opacity: 0;
+
+						&,
+						& > svg {
+							pointer-events: none;
+						}
 					}
 				}
 			}
+
+			& span {
+				margin-top: 10px;
+				min-height: 20px;
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				align-self: normal;
+			}
+
+			& .add-element-btn {
+				width: 130px + @clips-h-offset * @clips;
+			}
 		}
 
-		& span {
-			margin-top: 10px;
-			min-height: 20px;
+		& ~ footer {
+			flex-shrink: 0;
+
 			display: flex;
 			justify-content: space-between;
 			align-items: center;
-			align-self: normal;
-		}
+			border-top: 0.5px solid #292929;
+			height: 50px;
+			padding: 0 20px; /* small sizes */
 
-		& .add-element-btn {
-			width: 130px + @clips-h-offset * @clips;
-		}
-	}
-
-	& ~ footer {
-		flex-shrink: 0;
-
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		border-top: 0.5px solid #292929;
-		height: 50px;
-		padding: 0 20px; /* small sizes */
-
-		& > .the-switcher {
-			margin-left: 0;
+			& > .the-switcher {
+				margin-left: 0;
+			}
 		}
 	}
 }

@@ -180,7 +180,6 @@ export default class MediaModal extends React.Component<Props, State> {
 						<CSSTransition
 							timeout={500}
 							key={this.state.editingCollection}
-							classNames="fade"
 						>
 							{!this.state.editingCollection
 								?
