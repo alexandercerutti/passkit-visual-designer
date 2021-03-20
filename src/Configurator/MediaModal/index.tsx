@@ -52,14 +52,20 @@ export default class MediaModal extends React.Component<Props, State> {
 	}
 
 	static getDerivedStateFromProps(props: Props, state: State) {
+		const nextState = { ...state };
+
 		if (state.isEditMode && !props.mediaContent?.enabled) {
-			return {
-				...state,
-				isEditMode: false,
-			};
+			nextState.isEditMode = false;
 		}
 
-		return state;
+		if (
+			state.collectionSelected &&
+			state.collectionSelected !== props.mediaContent.collections[state.collectionSelectedID]
+		) {
+			nextState.collectionSelected = props.mediaContent.collections[state.collectionSelectedID];
+		}
+
+		return nextState;
 	}
 
 	/**
