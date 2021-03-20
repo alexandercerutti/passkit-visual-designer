@@ -2,7 +2,6 @@ import * as React from "react";
 import { v1 as uuid } from "uuid";
 import type { IdentifiedResolutions, MediaCollection } from "../../../store";
 import { getArrayBuffer } from "../../../utils";
-import CommittableTextInput from "../../CommittableTextInput";
 import { DeleteIcon, PlusIcon } from "../icons";
 import "./style.less";
 
@@ -148,11 +147,18 @@ export default class CollectionEditor extends React.Component<Props, State> {
 								<img src={url} />
 							</div>
 						</div>
-						<CommittableTextInput
-							defaultValue={resolution.name}
-							commit={(value) => this.onResolutionNameCommit(resolutionID, value)}
-							placeholder="(@1x, @2x, @3x)"
-						/>
+						<select
+							onChange={(event) =>
+								this.onResolutionNameCommit(
+									resolutionID,
+									event.currentTarget.selectedOptions[0].value
+								)
+							}
+						>
+							<option value="@1x">1x</option>
+							<option value="@2x">2x</option>
+							<option value="@3x">3x</option>
+						</select>
 					</div>
 				);
 			}
