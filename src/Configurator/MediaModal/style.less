@@ -45,17 +45,21 @@
 				align-items: center;
 				padding: 0 20px;
 
-				& .edit-button {
-					&.disabled {
-						pointer-events: none;
-						color: #646464;
-						cursor: initial;
-					}
+				& button.edit-mode {
+					background: none;
+					border: 0;
+					outline: none;
 
 					color: #e6e6e6;
 					cursor: pointer;
 					min-width: 40px;
 					text-align: right;
+					font-size: inherit;
+
+					&[disabled] {
+						color: #646464;
+						cursor: initial;
+					}
 				}
 			}
 
