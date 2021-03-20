@@ -5,6 +5,8 @@ import { getArrayBuffer } from "../../../utils";
 import { DeleteIcon, PlusIcon } from "../icons";
 import "./style.less";
 
+const NAME_RESOLUTION_REGEX = /@(\dx)\..+$/;
+
 interface Props {
 	collection: MediaCollection;
 	onCollectionChange(collection: MediaCollection): void;
@@ -154,6 +156,7 @@ export default class CollectionEditor extends React.Component<Props, State> {
 									event.currentTarget.selectedOptions[0].value
 								)
 							}
+							defaultValue={`@${resolution.name}`}
 						>
 							<option value="@1x">1x</option>
 							<option value="@2x">2x</option>
@@ -202,11 +205,11 @@ export default class CollectionEditor extends React.Component<Props, State> {
 async function getResolutionsFromFileList(files: FileList) {
 	const buffers = await Promise.all<ArrayBuffer>(Array.prototype.map.call(files, getArrayBuffer));
 
-	return buffers.reduce((acc, content) => {
+	return buffers.reduce((acc, content, index) => {
 		return {
 			...acc,
 			[uuid()]: {
-				name: "",
+				name: files[index].name.match(NAME_RESOLUTION_REGEX)?.[1] ?? "1x",
 				content,
 			},
 		};
