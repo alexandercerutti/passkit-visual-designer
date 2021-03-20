@@ -39,7 +39,7 @@ export default class MediaModal extends React.Component<Props, State> {
 
 		this.onCollectionEditOperation = this.onCollectionEditOperation.bind(this);
 		this.onCollectionEditSelect = this.onCollectionEditSelect.bind(this);
-		this.shouldToggleEditMode = this.shouldToggleEditMode.bind(this);
+		this.toggleEditMode = this.toggleEditMode.bind(this);
 		this.onCollectionNameEdit = this.onCollectionNameEdit.bind(this);
 		this.onCollectionChange = this.onCollectionChange.bind(this);
 		this.onCollectionUse = this.onCollectionUse.bind(this);
@@ -149,11 +149,7 @@ export default class MediaModal extends React.Component<Props, State> {
 	 * to edit the collection list
 	 */
 
-	shouldToggleEditMode() {
-		if (!Object.entries(this.props.mediaContent.collections).length && !this.state.isEditMode) {
-			return;
-		}
-
+	toggleEditMode() {
 		this.setState((prev) => ({
 			isEditMode: !prev.isEditMode,
 		}));
@@ -180,7 +176,7 @@ export default class MediaModal extends React.Component<Props, State> {
 						/>
 						{(!collectionSelectedID && (
 							<span
-								onClick={this.shouldToggleEditMode}
+								onClick={this.toggleEditMode}
 								className={createClassName(["edit-button"], {
 									disabled: !collectionsKeys.length || !mediaContent.enabled,
 								})}
