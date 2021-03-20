@@ -30,7 +30,7 @@
 		display: flex;
 		background-color: #1c1c1c;
 		flex-shrink: 0;
-		width: 0px;
+		width: 300px;
 		overflow: hidden;
 		animation-name: open-menu;
 		animation-duration: 0.8s;
@@ -38,14 +38,26 @@
 		animation-delay: 1s;
 		animation-timing-function: ease-in-out;
 		box-shadow: -3px 0 10px #2b2b2b;
+		position: relative;
+
+		@media screen and (max-width: 550px) {
+			position: absolute;
+			right: 0;
+			top: 0;
+			bottom: 0;
+		}
+
+		@media screen and (max-width: 300px) {
+			max-width: 100%;
+		}
 	}
 }
 
 @keyframes open-menu {
 	from {
-		width: 0;
+		right: -300px;
 	}
 	to {
-		width: 300px;
+		right: 0px;
 	}
 }
