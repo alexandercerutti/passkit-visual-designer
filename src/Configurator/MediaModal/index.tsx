@@ -1,6 +1,5 @@
 import * as React from "react";
 import "./style.less";
-import { PassKind } from "../../model";
 import Pass, { MediaProps } from "../../Pass";
 import Modal, { ModalProps } from "../ModalBase";
 import CollectionsList from "./CollectionsList";
@@ -30,7 +29,8 @@ interface Props extends Omit<ModalProps, "contentUniqueID"> {
 
 interface State {
 	isEditMode: boolean;
-	editingCollection: string;
+	collectionSelected: MediaCollection;
+	collectionSelectedID: string;
 }
 
 export default class MediaModal extends React.Component<Props, State> {
@@ -45,7 +45,8 @@ export default class MediaModal extends React.Component<Props, State> {
 
 		this.state = {
 			isEditMode: false,
-			editingCollection: "",
+			collectionSelected: undefined,
+			collectionSelectedID: undefined,
 		};
 	}
 
@@ -67,7 +68,8 @@ export default class MediaModal extends React.Component<Props, State> {
 
 	onCollectionEditSelect(collectionID?: string) {
 		this.setState({
-			editingCollection: collectionID || "",
+			collectionSelected: this.props.mediaContent.collections[collectionID],
+			collectionSelectedID: collectionID || "",
 		});
 	}
 
@@ -150,55 +152,53 @@ export default class MediaModal extends React.Component<Props, State> {
 	}
 
 	render() {
+		const { collectionSelected, collectionSelectedID, isEditMode } = this.state;
+		const { mediaContent, mediaName, currentLanguage, passProps } = this.props;
 		const collectionsKeys = Object.keys(this.props.mediaContent?.collections || {});
 
 		return (
 			<Modal closeModal={this.props.closeModal} contentUniqueID="media-collection">
 				<div id="pass-preview">
-					<Pass {...this.props.passProps} />
+					<Pass {...passProps} />
 				</div>
 				<div id="media-collector">
 					<header>
 						<ModalNavigation
-							collectionID={this.state.editingCollection}
+							collectionID={collectionSelectedID}
 							onBack={this.onCollectionEditSelect}
-							mediaName={this.props.mediaName}
-							collectionName={
-								(this.state.editingCollection &&
-									this.props.mediaContent.collections[this.state.editingCollection].name) ||
-								""
-							}
+							mediaName={mediaName}
+							collectionName={collectionSelected?.name || ""}
 							onCollectionNameEditComplete={this.onCollectionNameEdit}
 						/>
-						{(!this.state.editingCollection && (
+						{(!collectionSelectedID && (
 							<span
 								onClick={this.shouldToggleEditMode}
 								className={createClassName(["edit-button"], {
-									disabled: !collectionsKeys.length || !this.props.mediaContent.enabled,
+									disabled: !collectionsKeys.length || !mediaContent.enabled,
 								})}
 							>
-								{this.state.isEditMode ? "Done" : "Edit"}
+								{isEditMode ? "Done" : "Edit"}
 							</span>
 						)) ||
 							null}
 					</header>
 					<SwitchTransition mode="out-in">
-						<CSSTransition timeout={500} key={this.state.editingCollection}>
-							{!this.state.editingCollection ? (
+						<CSSTransition timeout={500} key={collectionSelectedID || ""}>
+							{!collectionSelectedID ? (
 								<CollectionsList
-									media={this.props.mediaContent}
-									isEditMode={this.state.isEditMode}
+									media={mediaContent}
+									isEditMode={isEditMode}
 									setMediaExportState={this.props.setMediaExportState}
 									editSelectedCollection={this.onCollectionEditSelect}
 									useSelectedCollection={this.onCollectionUse}
 									performCollectionsOperation={this.onCollectionEditOperation}
-									currentLanguage={this.props.currentLanguage}
+									currentLanguage={currentLanguage}
 									requestForLanguageChange={this.props.requestForLanguageChange}
 								/>
 							) : (
 								<CollectionEditor
-									collectionID={this.state.editingCollection}
-									collection={this.props.mediaContent.collections[this.state.editingCollection]}
+									collectionID={collectionSelectedID}
+									collection={collectionSelected}
 									onResolutionChange={this.onCollectionEditOperation}
 								/>
 							)}
