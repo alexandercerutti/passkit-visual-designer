@@ -37,11 +37,12 @@ export default class MediaModal extends React.Component<Props, State> {
 	constructor(props: Props) {
 		super(props);
 
-		this.onCollectionUse = this.onCollectionUse.bind(this);
-		this.onCollectionNameEdit = this.onCollectionNameEdit.bind(this);
-		this.onCollectionEditSelect = this.onCollectionEditSelect.bind(this);
 		this.onCollectionEditOperation = this.onCollectionEditOperation.bind(this);
+		this.onCollectionEditSelect = this.onCollectionEditSelect.bind(this);
 		this.shouldToggleEditMode = this.shouldToggleEditMode.bind(this);
+		this.onCollectionNameEdit = this.onCollectionNameEdit.bind(this);
+		this.onCollectionChange = this.onCollectionChange.bind(this);
+		this.onCollectionUse = this.onCollectionUse.bind(this);
 
 		this.state = {
 			isEditMode: false,
@@ -120,6 +121,12 @@ export default class MediaModal extends React.Component<Props, State> {
 		}
 	}
 
+	onCollectionChange(value: MediaCollection) {
+		const { collectionSelectedID: collectionID } = this.state;
+
+		this.onCollectionEditOperation(CollectionEditModify, collectionID, value);
+	}
+
 	/**
 	 * Changes the name for the selected collectionID
 	 *
@@ -127,13 +134,14 @@ export default class MediaModal extends React.Component<Props, State> {
 	 * @param value
 	 */
 
-	onCollectionNameEdit(collectionID: string, value: string) {
-		const editedCollection: MediaCollection = {
-			name: value,
-			resolutions: this.props.mediaContent.collections[collectionID].resolutions,
-		};
+	onCollectionNameEdit(value: string) {
+		const { collectionSelected } = this.state;
 
-		this.onCollectionEditOperation(CollectionEditModify, collectionID, editedCollection);
+		const newCollection = Object.assign(collectionSelected, {
+			name: value,
+		});
+
+		this.onCollectionChange(newCollection);
 	}
 
 	/**
@@ -168,7 +176,7 @@ export default class MediaModal extends React.Component<Props, State> {
 							onBack={this.onCollectionEditSelect}
 							mediaName={mediaName}
 							collectionName={collectionSelected?.name || ""}
-							onCollectionNameEditComplete={this.onCollectionNameEdit}
+							onCollectionNameChange={this.onCollectionNameEdit}
 						/>
 						{(!collectionSelectedID && (
 							<span
@@ -197,9 +205,8 @@ export default class MediaModal extends React.Component<Props, State> {
 								/>
 							) : (
 								<CollectionEditor
-									collectionID={collectionSelectedID}
 									collection={collectionSelected}
-									onResolutionChange={this.onCollectionEditOperation}
+									onCollectionChange={this.onCollectionChange}
 								/>
 							)}
 						</CSSTransition>

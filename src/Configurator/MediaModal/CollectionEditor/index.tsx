@@ -1,6 +1,5 @@
 import * as React from "react";
 import { v1 as uuid } from "uuid";
-import { CollectionEditModify, CollectionEditOperation } from "..";
 import type { IdentifiedResolutions, MediaCollection } from "../../../store";
 import { getArrayBuffer } from "../../../utils";
 import CommittableTextInput from "../../CommittableTextInput";
@@ -8,13 +7,8 @@ import { DeleteIcon, PlusIcon } from "../icons";
 import "./style.less";
 
 interface Props {
-	collectionID: string;
 	collection: MediaCollection;
-	onResolutionChange(
-		operation: CollectionEditOperation,
-		collectionID: string,
-		collection: MediaCollection
-	): void;
+	onCollectionChange(collection: MediaCollection): void;
 }
 
 interface State {
@@ -102,14 +96,14 @@ export default class CollectionEditor extends React.Component<Props, State> {
 	}
 
 	onResolutionsEdit(resolutions: IdentifiedResolutions) {
-		const { onResolutionChange, collection, collectionID } = this.props;
+		const { onCollectionChange, collection } = this.props;
 
 		const changedCollection: MediaCollection = {
 			name: collection.name,
 			resolutions,
 		};
 
-		onResolutionChange(CollectionEditModify, collectionID, changedCollection);
+		onCollectionChange(changedCollection);
 	}
 
 	// **************************** //

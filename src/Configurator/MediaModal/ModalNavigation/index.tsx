@@ -6,7 +6,7 @@ import "./style.less";
 interface Props {
 	collectionID: string;
 	onBack(): void;
-	onCollectionNameEditComplete(collectionID: string, value: string): void;
+	onCollectionNameChange(value: string): void;
 	mediaName: string;
 	collectionName?: string;
 }
@@ -79,7 +79,7 @@ export function ModalNavigation(props: Props) {
 	const onCollectionNameEditCommit = React.useCallback(
 		(value: string) => {
 			setEditing(false);
-			props.onCollectionNameEditComplete(props.collectionID, value);
+			props.onCollectionNameChange(value);
 		},
 		[props.collectionID]
 	);
