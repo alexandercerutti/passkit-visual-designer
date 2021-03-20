@@ -4,7 +4,7 @@ This is a project that aims to make Apple Wallet design phase easier through a s
 
 ## Designing flow
 
-While creating an Apple Wallet Pass, the generation is not the step that matters the most, but also your idea before creating it. So having an idea of colors, texts, translations and so on is very important, also due to a matter of branding.
+While creating an Apple Wallet Pass, the generation is not the step that matters the most, but your idea before creating it. So having an idea of colors, texts, translations and so on is very important, also due to a matter of branding.
 
 So the designing flow for Apple Wallet passes _passes_ through this: Design, Approval, Generation.
 
