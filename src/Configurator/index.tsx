@@ -67,7 +67,6 @@ interface ConfiguratorStore {
 interface ConfiguratorProps extends ConfiguratorStore, DispatchProps, RouteComponentProps<any> {}
 interface ConfiguratorState {
 	selectedFieldId?: keyof PassMixedProps;
-	registeredFields: RegisteredFieldsMap;
 	shouldShowPassBack: boolean;
 	emptyFieldsVisible: boolean;
 	canBeExported: boolean;
@@ -89,6 +88,8 @@ const MODAL_TIMEOUT = 200;
 class Configurator
 	extends React.Component<ConfiguratorProps, ConfiguratorState>
 	implements InteractionContextMethods {
+	private registeredFields: RegisteredFieldsMap = new Map(DefaultFields);
+
 	constructor(props: ConfiguratorProps) {
 		super(props);
 
@@ -112,7 +113,6 @@ class Configurator
 
 		this.state = {
 			selectedFieldId: null,
-			registeredFields: new Map(DefaultFields),
 			shouldShowPassBack: false,
 			emptyFieldsVisible: true,
 			canBeExported: false,
@@ -155,7 +155,7 @@ class Configurator
 	 */
 
 	registerField(kind: FieldKind, id: keyof PassMixedProps): FieldSelectHandler {
-		if (this.state.registeredFields.get(DataGroup.DATA).find((data) => data.name === id)) {
+		if (this.registeredFields.get(DataGroup.DATA).find((data) => data.name === id)) {
 			if (__DEV__) {
 				console.log("...but failed due to duplicate already available");
 			}
@@ -163,23 +163,12 @@ class Configurator
 			return null;
 		}
 
-		this.setState((previous) => {
-			const updatedFields = new Map(previous.registeredFields);
-			const fieldDataGroup = convertFieldKindToDataGroup(kind);
+		const dataGroup = convertFieldKindToDataGroup(kind);
 
-			if (!fieldDataGroup) {
-				return {
-					registeredFields: updatedFields,
-				};
-			}
-
-			return {
-				registeredFields: updatedFields.set(fieldDataGroup, [
-					...updatedFields.get(fieldDataGroup),
-					{ name: id, kind },
-				]),
-			};
-		});
+		this.registeredFields.set(dataGroup, [
+			...this.registeredFields.get(dataGroup),
+			{ name: id, kind },
+		]);
 
 		return (key: string) => this.onFieldSelect(id, key);
 	}
@@ -354,7 +343,6 @@ class Configurator
 		const {
 			shouldShowPassBack,
 			emptyFieldsVisible,
-			registeredFields,
 			selectedFieldId,
 			canBeExported,
 			viewingMediaName,
@@ -386,7 +374,7 @@ class Configurator
 					<OptionsMenu
 						data={passProps}
 						selectedFieldID={selectedFieldId}
-						fields={registeredFields}
+						fields={this.registeredFields}
 						onValueChange={this.onValueChange}
 						cancelFieldSelection={this.onVoidClick}
 						requestExport={(canBeExported && this.requestExport) || null}

@@ -32,20 +32,11 @@ export function useRegistrations(
 	registerFn: onRegister,
 	components: RegistrationDescriptor[]
 ): FieldSelectHandler[] {
-	const [handlers, setHandlers] = React.useState<FieldSelectHandler[]>([]);
-
-	React.useEffect(() => {
-		/**
-		 * If no registration function is provided, we
-		 * act like it was approved
-		 */
-
+	return React.useMemo(() => {
 		if (!registerFn) {
-			return setHandlers(components.map(() => noop));
+			return components.map(() => noop);
 		}
 
-		return setHandlers(components.map(([kind, id]) => registerFn(kind, id)));
-	}, []);
-
-	return handlers;
+		return components.map(([kind, id]) => registerFn(kind, id));
+	}, [registerFn]);
 }
