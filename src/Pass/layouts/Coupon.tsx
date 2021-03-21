@@ -8,8 +8,6 @@ import Footer from "./sections/Footer";
 import useAlternativesRegistration from "../useAlternativesRegistration";
 import type { AlternativesRegistrationSignature } from "../useAlternativesRegistration";
 import InteractionContext from "../InteractionContext";
-import { useRegistrations } from "./sections/useRegistrations";
-import { FieldKind } from "../../model";
 
 type CouponProps = PassMixedProps & AlternativesRegistrationSignature;
 

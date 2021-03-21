@@ -4,7 +4,6 @@ import TextField from "../../components/TextField";
 import { RegistrableComponent, useRegistrations } from "../useRegistrations";
 import ImageField from "../../components/ImageField";
 import FieldsRow from "../FieldRow";
-import { createClassName } from "../../../../utils";
 import { FieldKind } from "../../../../model";
 import { PassFieldKeys } from "../../../constants";
 

@@ -6,11 +6,9 @@ import { PKBarcodeFormat } from "../constants";
 import Barcodes, { isSquareBarcode } from "./components/Barcodes";
 import FieldsRow from "./sections/FieldRow";
 import Footer from "./sections/Footer";
-import InteractionContext, { InteractionContextMethods } from "../InteractionContext";
+import InteractionContext from "../InteractionContext";
 import useAlternativesRegistration from "../useAlternativesRegistration";
 import type { AlternativesRegistrationSignature } from "../useAlternativesRegistration";
-import { useRegistrations } from "./sections/useRegistrations";
-import { FieldKind } from "../../model";
 
 type GenericProps = PassMixedProps & AlternativesRegistrationSignature;
 
