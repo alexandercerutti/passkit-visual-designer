@@ -17,6 +17,8 @@ export default function Drawer(props: Props) {
 	const [isThereMoreAfterTheSkyline, setMoreAvailability] = React.useState(false);
 	const drawerRef = React.useRef<HTMLDivElement>();
 
+	const { requestPageCreation } = React.useContext(PageNavigationContext);
+
 	const onListScrollHandler = React.useRef(
 		({ currentTarget }: Partial<React.UIEvent<HTMLDivElement>>) => {
 			// Tollerance of 25px before showing the indicator
@@ -39,20 +41,17 @@ export default function Drawer(props: Props) {
 		const fieldUUID = props.fieldsUUIDs[index];
 
 		return (
-			<PageNavigationContext.Consumer key={fieldUUID}>
-				{({ requestPageCreation }) => (
-					<DrawerElement
-						fieldUUID={fieldUUID}
-						elementData={field}
-						onFieldDelete={props.onFieldDelete}
-						onFieldDataChange={props.onFieldChange}
-						onFieldOrderChange={props.onFieldOrderChange}
-						requestPageCreation={requestPageCreation}
-						isUpperBoundary={index === 0}
-						isLowerBoundary={index === props.fieldsData.length - 1}
-					/>
-				)}
-			</PageNavigationContext.Consumer>
+			<DrawerElement
+				key={fieldUUID}
+				fieldUUID={fieldUUID}
+				elementData={field}
+				onFieldDelete={props.onFieldDelete}
+				onFieldDataChange={props.onFieldChange}
+				onFieldOrderChange={props.onFieldOrderChange}
+				requestPageCreation={requestPageCreation}
+				isUpperBoundary={index === 0}
+				isLowerBoundary={index === props.fieldsData.length - 1}
+			/>
 		);
 	});
 
