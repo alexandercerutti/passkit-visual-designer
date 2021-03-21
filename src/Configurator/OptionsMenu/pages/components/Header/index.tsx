@@ -8,18 +8,16 @@ import PageNavigationContext from "../../PageNavigationContext";
 interface Props extends Partial<PageProps> {}
 
 export default function PageHeader(props: React.PropsWithChildren<Props>) {
+	const { requestPageClosing } = React.useContext(PageNavigationContext);
+
 	return (
-		<PageNavigationContext.Consumer>
-			{({ requestPageClosing }) => (
-				<header>
-					<div className="back" onClick={() => requestPageClosing(true)}>
-						<FieldsArrowIcon />
-						<span>Back</span>
-					</div>
-					{props.name && <CapitalHeaderTitle name={props.name} />}
-					{props.children}
-				</header>
-			)}
-		</PageNavigationContext.Consumer>
+		<header>
+			<div className="back" onClick={() => requestPageClosing(true)}>
+				<FieldsArrowIcon />
+				<span>Back</span>
+			</div>
+			{props.name && <CapitalHeaderTitle name={props.name} />}
+			{props.children}
+		</header>
 	);
 }
