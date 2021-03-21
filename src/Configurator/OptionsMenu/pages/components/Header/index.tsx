@@ -1,6 +1,6 @@
 import * as React from "react";
 import "./style.less";
-import { FieldsArrowIcon } from "../../icons";
+import FieldsArrowIcon from "../../icons";
 import CapitalHeaderTitle from "../CapitalHeaderTitle";
 import { PageProps } from "../../usePageFactory";
 import PageNavigationContext from "../../PageNavigationContext";
