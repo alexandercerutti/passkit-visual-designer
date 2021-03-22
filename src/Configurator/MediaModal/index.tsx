@@ -60,6 +60,7 @@ export default class MediaModal extends React.Component<Props, State> {
 
 		if (
 			state.collectionSelected &&
+			props.mediaContent &&
 			state.collectionSelected !== props.mediaContent.collections[state.collectionSelectedID]
 		) {
 			nextState.collectionSelected = props.mediaContent.collections[state.collectionSelectedID];
