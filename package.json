@@ -10,11 +10,10 @@
 	},
 	"keywords": [
 		"apple",
-		"wallet",
 		"passkit"
 	],
 	"author": "Alexander P. Cerutti <cerutti.alexander@gmail.com>",
-	"license": "ISC",
+	"license": "MIT",
 	"devDependencies": {
 		"@babel/core": "^7.13.10",
 		"@babel/preset-env": "^7.13.10",
