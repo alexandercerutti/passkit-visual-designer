@@ -12,5 +12,6 @@
 		],
 		"moduleResolution": "node",
 		"allowSyntheticDefaultImports": true,
+		"importHelpers": true
 	}
 }

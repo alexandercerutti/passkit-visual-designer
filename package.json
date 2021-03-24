@@ -58,6 +58,7 @@
 		"redux": "^4.0.5",
 		"redux-devtools-extension": "^2.13.9",
 		"redux-thunk": "^2.3.0",
+		"tslib": "^2.1.0",
 		"uuid": "^8.3.2"
 	}
 }
