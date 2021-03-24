@@ -8,7 +8,6 @@ import { CSSTransition, SwitchTransition } from "react-transition-group";
 import type { CollectionSet, MediaCollection } from "../../store";
 import { v1 as uuid } from "uuid";
 import { ModalNavigation } from "./ModalNavigation";
-import { createClassName } from "../../utils";
 
 export type CollectionEditOperation = 0b0001 | 0b0010 | 0b0100;
 export const CollectionEditCreate = 0b0001;
