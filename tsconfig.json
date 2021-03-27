@@ -2,9 +2,9 @@
 	"compilerOptions": {
 		"jsx": "react",
 		"sourceMap": true,
-		"module": "CommonJS",
+		"module": "ES6",
 		"esModuleInterop": true,
-		"target": "es6",
+		"target": "ES2016",
 		"newLine": "LF",
 		"lib": [
 			"dom",
