@@ -11,7 +11,8 @@ module.exports = {
 	entry: "./src/public/index.tsx",
 	output: {
 		path: path.join(__dirname, "dist"),
-		filename: "bundle.js"
+		filename: "[name].bundle.js",
+		clean: true,
 	},
 	module: {
 		rules: [{
@@ -69,6 +70,30 @@ module.exports = {
 			}
 		}]
 	},
+	optimization: {
+		splitChunks: {
+			cacheGroups: {
+				vendor: {
+					test: /[\\/]node_modules[\\/].+/,
+					name: "vendor",
+					chunks: "initial",
+					priority: 1,
+				},
+				react: {
+					test: /[\\/]node_modules[\\/](react|react-dom)[\\/].+/,
+					name: "react.vendor",
+					chunks: "initial",
+					priority: 2,
+				},
+				partners: {
+					test: /[\\/](partners-templates|node_modules[\\/]handlebars)[\\/].+/,
+					name: "partners",
+					priority: 2,
+					chunks: "initial"
+				}
+			},
+		}
+	},
 	devtool: "source-map",
 	resolve: {
 		extensions: [".js", ".jsx", ".ts", ".tsx"]
@@ -83,7 +108,8 @@ module.exports = {
 			title: "Passkit Visual Designer",
 			template: "./src/public/index.html",
 			filename: "./index.html",
-			description: "A web tool to make it easier designing Apple Wallet Passes graphically"
+			description: "A web tool to make it easier designing Apple Wallet Passes graphically",
+			chunks: "all",
 		}),
 		new forkTsCheckerWebpackPlugin(),
 		new DefinePlugin({
