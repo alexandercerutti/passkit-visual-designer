@@ -16,15 +16,11 @@ interface DispatchProps {
 	setPassProps: typeof Store.Pass.setPropsBatch;
 }
 
-interface StoreProps {
-	selectedPassKind: PassKind;
-}
-
 interface SelectorState {
 	selectedKind: PassKind;
 }
 
-interface SelectorProps extends DispatchProps, StoreProps {
+interface SelectorProps extends DispatchProps {
 	pushHistory(path: string, init?: Function): void;
 }
 
@@ -116,11 +112,6 @@ class PassSelector extends React.PureComponent<SelectorProps, SelectorState> {
 	}
 }
 
-export default connect(
-	({ pass: { kind: selectedPassKind } }: State) => {
-		return { selectedPassKind };
-	},
-	{
-		setPassProps: Store.Pass.setPropsBatch,
-	}
-)(PassSelector);
+export default connect(null, {
+	setPassProps: Store.Pass.setPropsBatch,
+})(PassSelector);
