@@ -7,14 +7,12 @@ import FieldsRow from "./sections/FieldRow";
 import Footer from "./sections/Footer";
 import Barcode from "./components/Barcodes";
 import useAlternativesRegistration from "../useAlternativesRegistration";
-import type { AlternativesRegistrationSignature } from "../useAlternativesRegistration";
 import InteractionContext from "../InteractionContext";
+import { PassKind } from "../../model";
 
-type BoardingPassProps = PassMixedProps & AlternativesRegistrationSignature;
-
-export function BoardingPass(props: BoardingPassProps) {
+export function BoardingPass(props: PassMixedProps) {
 	useAlternativesRegistration(
-		props.registerAlternatives,
+		PassKind.BOARDING_PASS,
 		{
 			name: "Generic Boarding Pass",
 			specificProps: {

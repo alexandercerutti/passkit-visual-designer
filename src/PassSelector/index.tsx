@@ -5,7 +5,7 @@ import { PassKind } from "../model";
 import PassList from "./PassList";
 import NamedPass from "./NamedPass";
 import { PassProps } from "../Pass";
-import type { PassAlternative } from "../Pass/useAlternativesRegistration";
+import { getAlternativesByKind } from "../Pass/useAlternativesRegistration";
 import type { State } from "../store";
 import * as Store from "../store";
 
@@ -28,11 +28,7 @@ interface SelectorProps extends DispatchProps, StoreProps {
 	pushHistory(path: string, init?: Function): void;
 }
 
-type PassKindsAlternatives = { [key in PassKind]?: PassAlternative[] };
-
 class PassSelector extends React.PureComponent<SelectorProps, SelectorState> {
-	private alternatives: PassKindsAlternatives = {};
-
 	private config = {
 		introText: "Select your pass model",
 	};
@@ -44,26 +40,8 @@ class PassSelector extends React.PureComponent<SelectorProps, SelectorState> {
 			selectedKind: undefined,
 		};
 
-		this.registerAlternatives = this.registerAlternatives.bind(this);
 		this.onPassSelect = this.onPassSelect.bind(this);
 		this.onAlternativeSelection = this.onAlternativeSelection.bind(this);
-	}
-
-	/**
-	 * This methods will be passed to passes. They will invoke it
-	 * and register all the possible alternatives of the same
-	 * model (e.g. Boarding Pass + Generic / Boat / Air ...)
-	 *
-	 * @param kind
-	 * @param alternatives
-	 */
-
-	registerAlternatives(kind: PassKind, ...alternatives: PassAlternative[]) {
-		this.alternatives[kind] = alternatives;
-
-		if (__DEV__) {
-			console.log("Registering alternatives for", kind, alternatives);
-		}
 	}
 
 	onPassSelect(passProps: PassProps) {
@@ -75,6 +53,7 @@ class PassSelector extends React.PureComponent<SelectorProps, SelectorState> {
 			this.setState({
 				selectedKind: undefined,
 			});
+
 			return;
 		}
 
@@ -83,23 +62,23 @@ class PassSelector extends React.PureComponent<SelectorProps, SelectorState> {
 		});
 	}
 
+	/**
+	 * Receives the pass props that identifies an alternative
+	 * along with the kind and performs page changing
+	 *
+	 * @param passProps
+	 */
+
 	onAlternativeSelection(passProps: PassProps) {
 		this.props.pushHistory("/creator", () => this.props.setPassProps(passProps));
 	}
 
 	render() {
 		const { selectedKind } = this.state;
-		const availableAlternatives = (selectedKind && this.alternatives[selectedKind]) || [];
+		const availableAlternatives = getAlternativesByKind(selectedKind) || [];
 
 		const passes = Object.entries(PassKind).map(([_, pass]) => {
-			return (
-				<NamedPass
-					key={pass}
-					name={pass}
-					kind={pass}
-					registerAlternatives={this.registerAlternatives.bind(this, pass)}
-				/>
-			);
+			return <NamedPass key={pass} name={pass} kind={pass} />;
 		});
 
 		const alternativesList = availableAlternatives.map((alternative) => {

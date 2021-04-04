@@ -8,19 +8,16 @@ import Footer from "./sections/Footer";
 import Barcodes from "./components/Barcodes";
 import InteractionContext, { InteractionContextMethods } from "../InteractionContext";
 import useAlternativesRegistration from "../useAlternativesRegistration";
-import type { AlternativesRegistrationSignature } from "../useAlternativesRegistration";
 import { useRegistrations } from "./sections/useRegistrations";
-import { FieldKind } from "../../model";
-
-type EventTicketProps = PassMixedProps & AlternativesRegistrationSignature;
+import { FieldKind, PassKind } from "../../model";
 
 type PrimaryFieldPropsKind = Parameters<
 	typeof StripPrimaryFields | typeof ThumbnailPrimaryField
 >[0];
 
-export function EventTicket(props: EventTicketProps): JSX.Element {
+export function EventTicket(props: PassMixedProps): JSX.Element {
 	useAlternativesRegistration(
-		props.registerAlternatives,
+		PassKind.EVENT,
 		{
 			name: "With background image",
 			specificProps: {

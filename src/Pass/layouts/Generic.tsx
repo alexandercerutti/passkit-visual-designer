@@ -8,13 +8,11 @@ import FieldsRow from "./sections/FieldRow";
 import Footer from "./sections/Footer";
 import InteractionContext from "../InteractionContext";
 import useAlternativesRegistration from "../useAlternativesRegistration";
-import type { AlternativesRegistrationSignature } from "../useAlternativesRegistration";
+import { PassKind } from "../../model";
 
-type GenericProps = PassMixedProps & AlternativesRegistrationSignature;
-
-export function Generic(props: GenericProps): JSX.Element {
+export function Generic(props: PassMixedProps): JSX.Element {
 	useAlternativesRegistration(
-		props.registerAlternatives,
+		PassKind.GENERIC,
 		{
 			name: "With rectangular barcode",
 			specificProps: {

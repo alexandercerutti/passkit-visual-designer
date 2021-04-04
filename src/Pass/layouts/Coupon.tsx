@@ -6,13 +6,11 @@ import FieldsRow from "./sections/FieldRow";
 import Barcode from "./components/Barcodes";
 import Footer from "./sections/Footer";
 import useAlternativesRegistration from "../useAlternativesRegistration";
-import type { AlternativesRegistrationSignature } from "../useAlternativesRegistration";
 import InteractionContext from "../InteractionContext";
+import { PassKind } from "../../model";
 
-type CouponProps = PassMixedProps & AlternativesRegistrationSignature;
-
-export function Coupon(props: CouponProps): JSX.Element {
-	useAlternativesRegistration(props.registerAlternatives, {
+export function Coupon(props: PassMixedProps): JSX.Element {
+	useAlternativesRegistration(PassKind.COUPON, {
 		name: "Coupon Pass",
 		specificProps: {},
 	});

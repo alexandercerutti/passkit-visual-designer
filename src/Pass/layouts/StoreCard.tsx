@@ -6,13 +6,11 @@ import FieldsRow from "./sections/FieldRow";
 import Footer from "./sections/Footer";
 import Barcodes from "./components/Barcodes";
 import useAlternativesRegistration from "../useAlternativesRegistration";
-import type { AlternativesRegistrationSignature } from "../useAlternativesRegistration";
 import InteractionContext from "../InteractionContext";
+import { PassKind } from "../../model";
 
-type StoreCardProps = PassMixedProps & AlternativesRegistrationSignature;
-
-export function StoreCard(props: StoreCardProps): JSX.Element {
-	useAlternativesRegistration(props.registerAlternatives, {
+export function StoreCard(props: PassMixedProps): JSX.Element {
+	useAlternativesRegistration(PassKind.STORE, {
 		name: "StoreCard",
 		specificProps: {},
 	});

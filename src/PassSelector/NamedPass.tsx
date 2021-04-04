@@ -1,6 +1,5 @@
 import * as React from "react";
 import Pass, { PassProps } from "../Pass";
-import type { AlternativesRegistrationSignature } from "../Pass/useAlternativesRegistration";
 
 /**
  * This is pretty stupid component.
@@ -11,7 +10,7 @@ import type { AlternativesRegistrationSignature } from "../Pass/useAlternativesR
  * @param props
  */
 
-export interface NamedPassProps extends PassProps, AlternativesRegistrationSignature {
+export interface NamedPassProps extends PassProps {
 	name: string;
 }
 

@@ -6,7 +6,7 @@ import { createClassName } from "../utils";
 import { NamedPassProps } from "./NamedPass";
 
 interface PassListProps {
-	onPassSelect: (passProps: PassProps) => void;
+	onPassSelect(passProps: PassProps): void;
 	requiresAttention?: boolean;
 	selectedKind?: PassKind;
 }
@@ -15,12 +15,11 @@ type PassListPropsWithChildren = React.PropsWithChildren<PassListProps>;
 
 export default function PassList(props: PassListPropsWithChildren): JSX.Element {
 	const selectionTray = React.useRef<HTMLDivElement>(null);
-	const { current: onPassClickHandlerRef } = React.useRef(
-		(event: React.MouseEvent, clickProps: PassProps) => {
-			event.stopPropagation();
-			props.onPassSelect({ ...clickProps });
-		}
-	);
+
+	const onPassClickHandler = React.useCallback((event: React.MouseEvent, clickProps: PassProps) => {
+		event.stopPropagation();
+		props.onPassSelect({ ...clickProps });
+	}, []);
 
 	React.useEffect(
 		() =>
@@ -41,8 +40,8 @@ export default function PassList(props: PassListPropsWithChildren): JSX.Element 
 			return (
 				<div
 					className={className}
-					data-pass={kind}
-					onClick={(e) => onPassClickHandlerRef(e, { kind, ...passProps })}
+					data-pass-kind={kind}
+					onClick={(e) => onPassClickHandler(e, { kind, ...passProps })}
 				>
 					{node}
 				</div>
