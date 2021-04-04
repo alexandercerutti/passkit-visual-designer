@@ -10,7 +10,7 @@ import InteractionContext from "../InteractionContext";
 import useAlternativesRegistration from "../useAlternativesRegistration";
 import { PassKind } from "../../model";
 
-export function Generic(props: PassMixedProps): JSX.Element {
+export default function Generic(props: PassMixedProps): JSX.Element {
 	useAlternativesRegistration(
 		PassKind.GENERIC,
 		{

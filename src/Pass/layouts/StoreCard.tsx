@@ -9,7 +9,7 @@ import useAlternativesRegistration from "../useAlternativesRegistration";
 import InteractionContext from "../InteractionContext";
 import { PassKind } from "../../model";
 
-export function StoreCard(props: PassMixedProps): JSX.Element {
+export default function StoreCard(props: PassMixedProps): JSX.Element {
 	useAlternativesRegistration(PassKind.STORE, {
 		name: "StoreCard",
 		specificProps: {},

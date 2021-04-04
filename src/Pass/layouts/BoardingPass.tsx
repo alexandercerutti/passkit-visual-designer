@@ -10,7 +10,7 @@ import useAlternativesRegistration from "../useAlternativesRegistration";
 import InteractionContext from "../InteractionContext";
 import { PassKind } from "../../model";
 
-export function BoardingPass(props: PassMixedProps) {
+export default function BoardingPass(props: PassMixedProps) {
 	useAlternativesRegistration(
 		PassKind.BOARDING_PASS,
 		{

@@ -9,7 +9,7 @@ import useAlternativesRegistration from "../useAlternativesRegistration";
 import InteractionContext from "../InteractionContext";
 import { PassKind } from "../../model";
 
-export function Coupon(props: PassMixedProps): JSX.Element {
+export default function Coupon(props: PassMixedProps): JSX.Element {
 	useAlternativesRegistration(PassKind.COUPON, {
 		name: "Coupon Pass",
 		specificProps: {},

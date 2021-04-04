@@ -1,11 +1,7 @@
 import * as React from "react";
 import "./style.less";
 import { PassKind } from "../model";
-import { BoardingPass } from "./layouts/BoardingPass";
-import { Coupon } from "./layouts/Coupon";
-import { EventTicket } from "./layouts/EventTicket";
-import { Generic } from "./layouts/Generic";
-import { StoreCard } from "./layouts/StoreCard";
+import * as Layouts from "./layouts";
 import {
 	PKTransitType,
 	PassFields,
@@ -66,11 +62,11 @@ export interface PassProps extends PassMixedProps, Partial<InteractionContextMet
 }
 
 const PassKindsLayoutsMap = new Map<PassKind, React.FunctionComponent<PassMixedProps>>([
-	[PassKind.BOARDING_PASS, BoardingPass],
-	[PassKind.COUPON, Coupon],
-	[PassKind.EVENT, EventTicket],
-	[PassKind.GENERIC, Generic],
-	[PassKind.STORE, StoreCard],
+	[PassKind.BOARDING_PASS, Layouts.BoardingPass],
+	[PassKind.COUPON, Layouts.Coupon],
+	[PassKind.EVENT, Layouts.EventTicket],
+	[PassKind.GENERIC, Layouts.Generic],
+	[PassKind.STORE, Layouts.StoreCard],
 ]);
 
 export default function Pass(props: PassProps) {

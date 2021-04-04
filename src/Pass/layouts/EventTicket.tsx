@@ -15,7 +15,7 @@ type PrimaryFieldPropsKind = Parameters<
 	typeof StripPrimaryFields | typeof ThumbnailPrimaryField
 >[0];
 
-export function EventTicket(props: PassMixedProps): JSX.Element {
+export default function EventTicket(props: PassMixedProps): JSX.Element {
 	useAlternativesRegistration(
 		PassKind.EVENT,
 		{
