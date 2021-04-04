@@ -1,8 +1,8 @@
 import * as React from "react";
 import useAlternativesRegistration from "../useAlternativesRegistration";
-import { EventTicket as PassLayout } from "../../Pass/layouts";
-import { PassMixedProps } from "../../Pass";
-import { PassKind } from "../../model";
+import { EventTicket as PassLayout } from "../../../Pass/layouts";
+import { PassMixedProps } from "../../../Pass";
+import { PassKind } from "../../../model";
 
 /**
  * Layout proxy with alternatives registration capability.

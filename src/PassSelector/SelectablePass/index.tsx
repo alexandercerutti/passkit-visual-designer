@@ -1,8 +1,8 @@
 import * as React from "react";
-import { PassKind } from "../model";
-import Pass, { PassProps } from "../Pass";
-import { LayoutSignature } from "../Pass/layouts";
-import * as SelectableLayouts from "./SelectablePassLayouts";
+import { PassKind } from "../../model";
+import Pass, { PassProps } from "../../Pass";
+import { LayoutSignature } from "../../Pass/layouts";
+import * as SelectableLayouts from "./layouts";
 
 /**
  * This module defines an alternative sets of layouts, which

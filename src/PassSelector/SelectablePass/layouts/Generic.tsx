@@ -1,9 +1,9 @@
 import * as React from "react";
 import useAlternativesRegistration from "../useAlternativesRegistration";
-import { Generic as PassLayout } from "../../Pass/layouts";
-import { PassMixedProps } from "../../Pass";
-import { PassKind } from "../../model";
-import { PKBarcodeFormat } from "../../Pass/constants";
+import { Generic as PassLayout } from "../../../Pass/layouts";
+import { PassMixedProps } from "../../../Pass";
+import { PassKind } from "../../../model";
+import { PKBarcodeFormat } from "../../../Pass/constants";
 
 /**
  * Layout proxy with alternatives registration capability.

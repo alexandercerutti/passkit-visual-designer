@@ -1,6 +1,6 @@
 import * as React from "react";
-import { PassMixedProps } from "../Pass";
-import { PassKind } from "../model";
+import { PassMixedProps } from "../../Pass";
+import { PassKind } from "../../model";
 
 interface PassAlternative {
 	name: string;
