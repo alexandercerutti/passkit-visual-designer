@@ -5,16 +5,9 @@ import StripPrimaryFields from "./sections/PrimaryFields/Strip";
 import FieldsRow from "./sections/FieldRow";
 import Barcode from "./components/Barcodes";
 import Footer from "./sections/Footer";
-import useAlternativesRegistration from "../useAlternativesRegistration";
 import InteractionContext from "../InteractionContext";
-import { PassKind } from "../../model";
 
 export default function Coupon(props: PassMixedProps): JSX.Element {
-	useAlternativesRegistration(PassKind.COUPON, {
-		name: "Coupon Pass",
-		specificProps: {},
-	});
-
 	const {
 		secondaryFields = [],
 		primaryFields = [],

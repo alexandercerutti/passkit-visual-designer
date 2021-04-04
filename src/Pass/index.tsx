@@ -59,9 +59,10 @@ export type MediaProps = Pick<
 
 export interface PassProps extends PassMixedProps, Partial<InteractionContextMethods> {
 	showBack?: boolean;
+	layout?: Layouts.LayoutSignature;
 }
 
-const PassKindsLayoutsMap = new Map<PassKind, React.FunctionComponent<PassMixedProps>>([
+const PassKindsLayoutsMap = new Map<PassKind, Layouts.LayoutSignature>([
 	[PassKind.BOARDING_PASS, Layouts.BoardingPass],
 	[PassKind.COUPON, Layouts.Coupon],
 	[PassKind.EVENT, Layouts.EventTicket],
@@ -76,7 +77,7 @@ export default function Pass(props: PassProps) {
 	// the Background
 	const { backgroundImage } = props;
 
-	const PassLayout = PassKindsLayoutsMap.get(kind);
+	const PassLayout = props.layout || PassKindsLayoutsMap.get(kind);
 
 	/**
 	 * Setting ref against card and not on main pass element

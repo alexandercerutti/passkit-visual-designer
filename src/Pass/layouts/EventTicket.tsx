@@ -7,31 +7,14 @@ import StripPrimaryFields from "./sections/PrimaryFields/Strip";
 import Footer from "./sections/Footer";
 import Barcodes from "./components/Barcodes";
 import InteractionContext, { InteractionContextMethods } from "../InteractionContext";
-import useAlternativesRegistration from "../useAlternativesRegistration";
 import { useRegistrations } from "./sections/useRegistrations";
-import { FieldKind, PassKind } from "../../model";
+import { FieldKind } from "../../model";
 
 type PrimaryFieldPropsKind = Parameters<
 	typeof StripPrimaryFields | typeof ThumbnailPrimaryField
 >[0];
 
 export default function EventTicket(props: PassMixedProps): JSX.Element {
-	useAlternativesRegistration(
-		PassKind.EVENT,
-		{
-			name: "With background image",
-			specificProps: {
-				backgroundImage: null,
-			},
-		},
-		{
-			name: "With strip image",
-			specificProps: {
-				stripImage: null,
-			},
-		}
-	);
-
 	const {
 		secondaryFields = [],
 		primaryFields = [],

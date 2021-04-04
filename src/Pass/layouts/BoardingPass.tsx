@@ -1,50 +1,13 @@
 import * as React from "react";
 import { PassMixedProps } from "..";
 import { PassHeader } from "./sections/Header";
-import { PKTransitType } from "../constants";
 import PrimaryFields from "./sections/PrimaryFields/Travel";
 import FieldsRow from "./sections/FieldRow";
 import Footer from "./sections/Footer";
 import Barcode from "./components/Barcodes";
-import useAlternativesRegistration from "../useAlternativesRegistration";
 import InteractionContext from "../InteractionContext";
-import { PassKind } from "../../model";
 
 export default function BoardingPass(props: PassMixedProps) {
-	useAlternativesRegistration(
-		PassKind.BOARDING_PASS,
-		{
-			name: "Generic Boarding Pass",
-			specificProps: {
-				transitType: PKTransitType.Generic,
-			},
-		},
-		{
-			name: "Air Boarding Pass",
-			specificProps: {
-				transitType: PKTransitType.Air,
-			},
-		},
-		{
-			name: "Boat Boarding Pass",
-			specificProps: {
-				transitType: PKTransitType.Boat,
-			},
-		},
-		{
-			name: "Bus Boarding Pass",
-			specificProps: {
-				transitType: PKTransitType.Bus,
-			},
-		},
-		{
-			name: "Train Boarding Pass",
-			specificProps: {
-				transitType: PKTransitType.Train,
-			},
-		}
-	);
-
 	const {
 		secondaryFields = [],
 		primaryFields = [],

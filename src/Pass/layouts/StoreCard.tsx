@@ -5,16 +5,9 @@ import StripPrimaryFields from "./sections/PrimaryFields/Strip";
 import FieldsRow from "./sections/FieldRow";
 import Footer from "./sections/Footer";
 import Barcodes from "./components/Barcodes";
-import useAlternativesRegistration from "../useAlternativesRegistration";
 import InteractionContext from "../InteractionContext";
-import { PassKind } from "../../model";
 
 export default function StoreCard(props: PassMixedProps): JSX.Element {
-	useAlternativesRegistration(PassKind.STORE, {
-		name: "StoreCard",
-		specificProps: {},
-	});
-
 	const {
 		secondaryFields = [],
 		primaryFields = [],

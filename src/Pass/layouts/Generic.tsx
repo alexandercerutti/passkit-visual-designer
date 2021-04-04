@@ -2,35 +2,12 @@ import * as React from "react";
 import { PassMixedProps } from "..";
 import { PassHeader } from "./sections/Header";
 import ThumbnailPrimaryField from "./sections/PrimaryFields/Thumbnail";
-import { PKBarcodeFormat } from "../constants";
 import Barcodes, { isSquareBarcode } from "./components/Barcodes";
 import FieldsRow from "./sections/FieldRow";
 import Footer from "./sections/Footer";
 import InteractionContext from "../InteractionContext";
-import useAlternativesRegistration from "../useAlternativesRegistration";
-import { PassKind } from "../../model";
 
 export default function Generic(props: PassMixedProps): JSX.Element {
-	useAlternativesRegistration(
-		PassKind.GENERIC,
-		{
-			name: "With rectangular barcode",
-			specificProps: {
-				barcode: {
-					format: PKBarcodeFormat.Rectangle,
-				},
-			},
-		},
-		{
-			name: "With square barcode",
-			specificProps: {
-				barcode: {
-					format: PKBarcodeFormat.Square,
-				},
-			},
-		}
-	);
-
 	const {
 		secondaryFields = [],
 		primaryFields = [],
