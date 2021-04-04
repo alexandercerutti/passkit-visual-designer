@@ -3,7 +3,7 @@ import "./style.less";
 import { PassKind } from "../model";
 import { PassProps } from "../Pass";
 import { createClassName } from "../utils";
-import { NamedPassProps } from "./NamedPass";
+import { SelectablePassProps } from "./SelectablePass";
 
 interface PassListProps {
 	onPassSelect(passProps: PassProps): void;
@@ -31,7 +31,7 @@ export default function PassList(props: PassListPropsWithChildren): JSX.Element 
 
 	const children = React.Children.map(
 		props.children,
-		(node: React.ReactElement<NamedPassProps>) => {
+		(node: React.ReactElement<SelectablePassProps>) => {
 			const { kind, name, ...passProps } = node.props;
 			const className = createClassName(["select"], {
 				highlighted: kind === props.selectedKind,

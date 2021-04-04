@@ -14,7 +14,7 @@ import * as SelectableLayouts from "./SelectablePassLayouts";
  * under it as a description.
  */
 
-export interface NamedPassProps extends PassProps {
+export interface SelectablePassProps extends PassProps {
 	name: string;
 }
 
@@ -26,7 +26,7 @@ const LayoutsMap = new Map<PassKind, LayoutSignature>([
 	[PassKind.STORE, SelectableLayouts.StoreCard],
 ]);
 
-export default function NamedPass(props: NamedPassProps): JSX.Element {
+export default function SelectablePass(props: SelectablePassProps): JSX.Element {
 	const { name, ...passProps } = props;
 
 	const PassLayout = LayoutsMap.get(passProps.kind);

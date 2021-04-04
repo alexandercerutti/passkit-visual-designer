@@ -3,10 +3,9 @@ import { connect } from "react-redux";
 import "./style.less";
 import { PassKind } from "../model";
 import PassList from "./PassList";
-import NamedPass from "./NamedPass";
+import SelectablePass from "./SelectablePass";
 import { PassProps } from "../Pass";
 import { getAlternativesByKind } from "../Pass/useAlternativesRegistration";
-import type { State } from "../store";
 import * as Store from "../store";
 
 // Webpack declared
@@ -74,12 +73,12 @@ class PassSelector extends React.PureComponent<SelectorProps, SelectorState> {
 		const availableAlternatives = getAlternativesByKind(selectedKind) || [];
 
 		const passes = Object.entries(PassKind).map(([_, pass]) => {
-			return <NamedPass key={pass} name={pass} kind={pass} />;
+			return <SelectablePass key={pass} name={pass} kind={pass} />;
 		});
 
 		const alternativesList = availableAlternatives.map((alternative) => {
 			return (
-				<NamedPass
+				<SelectablePass
 					key={alternative.name}
 					name={alternative.name}
 					kind={selectedKind}
