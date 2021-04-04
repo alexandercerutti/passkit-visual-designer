@@ -2,21 +2,24 @@ import * as React from "react";
 import { PassMixedProps } from ".";
 import { PassKind } from "../model";
 
-export interface PassAlternative {
+interface PassAlternative {
 	name: string;
 	specificProps: Partial<PassMixedProps>;
 }
 
 type PassKindsAlternatives = {
-	[key in PassKind]?: PassAlternative[]
+	[key in PassKind]?: PassAlternative[];
 };
 
-/**
- * Can we put here a map or a structure along with an exported function to access to it
- * and the hook to save data without having to pass "register" function to useAlternativeRegistration?
- */
-
 const alternativesList: PassKindsAlternatives = {};
+
+/**
+ * Hook to save a list of possible alternatives of a
+ * pass kind, only on the first rendering
+ *
+ * @param kind
+ * @param alternatives
+ */
 
 export default function useAlternativesRegistration(
 	kind: PassKind,
@@ -26,6 +29,13 @@ export default function useAlternativesRegistration(
 		alternativesList[kind] = [ ...alternatives ];
 	}, []);
 }
+
+/**
+ * Retrieves the alternatives list for a specified kind
+ *
+ * @param kind
+ * @returns
+ */
 
 export function getAlternativesByKind(kind: PassKind) {
 	if (!kind) {
