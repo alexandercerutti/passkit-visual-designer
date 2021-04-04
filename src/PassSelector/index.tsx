@@ -5,7 +5,7 @@ import { PassKind } from "../model";
 import PassList from "./PassList";
 import SelectablePass from "./SelectablePass";
 import { PassProps } from "../Pass";
-import { getAlternativesByKind } from "../Pass/useAlternativesRegistration";
+import { getAlternativesByKind } from "./useAlternativesRegistration";
 import * as Store from "../store";
 
 // Webpack declared

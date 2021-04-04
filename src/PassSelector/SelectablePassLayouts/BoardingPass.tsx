@@ -1,5 +1,5 @@
 import * as React from "react";
-import useAlternativesRegistration from "../../Pass/useAlternativesRegistration";
+import useAlternativesRegistration from "../useAlternativesRegistration";
 import { BoardingPass as PassLayout } from "../../Pass/layouts";
 import { PassMixedProps } from "../../Pass";
 import { PassKind } from "../../model";
