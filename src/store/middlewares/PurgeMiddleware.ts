@@ -1,7 +1,7 @@
 import { AnyAction, Dispatch, MiddlewareAPI } from "redux";
+import { PassMediaProps } from "@pkvd/pass";
 import type { State } from "..";
 import * as Store from "..";
-import { MediaProps } from "../../Pass";
 import { CollectionSet, MediaCollection } from "../store";
 
 export default function PurgeMiddleware(store: MiddlewareAPI<Dispatch, State>) {
@@ -35,7 +35,7 @@ export default function PurgeMiddleware(store: MiddlewareAPI<Dispatch, State>) {
 			if (prepurgeMedia[activeMediaLanguage]) {
 				for (const [mediaName, collectionSet] of Object.entries(
 					prepurgeMedia[activeMediaLanguage]
-				) as [keyof MediaProps, CollectionSet][]) {
+				) as [keyof PassMediaProps, CollectionSet][]) {
 					enqueueMediaPurgeOnEmpty(mediaGenerator, collectionSet, activeMediaLanguage, mediaName);
 				}
 
@@ -71,7 +71,7 @@ function enqueueMediaPurgeOnEmpty(
 	generator: ReturnType<typeof purgeGenerator>,
 	collectionSet: Store.CollectionSet,
 	language: string,
-	mediaName: keyof MediaProps
+	mediaName: keyof PassMediaProps
 ): void {
 	const collectionEntries = Object.entries(collectionSet.collections);
 
@@ -80,7 +80,7 @@ function enqueueMediaPurgeOnEmpty(
 	}
 }
 
-type GeneratorElement = [setID: string, mediaID?: keyof MediaProps];
+type GeneratorElement = [setID: string, mediaID?: keyof PassMediaProps];
 
 function* purgeGenerator(
 	store: MiddlewareAPI<Dispatch, State>,

@@ -1,6 +1,6 @@
 import * as React from "react";
 import "./style.less";
-import { InteractionContextMethods, MediaProps, PassMixedProps } from "@pkvd/pass";
+import { InteractionContextMethods, PassMediaProps, PassMixedProps } from "@pkvd/pass";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import { CSSTransition } from "react-transition-group";
 import { connect } from "react-redux";
@@ -69,7 +69,7 @@ interface ConfiguratorState {
 	shouldShowPassBack: boolean;
 	emptyFieldsVisible: boolean;
 	canBeExported: boolean;
-	viewingMediaName: keyof MediaProps;
+	viewingMediaName: keyof PassMediaProps;
 	modalIdentifier: number;
 }
 
@@ -243,7 +243,7 @@ class Configurator
 		}));
 	}
 
-	toggleMediaModal(mediaName?: keyof MediaProps) {
+	toggleMediaModal(mediaName?: keyof PassMediaProps) {
 		this.setState((previous) => ({
 			modalIdentifier: previous.modalIdentifier ^ ModalIdentifier.Media,
 			viewingMediaName: previous.viewingMediaName ? null : mediaName,
@@ -478,7 +478,7 @@ function convertFieldKindToDataGroup(kind: FieldKind): DataGroup {
  */
 
 function getBestResolutionForMedia(mediaGroup: LocalizedMediaGroup, selectedLanguage: string) {
-	const best = {} as MediaProps;
+	const best = {} as PassMediaProps;
 
 	/**
 	 * If we don't have a media initialized for this language,
@@ -492,7 +492,7 @@ function getBestResolutionForMedia(mediaGroup: LocalizedMediaGroup, selectedLang
 	}
 
 	for (let [mediaName, media] of Object.entries(firstGroupToCheck) as [
-		keyof MediaProps,
+		keyof PassMediaProps,
 		CollectionSet
 	][]) {
 		if (media) {

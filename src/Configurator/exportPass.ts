@@ -1,5 +1,5 @@
 import JSZip from "jszip";
-import { PassMixedProps } from "../Pass";
+import { PassMixedProps } from "@pkvd/pass";
 import type {
 	LocalizedMediaGroup,
 	LocalizedTranslationsGroup,

@@ -18,7 +18,7 @@ import * as Store from "../store";
 import RecentSelector from "../RecentSelector";
 import LoaderFace from "../Loader";
 import { CSSTransition, SwitchTransition } from "react-transition-group";
-import { MediaProps, PassMixedProps } from "../Pass";
+import { PassMediaProps, PassMixedProps } from "@pkvd/pass";
 import { CollectionSet } from "../store";
 import { v1 as uuid } from "uuid";
 
@@ -163,7 +163,7 @@ function App(props: Props): JSX.Element {
 
 			) {
 				const [language, mediaSet] = localized;
-				const mediaEntries = Object.entries(mediaSet) as [keyof MediaProps, CollectionSet][];
+				const mediaEntries = Object.entries(mediaSet) as [keyof PassMediaProps, CollectionSet][];
 
 				for (
 					let i = mediaEntries.length, mediaEntry: typeof mediaEntries[0];
@@ -236,7 +236,7 @@ function App(props: Props): JSX.Element {
 									const mediaNameWithoutExtOrResolution = fileName.replace(
 										/(@\dx)?\.(.+)$/,
 										""
-									) as keyof MediaProps;
+									) as keyof PassMediaProps;
 									let collectionID: string = mediaNameCollIDMap.get(
 										mediaNameWithoutExtOrResolution
 									);

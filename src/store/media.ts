@@ -1,5 +1,5 @@
 import { Action } from "redux";
-import { MediaProps } from "../Pass";
+import { PassMediaProps } from "@pkvd/pass";
 import { CollectionSet, initialState, MediaCollection, State } from ".";
 
 // ************************************************************************ //
@@ -140,7 +140,7 @@ export function Create(mediaLanguage: string): Actions.Create {
 	};
 }
 
-export function Init(mediaName: keyof MediaProps, mediaLanguage: string): Actions.Init {
+export function Init(mediaName: keyof PassMediaProps, mediaLanguage: string): Actions.Init {
 	return {
 		type: INIT,
 		mediaName,
@@ -148,7 +148,7 @@ export function Init(mediaName: keyof MediaProps, mediaLanguage: string): Action
 	};
 }
 
-export function Purge(mediaLanguage: string, mediaName: keyof MediaProps): Actions.Purge {
+export function Purge(mediaLanguage: string, mediaName: keyof PassMediaProps): Actions.Purge {
 	return {
 		type: PURGE,
 		mediaName,
@@ -164,7 +164,7 @@ export function Destroy(mediaLanguage: string): Actions.Destroy {
 }
 
 export function EditCollection(
-	mediaName: keyof MediaProps,
+	mediaName: keyof PassMediaProps,
 	mediaLanguage: string,
 	collectionID: string,
 	collection: MediaCollection | null
@@ -179,7 +179,7 @@ export function EditCollection(
 }
 
 export function SetExportState(
-	mediaName: keyof MediaProps,
+	mediaName: keyof PassMediaProps,
 	mediaLanguage: string,
 	enabled: boolean
 ): Actions.SetExportState {
@@ -192,7 +192,7 @@ export function SetExportState(
 }
 
 export function SetActiveCollection(
-	mediaName: keyof MediaProps,
+	mediaName: keyof PassMediaProps,
 	mediaLanguage: string,
 	collectionID: string
 ): Actions.SetActiveCollection {
@@ -215,7 +215,7 @@ export function SetActiveCollection(
 export declare namespace Actions {
 	interface EditCollection extends Action<typeof EDIT_COLLECTION> {
 		mediaLanguage: string;
-		mediaName: keyof MediaProps;
+		mediaName: keyof PassMediaProps;
 		collectionID: string;
 		collection: MediaCollection;
 	}
@@ -225,12 +225,12 @@ export declare namespace Actions {
 	}
 
 	interface Init extends Action<typeof INIT> {
-		mediaName: keyof MediaProps;
+		mediaName: keyof PassMediaProps;
 		mediaLanguage: string;
 	}
 
 	interface Purge extends Action<typeof PURGE> {
-		mediaName: keyof MediaProps;
+		mediaName: keyof PassMediaProps;
 		mediaLanguage: string;
 	}
 
@@ -240,12 +240,12 @@ export declare namespace Actions {
 
 	interface SetExportState extends Action<typeof SET_EXPORT_STATE> {
 		mediaLanguage: string;
-		mediaName: keyof MediaProps;
+		mediaName: keyof PassMediaProps;
 		enabled: boolean;
 	}
 
 	interface SetActiveCollection extends Action<typeof SET_ACTIVE_COLLECTION> {
-		mediaName: keyof MediaProps;
+		mediaName: keyof PassMediaProps;
 		mediaLanguage: string;
 		collectionID: string;
 	}

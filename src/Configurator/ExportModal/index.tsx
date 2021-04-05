@@ -1,8 +1,8 @@
 import * as React from "react";
-import "./style.less";
 import Prism from "prismjs";
+import "./style.less";
+import { PassMixedProps } from "@pkvd/pass";
 import { createClassName } from "../../utils";
-import { PassMixedProps } from "../../Pass";
 import Modal, { ModalProps } from "../ModalBase";
 import * as Store from "../../store";
 import * as templates from "../../../partners-templates";

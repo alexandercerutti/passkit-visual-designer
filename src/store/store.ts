@@ -1,5 +1,5 @@
 import { PassKind } from "../model";
-import { Constants, PassMixedProps, MediaProps } from "@pkvd/pass";
+import { Constants, PassMixedProps, PassMediaProps } from "@pkvd/pass";
 
 const { PKTextAlignment, PKTransitType } = Constants;
 
@@ -128,7 +128,7 @@ export interface LocalizedMediaGroup {
 }
 
 export type MediaSet = {
-	[K in keyof MediaProps]: CollectionSet;
+	[K in keyof PassMediaProps]: CollectionSet;
 };
 
 export interface CollectionSet {

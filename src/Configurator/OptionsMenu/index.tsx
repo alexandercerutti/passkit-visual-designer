@@ -1,5 +1,6 @@
 import * as React from "react";
 import "./style.less";
+import { PassMediaProps, PassMixedProps } from "@pkvd/pass";
 import PanelsPage, { DataGroup } from "./pages/PanelsPage";
 import PageNavigationContext from "./pages/PageNavigationContext";
 import {
@@ -7,7 +8,6 @@ import {
 	PageNavigation,
 	ContextPropsGetter,
 } from "./pages/usePageFactory";
-import { MediaProps, PassMixedProps } from "../../Pass";
 import { ShareIcon } from "./pages/PanelsPage/icons";
 import { createClassName } from "../../utils";
 import { FieldDetails } from "./pages/PanelsPage/Panel";
@@ -25,7 +25,7 @@ interface NavigatorProps {
 	cancelFieldSelection(): void;
 	onValueChange(key: string, value: any): Promise<boolean>;
 	requestExport(): void;
-	onMediaEditRequest(mediaName: keyof MediaProps): void;
+	onMediaEditRequest(mediaName: keyof PassMediaProps): void;
 }
 
 export default class OptionsMenu

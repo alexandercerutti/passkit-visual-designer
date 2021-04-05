@@ -1,7 +1,7 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import "./style.less";
-import { PassProps } from "@pkvd/pass";
+import { PassMixedProps } from "@pkvd/pass";
 import { PassKind } from "../model";
 import PassList from "./PassList";
 import SelectablePass from "./SelectablePass";
@@ -39,7 +39,7 @@ class PassSelector extends React.PureComponent<SelectorProps, SelectorState> {
 		this.onAlternativeSelection = this.onAlternativeSelection.bind(this);
 	}
 
-	onPassSelect(passProps: PassProps) {
+	onPassSelect(passProps: PassMixedProps) {
 		if (__DEV__) {
 			console.log("Performed selection of", passProps.kind);
 		}
@@ -64,7 +64,7 @@ class PassSelector extends React.PureComponent<SelectorProps, SelectorState> {
 	 * @param passProps
 	 */
 
-	onAlternativeSelection(passProps: PassProps) {
+	onAlternativeSelection(passProps: PassMixedProps) {
 		this.props.pushHistory("/creator", () => this.props.setPassProps(passProps));
 	}
 

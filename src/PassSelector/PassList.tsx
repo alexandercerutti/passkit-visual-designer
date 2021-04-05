@@ -1,12 +1,12 @@
 import * as React from "react";
 import "./style.less";
 import { PassKind } from "../model";
-import { PassProps } from "../Pass";
+import { PassMixedProps } from "@pkvd/pass";
 import { createClassName } from "../utils";
 import { SelectablePassProps } from "./SelectablePass";
 
 interface PassListProps {
-	onPassSelect(passProps: PassProps): void;
+	onPassSelect(passProps: PassMixedProps): void;
 	requiresAttention?: boolean;
 	selectedKind?: PassKind;
 }
@@ -16,10 +16,13 @@ type PassListPropsWithChildren = React.PropsWithChildren<PassListProps>;
 export default function PassList(props: PassListPropsWithChildren): JSX.Element {
 	const selectionTray = React.useRef<HTMLDivElement>(null);
 
-	const onPassClickHandler = React.useCallback((event: React.MouseEvent, clickProps: PassProps) => {
-		event.stopPropagation();
-		props.onPassSelect({ ...clickProps });
-	}, []);
+	const onPassClickHandler = React.useCallback(
+		(event: React.MouseEvent, clickProps: PassMixedProps) => {
+			event.stopPropagation();
+			props.onPassSelect({ ...clickProps });
+		},
+		[]
+	);
 
 	React.useEffect(
 		() =>

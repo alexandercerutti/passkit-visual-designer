@@ -20,7 +20,7 @@ export type { InteractionContextMethods } from "./InteractionContext";
 export * as Layouts from "./layouts";
 export * as Constants from "./constants";
 
-export interface PassMixedProps {
+export interface PassMixedProps extends PassMediaProps {
 	kind?: PassKind;
 	headerFields?: PassFields.HeaderFields[];
 	secondaryFields?: PassFields.SecondaryFields[];
@@ -45,8 +45,12 @@ export interface PassMixedProps {
 	authenticationToken?: string;
 	associatedStoreIdentifiers?: string;
 	appLaunchURL?: string;
+}
 
-	// URLs from redux middlewares
+/**
+ * This interface includes urls from redux middleware
+ */
+export interface PassMediaProps {
 	logo?: string;
 	backgroundImage?: string;
 	thumbnailImage?: string;
@@ -54,11 +58,6 @@ export interface PassMixedProps {
 	icon?: string;
 	footerImage?: string;
 }
-
-export type MediaProps = Pick<
-	PassMixedProps,
-	"backgroundImage" | "footerImage" | "logo" | "thumbnailImage" | "stripImage" | "icon"
->;
 
 export interface PassProps extends PassMixedProps, Partial<InteractionContextMethods> {
 	showBack?: boolean;

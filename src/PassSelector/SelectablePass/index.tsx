@@ -1,5 +1,5 @@
 import * as React from "react";
-import Pass, { PassProps, Layouts } from "@pkvd/pass";
+import Pass, { Layouts, PassMixedProps } from "@pkvd/pass";
 import { PassKind } from "../../model";
 import * as SelectableLayouts from "./layouts";
 
@@ -13,7 +13,7 @@ import * as SelectableLayouts from "./layouts";
  * under it as a description.
  */
 
-export interface SelectablePassProps extends PassProps {
+export interface SelectablePassProps extends PassMixedProps {
 	name: string;
 }
 

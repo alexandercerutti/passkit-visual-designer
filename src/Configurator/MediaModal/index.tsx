@@ -1,6 +1,6 @@
 import * as React from "react";
 import "./style.less";
-import Pass, { MediaProps } from "../../Pass";
+import Pass, { PassMediaProps } from "@pkvd/pass";
 import Modal, { ModalProps } from "../ModalBase";
 import CollectionsList from "./CollectionsList";
 import CollectionEditor from "./CollectionEditor";
@@ -17,9 +17,9 @@ export const CollectionEditDelete = 0b0100;
 
 interface Props extends Omit<ModalProps, "contentUniqueID"> {
 	currentLanguage: string;
-	mediaName: keyof MediaProps;
+	mediaName: keyof PassMediaProps;
 	mediaContent: CollectionSet;
-	passProps: MediaProps;
+	passProps: PassMediaProps;
 	setMediaExportState(enable: boolean): void;
 	useCollection(collectionID: string): void;
 	updateCollection(collectionID: string, collection: MediaCollection): void;
