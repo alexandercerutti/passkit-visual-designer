@@ -1,8 +1,11 @@
 import * as React from "react";
 import "./style.less";
+import { Constants } from "@pkvd/pass";
 import { createClassName } from "../../../../../utils";
-import { PKTextAlignment, PassFieldKeys } from "../../../../../Pass/constants";
 import CommittableTextInput from "../../../../CommittableTextInput";
+
+const { PKTextAlignment } = Constants;
+type PassFieldKeys = Constants.PassFieldKeys;
 
 interface Props {
 	fieldUUID: string;

@@ -16,6 +16,9 @@ import Backfields from "./layouts/sections/BackFields";
 import useCSSCustomProperty from "./useCSSCustomProperty";
 
 export { default as InteractionContext } from "./InteractionContext";
+export type { InteractionContextMethods } from "./InteractionContext";
+export * as Layouts from "./layouts";
+export * as Constants from "./constants";
 
 export interface PassMixedProps {
 	kind?: PassKind;

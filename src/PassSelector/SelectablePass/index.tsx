@@ -1,7 +1,6 @@
 import * as React from "react";
+import Pass, { PassProps, Layouts } from "@pkvd/pass";
 import { PassKind } from "../../model";
-import Pass, { PassProps } from "../../Pass";
-import { LayoutSignature } from "../../Pass/layouts";
 import * as SelectableLayouts from "./layouts";
 
 /**
@@ -18,7 +17,7 @@ export interface SelectablePassProps extends PassProps {
 	name: string;
 }
 
-const LayoutsMap = new Map<PassKind, LayoutSignature>([
+const LayoutsMap = new Map<PassKind, Layouts.LayoutSignature>([
 	[PassKind.BOARDING_PASS, SelectableLayouts.BoardingPass],
 	[PassKind.COUPON, SelectableLayouts.Coupon],
 	[PassKind.EVENT, SelectableLayouts.EventTicket],

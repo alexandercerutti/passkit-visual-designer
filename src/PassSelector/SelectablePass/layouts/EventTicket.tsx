@@ -1,7 +1,6 @@
 import * as React from "react";
+import { Layouts, PassMixedProps } from "@pkvd/pass";
 import useAlternativesRegistration from "../useAlternativesRegistration";
-import { EventTicket as PassLayout } from "../../../Pass/layouts";
-import { PassMixedProps } from "../../../Pass";
 import { PassKind } from "../../../model";
 
 /**
@@ -28,5 +27,5 @@ export default function EventTicket(props: PassMixedProps) {
 		}
 	);
 
-	return <PassLayout {...props} />;
+	return <Layouts.EventTicket {...props} />;
 }

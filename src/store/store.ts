@@ -1,6 +1,7 @@
 import { PassKind } from "../model";
-import type { PassMixedProps, MediaProps } from "../Pass";
-import { PKTextAlignment, PKTransitType } from "../Pass/constants";
+import { Constants, PassMixedProps, MediaProps } from "@pkvd/pass";
+
+const { PKTextAlignment, PKTransitType } = Constants;
 
 /** Webpack defined */
 declare const __DEV__: boolean;

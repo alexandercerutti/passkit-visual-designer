@@ -1,15 +1,13 @@
 import * as React from "react";
-import "./style.less";
-import {
-	PKTextAlignment,
-	PKDateStyle,
-	PKDataDetectorType,
-	PassFieldKeys,
-} from "../../../../../Pass/constants";
+import { Constants } from "@pkvd/pass";
 import { FieldPropertiesDetails } from "../../FieldsPreviewPage/DrawerElement/FieldPropertiesDetails";
 import FieldStringPropertyPanel from "./FieldPropertyPanels/String";
 import FieldCheckboxPropertyPanel from "./FieldPropertyPanels/Checkbox";
 import FieldEnumPropertyPanel from "./FieldPropertyPanels/Enum";
+
+const { PKTextAlignment, PKDateStyle, PKDataDetectorType } = Constants;
+
+type PassFieldKeys = Constants.PassFieldKeys;
 
 interface FieldPropertiesEditListProps {
 	data: PassFieldKeys;

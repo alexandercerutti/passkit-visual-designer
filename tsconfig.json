@@ -12,6 +12,12 @@
 		],
 		"moduleResolution": "node",
 		"allowSyntheticDefaultImports": true,
-		"importHelpers": true
+		"importHelpers": true,
+		"baseUrl": ".",
+		"paths": {
+			"@pkvd/pass": [
+				"src/Pass"
+			]
+		}
 	}
 }

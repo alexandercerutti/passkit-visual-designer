@@ -1,5 +1,5 @@
 import * as React from "react";
-import { PassMixedProps } from "../../Pass";
+import { PassMixedProps } from "@pkvd/pass";
 import { PassKind } from "../../model";
 
 interface PassAlternative {

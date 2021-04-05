@@ -1,9 +1,7 @@
-import {
-	PKDataDetectorType,
-	PKTextAlignment,
-	PKDateStyle,
-	PassFieldKeys,
-} from "../../../../../Pass/constants";
+import { Constants } from "@pkvd/pass";
+
+const { PKTextAlignment, PKDateStyle, PKDataDetectorType } = Constants;
+type PassFieldKeys = Constants.PassFieldKeys;
 
 type FieldPropertyDetail = {
 	name: keyof PassFieldKeys;

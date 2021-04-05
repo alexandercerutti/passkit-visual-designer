@@ -1,10 +1,10 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import "./style.less";
+import { PassProps } from "@pkvd/pass";
 import { PassKind } from "../model";
 import PassList from "./PassList";
 import SelectablePass from "./SelectablePass";
-import { PassProps } from "../Pass";
 import { getAlternativesByKind } from "./SelectablePass/useAlternativesRegistration";
 import * as Store from "../store";
 

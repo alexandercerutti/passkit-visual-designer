@@ -1,12 +1,14 @@
 import * as React from "react";
 import "./style.less";
+import { Constants } from "@pkvd/pass";
 import { PanelProps } from "..";
-import { PassFieldKeys } from "../../../../../../Pass/constants";
 import { FieldsArrowIcon } from "./icons";
 import CapitalHeaderTitle from "../../../components/CapitalHeaderTitle";
 import FieldsPreviewPage from "../../../FieldsPreviewPage";
 import usePageFactory from "../../../usePageFactory";
 import useContentSavingHandler from "../useContentSavingHandler";
+
+type PassFieldKeys = Constants.PassFieldKeys;
 
 interface Props extends PanelProps {
 	value?: PassFieldKeys[];

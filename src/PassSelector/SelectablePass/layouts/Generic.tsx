@@ -1,9 +1,9 @@
 import * as React from "react";
+import { Layouts, PassMixedProps, Constants } from "@pkvd/pass";
 import useAlternativesRegistration from "../useAlternativesRegistration";
-import { Generic as PassLayout } from "../../../Pass/layouts";
-import { PassMixedProps } from "../../../Pass";
 import { PassKind } from "../../../model";
-import { PKBarcodeFormat } from "../../../Pass/constants";
+
+const { PKBarcodeFormat } = Constants;
 
 /**
  * Layout proxy with alternatives registration capability.
@@ -33,5 +33,5 @@ export default function Generic(props: PassMixedProps) {
 		}
 	);
 
-	return <PassLayout {...props} />;
+	return <Layouts.Generic {...props} />;
 }

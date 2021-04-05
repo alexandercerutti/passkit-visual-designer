@@ -1,11 +1,11 @@
 import * as React from "react";
 import "./style.less";
-import Pass, { PassProps } from "../../Pass";
-import InteractionContext from "../../Pass/InteractionContext";
+import Pass, { PassProps, InteractionContext, Constants } from "@pkvd/pass";
 import { createClassName } from "../../utils";
 import CommittableTextInput from "../CommittableTextInput";
 import type { TranslationsSet } from "../../store";
-import { PassFieldKeys } from "../../Pass/constants";
+
+type PassFieldKeys = Constants.PassFieldKeys;
 
 export interface ViewerProps
 	extends Pick<PassProps, "registerField" | "onFieldSelect" | "showBack"> {

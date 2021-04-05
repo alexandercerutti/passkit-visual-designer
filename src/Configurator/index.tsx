@@ -1,14 +1,14 @@
 import * as React from "react";
 import "./style.less";
+import { InteractionContextMethods, MediaProps, PassMixedProps } from "@pkvd/pass";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import { CSSTransition } from "react-transition-group";
+import { connect } from "react-redux";
+import { v1 as uuid } from "uuid";
 import Viewer from "./Viewer";
 import OptionsBar from "./OptionsBar";
 import OptionsMenu, { RegisteredFieldsMap } from "./OptionsMenu";
 import { FieldKind } from "../model";
-import { InteractionContextMethods } from "../Pass/InteractionContext";
-import { connect } from "react-redux";
-import { MediaProps, PassMixedProps } from "../Pass";
 import type {
 	CollectionSet,
 	LocalizedMediaGroup,
@@ -26,7 +26,6 @@ import MediaModal from "./MediaModal";
 import { getArrayBuffer } from "../utils";
 import LanguageModal from "./LanguageModal";
 import TranslationsModal from "./TranslationsModal";
-import { v1 as uuid } from "uuid";
 import "prismjs/components/prism-json";
 import "prismjs/plugins/line-numbers/prism-line-numbers";
 import "prismjs/plugins/line-numbers/prism-line-numbers.css";

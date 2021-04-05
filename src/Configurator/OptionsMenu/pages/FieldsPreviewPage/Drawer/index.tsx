@@ -1,9 +1,11 @@
 import * as React from "react";
 import "./style.less";
-import { PassFieldKeys } from "../../../../../Pass/constants";
+import { Constants } from "@pkvd/pass";
 import { MoreFieldsBelowIcon } from "../icons";
 import DrawerElement from "../DrawerElement";
 import PageNavigationContext from "../../PageNavigationContext";
+
+type PassFieldKeys = Constants.PassFieldKeys;
 
 interface Props {
 	readonly fieldsData: PassFieldKeys[];

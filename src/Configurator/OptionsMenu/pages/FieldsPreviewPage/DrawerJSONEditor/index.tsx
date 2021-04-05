@@ -1,8 +1,11 @@
 import * as React from "react";
 import Prism from "prismjs";
-import { PassFieldKeys, PassFields } from "../../../../../Pass/constants";
 import "./style.less";
+import { Constants } from "@pkvd/pass";
 import { createClassName } from "../../../../../utils";
+
+type PassFieldKeys = Constants.PassFieldKeys;
+type PassFields = Constants.PassFields;
 
 interface Props {
 	fieldName: keyof PassFields;

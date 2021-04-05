@@ -1,9 +1,9 @@
 import * as React from "react";
+import { Layouts, PassMixedProps, Constants } from "@pkvd/pass";
 import useAlternativesRegistration from "../useAlternativesRegistration";
-import { BoardingPass as PassLayout } from "../../../Pass/layouts";
-import { PassMixedProps } from "../../../Pass";
 import { PassKind } from "../../../model";
-import { PKTransitType } from "../../../Pass/constants";
+
+const { PKTransitType } = Constants;
 
 /**
  * Layout proxy with alternatives registration capability.
@@ -47,5 +47,5 @@ export default function BoardingPass(props: PassMixedProps) {
 		}
 	);
 
-	return <PassLayout {...props} />;
+	return <Layouts.BoardingPass {...props} />;
 }

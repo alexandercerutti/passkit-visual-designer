@@ -1,10 +1,12 @@
 import * as React from "react";
 import "./style.less";
+import { Constants } from "@pkvd/pass";
 import FieldOptionsBar from "./FieldOptionsBar";
 import FieldPreview from "../../components/FieldPreview";
-import { PassFieldKeys } from "../../../../../Pass/constants";
 import FieldsPropertiesEditPage from "../../FieldsPropertiesEditPage";
 import usePageFactory, { PageNavigation } from "../../usePageFactory";
+
+type PassFieldKeys = Constants.PassFieldKeys;
 
 interface DrawerElementProps extends Pick<PageNavigation, "requestPageCreation"> {
 	fieldUUID: string;

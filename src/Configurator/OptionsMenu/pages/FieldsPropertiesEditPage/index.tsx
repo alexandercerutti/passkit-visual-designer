@@ -1,10 +1,12 @@
 import * as React from "react";
 import "./style.less";
+import { Constants } from "@pkvd/pass";
 import PageHeader from "../components/Header";
 import { PageProps } from "../usePageFactory";
 import FieldPreview from "../components/FieldPreview";
-import { PassFieldKeys } from "../../../../Pass/constants";
 import FieldPropertiesEditList from "./FieldPropertiesEditList";
+
+type PassFieldKeys = Constants.PassFieldKeys;
 
 interface Props extends PageProps {
 	data: PassFieldKeys;

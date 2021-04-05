@@ -1,7 +1,6 @@
 import * as React from "react";
+import { Layouts, PassMixedProps } from "@pkvd/pass";
 import useAlternativesRegistration from "../useAlternativesRegistration";
-import { StoreCard as PassLayout } from "../../../Pass/layouts";
-import { PassMixedProps } from "../../../Pass";
 import { PassKind } from "../../../model";
 
 /**
@@ -17,5 +16,5 @@ export default function StoreCard(props: PassMixedProps) {
 		specificProps: {},
 	});
 
-	return <PassLayout {...props} />;
+	return <Layouts.StoreCard {...props} />;
 }

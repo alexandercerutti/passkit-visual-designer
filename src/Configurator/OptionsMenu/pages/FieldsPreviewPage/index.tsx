@@ -1,13 +1,16 @@
 import * as React from "react";
 import { v1 as uuid } from "uuid";
 import "./style.less";
-import { PassFieldKeys, PassFields } from "../../../../Pass/constants";
+import type { Constants } from "@pkvd/pass";
 import { FieldsAddIcon } from "./icons";
 import Drawer from "./Drawer";
 import DrawerPlaceholder from "./DrawerPlaceholder";
 import PageHeader from "../components/Header";
 import { PageProps, PageNavigation } from "../usePageFactory";
 import DrawerJSONEditor from "./DrawerJSONEditor";
+
+type PassFields = Constants.PassFields;
+type PassFieldKeys = Constants.PassFieldKeys;
 
 // Webpack declared
 declare const __DEV__: boolean;

@@ -96,7 +96,10 @@ module.exports = {
 	},
 	devtool: "source-map",
 	resolve: {
-		extensions: [".js", ".jsx", ".ts", ".tsx"]
+		extensions: [".js", ".jsx", ".ts", ".tsx"],
+		alias: {
+			"@pkvd/pass": path.resolve(__dirname, "./src/Pass/")
+		}
 	},
 	devServer: {
 		port: 3000,
