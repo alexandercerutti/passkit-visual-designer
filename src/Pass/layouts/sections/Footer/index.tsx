@@ -1,11 +1,11 @@
 import * as React from "react";
 import "./style.less";
-import { useRegistrations, RegistrableComponent } from "../useRegistrations";
+import { useRegistrations } from "../useRegistrations";
 import { FieldKind } from "../../../../model";
 import ImageField, { ImageFieldProps } from "../../components/ImageField";
 import { AppIconEmpty } from "./icons";
 
-interface FooterProps extends Pick<RegistrableComponent, "register">, ImageFieldProps {
+interface FooterProps extends ImageFieldProps {
 	allowFooterImage?: boolean;
 	icon?: string;
 }
@@ -15,14 +15,12 @@ export default function Footer(props: React.PropsWithChildren<FooterProps>) {
 	let footerImage: JSX.Element = null;
 
 	if (props.allowFooterImage) {
-		const [footerImageClickHandler] = useRegistrations(props.register, [
-			[FieldKind.IMAGE, "footerImage"],
-		]);
+		const [footerImageClickHandler] = useRegistrations([[FieldKind.IMAGE, "footerImage"]]);
 
 		footerImage = <ImageField src={props.src} onClick={() => footerImageClickHandler(null)} />;
 	}
 
-	const [iconClickHandler] = useRegistrations(props.register, [[FieldKind.IMAGE, "icon"]]);
+	const [iconClickHandler] = useRegistrations([[FieldKind.IMAGE, "icon"]]);
 
 	return (
 		<div className="footer">

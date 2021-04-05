@@ -9,9 +9,7 @@ interface Props {
 }
 
 export default function Backfields(props: Props) {
-	const context = React.useContext(InteractionContext);
-	const validFieldsAmount =
-		(props.data && props.data.filter(({ value, label }) => value || label)) || [];
+	const validFieldsAmount = props.data?.filter(({ value, label }) => value || label) || [];
 
 	return (
 		<div className="back-fields">
@@ -19,8 +17,6 @@ export default function Backfields(props: Props) {
 				id="backFields"
 				maximumElementsAmount={0}
 				elements={validFieldsAmount}
-				register={context.registerField}
-				onClick={context.onFieldSelect}
 				className={(!validFieldsAmount.length && "expand") || ""}
 			/>
 		</div>

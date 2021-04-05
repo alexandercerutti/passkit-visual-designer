@@ -5,7 +5,6 @@ import ThumbnailPrimaryField from "./sections/PrimaryFields/Thumbnail";
 import Barcodes, { isSquareBarcode } from "./components/Barcodes";
 import FieldsRow from "./sections/FieldRow";
 import Footer from "./sections/Footer";
-import InteractionContext from "../InteractionContext";
 
 export default function Generic(props: PassMixedProps): JSX.Element {
 	const {
@@ -20,54 +19,27 @@ export default function Generic(props: PassMixedProps): JSX.Element {
 		icon,
 	} = props;
 
-	const { onFieldSelect, registerField } = React.useContext(InteractionContext);
-
 	const isSquaredBarcode = isSquareBarcode(barcode?.format);
 
 	const middleFragment = (isSquaredBarcode && (
 		<FieldsRow
 			elements={[...secondaryFields, ...auxiliaryFields]}
 			maximumElementsAmount={4}
-			onClick={onFieldSelect}
-			register={registerField}
 			id="secondary-auxiliary"
 		/>
 	)) || (
 		<>
-			<FieldsRow
-				id="secondaryFields"
-				elements={secondaryFields}
-				maximumElementsAmount={4}
-				onClick={onFieldSelect}
-				register={registerField}
-			/>
-			<FieldsRow
-				id="auxiliaryFields"
-				elements={auxiliaryFields}
-				maximumElementsAmount={4}
-				onClick={onFieldSelect}
-				register={registerField}
-			/>
+			<FieldsRow id="secondaryFields" elements={secondaryFields} maximumElementsAmount={4} />
+			<FieldsRow id="auxiliaryFields" elements={auxiliaryFields} maximumElementsAmount={4} />
 		</>
 	);
 
 	return (
 		<>
-			<PassHeader
-				headerFields={headerFields}
-				logo={logo}
-				logoText={logoText}
-				onClick={onFieldSelect}
-				register={registerField}
-			/>
-			<ThumbnailPrimaryField
-				fields={primaryFields}
-				thumbnailSrc={thumbnailImage}
-				onClick={onFieldSelect}
-				register={registerField}
-			/>
+			<PassHeader headerFields={headerFields} logo={logo} logoText={logoText} />
+			<ThumbnailPrimaryField fields={primaryFields} thumbnailSrc={thumbnailImage} />
 			{middleFragment}
-			<Footer icon={icon} register={registerField}>
+			<Footer icon={icon}>
 				<Barcodes fallbackShape={isSquaredBarcode ? "square" : "rect"} format={barcode?.format} />
 			</Footer>
 		</>

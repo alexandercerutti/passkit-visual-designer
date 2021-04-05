@@ -5,7 +5,6 @@ import StripPrimaryFields from "./sections/PrimaryFields/Strip";
 import FieldsRow from "./sections/FieldRow";
 import Barcode from "./components/Barcodes";
 import Footer from "./sections/Footer";
-import InteractionContext from "../InteractionContext";
 
 export default function Coupon(props: PassMixedProps): JSX.Element {
 	const {
@@ -20,23 +19,10 @@ export default function Coupon(props: PassMixedProps): JSX.Element {
 		icon,
 	} = props;
 
-	const { onFieldSelect, registerField } = React.useContext(InteractionContext);
-
 	return (
 		<>
-			<PassHeader
-				headerFields={headerFields}
-				logo={logo}
-				logoText={logoText}
-				onClick={onFieldSelect}
-				register={registerField}
-			/>
-			<StripPrimaryFields
-				stripSrc={stripImage}
-				fields={primaryFields}
-				onClick={onFieldSelect}
-				register={registerField}
-			/>
+			<PassHeader headerFields={headerFields} logo={logo} logoText={logoText} />
+			<StripPrimaryFields stripSrc={stripImage} fields={primaryFields} />
 			<FieldsRow
 				// @TODO: this component, as is,
 				// might not be fully correct because 4 fields
@@ -47,11 +33,9 @@ export default function Coupon(props: PassMixedProps): JSX.Element {
 				// @TODO - Coupons can have up to 4 fields if
 				// barcode is a square barcode
 				maximumElementsAmount={-1}
-				onClick={onFieldSelect}
-				register={registerField}
 				id="secondary-auxiliary"
 			/>
-			<Footer icon={icon} register={registerField}>
+			<Footer icon={icon}>
 				<Barcode format={barcode?.format} fallbackShape="square" />
 			</Footer>
 		</>

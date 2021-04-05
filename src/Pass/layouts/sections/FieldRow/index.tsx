@@ -1,13 +1,13 @@
 import * as React from "react";
 import "./style.less";
 import { Field, FieldLabel, FieldValue } from "../../components/Field";
-import { RegistrableComponent, useRegistrations } from "../useRegistrations";
+import { useRegistrations } from "../useRegistrations";
 import { FieldKind } from "../../../../model";
 import { PassFieldKeys } from "../../../constants";
 import { createClassName } from "../../../../utils";
 import { getFilteredFieldData } from "../../components/Field/getFilteredFieldData";
 
-interface RowProps extends RegistrableComponent {
+interface RowProps {
 	id: string;
 	maximumElementsAmount: number;
 	elements: PassFieldKeys[];
@@ -21,15 +21,9 @@ interface RowProps extends RegistrableComponent {
  */
 
 export default function FieldsRow(props: RowProps) {
-	const {
-		maximumElementsAmount = 0,
-		register,
-		id,
-		elements = [],
-		className: externalClassName,
-	} = props;
+	const { maximumElementsAmount = 0, id, elements = [], className: externalClassName } = props;
 
-	const [fieldsClickHandler] = useRegistrations(register, [[FieldKind.FIELDS, id]]);
+	const [fieldsClickHandler] = useRegistrations([[FieldKind.FIELDS, id]]);
 
 	/** Forcing one or we'd get too much fields as fallback */
 	const mappedElements = getFilteredFieldData(elements, 1, maximumElementsAmount).map(

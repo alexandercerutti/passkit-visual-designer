@@ -13,10 +13,10 @@ interface PFTravelProps extends PrimaryFieldsProps {
 }
 
 export default function PrimaryFields(props: PFTravelProps) {
-	const { register, fields, transitType } = props;
+	const { fields, transitType } = props;
 	const parentId = "primaryFields";
 
-	const [primaryFieldsClickHandler] = useRegistrations(register, [[FieldKind.FIELDS, parentId]]);
+	const [primaryFieldsClickHandler] = useRegistrations([[FieldKind.FIELDS, parentId]]);
 
 	const [from, to] = getFilteredFieldData(fields, 2, 2).map((fieldData, index) => {
 		const id = `${parentId}.${index}`;

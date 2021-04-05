@@ -1,13 +1,13 @@
 import * as React from "react";
 import "./style.less";
 import TextField from "../../components/TextField";
-import { RegistrableComponent, useRegistrations } from "../useRegistrations";
+import { useRegistrations } from "../useRegistrations";
 import ImageField from "../../components/ImageField";
 import FieldsRow from "../FieldRow";
 import { FieldKind } from "../../../../model";
 import { PassFieldKeys } from "../../../constants";
 
-interface HeaderProps extends Partial<RegistrableComponent> {
+interface HeaderProps {
 	headerFields?: PassFieldKeys[];
 	logoText?: string;
 	logo?: string;
@@ -18,7 +18,7 @@ export function PassHeader(props: HeaderProps) {
 	 * The Field row will register itself
 	 * with the ID we pass to it.
 	 */
-	const [logoClickHandler, logoTextClickHandler] = useRegistrations(props.register, [
+	const [logoClickHandler, logoTextClickHandler] = useRegistrations([
 		[FieldKind.IMAGE, "logo"],
 		[FieldKind.TEXT, "logoText"],
 	]);
@@ -47,7 +47,6 @@ export function PassHeader(props: HeaderProps) {
 					elements={props.headerFields}
 					maximumElementsAmount={3}
 					id="headerFields"
-					register={props.register}
 					className={canGrowRowCN}
 				/>
 			</div>
