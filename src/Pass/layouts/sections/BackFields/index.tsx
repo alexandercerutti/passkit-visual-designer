@@ -1,7 +1,6 @@
 import * as React from "react";
 import "./style.less";
 import FieldsRow from "../FieldRow";
-import InteractionContext from "../../../InteractionContext";
 import { PassFieldKeys } from "../../../constants";
 
 interface Props {
