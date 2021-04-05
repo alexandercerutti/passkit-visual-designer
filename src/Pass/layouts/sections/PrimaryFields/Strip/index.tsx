@@ -1,13 +1,14 @@
 import * as React from "react";
+import "./style.less";
+import { Constants } from "@pkvd/pass";
 import { getFilteredFieldData } from "../../../components/Field/getFilteredFieldData";
 import ImageField from "../../../components/ImageField";
-import PrimaryFieldsProps from "../primaryFieldsProps";
 import { FieldValue, FieldLabel, GhostField } from "../../../components/Field";
-import "./style.less";
 import { useRegistrations } from "../../useRegistrations";
 import { FieldKind } from "../../../../../model";
 
-interface PFStripProps extends PrimaryFieldsProps {
+interface PFStripProps {
+	fields?: Constants.PassFieldKeys[];
 	stripSrc?: string;
 }
 

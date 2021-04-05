@@ -1,14 +1,15 @@
 import * as React from "react";
-import PrimaryFieldsProps from "../primaryFieldsProps";
+import "./style.less";
+import { Constants } from "@pkvd/pass";
 import { getFilteredFieldData } from "../../../components/Field/getFilteredFieldData";
 import { GhostField, FieldLabel, FieldValue } from "../../../components/Field";
 import { PKTransitType } from "../../../../constants";
 import { PKTransitIcon } from "./icons";
-import "./style.less";
 import { useRegistrations } from "../../useRegistrations";
 import { FieldKind } from "../../../../../model";
 
-interface PFTravelProps extends PrimaryFieldsProps {
+interface PFTravelProps {
+	fields?: Constants.PassFieldKeys[];
 	transitType: PKTransitType;
 }
 

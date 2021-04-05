@@ -1,13 +1,14 @@
 import * as React from "react";
 import "./style.less";
+import { Constants } from "@pkvd/pass";
 import { getFilteredFieldData } from "../../../components/Field/getFilteredFieldData";
 import { Field, FieldLabel, FieldValue } from "../../../components/Field";
 import ImageField from "../../../components/ImageField";
-import PrimaryFieldsProps from "../primaryFieldsProps";
 import { useRegistrations } from "../../useRegistrations";
 import { FieldKind } from "../../../../../model";
 
-interface PFThumbnailProps extends PrimaryFieldsProps {
+interface PFThumbnailProps {
+	fields?: Constants.PassFieldKeys[];
 	thumbnailSrc?: string;
 }
 
