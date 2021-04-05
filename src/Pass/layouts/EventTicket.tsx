@@ -1,16 +1,15 @@
 import * as React from "react";
 import { PassMixedProps } from "..";
 import { PassHeader } from "./sections/Header";
-import ThumbnailPrimaryField from "./sections/PrimaryFields/Thumbnail";
+import { StripPrimaryFields, ThumbnailPrimaryFields } from "./sections/PrimaryFields";
 import FieldsRow from "./sections/FieldRow";
-import StripPrimaryFields from "./sections/PrimaryFields/Strip";
 import Footer from "./sections/Footer";
 import Barcodes from "./components/Barcodes";
 import { useRegistrations } from "./sections/useRegistrations";
 import { FieldKind } from "../../model";
 
 type PrimaryFieldPropsKind = Parameters<
-	typeof StripPrimaryFields | typeof ThumbnailPrimaryField
+	typeof StripPrimaryFields | typeof ThumbnailPrimaryFields
 >[0];
 
 export default function EventTicket(props: PassMixedProps): JSX.Element {
@@ -45,9 +44,9 @@ export default function EventTicket(props: PassMixedProps): JSX.Element {
 		useRegistrations([[FieldKind.IMAGE, "backgroundImage"]]);
 
 		fieldsFragment = (
-			<ThumbnailPrimaryField thumbnailSrc={thumbnailImage} fields={primaryFields}>
+			<ThumbnailPrimaryFields thumbnailSrc={thumbnailImage} fields={primaryFields}>
 				{SecondaryFieldRow}
-			</ThumbnailPrimaryField>
+			</ThumbnailPrimaryFields>
 		);
 	}
 

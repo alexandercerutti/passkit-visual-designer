@@ -1,7 +1,7 @@
 import * as React from "react";
 import { PassMixedProps } from "..";
 import { PassHeader } from "./sections/Header";
-import StripPrimaryFields from "./sections/PrimaryFields/Strip";
+import { StripPrimaryFields } from "./sections/PrimaryFields";
 import FieldsRow from "./sections/FieldRow";
 import Footer from "./sections/Footer";
 import Barcodes from "./components/Barcodes";

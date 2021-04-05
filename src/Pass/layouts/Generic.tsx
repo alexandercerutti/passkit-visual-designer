@@ -1,7 +1,7 @@
 import * as React from "react";
 import { PassMixedProps } from "..";
 import { PassHeader } from "./sections/Header";
-import ThumbnailPrimaryField from "./sections/PrimaryFields/Thumbnail";
+import { ThumbnailPrimaryFields } from "./sections/PrimaryFields";
 import Barcodes, { isSquareBarcode } from "./components/Barcodes";
 import FieldsRow from "./sections/FieldRow";
 import Footer from "./sections/Footer";
@@ -37,7 +37,7 @@ export default function Generic(props: PassMixedProps): JSX.Element {
 	return (
 		<>
 			<PassHeader headerFields={headerFields} logo={logo} logoText={logoText} />
-			<ThumbnailPrimaryField fields={primaryFields} thumbnailSrc={thumbnailImage} />
+			<ThumbnailPrimaryFields fields={primaryFields} thumbnailSrc={thumbnailImage} />
 			{middleFragment}
 			<Footer icon={icon}>
 				<Barcodes fallbackShape={isSquaredBarcode ? "square" : "rect"} format={barcode?.format} />

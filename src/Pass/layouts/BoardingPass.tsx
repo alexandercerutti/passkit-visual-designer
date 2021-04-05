@@ -1,7 +1,7 @@
 import * as React from "react";
 import { PassMixedProps } from "..";
 import { PassHeader } from "./sections/Header";
-import PrimaryFields from "./sections/PrimaryFields/Travel";
+import { TravelPrimaryFields } from "./sections/PrimaryFields";
 import FieldsRow from "./sections/FieldRow";
 import Footer from "./sections/Footer";
 import Barcode from "./components/Barcodes";
@@ -23,7 +23,7 @@ export default function BoardingPass(props: PassMixedProps) {
 	return (
 		<>
 			<PassHeader logo={logo} logoText={logoText} headerFields={headerFields} />
-			<PrimaryFields transitType={transitType} fields={primaryFields} />
+			<TravelPrimaryFields transitType={transitType} fields={primaryFields} />
 			<FieldsRow maximumElementsAmount={5} elements={auxiliaryFields} id="auxiliaryFields" />
 			<FieldsRow maximumElementsAmount={4} elements={secondaryFields} id="secondaryFields" />
 			<Footer allowFooterImage icon={icon} src={footerImage}>
