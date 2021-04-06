@@ -25,13 +25,15 @@
 		min-height: initial;
 		max-height: initial;
 		margin-top: initial;
-		background-color: #1c1c1e;
-		border-radius: 7px;
-		padding-left: 10px;
 		justify-content: flex-start;
+		height: 100%;
 
-		&.expand {
-			height: 100%;
+		/**
+		 * If empty placeholder is shown we want to
+		 * make the backfield to occupy the whole height
+		 */
+		& > .empty-field:only-child {
+			background-color: #1c1c1e;
 
 			&::before {
 				content: "Set BackFields to make something to appear here like magic. ✨";
@@ -51,13 +53,17 @@
 			}
 		}
 
-		& .empty-field {
-			background-color: initial;
-			height: 100% !important;
-		}
-
 		& .field {
-			padding: 7px 0px;
+			padding: 7px 10px;
+			background-color: #1c1c1e;
+
+			&:first-child {
+				border-radius: 7px 7px 0 0;
+			}
+
+			&:last-child {
+				border-radius: 0 0 7px 7px;
+			}
 
 			&:not(:last-child) {
 				border-bottom: 1px solid #323234;
