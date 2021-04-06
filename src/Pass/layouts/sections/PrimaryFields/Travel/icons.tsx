@@ -154,18 +154,19 @@ function GenericIcon(props: BoardingIconProps) {
 	);
 }
 
-const PKTransitIconsMap: { [K in PKTransitType]: React.ComponentType<BoardingIconProps> } = {
-	[PKTransitType.Generic]: GenericIcon,
-	[PKTransitType.Bus]: BusIcon,
-	[PKTransitType.Train]: RailIcon,
-	[PKTransitType.Air]: FlightIcon,
-	[PKTransitType.Boat]: BoatIcon,
-};
+const PKTransitIconsMap = new Map<PKTransitType, React.FunctionComponent<BoardingIconProps>>([
+	[PKTransitType.Generic, GenericIcon],
+	[PKTransitType.Bus, BusIcon],
+	[PKTransitType.Train, RailIcon],
+	[PKTransitType.Air, FlightIcon],
+	[PKTransitType.Boat, BoatIcon],
+]);
 
 export function PKTransitIcon({ type, ...props }: BoardingIconProps & { type: PKTransitType }) {
-	const WrappedIcon = PKTransitIconsMap[type];
+	const TransitIcon = PKTransitIconsMap.get(type);
+
 	return (
-		<WrappedIcon
+		<TransitIcon
 			fill={"var(--pass-label-color)"}
 			width={25}
 			height={25}
