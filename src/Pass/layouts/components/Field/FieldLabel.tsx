@@ -1,5 +1,5 @@
 import * as React from "react";
-import { composeLabelValueStylesFromProps, FieldProperties, FieldTypes } from "./fieldCommons";
+import { getCSSFromFieldProps, FieldProperties, FieldTypes } from "./fieldCommons";
 import { SelectableComponent } from "../../sections/useRegistrations";
 
 type LabelProps = Partial<SelectableComponent<never>> & {
@@ -8,7 +8,7 @@ type LabelProps = Partial<SelectableComponent<never>> & {
 
 export default function FieldLabel(props: LabelProps) {
 	const { fieldData, onClick } = props;
-	const style = composeLabelValueStylesFromProps(fieldData, "label");
+	const style = getCSSFromFieldProps(fieldData, "label");
 
 	return (
 		<span className="label" style={style} onClick={onClick ?? null}>

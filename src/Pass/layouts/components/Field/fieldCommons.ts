@@ -1,7 +1,7 @@
 import { PKTextAlignment, PassFieldKeys } from "../../../constants";
 import { StylingProps } from "../../../../model";
 
-export function composeLabelValueStylesFromProps(
+export function getCSSFromFieldProps(
 	props: Partial<FieldProperties>,
 	origin: "label" | "value"
 ): React.CSSProperties {

@@ -1,3 +1,5 @@
+import { PassFieldKeys } from "../../../constants";
+
 /**
  * Tries to get data from the specified source
  * if it is available and the array has elements
@@ -7,8 +9,6 @@
  * @param data
  * @param fallbackAmount
  */
-
-import { PassFieldKeys } from "../../../constants";
 
 export function getFilteredFieldData(
 	data: PassFieldKeys[] = [],

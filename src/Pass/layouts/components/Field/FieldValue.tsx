@@ -1,6 +1,6 @@
 import * as React from "react";
 import { PKDateStyle } from "../../../constants";
-import { composeLabelValueStylesFromProps, FieldProperties, FieldTypes } from "./fieldCommons";
+import { getCSSFromFieldProps, FieldProperties, FieldTypes } from "./fieldCommons";
 import { SelectableComponent } from "../../sections/useRegistrations";
 import format from "date-fns/format";
 
@@ -14,7 +14,7 @@ type ValueProps = Partial<SelectableComponent<never>> & {
 
 export default function FieldValue(props: ValueProps) {
 	const { fieldData } = props;
-	const style = composeLabelValueStylesFromProps(fieldData, "label");
+	const style = getCSSFromFieldProps(fieldData, "label");
 	const parsedValue = getValueFromProps(props);
 
 	return (
