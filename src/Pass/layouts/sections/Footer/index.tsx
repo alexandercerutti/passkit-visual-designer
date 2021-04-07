@@ -14,13 +14,15 @@ export default function Footer(props: React.PropsWithChildren<FooterProps>) {
 	const { children = null } = props;
 	let footerImage: JSX.Element = null;
 
-	if (props.allowFooterImage) {
-		const [footerImageClickHandler] = useRegistrations([[FieldKind.IMAGE, "footerImage"]]);
+	const registrationsDescriptors: Parameters<typeof useRegistrations>[0] = [
+		[FieldKind.IMAGE, "icon"],
+	];
 
-		footerImage = <ImageField src={props.src} onClick={() => footerImageClickHandler(null)} />;
+	if (props.allowFooterImage) {
+		registrationsDescriptors.push([FieldKind.IMAGE, "footerImage"]);
 	}
 
-	const [iconClickHandler] = useRegistrations([[FieldKind.IMAGE, "icon"]]);
+	const [iconClickHandler, footerImageClickHandler] = useRegistrations(registrationsDescriptors);
 
 	return (
 		<div className="footer">
@@ -28,7 +30,10 @@ export default function Footer(props: React.PropsWithChildren<FooterProps>) {
 				<div className="icon" onClick={() => iconClickHandler("icon")}>
 					{props.icon ? <img alt="icon" src={props.icon} /> : <AppIconEmpty />}
 				</div>
-				{footerImage}
+				{(footerImageClickHandler && (
+					<ImageField src={props.src} onClick={() => footerImageClickHandler(null)} />
+				)) ||
+					null}
 				{children}
 			</div>
 		</div>
