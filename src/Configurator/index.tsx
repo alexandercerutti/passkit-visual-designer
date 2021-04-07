@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 import { v1 as uuid } from "uuid";
 import Viewer from "./Viewer";
 import OptionsBar from "./OptionsBar";
-import OptionsMenu, { RegisteredFieldsMap } from "./OptionsMenu";
+import OptionsMenu from "./OptionsMenu";
 import { FieldKind } from "../model";
 import type {
 	CollectionSet,
@@ -26,6 +26,8 @@ import MediaModal from "./MediaModal";
 import { getArrayBuffer } from "../utils";
 import LanguageModal from "./LanguageModal";
 import TranslationsModal from "./TranslationsModal";
+import RegistrationIndex from "./RegistrationIndex";
+import { FieldDetails } from "./OptionsMenu/pages/PanelsPage/Panel";
 import "prismjs/components/prism-json";
 import "prismjs/plugins/line-numbers/prism-line-numbers";
 import "prismjs/plugins/line-numbers/prism-line-numbers.css";
@@ -65,7 +67,7 @@ interface ConfiguratorStore {
 
 interface ConfiguratorProps extends ConfiguratorStore, DispatchProps, RouteComponentProps<any> {}
 interface ConfiguratorState {
-	selectedFieldId?: keyof PassMixedProps;
+	selectedRegistered?: FieldDetails;
 	shouldShowPassBack: boolean;
 	emptyFieldsVisible: boolean;
 	canBeExported: boolean;
@@ -85,7 +87,7 @@ interface ConfiguratorState {
 const MODAL_TIMEOUT = 200;
 
 class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState> {
-	private registeredFields: RegisteredFieldsMap = new Map(DefaultFields);
+	private registeredFields = new RegistrationIndex(DefaultFields);
 
 	constructor(props: ConfiguratorProps) {
 		super(props);
@@ -109,7 +111,7 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 		this.onTranslationExportStateChange = this.onTranslationExportStateChange.bind(this);
 
 		this.state = {
-			selectedFieldId: null,
+			selectedRegistered: null,
 			shouldShowPassBack: false,
 			emptyFieldsVisible: true,
 			canBeExported: false,
@@ -152,7 +154,9 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 	 */
 
 	registerField(kind: FieldKind, id: keyof PassMixedProps): FieldSelectHandler {
-		if (this.registeredFields.get(DataGroup.DATA).find((data) => data.name === id)) {
+		const dataGroup = convertFieldKindToDataGroup(kind);
+
+		if (this.registeredFields.findInDatagroup(dataGroup, id)) {
 			if (__DEV__) {
 				console.log("...but failed due to duplicate already available");
 			}
@@ -160,12 +164,11 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 			return null;
 		}
 
-		const dataGroup = convertFieldKindToDataGroup(kind);
-
-		this.registeredFields.set(dataGroup, [
-			...this.registeredFields.get(dataGroup),
-			{ name: id, kind },
-		]);
+		this.registeredFields.setByDatagroup(dataGroup, {
+			name: id,
+			kind,
+			group: dataGroup,
+		});
 
 		return (key: string) => this.onFieldSelect(id, key);
 	}
@@ -176,8 +179,10 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 	 */
 
 	onFieldSelect(id: keyof PassMixedProps, key: string | null): void {
+		const detail = this.registeredFields.getById(id);
+
 		// @TODO: Resolve key in id
-		this.setState({ selectedFieldId: id });
+		this.setState({ selectedRegistered: detail });
 
 		if (__DEV__) {
 			console.log(id, "selected, with key", key);
@@ -226,7 +231,7 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 			return;
 		}
 
-		this.setState({ selectedFieldId: null });
+		this.setState({ selectedRegistered: null });
 	}
 
 	onShowPassBackRequest() {
@@ -340,7 +345,7 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 		const {
 			shouldShowPassBack,
 			emptyFieldsVisible,
-			selectedFieldId,
+			selectedRegistered,
 			canBeExported,
 			viewingMediaName,
 			modalIdentifier,
@@ -370,7 +375,7 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 				<div className="config-panel">
 					<OptionsMenu
 						data={passProps}
-						selectedFieldID={selectedFieldId}
+						selectedRegistrable={selectedRegistered}
 						fields={this.registeredFields}
 						onValueChange={this.onValueChange}
 						cancelFieldSelection={this.onVoidClick}

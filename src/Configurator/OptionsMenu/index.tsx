@@ -11,16 +11,15 @@ import {
 import { ShareIcon } from "./pages/PanelsPage/icons";
 import { createClassName } from "../../utils";
 import { FieldDetails } from "./pages/PanelsPage/Panel";
-
-export type RegisteredFieldsMap = Map<DataGroup, FieldDetails[]>;
+import type RegistrationIndex from "../RegistrationIndex";
 
 interface NavigatorState {
 	pagesHierarchy: Parameters<RequestPageCreationFunction>[];
 }
 
 interface NavigatorProps {
-	selectedFieldID?: keyof PassMixedProps;
-	fields: RegisteredFieldsMap;
+	selectedRegistrable?: FieldDetails;
+	fields: RegistrationIndex;
 	data: PassMixedProps;
 	cancelFieldSelection(): void;
 	onValueChange(key: string, value: any): Promise<boolean>;
@@ -45,8 +44,12 @@ export default class OptionsMenu
 	componentDidUpdate(prevProps: NavigatorProps) {
 		const isCurrentPageSelected =
 			this.state.pagesHierarchy[this.state.pagesHierarchy.length - 1]?.[0] ===
-			this.props.selectedFieldID;
-		if (prevProps.selectedFieldID !== this.props.selectedFieldID && !isCurrentPageSelected) {
+			this.props.selectedRegistrable?.name;
+
+		if (
+			prevProps.selectedRegistrable !== this.props.selectedRegistrable &&
+			!isCurrentPageSelected
+		) {
 			this.requestPageClosing();
 			return;
 		}
@@ -119,7 +122,7 @@ export default class OptionsMenu
 				>
 					<div className="page" key="panel-depth0">
 						<PanelsPage
-							selectedFieldID={this.props.selectedFieldID}
+							selectedRegistrable={this.props.selectedRegistrable}
 							onValueChange={this.props.onValueChange}
 							onMediaEditRequest={this.props.onMediaEditRequest}
 							fields={this.props.fields}

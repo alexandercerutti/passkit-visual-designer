@@ -9,6 +9,7 @@ const StaticFields: Array<[DataGroup, FieldDetails[]]> = [
 			{
 				name: "description",
 				kind: FieldKind.TEXT,
+				group: DataGroup.METADATA,
 				mockable: false,
 				tooltipText: "",
 				disabled: false,
@@ -24,37 +25,45 @@ const StaticFields: Array<[DataGroup, FieldDetails[]]> = [
 	},*/ {
 				name: "organizationName",
 				kind: FieldKind.TEXT,
+				group: DataGroup.METADATA,
 				required: true,
 			},
 			{
 				name: "passTypeIdentifier",
 				kind: FieldKind.TEXT,
+				group: DataGroup.METADATA,
 				required: true,
 			},
 			{
 				name: "teamIdentifier",
 				kind: FieldKind.TEXT,
+				group: DataGroup.METADATA,
 				required: true,
 			},
 			{
 				name: "appLaunchURL",
 				kind: FieldKind.TEXT,
+				group: DataGroup.METADATA,
 			},
 			{
 				name: "associatedStoreIdentifiers",
 				kind: FieldKind.TEXT,
+				group: DataGroup.METADATA,
 			},
 			{
 				name: "authenticationToken",
 				kind: FieldKind.TEXT,
+				group: DataGroup.METADATA,
 			},
 			{
 				name: "webServiceURL",
 				kind: FieldKind.TEXT,
+				group: DataGroup.METADATA,
 			},
 			{
 				name: "groupingIdentifier",
 				kind: FieldKind.TEXT,
+				group: DataGroup.METADATA,
 			} /*, {
 			name: "becons",
 			kind: FieldKind.JSON,
@@ -72,14 +81,17 @@ const StaticFields: Array<[DataGroup, FieldDetails[]]> = [
 			{
 				name: "backgroundColor",
 				kind: FieldKind.COLOR,
+				group: DataGroup.COLORS,
 			},
 			{
 				name: "foregroundColor",
 				kind: FieldKind.COLOR,
+				group: DataGroup.COLORS,
 			},
 			{
 				name: "labelColor",
 				kind: FieldKind.COLOR,
+				group: DataGroup.COLORS,
 			},
 		],
 	],

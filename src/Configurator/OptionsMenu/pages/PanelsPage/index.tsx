@@ -1,11 +1,11 @@
 import * as React from "react";
 import "./style.less";
 import { PageNavigation } from "../usePageFactory";
-import Panel from "./Panel";
-import { RegisteredFieldsMap } from "../..";
+import Panel, { FieldDetails } from "./Panel";
 import PageNavigationContext from "../PageNavigationContext";
 import type { PassMediaProps, PassMixedProps } from "@pkvd/pass";
 import TabsList from "./TabsList";
+import RegistrationIndex from "src/Configurator/RegistrationIndex";
 
 export enum DataGroup {
 	METADATA = "Metadata",
@@ -17,8 +17,8 @@ export enum DataGroup {
 const MenuVoices = [DataGroup.METADATA, DataGroup.IMAGES, DataGroup.COLORS, DataGroup.DATA];
 
 interface Props extends Partial<PageNavigation> {
-	selectedFieldID: keyof PassMixedProps;
-	fields: RegisteredFieldsMap;
+	selectedRegistrable: FieldDetails;
+	fields: RegistrationIndex;
 	data: PassMixedProps;
 	onValueChange<T>(name: string, data: T): void;
 	onMediaEditRequest(mediaName: keyof PassMediaProps): void;
@@ -38,18 +38,20 @@ export default function PanelsPage(props: Props) {
 	}, []);
 
 	React.useEffect(() => {
-		if (!props.selectedFieldID) {
+		if (!props.selectedRegistrable) {
 			return;
 		}
 
+		const dgIndex = MenuVoices.findIndex((group) => group === props.selectedRegistrable.group);
+
 		// Selecting Data
-		setSelectedTabIndex(3);
-	}, [props.selectedFieldID]);
+		setSelectedTabIndex(dgIndex);
+	}, [props.selectedRegistrable]);
 
 	const context = React.useContext(PageNavigationContext);
 
-	const panels = Array.from(props.fields.entries())
-		.find(([group]) => group === MenuVoices[selectedTabIndex])[1]
+	const panels = props.fields
+		.getDatagroup(MenuVoices[selectedTabIndex])
 		.map(({ kind, name, ...otherData }) => (
 			<Panel
 				key={name}
@@ -62,7 +64,7 @@ export default function PanelsPage(props: Props) {
 						: props.data?.[name]
 				}
 				onValueChange={props.onValueChange}
-				isSelected={props.selectedFieldID === name}
+				isSelected={props.selectedRegistrable?.name === name}
 				requestPageClosing={context.requestPageClosing}
 				requestPageCreation={context.requestPageCreation}
 			/>

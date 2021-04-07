@@ -6,6 +6,7 @@ import ColorPanel from "./ColorPanel";
 import FieldPanel from "./FieldsPanel";
 import ImagePanel from "./ImagePanel";
 import { PageNavigation } from "../../usePageFactory";
+import { DataGroup } from "..";
 
 export interface PanelProps extends PageNavigation {
 	name: string;
@@ -19,6 +20,7 @@ export interface PanelProps extends PageNavigation {
 export interface FieldDetails {
 	name: string;
 	kind: FieldKind;
+	group: DataGroup;
 	mockable?: boolean;
 	tooltipText?: string;
 	disabled?: boolean;
