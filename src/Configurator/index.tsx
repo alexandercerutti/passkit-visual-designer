@@ -1,6 +1,6 @@
 import * as React from "react";
 import "./style.less";
-import { InteractionContextMethods, PassMediaProps, PassMixedProps } from "@pkvd/pass";
+import { InteractionContext, PassMediaProps, PassMixedProps } from "@pkvd/pass";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import { CSSTransition } from "react-transition-group";
 import { connect } from "react-redux";
@@ -84,9 +84,7 @@ interface ConfiguratorState {
 
 const MODAL_TIMEOUT = 200;
 
-class Configurator
-	extends React.Component<ConfiguratorProps, ConfiguratorState>
-	implements InteractionContextMethods {
+class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState> {
 	private registeredFields: RegisteredFieldsMap = new Map(DefaultFields);
 
 	constructor(props: ConfiguratorProps) {
@@ -351,17 +349,17 @@ class Configurator
 		return (
 			<div id="configurator">
 				<div className="screen">
-					<Viewer
-						passProps={passProps}
-						translationSet={translations[activeMediaLanguage]}
-						onFieldSelect={this.onFieldSelect}
-						registerField={this.registerField}
-						onVoidClick={this.onVoidClick}
-						showBack={shouldShowPassBack}
-						showEmpty={emptyFieldsVisible}
-						projectTitle={title}
-						changeProjectTitle={this.changeProjectTitle}
-					/>
+					<InteractionContext.Provider value={this.registerField}>
+						<Viewer
+							passProps={passProps}
+							translationSet={translations[activeMediaLanguage]}
+							onVoidClick={this.onVoidClick}
+							showBack={shouldShowPassBack}
+							showEmpty={emptyFieldsVisible}
+							projectTitle={title}
+							changeProjectTitle={this.changeProjectTitle}
+						/>
+					</InteractionContext.Provider>
 					<OptionsBar
 						rotatePass={this.onShowPassBackRequest}
 						isEmptyVisible={emptyFieldsVisible}

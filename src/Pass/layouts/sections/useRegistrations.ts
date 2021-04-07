@@ -9,7 +9,6 @@ export type FieldSelectHandler<P = any> = [P] extends [never]
 	? () => void
 	: (fieldIdentifier: string | null) => void;
 export type onRegister = (kind: FieldKind, id: keyof PassMixedProps | string) => FieldSelectHandler;
-export type onComponentSelection = (id: keyof PassMixedProps, key: string | null) => void;
 
 export interface SelectableComponent<P = any> {
 	onClick: FieldSelectHandler<P>;
@@ -19,10 +18,23 @@ type RegistrationDescriptor = [kind: FieldKind, fieldName: string];
 
 const noop = () => {};
 
+/**
+ * Registration principle regards having a way to click on
+ * an element and trigger something in a parent, which uses
+ * the InteractionContext provided by the Pass component.
+ *
+ * So, the context defines the registration function and
+ * the registration function, once invoked, returns a
+ * click handler.
+ *
+ * @param components
+ * @returns
+ */
+
 export function useRegistrations(
 	components: RegistrationDescriptor[]
 ): FieldSelectHandler[] {
-	const { registerField } = React.useContext(InteractionContext);
+	const registerField = React.useContext(InteractionContext);
 
 	return React.useMemo(() => {
 		if (!registerField) {

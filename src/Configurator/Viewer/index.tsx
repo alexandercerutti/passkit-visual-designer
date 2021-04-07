@@ -7,8 +7,7 @@ import type { TranslationsSet } from "../../store";
 
 type PassFieldKeys = Constants.PassFieldKeys;
 
-export interface ViewerProps
-	extends Pick<PassProps, "registerField" | "onFieldSelect" | "showBack"> {
+export interface ViewerProps extends Pick<PassProps, "showBack"> {
 	passProps: PassMixedProps;
 	translationSet: TranslationsSet;
 	showEmpty: boolean;
@@ -18,16 +17,7 @@ export interface ViewerProps
 }
 
 export default function Viewer(props: ViewerProps) {
-	const {
-		changeProjectTitle,
-		onVoidClick,
-		projectTitle = "",
-		showBack,
-		registerField,
-		onFieldSelect,
-		passProps,
-	} = props;
-	const registrationProps = { registerField, onFieldSelect };
+	const { changeProjectTitle, onVoidClick, projectTitle = "", showBack, passProps } = props;
 
 	const viewerCN = createClassName(["viewer"], {
 		"no-empty": !props.showEmpty,
@@ -57,9 +47,7 @@ export default function Viewer(props: ViewerProps) {
 					commit={changeProjectTitle}
 				/>
 			</div>
-			<InteractionContext.Provider value={registrationProps}>
-				<Pass {...passUIProps} showBack={showBack} />
-			</InteractionContext.Provider>
+			<Pass {...passUIProps} showBack={showBack} />
 		</div>
 	);
 }

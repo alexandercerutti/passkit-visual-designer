@@ -10,13 +10,11 @@ import {
 	DEFAULT_FOREGROUND_COLOR,
 	DEFAULT_LABEL_COLOR,
 } from "./constants";
-import { InteractionContextMethods } from "./InteractionContext";
 import { createClassName } from "../utils";
 import Backfields from "./layouts/sections/BackFields";
 import useCSSCustomProperty from "./useCSSCustomProperty";
 
 export { default as InteractionContext } from "./InteractionContext";
-export type { InteractionContextMethods } from "./InteractionContext";
 export * as Layouts from "./layouts";
 export * as Constants from "./constants";
 
@@ -59,7 +57,7 @@ export interface PassMediaProps {
 	footerImage?: string;
 }
 
-export interface PassProps extends PassMixedProps, Partial<InteractionContextMethods> {
+export interface PassProps extends PassMixedProps {
 	showBack?: boolean;
 	layout?: Layouts.LayoutSignature;
 }
