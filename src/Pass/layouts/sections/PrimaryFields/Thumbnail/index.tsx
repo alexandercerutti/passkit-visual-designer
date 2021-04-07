@@ -47,7 +47,7 @@ export default function ThumbnailPrimaryField(props: React.PropsWithChildren<PFT
 					height="100%"
 					className="thumbnail"
 					src={thumbnailSrc}
-					onClick={thumbnailClickHandler}
+					onClick={() => thumbnailClickHandler(null)}
 				/>
 			</div>
 		</div>
