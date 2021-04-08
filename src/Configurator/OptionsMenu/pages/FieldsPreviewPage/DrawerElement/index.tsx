@@ -4,11 +4,12 @@ import { Constants } from "@pkvd/pass";
 import FieldOptionsBar from "./FieldOptionsBar";
 import FieldPreview from "../../components/FieldPreview";
 import FieldsPropertiesEditPage from "../../FieldsPropertiesEditPage";
-import usePageFactory, { PageNavigation } from "../../usePageFactory";
+import usePageFactory from "../../usePageFactory";
+import PageNavigationContext from "../../PageNavigationContext";
 
 type PassFieldKeys = Constants.PassFieldKeys;
 
-interface DrawerElementProps extends Pick<PageNavigation, "requestPageCreation"> {
+interface DrawerElementProps {
 	fieldUUID: string;
 	onFieldDelete(key: string): void;
 	onFieldDataChange(fieldUUID: string, data: PassFieldKeys): void;
@@ -21,6 +22,8 @@ interface DrawerElementProps extends Pick<PageNavigation, "requestPageCreation">
 export default function DrawerElement(props: DrawerElementProps) {
 	const [fieldData, setFieldData] = React.useState(props.elementData);
 
+	const { requestPageCreation } = React.useContext(PageNavigationContext);
+
 	const pageCreationHandler = usePageFactory(
 		FieldsPropertiesEditPage,
 		{ data: fieldData, fieldUUID: props.fieldUUID },
@@ -28,7 +31,7 @@ export default function DrawerElement(props: DrawerElementProps) {
 	);
 
 	const onEditPropertiesHandler = React.useCallback(() => {
-		pageCreationHandler(props.fieldUUID, props.requestPageCreation);
+		pageCreationHandler(props.fieldUUID, requestPageCreation);
 	}, [pageCreationHandler]);
 
 	React.useEffect(() => {

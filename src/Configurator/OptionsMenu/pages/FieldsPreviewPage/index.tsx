@@ -6,7 +6,7 @@ import { FieldsAddIcon } from "./icons";
 import Drawer from "./Drawer";
 import DrawerPlaceholder from "./DrawerPlaceholder";
 import PageHeader from "../components/Header";
-import { PageProps, PageNavigation } from "../usePageFactory";
+import { PageProps } from "../usePageFactory";
 import DrawerJSONEditor from "./DrawerJSONEditor";
 
 type PassFields = Constants.PassFields;
@@ -15,7 +15,7 @@ type PassFieldKeys = Constants.PassFieldKeys;
 // Webpack declared
 declare const __DEV__: boolean;
 
-interface Props extends PageProps, PageNavigation {
+interface Props extends PageProps {
 	value?: PassFieldKeys[];
 	onChange(fieldData: PassFieldKeys[]): void;
 }

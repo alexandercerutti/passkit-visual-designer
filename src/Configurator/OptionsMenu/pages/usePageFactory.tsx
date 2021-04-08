@@ -17,7 +17,7 @@ export interface PageProps {
 
 export type RequestPageCreationFunction = (
 	identifier: string,
-	PageElement: React.ComponentType<Partial<PageNavigation> & PageProps>,
+	PageElement: React.ComponentType<PageProps>,
 	getContextProps?: ContextPropsGetter<React.ComponentProps<typeof PageElement>>
 ) => void;
 

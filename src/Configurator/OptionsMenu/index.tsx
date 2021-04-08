@@ -95,12 +95,7 @@ export default class OptionsMenu
 		const pages = this.state.pagesHierarchy.map(([id, PageElement, getContextProps], index) => {
 			return (
 				<div className="page" key={`panel-depth${index + 1}`}>
-					<PageElement
-						name={id}
-						requestPageCreation={this.requestPageCreation}
-						requestPageClosing={this.requestPageClosing}
-						{...getContextProps()}
-					/>
+					<PageElement name={id} {...getContextProps()} />
 				</div>
 			);
 		});

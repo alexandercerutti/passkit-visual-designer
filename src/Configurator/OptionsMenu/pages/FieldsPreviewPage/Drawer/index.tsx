@@ -3,7 +3,6 @@ import "./style.less";
 import { Constants } from "@pkvd/pass";
 import { MoreFieldsBelowIcon } from "../icons";
 import DrawerElement from "../DrawerElement";
-import PageNavigationContext from "../../PageNavigationContext";
 
 type PassFieldKeys = Constants.PassFieldKeys;
 
@@ -18,8 +17,6 @@ interface Props {
 export default function Drawer(props: Props) {
 	const [isThereMoreAfterTheSkyline, setMoreAvailability] = React.useState(false);
 	const drawerRef = React.useRef<HTMLDivElement>();
-
-	const { requestPageCreation } = React.useContext(PageNavigationContext);
 
 	const onListScrollHandler = React.useRef(
 		({ currentTarget }: Partial<React.UIEvent<HTMLDivElement>>) => {
@@ -50,7 +47,6 @@ export default function Drawer(props: Props) {
 				onFieldDelete={props.onFieldDelete}
 				onFieldDataChange={props.onFieldChange}
 				onFieldOrderChange={props.onFieldOrderChange}
-				requestPageCreation={requestPageCreation}
 				isUpperBoundary={index === 0}
 				isLowerBoundary={index === props.fieldsData.length - 1}
 			/>
