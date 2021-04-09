@@ -29,15 +29,25 @@ interface Props extends Partial<PageNavigation> {
 
 export default function PanelsPage(props: Props) {
 	const [selectedTabIndex, setSelectedTabIndex] = React.useState(0);
+	const listRef = React.useRef<HTMLDivElement>(null);
 
-	const onWheelEventHandler = React.useCallback((event: React.WheelEvent<HTMLDivElement>) => {
-		const { scrollHeight, offsetHeight, scrollTop, parentElement } = event.currentTarget;
+	const determineOverflowBottomShadow = React.useCallback((element: HTMLDivElement) => {
+		const { scrollHeight, offsetHeight, scrollTop, parentElement } = element;
 
 		if (scrollHeight - offsetHeight !== Math.floor(scrollTop)) {
 			parentElement.classList.add("not-enough");
 		} else {
 			parentElement.classList.remove("not-enough");
 		}
+	}, []);
+
+	const onWheelEventHandler = React.useCallback((event: React.WheelEvent<HTMLDivElement>) => {
+		determineOverflowBottomShadow(event.currentTarget);
+	}, []);
+
+	/** Shadow */
+	React.useEffect(() => {
+		determineOverflowBottomShadow(listRef.current);
 	}, []);
 
 	React.useEffect(() => {
@@ -81,7 +91,7 @@ export default function PanelsPage(props: Props) {
 				onSelect={setSelectedTabIndex}
 			/>
 			<div className="list-element">
-				<div className="panels-list" onWheel={onWheelEventHandler}>
+				<div className="panels-list" onWheel={onWheelEventHandler} ref={listRef}>
 					{panels}
 				</div>
 			</div>
