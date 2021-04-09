@@ -5,6 +5,7 @@ import PageHeader from "../components/Header";
 import { PageProps } from "../usePageFactory";
 import FieldPreview from "../components/FieldPreview";
 import FieldPropertiesEditList from "./FieldPropertiesEditList";
+import { PageContainer } from "../../PageContainer";
 
 type PassFieldKeys = Constants.PassFieldKeys;
 
@@ -24,23 +25,25 @@ export default function FieldsPropertiesEditPage(props: Props) {
 	}, [data]);
 
 	return (
-		<div id="fields-properties-edit-page">
-			<PageHeader />
-			<FieldPreview
-				keyEditable
-				fieldUUID={props.fieldUUID}
-				onFieldKeyChange={(fieldUUID: string, key: string) => setData({ ...data, key })}
-				previewData={data}
-			/>
-			<FieldPropertiesEditList
-				data={data}
-				onValueChange={(prop, value) => {
-					setData({
-						...data,
-						[prop]: value,
-					});
-				}}
-			/>
-		</div>
+		<PageContainer>
+			<div id="fields-properties-edit-page">
+				<PageHeader />
+				<FieldPreview
+					keyEditable
+					fieldUUID={props.fieldUUID}
+					onFieldKeyChange={(fieldUUID: string, key: string) => setData({ ...data, key })}
+					previewData={data}
+				/>
+				<FieldPropertiesEditList
+					data={data}
+					onValueChange={(prop, value) => {
+						setData({
+							...data,
+							[prop]: value,
+						});
+					}}
+				/>
+			</div>
+		</PageContainer>
 	);
 }

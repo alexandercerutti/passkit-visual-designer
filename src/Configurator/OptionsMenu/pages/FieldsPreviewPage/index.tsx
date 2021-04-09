@@ -8,6 +8,7 @@ import DrawerPlaceholder from "./DrawerPlaceholder";
 import PageHeader from "../components/Header";
 import { PageProps } from "../usePageFactory";
 import DrawerJSONEditor from "./DrawerJSONEditor";
+import { PageContainer } from "../../PageContainer";
 
 type PassFields = Constants.PassFields;
 type PassFieldKeys = Constants.PassFieldKeys;
@@ -185,20 +186,22 @@ export default class FieldsPreviewPage extends React.Component<Props, State> {
 		}
 
 		return (
-			<div className="fields-preview-page">
-				<PageHeader name={this.pageName}>
-					<FieldsAddIcon className="add" onClick={this.onFieldAddHandler} />
-				</PageHeader>
-				{contentElement}
-				<footer>
-					<button
-						className={(isJSONMode && "json-mode-active") || ""}
-						onClick={this.toggleJSONMode}
-					>
-						JSON
-					</button>
-				</footer>
-			</div>
+			<PageContainer>
+				<div className="fields-preview-page">
+					<PageHeader name={this.pageName}>
+						<FieldsAddIcon className="add" onClick={this.onFieldAddHandler} />
+					</PageHeader>
+					{contentElement}
+					<footer>
+						<button
+							className={(isJSONMode && "json-mode-active") || ""}
+							onClick={this.toggleJSONMode}
+						>
+							JSON
+						</button>
+					</footer>
+				</div>
+			</PageContainer>
 		);
 	}
 }

@@ -1,15 +1,13 @@
 import * as React from "react";
 import "./style.less";
 import { PassMediaProps, PassMixedProps } from "@pkvd/pass";
-import PanelsPage, { DataGroup } from "./pages/PanelsPage";
+import PanelsPage from "./pages/PanelsPage";
 import PageNavigationContext from "./pages/PageNavigationContext";
 import {
 	RequestPageCreationFunction,
 	PageNavigation,
 	ContextPropsGetter,
 } from "./pages/usePageFactory";
-import { ShareIcon } from "./pages/PanelsPage/icons";
-import { createClassName } from "../../utils";
 import { FieldDetails } from "./pages/PanelsPage/Panel";
 import type RegistrationIndex from "../RegistrationIndex";
 
@@ -93,15 +91,7 @@ export default class OptionsMenu
 
 	render() {
 		const pages = this.state.pagesHierarchy.map(([id, PageElement, getContextProps], index) => {
-			return (
-				<div className="page" key={`panel-depth${index + 1}`}>
-					<PageElement name={id} {...getContextProps()} />
-				</div>
-			);
-		});
-
-		const exportButtonClassName = createClassName(["export-btn"], {
-			disabled: !this.props.requestExport,
+			return <PageElement name={id} {...getContextProps()} key={`panel-depth${index + 1}`} />;
 		});
 
 		return (
@@ -115,19 +105,14 @@ export default class OptionsMenu
 						requestPageCreation: this.requestPageCreation,
 					}}
 				>
-					<div className="page" key="panel-depth0">
-						<PanelsPage
-							selectedRegistrable={this.props.selectedRegistrable}
-							onValueChange={this.props.onValueChange}
-							onMediaEditRequest={this.props.onMediaEditRequest}
-							fields={this.props.fields}
-							data={this.props.data}
-						/>
-						<div className={exportButtonClassName} onClick={() => this.props.requestExport?.()}>
-							<h3>Export</h3>
-							<ShareIcon className="icon" width="25px" height="25px" />
-						</div>
-					</div>
+					<PanelsPage
+						selectedRegistrable={this.props.selectedRegistrable}
+						onValueChange={this.props.onValueChange}
+						onMediaEditRequest={this.props.onMediaEditRequest}
+						fields={this.props.fields}
+						data={this.props.data}
+						requestExport={this.props.requestExport}
+					/>
 					{pages}
 				</PageNavigationContext.Provider>
 			</div>
