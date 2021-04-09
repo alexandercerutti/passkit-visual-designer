@@ -2,7 +2,6 @@ import * as React from "react";
 import "./style.less";
 import { PageNavigation } from "../usePageFactory";
 import Panel, { FieldDetails } from "./Panel";
-import PageNavigationContext from "../PageNavigationContext";
 import type { PassMediaProps, PassMixedProps } from "@pkvd/pass";
 import TabsList from "./TabsList";
 import RegistrationIndex from "../../../RegistrationIndex";
@@ -52,8 +51,6 @@ export default function PanelsPage(props: Props) {
 		setSelectedTabIndex(dgIndex);
 	}, [props.selectedRegistrable]);
 
-	const context = React.useContext(PageNavigationContext);
-
 	const panels = props.fields
 		.getDatagroup(MenuVoices[selectedTabIndex])
 		.map(({ kind, name, ...otherData }) => (
@@ -69,8 +66,6 @@ export default function PanelsPage(props: Props) {
 				}
 				onValueChange={props.onValueChange}
 				isSelected={props.selectedRegistrable?.name === name}
-				requestPageClosing={context.requestPageClosing}
-				requestPageCreation={context.requestPageCreation}
 			/>
 		));
 

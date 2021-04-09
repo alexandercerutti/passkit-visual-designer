@@ -5,10 +5,9 @@ import TextPanel from "./TextPanel";
 import ColorPanel from "./ColorPanel";
 import FieldPanel from "./FieldsPanel";
 import ImagePanel from "./ImagePanel";
-import { PageNavigation } from "../../usePageFactory";
 import { DataGroup } from "..";
 
-export interface PanelProps extends PageNavigation {
+export interface PanelProps {
 	name: string;
 	kind: FieldKind;
 	data: Omit<FieldDetails, "kind" | "name">;

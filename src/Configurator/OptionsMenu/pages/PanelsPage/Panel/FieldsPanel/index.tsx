@@ -7,6 +7,7 @@ import CapitalHeaderTitle from "../../../components/CapitalHeaderTitle";
 import FieldsPreviewPage from "../../../FieldsPreviewPage";
 import usePageFactory from "../../../usePageFactory";
 import useContentSavingHandler from "../useContentSavingHandler";
+import PageNavigationContext from "../../../PageNavigationContext";
 
 type PassFieldKeys = Constants.PassFieldKeys;
 
@@ -20,15 +21,17 @@ export default function FieldPanel(props: Props) {
 		props.name,
 		props.value || []
 	);
+
+	const { requestPageCreation } = React.useContext(PageNavigationContext);
 	const pageCreationHandler = usePageFactory(FieldsPreviewPage, { value: fields }, onFieldsChanged);
 
 	const pageCreationClickHandler = React.useCallback(() => {
-		pageCreationHandler(props.name, props.requestPageCreation);
+		pageCreationHandler(props.name, requestPageCreation);
 	}, [props]);
 
 	if (props.isSelected) {
 		setTimeout(() => {
-			pageCreationHandler(props.name, props.requestPageCreation);
+			pageCreationHandler(props.name, requestPageCreation);
 		}, 500);
 	}
 
