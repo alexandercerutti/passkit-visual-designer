@@ -1,7 +1,7 @@
 import * as React from "react";
 import "./style.less";
 import { PageNavigation } from "../usePageFactory";
-import Panel, { FieldDetails } from "./Panel";
+import { ColorPanel, FieldDetails, FieldsPanel, ImagePanel, TextPanel } from "./Panel";
 import type { PassMediaProps, PassMixedProps } from "@pkvd/pass";
 import TabsList from "./TabsList";
 import RegistrationIndex from "../../../RegistrationIndex";
@@ -63,21 +63,67 @@ export default function PanelsPage(props: Props) {
 
 	const panels = props.fields
 		.getDatagroup(MenuVoices[selectedTabIndex])
-		.map(({ kind, name, ...otherData }) => (
-			<Panel
-				key={name}
-				name={name}
-				kind={kind}
-				data={otherData}
-				value={
-					MenuVoices[selectedTabIndex] === DataGroup.IMAGES
-						? props.onMediaEditRequest
-						: props.data?.[name]
+		.map(({ kind, name, ...otherData }) => {
+			const { group } = otherData;
+			const isSelected = props.selectedRegistrable?.name === name;
+
+			switch (group) {
+				case DataGroup.METADATA: {
+					return (
+						<TextPanel
+							key={name}
+							name={name}
+							data={otherData}
+							value={props.data?.[name]}
+							onValueChange={props.onValueChange}
+							isSelected={isSelected}
+						/>
+					);
 				}
-				onValueChange={props.onValueChange}
-				isSelected={props.selectedRegistrable?.name === name}
-			/>
-		));
+
+				case DataGroup.IMAGES: {
+					return (
+						<ImagePanel
+							key={name}
+							name={name}
+							data={otherData}
+							value={props.onMediaEditRequest}
+							isSelected={isSelected}
+						/>
+					);
+				}
+
+				case DataGroup.COLORS: {
+					return (
+						<ColorPanel
+							key={name}
+							name={name}
+							data={otherData}
+							value={props.data?.[name]}
+							onValueChange={props.onValueChange}
+							isSelected={isSelected}
+						/>
+					);
+				}
+
+				case DataGroup.DATA: {
+					return (
+						<FieldsPanel
+							key={name}
+							name={name}
+							data={otherData}
+							value={props.data?.[name]}
+							onValueChange={props.onValueChange}
+							isSelected={isSelected}
+						/>
+					);
+				}
+
+				default: {
+					return null;
+				}
+			}
+		});
 
 	const exportButtonClassName = createClassName(["export-btn"], {
 		disabled: !props.requestExport,

@@ -1,11 +1,12 @@
 import * as React from "react";
-import { PanelProps } from "..";
+import "./style.less";
+import { SharedPanelProps } from "..";
+import { FieldKind } from "../../../../../../model";
 import useContentSavingHandler from "../useContentSavingHandler";
 import CapitalHeaderTitle from "../../../components/CapitalHeaderTitle";
-import "./style.less";
 import CommittableTextInput from "../../../../../CommittableTextInput";
 
-interface TextPanelProps extends PanelProps {
+interface TextPanelProps extends SharedPanelProps {
 	value?: string;
 }
 
@@ -24,7 +25,7 @@ export default function TextPanel(props: TextPanelProps) {
 	}
 
 	return (
-		<>
+		<div className={`panel ${FieldKind.TEXT}`} data-name={props.name}>
 			<label htmlFor={props.name}>
 				<CapitalHeaderTitle name={props.name} />
 				{required}
@@ -36,6 +37,6 @@ export default function TextPanel(props: TextPanelProps) {
 				defaultValue={content}
 				commit={onContentSave}
 			/>
-		</>
+		</div>
 	);
 }

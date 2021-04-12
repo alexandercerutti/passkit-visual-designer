@@ -1,11 +1,12 @@
 import * as React from "react";
 import { TwitterPicker, RGBColor, ColorState } from "react-color";
-import { PanelProps } from "..";
+import { SharedPanelProps } from "..";
 import useContentSavingHandler from "../useContentSavingHandler";
 import CapitalHeaderTitle from "../../../components/CapitalHeaderTitle";
 import "./style.less";
+import { FieldKind } from "../../../../../../model";
 
-interface ColorPanelProps extends PanelProps {
+interface ColorPanelProps extends SharedPanelProps {
 	value?: string;
 }
 
@@ -45,7 +46,7 @@ export default function ColorPanel(props: ColorPanelProps) {
 	});
 
 	return (
-		<>
+		<div className={`panel ${FieldKind.COLOR}`} data-name={props.name}>
 			<CapitalHeaderTitle name={props.name} />
 			<TwitterPicker
 				triangle="hide"
@@ -54,7 +55,7 @@ export default function ColorPanel(props: ColorPanelProps) {
 				colors={colorHistory}
 				onChangeComplete={onColorChange.current}
 			/>
-		</>
+		</div>
 	);
 }
 
