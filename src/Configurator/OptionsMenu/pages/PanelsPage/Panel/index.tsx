@@ -1,4 +1,5 @@
 import "./style.less";
+import { PassMixedProps } from "@pkvd/pass";
 import { FieldKind } from "../../../../../model";
 import { DataGroup } from "..";
 
@@ -15,7 +16,7 @@ export interface SharedPanelProps {
 }
 
 export interface FieldDetails {
-	name: string;
+	name: string | keyof PassMixedProps;
 	kind: FieldKind;
 	group: DataGroup;
 	mockable?: boolean;

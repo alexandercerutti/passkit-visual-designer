@@ -85,9 +85,9 @@ export default function PanelsPage(props: Props) {
 					return (
 						<ImagePanel
 							key={name}
-							name={name}
+							name={name as keyof PassMediaProps}
 							data={otherData}
-							value={props.onMediaEditRequest}
+							openImageEditModal={props.onMediaEditRequest}
 							isSelected={isSelected}
 						/>
 					);
