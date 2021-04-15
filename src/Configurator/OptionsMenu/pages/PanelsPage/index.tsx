@@ -64,11 +64,10 @@ export default function PanelsPage(props: Props) {
 	const panels = props.fields
 		.getDatagroup(MenuVoices[selectedTabIndex])
 		.map(({ kind, name, ...otherData }) => {
-			const { group } = otherData;
 			const isSelected = props.selectedRegistrable?.name === name;
 
-			switch (group) {
-				case DataGroup.METADATA: {
+			switch (kind) {
+				case FieldKind.TEXT: {
 					return (
 						<TextPanel
 							key={name}
@@ -81,7 +80,7 @@ export default function PanelsPage(props: Props) {
 					);
 				}
 
-				case DataGroup.IMAGES: {
+				case FieldKind.IMAGE: {
 					return (
 						<ImagePanel
 							key={name}
@@ -93,7 +92,7 @@ export default function PanelsPage(props: Props) {
 					);
 				}
 
-				case DataGroup.COLORS: {
+				case FieldKind.COLOR: {
 					return (
 						<ColorPanel
 							key={name}
@@ -106,15 +105,17 @@ export default function PanelsPage(props: Props) {
 					);
 				}
 
-				case DataGroup.DATA: {
+				case FieldKind.FIELDS: {
 					return (
 						<FieldsPanel
 							key={name}
 							name={name}
 							data={otherData}
+							/** "name" is the name of property in pass.json */
 							value={props.data?.[name]}
 							onValueChange={props.onValueChange}
-							isSelected={isSelected}
+							onSelect={(name: string) => createPage(name)}
+							requestPageCreation={() => createPage("Capocchie")}
 						/>
 					);
 				}
