@@ -10,7 +10,7 @@ import navigable, { NextPageHandlers, PageProps } from "../Navigable.hoc";
 import DrawerJSONEditor from "./DrawerJSONEditor";
 import { PageContainer } from "../../PageContainer";
 import { connect } from "react-redux";
-import * as Store from "../../../../store";
+import * as Store from "@pkvd/store";
 import FieldsPropertiesEditPage from "../FieldsPropertiesEditPage";
 
 type PassFields = Constants.PassFields;

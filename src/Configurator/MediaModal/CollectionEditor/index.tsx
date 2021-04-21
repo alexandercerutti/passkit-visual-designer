@@ -1,6 +1,6 @@
 import * as React from "react";
 import { v1 as uuid } from "uuid";
-import type { IdentifiedResolutions, MediaCollection } from "../../../store";
+import type { IdentifiedResolutions, MediaCollection } from "@pkvd/store";
 import { getArrayBuffer } from "../../../utils";
 import { DeleteIcon, PlusIcon } from "../icons";
 import "./style.less";

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { TranslationsSet } from "../../store";
+import { TranslationsSet } from "@pkvd/store";
 import CommittableTextInput from "../CommittableTextInput";
 import LanguageSelectionButton from "../LanguageSelectionButton";
 import Modal, { ModalProps } from "../ModalBase";

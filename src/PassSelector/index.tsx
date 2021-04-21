@@ -6,7 +6,7 @@ import { PassKind } from "../model";
 import PassList from "./PassList";
 import SelectablePass from "./SelectablePass";
 import { getAlternativesByKind } from "./SelectablePass/useAlternativesRegistration";
-import * as Store from "../store";
+import * as Store from "@pkvd/store";
 
 // Webpack declared
 declare const __DEV__: boolean;

@@ -14,12 +14,11 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import PassSelector from "../PassSelector";
 import { createStore, applyMiddleware } from "redux";
 import Configurator from "../Configurator";
-import * as Store from "../store";
+import * as Store from "@pkvd/store";
 import RecentSelector from "../RecentSelector";
 import LoaderFace from "../Loader";
 import { CSSTransition, SwitchTransition } from "react-transition-group";
 import { PassMediaProps, PassMixedProps } from "@pkvd/pass";
-import { CollectionSet } from "../store";
 import { v1 as uuid } from "uuid";
 
 export interface StateLookalike {
@@ -163,7 +162,10 @@ function App(props: Props): JSX.Element {
 
 			) {
 				const [language, mediaSet] = localized;
-				const mediaEntries = Object.entries(mediaSet) as [keyof PassMediaProps, CollectionSet][];
+				const mediaEntries = Object.entries(mediaSet) as [
+					keyof PassMediaProps,
+					Store.CollectionSet
+				][];
 
 				for (
 					let i = mediaEntries.length, mediaEntry: typeof mediaEntries[0];

@@ -9,14 +9,7 @@ import Viewer from "./Viewer";
 import OptionsBar from "./OptionsBar";
 import OptionsMenu from "./OptionsMenu";
 import { FieldKind } from "../model";
-import type {
-	CollectionSet,
-	LocalizedMediaGroup,
-	MediaCollection,
-	MediaSet,
-	State,
-} from "../store";
-import * as Store from "../store";
+import * as Store from "@pkvd/store";
 import DefaultFields from "./staticFields";
 import { DataGroup } from "./OptionsMenu/pages/PanelsPage";
 import { FieldSelectHandler } from "../Pass/layouts/sections/useRegistrations";
@@ -58,11 +51,11 @@ interface DispatchProps {
 }
 
 interface ConfiguratorStore {
-	passProps: State["pass"];
-	media: State["media"];
+	passProps: Store.State["pass"];
+	media: Store.State["media"];
 	usedLanguages: Set<string>;
-	projectOptions: State["projectOptions"];
-	translations: State["translations"];
+	projectOptions: Store.State["projectOptions"];
+	translations: Store.State["translations"];
 }
 
 interface ConfiguratorProps extends ConfiguratorStore, DispatchProps, RouteComponentProps<any> {}
@@ -272,7 +265,7 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 		this.toggleModal(ModalIdentifier.Language);
 	}
 
-	onMediaCollectionEdit(collectionID: string, collection: MediaCollection) {
+	onMediaCollectionEdit(collectionID: string, collection: Store.MediaCollection) {
 		const { viewingMediaName: mediaName } = this.state;
 		const { activeMediaLanguage } = this.props.projectOptions;
 
@@ -480,7 +473,10 @@ function convertFieldKindToDataGroup(kind: FieldKind): DataGroup {
  * @param mediaSetForSelectedLanguage
  */
 
-function getBestResolutionForMedia(mediaGroup: LocalizedMediaGroup, selectedLanguage: string) {
+function getBestResolutionForMedia(
+	mediaGroup: Store.LocalizedMediaGroup,
+	selectedLanguage: string
+) {
 	const best = {} as PassMediaProps;
 
 	/**
@@ -496,7 +492,7 @@ function getBestResolutionForMedia(mediaGroup: LocalizedMediaGroup, selectedLang
 
 	for (let [mediaName, media] of Object.entries(firstGroupToCheck) as [
 		keyof PassMediaProps,
-		CollectionSet
+		Store.CollectionSet
 	][]) {
 		if (media) {
 			const { activeCollectionID = "", collections, enabled } = media;
@@ -527,7 +523,7 @@ function getBestResolutionForMedia(mediaGroup: LocalizedMediaGroup, selectedLang
 
 export default withRouter(
 	connect(
-		(state: State): ConfiguratorStore => {
+		(state: Store.State): ConfiguratorStore => {
 			const { pass, media, projectOptions, translations } = state;
 
 			const usedLanguages = new Set(
@@ -571,7 +567,7 @@ export default withRouter(
 	)(Configurator)
 );
 
-function hasMediaContents(media: MediaSet) {
+function hasMediaContents(media: Store.MediaSet) {
 	return Object.values(media).some(
 		(collectionSet) => Object.keys(collectionSet.collections).length
 	);

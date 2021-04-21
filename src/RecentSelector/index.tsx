@@ -1,7 +1,7 @@
 import * as React from "react";
 import JSZip from "jszip";
 import "./style.less";
-import * as Store from "../store";
+import * as Store from "@pkvd/store";
 import { GithubLogoDarkMode, AddIcon } from "./icons";
 import localForage from "localforage";
 import { createClassName } from "../utils";

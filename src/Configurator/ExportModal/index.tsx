@@ -4,7 +4,7 @@ import "./style.less";
 import { PassMixedProps } from "@pkvd/pass";
 import { createClassName } from "../../utils";
 import Modal, { ModalProps } from "../ModalBase";
-import * as Store from "../../store";
+import * as Store from "@pkvd/store";
 import * as templates from "../../../partners-templates";
 
 /** Defined by Webpack */

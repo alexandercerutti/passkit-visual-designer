@@ -3,7 +3,7 @@ import "./style.less";
 import Pass, { PassProps, Constants, PassMixedProps } from "@pkvd/pass";
 import { createClassName } from "../../utils";
 import CommittableTextInput from "../CommittableTextInput";
-import type { TranslationsSet } from "../../store";
+import type { TranslationsSet } from "@pkvd/store";
 
 type PassField = Constants.PassField;
 

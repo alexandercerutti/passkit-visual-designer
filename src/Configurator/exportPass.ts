@@ -6,7 +6,7 @@ import type {
 	MediaCollection,
 	MediaSet,
 	TranslationsSet,
-} from "../store";
+} from "@pkvd/store";
 
 export async function exportPass(
 	props: PassMixedProps,
