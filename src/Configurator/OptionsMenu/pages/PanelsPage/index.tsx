@@ -94,7 +94,7 @@ function PanelsPage(props: Props) {
 							key={name}
 							name={name as keyof PassMediaProps}
 							data={otherData}
-							openImageEditModal={props.onMediaEditRequest}
+							onSelect={props.onMediaEditRequest}
 							isSelected={isSelected}
 						/>
 					);
