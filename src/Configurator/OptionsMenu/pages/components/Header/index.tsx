@@ -2,17 +2,16 @@ import * as React from "react";
 import "./style.less";
 import FieldsArrowIcon from "../../icons";
 import CapitalHeaderTitle from "../CapitalHeaderTitle";
-import { PageProps } from "../../usePageFactory";
-import PageNavigationContext from "../../PageNavigationContext";
+import { PageProps } from "../../Navigable.hoc";
 
-interface Props extends Partial<PageProps> {}
+interface Props extends Partial<Omit<PageProps, "name">> {
+	name?: string;
+}
 
 export default function PageHeader(props: React.PropsWithChildren<Props>) {
-	const { requestPageClosing } = React.useContext(PageNavigationContext);
-
 	return (
 		<header>
-			<div className="back" onClick={() => requestPageClosing(true)}>
+			<div className="back" onClick={() => props.onBack()}>
 				<FieldsArrowIcon />
 				<span>Back</span>
 			</div>

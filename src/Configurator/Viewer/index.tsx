@@ -1,6 +1,6 @@
 import * as React from "react";
 import "./style.less";
-import Pass, { PassProps, InteractionContext, Constants, PassMixedProps } from "@pkvd/pass";
+import Pass, { PassProps, Constants, PassMixedProps } from "@pkvd/pass";
 import { createClassName } from "../../utils";
 import CommittableTextInput from "../CommittableTextInput";
 import type { TranslationsSet } from "../../store";

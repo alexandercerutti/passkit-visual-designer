@@ -1,6 +1,6 @@
 import { PassMixedProps } from "@pkvd/pass";
 import type * as React from "react";
-import { PageProps } from "./usePageNavigation";
+import { PageProps } from "./Navigable.hoc";
 
 interface Page<E extends PageProps> {
 	name: string | keyof PassMixedProps;

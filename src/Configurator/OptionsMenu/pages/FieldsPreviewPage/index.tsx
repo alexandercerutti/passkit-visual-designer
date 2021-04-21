@@ -1,33 +1,31 @@
 import * as React from "react";
 import { v1 as uuid } from "uuid";
 import "./style.less";
-import type { Constants } from "@pkvd/pass";
+import type { Constants, PassMixedProps } from "@pkvd/pass";
 import { FieldsAddIcon } from "./icons";
 import Drawer from "./Drawer";
 import DrawerPlaceholder from "./DrawerPlaceholder";
 import PageHeader from "../components/Header";
-import { PageProps } from "../usePageFactory";
+import navigable, { NextPageHandlers, PageProps } from "../Navigable.hoc";
 import DrawerJSONEditor from "./DrawerJSONEditor";
 import { PageContainer } from "../../PageContainer";
+import { connect } from "react-redux";
+import * as Store from "../../../../store";
+import FieldsPropertiesEditPage from "../FieldsPropertiesEditPage";
 
 type PassFields = Constants.PassFields;
 type PassField = Constants.PassField;
 
-// Webpack declared
-declare const __DEV__: boolean;
-
-interface Props extends PageProps {
-	value?: PassField[];
-	onChange(fieldData: PassField[]): void;
+interface Props extends PageProps, NextPageHandlers {
+	value: PassField[];
+	changePassPropValue: typeof Store.Pass.setProp;
 }
 
 interface State {
-	fields: PassFieldKeys[];
-	fieldsUUIDs: string[];
-	isJSONMode: boolean;
+	isJSONMode?: boolean;
 }
 
-export default class FieldsPreviewPage extends React.Component<Props, State> {
+class FieldsPreviewPage extends React.Component<Props, State> {
 	private readonly pageName = `${this.props.name.slice(0, 1).toUpperCase()}${this.props.name.slice(
 		1
 	)}`;
@@ -36,118 +34,59 @@ export default class FieldsPreviewPage extends React.Component<Props, State> {
 		super(props);
 
 		this.state = {
-			fields: props.value ?? [],
-			fieldsUUIDs: props.value?.map((_) => uuid()) ?? [],
 			isJSONMode: false,
 		};
 
 		this.onFieldAddHandler = this.onFieldAddHandler.bind(this);
 		this.onFieldDeleteHandler = this.onFieldDeleteHandler.bind(this);
 		this.onFieldOrderChange = this.onFieldOrderChange.bind(this);
-		this.onFieldChangeHandler = this.onFieldChangeHandler.bind(this);
 		this.onFieldsChangeFromJSON = this.onFieldsChangeFromJSON.bind(this);
 		this.toggleJSONMode = this.toggleJSONMode.bind(this);
-	}
-
-	componentDidUpdate(_: Props, prevState: State) {
-		if (prevState.fields !== this.state.fields) {
-			this.props.onChange(this.state.fields);
-		}
+		this.openDetailsPage = this.openDetailsPage.bind(this);
 	}
 
 	onFieldDeleteHandler(fieldUUID: string) {
-		this.setState(({ fields, fieldsUUIDs }) => {
-			const fieldIndex = fieldsUUIDs.findIndex((uuid) => uuid === fieldUUID);
+		const fieldIndex = this.props.value.findIndex((element) => element.fieldUUID === fieldUUID);
 
-			if (fieldIndex < 0) {
-				return null;
-			}
+		const newFields = [...this.props.value];
+		newFields.splice(fieldIndex, 1);
 
-			const newFields = [...fields];
-			const newUUIDs = [...fieldsUUIDs];
-			newFields.splice(fieldIndex, 1);
-			newUUIDs.splice(fieldIndex, 1);
-
-			return {
-				fields: newFields,
-				fieldsUUIDs: newUUIDs,
-			};
-		});
+		this.props.changePassPropValue(this.props.name as keyof PassMixedProps, newFields);
 	}
 
 	onFieldAddHandler() {
-		this.setState(({ fields, fieldsUUIDs: uuids }) => {
-			return {
-				fields: [...fields, {} as PassFieldKeys],
-				fieldsUUIDs: [...uuids, uuid()],
-			};
-		});
+		this.props.changePassPropValue(this.props.name as keyof PassMixedProps, [
+			...(this.props.value || []),
+			{ fieldUUID: uuid() } as PassField,
+		]);
 	}
 
 	onFieldOrderChange(fieldUUID: string, of: number): void {
-		this.setState(({ fields: previousFields, fieldsUUIDs: prevUUIDs }) => {
-			const fromIndex = prevUUIDs.findIndex((uuid) => uuid === fieldUUID);
+		const fromIndex = this.props.value.findIndex((element) => element.fieldUUID === fieldUUID);
+		const nextFields = [...this.props.value];
 
-			// Creating a copy of the array and swapping two elements
-			const nextFields = [...previousFields];
-			const nextUUIDs = [...prevUUIDs];
+		nextFields[fromIndex] = [
+			nextFields[fromIndex + of],
+			(nextFields[fromIndex + of] = nextFields[fromIndex]),
+		][0];
 
-			nextFields[fromIndex] = [
-				nextFields[fromIndex + of],
-				(nextFields[fromIndex + of] = nextFields[fromIndex]),
-			][0];
-
-			nextUUIDs[fromIndex] = [
-				nextUUIDs[fromIndex + of],
-				(nextUUIDs[fromIndex + of] = nextUUIDs[fromIndex]),
-			][0];
-
-			return {
-				fields: nextFields,
-				fieldsUUIDs: nextUUIDs,
-			};
-		});
-	}
-
-	onFieldChangeHandler(fieldUUID: string, fieldProps: PassFieldKeys) {
-		this.setState(({ fields: previousFields, fieldsUUIDs }) => {
-			const fieldIndex = fieldsUUIDs.findIndex((uuid) => uuid === fieldUUID);
-
-			if (fieldIndex < 0) {
-				return null;
-			}
-
-			const fields = [...previousFields];
-			// Adding to fields itself with new props but removing its old version before
-			fields.splice(fieldIndex, 1, Object.assign(fields[fieldIndex], fieldProps));
-
-			if (__DEV__) {
-				console.log("onFieldChange for", fieldProps, fieldUUID);
-			}
-
-			return { fields };
-		});
+		this.props.changePassPropValue(this.props.name as keyof PassMixedProps, nextFields);
 	}
 
 	onFieldsChangeFromJSON(jsonString: string) {
 		try {
-			const fields = JSON.parse(jsonString) as PassFieldKeys[];
+			const fields = JSON.parse(jsonString) as PassField[];
 
-			this.setState({
-				fields,
-				/**
-				 * Regenerating every internally every uuid
-				 * as we should have a way to understand
-				 * which field is new, which field has been deleted
-				 * or updated.
-				 * These uuids are only for this components, so we
-				 * can safely recreate them.
-				 */
-				fieldsUUIDs: fields.map((_) => uuid()),
-			});
+			this.props.changePassPropValue(this.props.name as keyof PassMixedProps, fields);
 		} catch (err) {
 			console.error(err);
 		}
+	}
+
+	openDetailsPage(fieldUUID: string) {
+		this.props.createPage(this.props.name, FieldsPropertiesEditPage, () => ({
+			fieldUUID,
+		}));
 	}
 
 	toggleJSONMode() {
@@ -157,7 +96,7 @@ export default class FieldsPreviewPage extends React.Component<Props, State> {
 	}
 
 	render() {
-		const { fields, fieldsUUIDs, isJSONMode } = this.state;
+		const { isJSONMode } = this.state;
 
 		let contentElement: React.ReactElement<
 			typeof DrawerJSONEditor | typeof Drawer | typeof DrawerPlaceholder
@@ -167,18 +106,17 @@ export default class FieldsPreviewPage extends React.Component<Props, State> {
 			contentElement = (
 				<DrawerJSONEditor
 					fieldName={this.props.name as keyof PassFields}
-					content={fields ?? []}
+					content={this.props.value ?? []}
 					onChange={this.onFieldsChangeFromJSON}
 				/>
 			);
-		} else if (fields.length) {
+		} else if (this.props.value?.length) {
 			contentElement = (
 				<Drawer
-					fieldsData={fields}
-					fieldsUUIDs={fieldsUUIDs}
-					onFieldChange={this.onFieldChangeHandler}
+					fieldsData={this.props.value}
 					onFieldDelete={this.onFieldDeleteHandler}
 					onFieldOrderChange={this.onFieldOrderChange}
+					openDetailsPage={this.openDetailsPage}
 				/>
 			);
 		} else {
@@ -188,8 +126,11 @@ export default class FieldsPreviewPage extends React.Component<Props, State> {
 		return (
 			<PageContainer>
 				<div className="fields-preview-page">
-					<PageHeader name={this.pageName}>
-						<FieldsAddIcon className="add" onClick={this.onFieldAddHandler} />
+					<PageHeader name={this.pageName} onBack={this.props.onBack}>
+						<FieldsAddIcon
+							className="add"
+							onClick={() => !this.state.isJSONMode && this.onFieldAddHandler()}
+						/>
 					</PageHeader>
 					{contentElement}
 					<footer>
@@ -205,3 +146,27 @@ export default class FieldsPreviewPage extends React.Component<Props, State> {
 		);
 	}
 }
+
+/**
+ * While I'm mainly against this approach (of having components other than main ones
+ * linked directly to the state), this way was the easiest one to adopt as the pages
+ * gets creates in a sort-of arbitrarily way and their props heavily depend
+ * on the caller. This caused a lot of troubles in terms of bad code and bad props
+ * passed to the pages components. For this reason, the best way for this is to have
+ * pages components to pick props directly from store.
+ */
+
+export default navigable(
+	connect(
+		function (state: Store.State, props: Props) {
+			const { name } = props;
+
+			return {
+				value: state.pass[name],
+			};
+		},
+		{
+			changePassPropValue: Store.Pass.setProp,
+		}
+	)(FieldsPreviewPage)
+);

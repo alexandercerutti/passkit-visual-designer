@@ -8,12 +8,11 @@ const { PKTextAlignment } = Constants;
 type PassField = Constants.PassField;
 
 interface Props {
-	fieldUUID: string;
 	previewData: PassField;
 	isFieldHidden?: boolean;
 	keyEditable?: boolean;
 	onClick?(): void;
-	onFieldKeyChange?(fieldUUID: string, newValue: string): void;
+	onFieldKeyChange?(newValue: string): void;
 }
 
 export default function FieldPreview(props: Props) {
@@ -22,10 +21,10 @@ export default function FieldPreview(props: Props) {
 	const onFieldKeyChange = React.useCallback(
 		(key: string) => {
 			if (key !== props.previewData.key) {
-				props.onFieldKeyChange(props.fieldUUID, key);
+				props.onFieldKeyChange(key);
 			}
 		},
-		[props.fieldUUID, props.previewData.key]
+		[props.previewData.key]
 	);
 
 	/** Effect to update the state value when props changes */

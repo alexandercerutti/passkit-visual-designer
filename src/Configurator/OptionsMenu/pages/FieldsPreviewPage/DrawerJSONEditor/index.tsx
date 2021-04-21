@@ -14,7 +14,8 @@ interface Props {
 }
 
 export default function DrawerJSONEditor(props: Props) {
-	const [jsonValid, setJSONValidityState] = React.useState(true);
+	// Initializing as undefined because the validity is related to an edit
+	const [jsonValid, setJSONValidityState] = React.useState(undefined);
 	const codeRef = React.useRef<HTMLElement>();
 	const textAreaRef = React.useRef<HTMLTextAreaElement>();
 	const jsonValidityCheckTimeoutRef = React.useRef<number>();
@@ -26,7 +27,7 @@ export default function DrawerJSONEditor(props: Props) {
 	}, []);
 
 	React.useEffect(() => {
-		if (jsonValid && JSON.stringify(props.content, null, "\t") !== textAreaRef.current.value) {
+		if (jsonValid) {
 			props.onChange(`[${textAreaRef.current.value}]`);
 		}
 	}, [jsonValid]);
@@ -101,8 +102,8 @@ export default function DrawerJSONEditor(props: Props) {
 			</pre>
 			<div
 				className={createClassName(["json-validity-alert"], {
-					valid: jsonValid,
-					invalid: !jsonValid,
+					valid: jsonValid === true || jsonValid === undefined,
+					invalid: jsonValid === false /** Explicitly not undefined */,
 				})}
 			/>
 		</div>

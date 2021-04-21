@@ -147,17 +147,21 @@ export namespace PassFields {
 }
 
 export interface PassFields {
-	auxiliaryFields: PassFields.AuxiliaryFields;
-	backFields: PassFields.BackFields;
-	headerFields: PassFields.HeaderFields;
-	primaryFields: PassFields.PrimaryFields;
-	secondaryFields: PassFields.SecondaryFields;
+	auxiliaryFields: PassFields.AuxiliaryFields[];
+	backFields: PassFields.BackFields[];
+	headerFields: PassFields.HeaderFields[];
+	primaryFields: PassFields.PrimaryFields[];
+	secondaryFields: PassFields.SecondaryFields[];
 }
 
 /**
  * @see https://apple.co/2ZqOVy8
  */
 export interface PassField {
+	/** Custom */
+	fieldUUID: string;
+
+	/** Proprietary */
 	key: string;
 	value: string | number;
 	attributedValue?: string;

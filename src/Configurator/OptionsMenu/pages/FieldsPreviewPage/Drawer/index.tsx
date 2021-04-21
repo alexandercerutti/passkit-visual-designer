@@ -8,10 +8,9 @@ type PassField = Constants.PassField;
 
 interface Props {
 	readonly fieldsData: PassField[];
-	readonly fieldsUUIDs: string[];
 	onFieldDelete(fieldUUID: string): void;
-	onFieldChange(fieldUUID: string, data: PassFieldKeys): void;
 	onFieldOrderChange(fieldUUID: string, of: number): void;
+	openDetailsPage(fieldUUID: string): void;
 }
 
 export default function Drawer(props: Props) {
@@ -38,18 +37,15 @@ export default function Drawer(props: Props) {
 	}, [props.fieldsData]);
 
 	const panels = props.fieldsData.map((field, index) => {
-		const fieldUUID = props.fieldsUUIDs[index];
-
 		return (
 			<DrawerElement
-				key={fieldUUID}
-				fieldUUID={fieldUUID}
+				key={`dre-${index}`}
 				elementData={field}
 				onFieldDelete={props.onFieldDelete}
-				onFieldDataChange={props.onFieldChange}
 				onFieldOrderChange={props.onFieldOrderChange}
 				isUpperBoundary={index === 0}
 				isLowerBoundary={index === props.fieldsData.length - 1}
+				openDetailsPage={props.openDetailsPage}
 			/>
 		);
 	});

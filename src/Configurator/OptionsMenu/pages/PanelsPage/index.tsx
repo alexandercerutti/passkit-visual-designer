@@ -1,6 +1,5 @@
 import * as React from "react";
 import "./style.less";
-import { PageNavigation } from "../usePageFactory";
 import { ColorPanel, FieldDetails, FieldsPanel, ImagePanel, TextPanel } from "./Panel";
 import type { PassMediaProps, PassMixedProps } from "@pkvd/pass";
 import TabsList from "./TabsList";
@@ -8,6 +7,9 @@ import RegistrationIndex from "../../../RegistrationIndex";
 import { PageContainer } from "../../PageContainer";
 import { createClassName } from "../../../../utils";
 import { ShareIcon } from "./icons";
+import navigable, { NextPageHandlers } from "../Navigable.hoc";
+import { FieldKind } from "../../../../model";
+import FieldsPreviewPage from "../FieldsPreviewPage";
 
 export enum DataGroup {
 	METADATA = "Metadata",
@@ -18,7 +20,7 @@ export enum DataGroup {
 
 const MenuVoices = [DataGroup.METADATA, DataGroup.IMAGES, DataGroup.COLORS, DataGroup.DATA];
 
-interface Props extends Partial<PageNavigation> {
+interface Props extends NextPageHandlers {
 	selectedRegistrable: FieldDetails;
 	fields: RegistrationIndex;
 	data: PassMixedProps;
@@ -27,7 +29,7 @@ interface Props extends Partial<PageNavigation> {
 	requestExport?(): void;
 }
 
-export default function PanelsPage(props: Props) {
+function PanelsPage(props: Props) {
 	const [selectedTabIndex, setSelectedTabIndex] = React.useState(0);
 	const listRef = React.useRef<HTMLDivElement>(null);
 
@@ -57,8 +59,14 @@ export default function PanelsPage(props: Props) {
 
 		const dgIndex = MenuVoices.findIndex((group) => group === props.selectedRegistrable.group);
 
-		// Selecting Data
 		setSelectedTabIndex(dgIndex);
+
+		if (props.selectedRegistrable.kind === FieldKind.FIELDS) {
+			props.destroyPage();
+			setTimeout(() => {
+				props.createPage(props.selectedRegistrable.name, FieldsPreviewPage);
+			}, 500);
+		}
 	}, [props.selectedRegistrable]);
 
 	const panels = props.fields
@@ -114,8 +122,7 @@ export default function PanelsPage(props: Props) {
 							/** "name" is the name of property in pass.json */
 							value={props.data?.[name]}
 							onValueChange={props.onValueChange}
-							onSelect={(name: string) => createPage(name)}
-							requestPageCreation={() => createPage("Capocchie")}
+							onSelect={(name: string) => props.createPage(name, FieldsPreviewPage)}
 						/>
 					);
 				}
@@ -149,3 +156,5 @@ export default function PanelsPage(props: Props) {
 		</PageContainer>
 	);
 }
+
+export default navigable(PanelsPage);

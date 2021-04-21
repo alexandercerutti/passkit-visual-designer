@@ -1,49 +1,78 @@
 import * as React from "react";
 import "./style.less";
-import { Constants } from "@pkvd/pass";
+import { Constants, PassMixedProps } from "@pkvd/pass";
+import * as Store from "@pkvd/store";
 import PageHeader from "../components/Header";
-import { PageProps } from "../usePageFactory";
 import FieldPreview from "../components/FieldPreview";
 import FieldPropertiesEditList from "./FieldPropertiesEditList";
 import { PageContainer } from "../../PageContainer";
+import { PageProps } from "../Navigable.hoc";
+import { connect } from "react-redux";
 
 type PassField = Constants.PassField;
 
 interface Props extends PageProps {
-	data: PassField;
+	selectedField: PassField[];
 	fieldUUID: string;
-	onChange(props: PassFieldKeys): void;
+	changePassPropValue: typeof Store.Pass.setProp;
 }
 
-export default function FieldsPropertiesEditPage(props: Props) {
-	const [data, setData] = React.useState(props.data);
+class FieldsPropertiesEditPage extends React.Component<Props> {
+	private dataIndex: number;
 
-	React.useEffect(() => {
-		if (data !== props.data) {
-			props.onChange(data);
-		}
-	}, [data]);
+	constructor(props: Props) {
+		super(props);
 
-	return (
-		<PageContainer>
-			<div id="fields-properties-edit-page">
-				<PageHeader />
-				<FieldPreview
-					keyEditable
-					fieldUUID={props.fieldUUID}
-					onFieldKeyChange={(fieldUUID: string, key: string) => setData({ ...data, key })}
-					previewData={data}
-				/>
-				<FieldPropertiesEditList
-					data={data}
-					onValueChange={(prop, value) => {
-						setData({
-							...data,
-							[prop]: value,
-						});
-					}}
-				/>
-			</div>
-		</PageContainer>
-	);
+		this.dataIndex = this.props.selectedField.findIndex(
+			(field) => field.fieldUUID === this.props.fieldUUID
+		);
+
+		this.updateValue = this.updateValue.bind(this);
+		this.updatePassProp = this.updatePassProp.bind(this);
+		this.updateKey = this.updateKey.bind(this);
+	}
+
+	updateValue(newData: PassField) {
+		const allFieldsCopy = [...this.props.selectedField];
+		allFieldsCopy.splice(this.dataIndex, 1, newData);
+
+		this.props.changePassPropValue(this.props.name as keyof PassMixedProps, allFieldsCopy);
+	}
+
+	updatePassProp<T>(prop: string, value: T) {
+		this.updateValue({ ...this.props.selectedField[this.dataIndex], [prop]: value });
+	}
+
+	updateKey(value: string) {
+		this.updatePassProp("key", value);
+	}
+
+	render() {
+		const current = this.props.selectedField[this.dataIndex];
+
+		return (
+			<PageContainer>
+				<div id="fields-properties-edit-page">
+					<PageHeader onBack={this.props.onBack} />
+					<FieldPreview keyEditable onFieldKeyChange={this.updateKey} previewData={current} />
+					<FieldPropertiesEditList data={current} onValueChange={this.updatePassProp} />
+				</div>
+			</PageContainer>
+		);
+	}
 }
+
+export default connect(
+	(store: Store.State, ownProps: Props) => {
+		const { pass } = store;
+
+		const selectedField = pass[ownProps.name as keyof Constants.PassFields];
+
+		return {
+			selectedField,
+		};
+	},
+	{
+		changePassPropValue: Store.Pass.setProp,
+	}
+)(FieldsPropertiesEditPage);
