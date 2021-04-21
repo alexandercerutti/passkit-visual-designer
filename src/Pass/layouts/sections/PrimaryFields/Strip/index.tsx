@@ -8,7 +8,7 @@ import { useRegistrations } from "../../useRegistrations";
 import { FieldKind } from "../../../../../model";
 
 interface PFStripProps {
-	fields?: Constants.PassFieldKeys[];
+	fields?: Constants.PassField[];
 	stripSrc?: string;
 }
 

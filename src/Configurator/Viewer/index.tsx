@@ -5,7 +5,7 @@ import { createClassName } from "../../utils";
 import CommittableTextInput from "../CommittableTextInput";
 import type { TranslationsSet } from "../../store";
 
-type PassFieldKeys = Constants.PassFieldKeys;
+type PassField = Constants.PassField;
 
 export interface ViewerProps extends Pick<PassProps, "showBack"> {
 	passProps: PassMixedProps;
@@ -53,7 +53,7 @@ export default function Viewer(props: ViewerProps) {
 }
 
 function localizeFieldContent(
-	field: PassFieldKeys[],
+	field: PassField[],
 	translations: Array<TranslationsSet["translations"][0]>
 ) {
 	if (!field) {

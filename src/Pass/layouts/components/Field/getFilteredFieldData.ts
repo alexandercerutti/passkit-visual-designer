@@ -1,4 +1,4 @@
-import { PassFieldKeys } from "../../../constants";
+import { PassField } from "../../../constants";
 
 /**
  * Tries to get data from the specified source
@@ -11,12 +11,12 @@ import { PassFieldKeys } from "../../../constants";
  */
 
 export function getFilteredFieldData(
-	data: PassFieldKeys[] = [],
+	data: PassField[] = [],
 	minAmount: number = 0,
 	maxAmount: number = 0
 ) {
 	if (!data.length) {
-		return createFilledPassFieldKeysArray(minAmount);
+		return createFilledPassFieldArray(minAmount);
 	}
 
 	/**
@@ -30,12 +30,12 @@ export function getFilteredFieldData(
 		.slice(0, (maxAmount > 0 && maxAmount) || undefined);
 
 	if (!showableFields.length) {
-		return createFilledPassFieldKeysArray(minAmount);
+		return createFilledPassFieldArray(minAmount);
 	}
 
 	return showableFields;
 }
 
-function createFilledPassFieldKeysArray(slots: number) {
-	return new Array<PassFieldKeys>(slots).fill({} as PassFieldKeys);
+function createFilledPassFieldArray(slots: number) {
+	return new Array<PassField>(slots).fill({} as PassField);
 }

@@ -11,14 +11,14 @@ import DrawerJSONEditor from "./DrawerJSONEditor";
 import { PageContainer } from "../../PageContainer";
 
 type PassFields = Constants.PassFields;
-type PassFieldKeys = Constants.PassFieldKeys;
+type PassField = Constants.PassField;
 
 // Webpack declared
 declare const __DEV__: boolean;
 
 interface Props extends PageProps {
-	value?: PassFieldKeys[];
-	onChange(fieldData: PassFieldKeys[]): void;
+	value?: PassField[];
+	onChange(fieldData: PassField[]): void;
 }
 
 interface State {

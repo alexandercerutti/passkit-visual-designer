@@ -5,11 +5,11 @@ import { createClassName } from "../../../../../utils";
 import CommittableTextInput from "../../../../CommittableTextInput";
 
 const { PKTextAlignment } = Constants;
-type PassFieldKeys = Constants.PassFieldKeys;
+type PassField = Constants.PassField;
 
 interface Props {
 	fieldUUID: string;
-	previewData: PassFieldKeys;
+	previewData: PassField;
 	isFieldHidden?: boolean;
 	keyEditable?: boolean;
 	onClick?(): void;

@@ -1,10 +1,10 @@
 import * as React from "react";
 import "./style.less";
 import FieldsRow from "../FieldRow";
-import { PassFieldKeys } from "../../../constants";
+import { PassField } from "../../../constants";
 
 interface Props {
-	data: PassFieldKeys[];
+	data: PassField[];
 }
 
 export default function Backfields(props: Props) {

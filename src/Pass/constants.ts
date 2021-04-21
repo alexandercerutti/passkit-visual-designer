@@ -136,14 +136,14 @@ export namespace PassFields {
 	 * @see https://apple.co/3j0D0i5
 	 */
 
-	export interface AuxiliaryFields extends PassFieldKeys {
+	export interface AuxiliaryFields extends PassField {
 		row?: 0 | 1;
 	}
 
-	export interface BackFields extends PassFieldKeys {}
-	export interface HeaderFields extends PassFieldKeys {}
-	export interface PrimaryFields extends PassFieldKeys {}
-	export interface SecondaryFields extends PassFieldKeys {}
+	export interface BackFields extends PassField {}
+	export interface HeaderFields extends PassField {}
+	export interface PrimaryFields extends PassField {}
+	export interface SecondaryFields extends PassField {}
 }
 
 export interface PassFields {
@@ -157,7 +157,7 @@ export interface PassFields {
 /**
  * @see https://apple.co/2ZqOVy8
  */
-export interface PassFieldKeys {
+export interface PassField {
 	key: string;
 	value: string | number;
 	attributedValue?: string;

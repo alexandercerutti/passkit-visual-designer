@@ -7,10 +7,10 @@ import FieldPreview from "../components/FieldPreview";
 import FieldPropertiesEditList from "./FieldPropertiesEditList";
 import { PageContainer } from "../../PageContainer";
 
-type PassFieldKeys = Constants.PassFieldKeys;
+type PassField = Constants.PassField;
 
 interface Props extends PageProps {
-	data: PassFieldKeys;
+	data: PassField;
 	fieldUUID: string;
 	onChange(props: PassFieldKeys): void;
 }

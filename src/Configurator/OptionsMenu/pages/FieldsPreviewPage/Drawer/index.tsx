@@ -4,10 +4,10 @@ import { Constants } from "@pkvd/pass";
 import { MoreFieldsBelowIcon } from "../icons";
 import DrawerElement from "../DrawerElement";
 
-type PassFieldKeys = Constants.PassFieldKeys;
+type PassField = Constants.PassField;
 
 interface Props {
-	readonly fieldsData: PassFieldKeys[];
+	readonly fieldsData: PassField[];
 	readonly fieldsUUIDs: string[];
 	onFieldDelete(fieldUUID: string): void;
 	onFieldChange(fieldUUID: string, data: PassFieldKeys): void;

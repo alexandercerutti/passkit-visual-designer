@@ -4,12 +4,12 @@ import "./style.less";
 import { Constants } from "@pkvd/pass";
 import { createClassName } from "../../../../../utils";
 
-type PassFieldKeys = Constants.PassFieldKeys;
+type PassField = Constants.PassField;
 type PassFields = Constants.PassFields;
 
 interface Props {
 	fieldName: keyof PassFields;
-	content: PassFieldKeys[];
+	content: PassField[];
 	onChange(jsonString: string): void;
 }
 

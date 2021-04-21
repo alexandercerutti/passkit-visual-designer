@@ -8,7 +8,7 @@ import { useRegistrations } from "../../useRegistrations";
 import { FieldKind } from "../../../../../model";
 
 interface PFThumbnailProps {
-	fields?: Constants.PassFieldKeys[];
+	fields?: Constants.PassField[];
 	thumbnailSrc?: string;
 }
 

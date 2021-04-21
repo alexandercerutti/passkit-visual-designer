@@ -9,10 +9,10 @@ import usePageFactory from "../../../usePageFactory";
 import useContentSavingHandler from "../useContentSavingHandler";
 import { FieldKind } from "../../../../../../model";
 
-type PassFieldKeys = Constants.PassFieldKeys;
+type PassField = Constants.PassField;
 
 interface Props extends SharedPanelProps {
-	value?: PassFieldKeys[];
+	value?: PassField[];
 }
 
 export default function FieldPanel(props: Props) {

@@ -5,10 +5,10 @@ import { useRegistrations } from "../useRegistrations";
 import ImageField from "../../components/ImageField";
 import FieldsRow from "../FieldRow";
 import { FieldKind } from "../../../../model";
-import { PassFieldKeys } from "../../../constants";
+import { PassField } from "../../../constants";
 
 interface HeaderProps {
-	headerFields?: PassFieldKeys[];
+	headerFields?: PassField[];
 	logoText?: string;
 	logo?: string;
 }

@@ -5,14 +5,14 @@ import { createClassName } from "../../../../utils";
 import useFallback from "../useFallback";
 import useClickEvent from "../useClickEvent";
 import { StylingProps } from "../../../../model";
-import { PassFieldKeys } from "../../../constants";
+import { PassField } from "../../../constants";
 
 export { default as FieldLabel } from "./FieldLabel";
 export { default as FieldValue } from "./FieldValue";
 
 type Props = StylingProps &
 	Partial<SelectableComponent> & {
-		fieldData: PassFieldKeys;
+		fieldData: PassField;
 	};
 
 export function Field(props: React.PropsWithChildren<Props>) {

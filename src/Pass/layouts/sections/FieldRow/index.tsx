@@ -3,14 +3,14 @@ import "./style.less";
 import { Field, FieldLabel, FieldValue } from "../../components/Field";
 import { useRegistrations } from "../useRegistrations";
 import { FieldKind } from "../../../../model";
-import { PassFieldKeys } from "../../../constants";
+import { PassField } from "../../../constants";
 import { createClassName } from "../../../../utils";
 import { getFilteredFieldData } from "../../components/Field/getFilteredFieldData";
 
 interface RowProps {
 	id: string;
 	maximumElementsAmount: number;
-	elements: PassFieldKeys[];
+	elements: PassField[];
 	className?: string;
 }
 

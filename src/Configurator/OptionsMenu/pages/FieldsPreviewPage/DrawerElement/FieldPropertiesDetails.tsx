@@ -1,10 +1,10 @@
 import { Constants } from "@pkvd/pass";
 
 const { PKTextAlignment, PKDateStyle, PKDataDetectorType } = Constants;
-type PassFieldKeys = Constants.PassFieldKeys;
+type PassField = Constants.PassField;
 
 type FieldPropertyDetail = {
-	name: keyof PassFieldKeys;
+	name: keyof PassField;
 	type:
 		| typeof String
 		| typeof Boolean

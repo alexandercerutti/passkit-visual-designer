@@ -9,7 +9,7 @@ import { useRegistrations } from "../../useRegistrations";
 import { FieldKind } from "../../../../../model";
 
 interface PFTravelProps {
-	fields?: Constants.PassFieldKeys[];
+	fields?: Constants.PassField[];
 	transitType: PKTransitType;
 }
 

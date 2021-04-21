@@ -7,14 +7,14 @@ import FieldsPropertiesEditPage from "../../FieldsPropertiesEditPage";
 import usePageFactory from "../../usePageFactory";
 import PageNavigationContext from "../../PageNavigationContext";
 
-type PassFieldKeys = Constants.PassFieldKeys;
+type PassField = Constants.PassField;
 
 interface DrawerElementProps {
 	fieldUUID: string;
 	onFieldDelete(key: string): void;
 	onFieldDataChange(fieldUUID: string, data: PassFieldKeys): void;
 	onFieldOrderChange(fieldUUID: string, of: number): void;
-	elementData: PassFieldKeys;
+	elementData: PassField;
 	isUpperBoundary: boolean;
 	isLowerBoundary: boolean;
 }

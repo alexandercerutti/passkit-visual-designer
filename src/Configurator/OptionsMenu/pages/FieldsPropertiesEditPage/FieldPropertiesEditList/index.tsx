@@ -8,10 +8,10 @@ import FieldEnumPropertyPanel from "./FieldPropertyPanels/Enum";
 
 const { PKTextAlignment, PKDateStyle, PKDataDetectorType } = Constants;
 
-type PassFieldKeys = Constants.PassFieldKeys;
+type PassField = Constants.PassField;
 
 interface FieldPropertiesEditListProps {
-	data: PassFieldKeys;
+	data: PassField;
 	onValueChange<T>(prop: string, value: T): void;
 }
 

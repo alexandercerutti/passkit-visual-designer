@@ -1,4 +1,4 @@
-import { PKTextAlignment, PassFieldKeys } from "../../../constants";
+import { PKTextAlignment, PassField } from "../../../constants";
 import { StylingProps } from "../../../../model";
 
 export function getCSSFromFieldProps(
@@ -45,7 +45,7 @@ export const enum FieldTypes {
 }
 
 export type FieldProperties<T extends FieldTypes = FieldTypes.BOTH> = Omit<
-	PassFieldKeys,
+	PassField,
 	"value" | "label"
 > &
 	StylingProps &
