@@ -17,6 +17,9 @@
 		"paths": {
 			"@pkvd/pass": [
 				"src/Pass"
+			],
+			"@pkvd/store": [
+				"src/store"
 			]
 		}
 	}

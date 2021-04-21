@@ -98,7 +98,8 @@ module.exports = {
 	resolve: {
 		extensions: [".js", ".jsx", ".ts", ".tsx"],
 		alias: {
-			"@pkvd/pass": path.resolve(__dirname, "./src/Pass/")
+			"@pkvd/pass": path.resolve(__dirname, "./src/Pass/"),
+			"@pkvd/store": path.resolve(__dirname, "./src/store/")
 		}
 	},
 	devServer: {
