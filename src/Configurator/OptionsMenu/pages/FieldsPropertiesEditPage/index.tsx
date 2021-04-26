@@ -6,7 +6,7 @@ import PageHeader from "../components/Header";
 import FieldPreview from "../components/FieldPreview";
 import FieldPropertiesEditList from "./FieldPropertiesEditList";
 import { PageContainer } from "../../PageContainer";
-import { PageProps } from "../Navigable.hoc";
+import { PageProps } from "../../navigation.utils";
 import { connect } from "react-redux";
 
 type PassField = Constants.PassField;

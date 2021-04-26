@@ -7,7 +7,7 @@ import RegistrationIndex from "../../../RegistrationIndex";
 import { PageContainer } from "../../PageContainer";
 import { createClassName } from "../../../../utils";
 import { ShareIcon } from "./icons";
-import { PageProps, usePageRelation } from "../Navigable.hoc";
+import { PageProps, usePageRelation } from "../../navigation.utils";
 import { FieldKind } from "../../../../model";
 import FieldsPreviewPage from "../FieldsPreviewPage";
 

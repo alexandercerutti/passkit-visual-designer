@@ -4,7 +4,7 @@ import { PassMediaProps, PassMixedProps } from "@pkvd/pass";
 import PanelsPage from "./pages/PanelsPage";
 import { FieldDetails } from "./pages/PanelsPage/Panel";
 import type RegistrationIndex from "../RegistrationIndex";
-import { usePageRelation, usePagesAmount } from "./pages/Navigable.hoc";
+import { usePageRelation, usePagesAmount } from "./navigation.utils";
 
 interface Props {
 	selectedRegistrable?: FieldDetails;

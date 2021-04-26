@@ -6,12 +6,12 @@ import { FieldsAddIcon } from "./icons";
 import Drawer from "./Drawer";
 import DrawerPlaceholder from "./DrawerPlaceholder";
 import PageHeader from "../components/Header";
-import navigable, { NavigableProps, PageProps } from "../Navigable.hoc";
 import DrawerJSONEditor from "./DrawerJSONEditor";
 import { PageContainer } from "../../PageContainer";
 import { connect } from "react-redux";
 import * as Store from "@pkvd/store";
 import FieldsPropertiesEditPage from "../FieldsPropertiesEditPage";
+import { navigable, NavigableProps, PageProps } from "../../navigation.utils";
 
 type PassFields = Constants.PassFields;
 type PassField = Constants.PassField;
