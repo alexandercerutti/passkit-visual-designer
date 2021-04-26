@@ -12,9 +12,9 @@ import { connect } from "react-redux";
 type PassField = Constants.PassField;
 
 interface Props extends PageProps {
-	selectedField: PassField[];
+	selectedField?: PassField[];
 	fieldUUID: string;
-	changePassPropValue: typeof Store.Pass.setProp;
+	changePassPropValue?: typeof Store.Pass.setProp;
 }
 
 class FieldsPropertiesEditPage extends React.Component<Props> {

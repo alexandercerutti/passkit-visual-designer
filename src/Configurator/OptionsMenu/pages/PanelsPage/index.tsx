@@ -7,7 +7,7 @@ import RegistrationIndex from "../../../RegistrationIndex";
 import { PageContainer } from "../../PageContainer";
 import { createClassName } from "../../../../utils";
 import { ShareIcon } from "./icons";
-import navigable, { NextPageHandlers } from "../Navigable.hoc";
+import { PageProps, usePageRelation } from "../Navigable.hoc";
 import { FieldKind } from "../../../../model";
 import FieldsPreviewPage from "../FieldsPreviewPage";
 
@@ -20,7 +20,7 @@ export enum DataGroup {
 
 const MenuVoices = [DataGroup.METADATA, DataGroup.IMAGES, DataGroup.COLORS, DataGroup.DATA];
 
-interface Props extends NextPageHandlers {
+interface Props extends Partial<PageProps> {
 	selectedRegistrable: FieldDetails;
 	fields: RegistrationIndex;
 	data: PassMixedProps;
@@ -29,7 +29,8 @@ interface Props extends NextPageHandlers {
 	requestExport?(): void;
 }
 
-function PanelsPage(props: Props) {
+export default function PanelsPage(props: Props) {
+	const [pageStatus, openPage, closePage, contexualProps] = usePageRelation<Partial<PageProps>>();
 	const [selectedTabIndex, setSelectedTabIndex] = React.useState(0);
 	const listRef = React.useRef<HTMLDivElement>(null);
 
@@ -53,6 +54,8 @@ function PanelsPage(props: Props) {
 	}, []);
 
 	React.useEffect(() => {
+		closePage();
+
 		if (!props.selectedRegistrable) {
 			return;
 		}
@@ -62,9 +65,8 @@ function PanelsPage(props: Props) {
 		setSelectedTabIndex(dgIndex);
 
 		if (props.selectedRegistrable.kind === FieldKind.FIELDS) {
-			props.destroyPage();
 			setTimeout(() => {
-				props.createPage(props.selectedRegistrable.name, FieldsPreviewPage);
+				openPage({ name: props.selectedRegistrable.name });
 			}, 500);
 		}
 	}, [props.selectedRegistrable]);
@@ -122,7 +124,7 @@ function PanelsPage(props: Props) {
 							/** "name" is the name of property in pass.json */
 							value={props.data?.[name]}
 							onValueChange={props.onValueChange}
-							onSelect={(name: string) => props.createPage(name, FieldsPreviewPage)}
+							onSelect={(name: string) => openPage({ name })}
 						/>
 					);
 				}
@@ -138,23 +140,24 @@ function PanelsPage(props: Props) {
 	});
 
 	return (
-		<PageContainer>
-			<TabsList
-				menuVoices={MenuVoices}
-				selectedIndex={selectedTabIndex}
-				onSelect={setSelectedTabIndex}
-			/>
-			<div className="list-element">
-				<div className="panels-list" onWheel={onWheelEventHandler} ref={listRef}>
-					{panels}
+		<>
+			<PageContainer>
+				<TabsList
+					menuVoices={MenuVoices}
+					selectedIndex={selectedTabIndex}
+					onSelect={setSelectedTabIndex}
+				/>
+				<div className="list-element">
+					<div className="panels-list" onWheel={onWheelEventHandler} ref={listRef}>
+						{panels}
+					</div>
 				</div>
-			</div>
-			<div className={exportButtonClassName} onClick={() => props.requestExport?.()}>
-				<h3>Export</h3>
-				<ShareIcon className="icon" width="25px" height="25px" />
-			</div>
-		</PageContainer>
+				<div className={exportButtonClassName} onClick={() => props.requestExport?.()}>
+					<h3>Export</h3>
+					<ShareIcon className="icon" width="25px" height="25px" />
+				</div>
+			</PageContainer>
+			{(pageStatus && <FieldsPreviewPage onBack={closePage} name={contexualProps.name} />) || null}
+		</>
 	);
 }
-
-export default navigable(PanelsPage);

@@ -6,7 +6,7 @@ import { FieldsAddIcon } from "./icons";
 import Drawer from "./Drawer";
 import DrawerPlaceholder from "./DrawerPlaceholder";
 import PageHeader from "../components/Header";
-import navigable, { NextPageHandlers, PageProps } from "../Navigable.hoc";
+import navigable, { NavigableProps, PageProps } from "../Navigable.hoc";
 import DrawerJSONEditor from "./DrawerJSONEditor";
 import { PageContainer } from "../../PageContainer";
 import { connect } from "react-redux";
@@ -16,12 +16,13 @@ import FieldsPropertiesEditPage from "../FieldsPropertiesEditPage";
 type PassFields = Constants.PassFields;
 type PassField = Constants.PassField;
 
-interface Props extends PageProps, NextPageHandlers {
-	value: PassField[];
-	changePassPropValue: typeof Store.Pass.setProp;
+interface Props extends PageProps, Partial<NavigableProps> {
+	value?: PassField[];
+	changePassPropValue?: typeof Store.Pass.setProp;
 }
 
 interface State {
+	currentEditingFieldUUID: string;
 	isJSONMode?: boolean;
 }
 
@@ -34,6 +35,7 @@ class FieldsPreviewPage extends React.Component<Props, State> {
 		super(props);
 
 		this.state = {
+			currentEditingFieldUUID: null,
 			isJSONMode: false,
 		};
 
@@ -43,6 +45,7 @@ class FieldsPreviewPage extends React.Component<Props, State> {
 		this.onFieldsChangeFromJSON = this.onFieldsChangeFromJSON.bind(this);
 		this.toggleJSONMode = this.toggleJSONMode.bind(this);
 		this.openDetailsPage = this.openDetailsPage.bind(this);
+		this.closeDetailsPage = this.closeDetailsPage.bind(this);
 	}
 
 	onFieldDeleteHandler(fieldUUID: string) {
@@ -84,9 +87,18 @@ class FieldsPreviewPage extends React.Component<Props, State> {
 	}
 
 	openDetailsPage(fieldUUID: string) {
-		this.props.createPage(this.props.name, FieldsPropertiesEditPage, () => ({
-			fieldUUID,
-		}));
+		this.props.openPage(this.props.pagesStatuses.length - 1);
+		this.setState({
+			currentEditingFieldUUID: fieldUUID,
+		});
+	}
+
+	closeDetailsPage() {
+		this.setState({
+			currentEditingFieldUUID: null,
+		});
+
+		this.props.closePage(0);
 	}
 
 	toggleJSONMode() {
@@ -96,7 +108,7 @@ class FieldsPreviewPage extends React.Component<Props, State> {
 	}
 
 	render() {
-		const { isJSONMode } = this.state;
+		const { isJSONMode, currentEditingFieldUUID } = this.state;
 
 		let contentElement: React.ReactElement<
 			typeof DrawerJSONEditor | typeof Drawer | typeof DrawerPlaceholder
@@ -124,25 +136,35 @@ class FieldsPreviewPage extends React.Component<Props, State> {
 		}
 
 		return (
-			<PageContainer>
-				<div className="fields-preview-page">
-					<PageHeader name={this.pageName} onBack={this.props.onBack}>
-						<FieldsAddIcon
-							className="add"
-							onClick={() => !this.state.isJSONMode && this.onFieldAddHandler()}
-						/>
-					</PageHeader>
-					{contentElement}
-					<footer>
-						<button
-							className={(isJSONMode && "json-mode-active") || ""}
-							onClick={this.toggleJSONMode}
-						>
-							JSON
-						</button>
-					</footer>
-				</div>
-			</PageContainer>
+			<>
+				<PageContainer>
+					<div className="fields-preview-page">
+						<PageHeader name={this.pageName} onBack={this.props.onBack}>
+							<FieldsAddIcon
+								className="add"
+								onClick={() => !isJSONMode && this.onFieldAddHandler()}
+							/>
+						</PageHeader>
+						{contentElement}
+						<footer>
+							<button
+								className={(isJSONMode && "json-mode-active") || ""}
+								onClick={this.toggleJSONMode}
+							>
+								JSON
+							</button>
+						</footer>
+					</div>
+				</PageContainer>
+				{(this.props.pagesStatuses[0] && (
+					<FieldsPropertiesEditPage
+						fieldUUID={currentEditingFieldUUID}
+						name={this.props.name}
+						onBack={this.closeDetailsPage}
+					/>
+				)) ||
+					null}
+			</>
 		);
 	}
 }
@@ -168,5 +190,6 @@ export default navigable(
 		{
 			changePassPropValue: Store.Pass.setProp,
 		}
-	)(FieldsPreviewPage)
+	)(FieldsPreviewPage),
+	FieldsPropertiesEditPage
 );
