@@ -65,11 +65,11 @@ function createPassJSON(passProps: PassMixedProps): [string, string] {
 		...topLevelProps,
 		formatVersion: 1,
 		[kind]: {
-			headerFields,
-			auxiliaryFields,
-			primaryFields,
-			secondaryFields,
-			backFields,
+			headerFields: headerFields?.map(({ fieldUUID, ...field }) => field),
+			auxiliaryFields: auxiliaryFields?.map(({ fieldUUID, ...field }) => field),
+			primaryFields: primaryFields?.map(({ fieldUUID, ...field }) => field),
+			secondaryFields: secondaryFields?.map(({ fieldUUID, ...field }) => field),
+			backFields: backFields?.map(({ fieldUUID, ...field }) => field),
 			transitType,
 		},
 	};
