@@ -93,3 +93,7 @@ export function removePageChain(uuid: string) {
 	lastElement.next = null;
 	return;
 }
+
+export function reset() {
+	pages = null;
+}
