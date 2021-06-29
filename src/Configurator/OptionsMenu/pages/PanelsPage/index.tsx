@@ -157,7 +157,7 @@ export default function PanelsPage(props: Props) {
 					<ShareIcon className="icon" width="25px" height="25px" />
 				</div>
 			</PageContainer>
-			{(pageStatus && <FieldsPreviewPage onBack={closePage} name={contexualProps.name} />) || null}
+			{(pageStatus && <FieldsPreviewPage onBack={closePage} name={contexualProps?.name} />) || null}
 		</>
 	);
 }

@@ -27,9 +27,8 @@ interface State {
 }
 
 class FieldsPreviewPage extends React.Component<Props, State> {
-	private readonly pageName = `${this.props.name.slice(0, 1).toUpperCase()}${this.props.name.slice(
-		1
-	)}`;
+	private readonly pageName =
+		this.props.name && `${this.props.name.slice(0, 1).toUpperCase()}${this.props.name.slice(1)}`;
 
 	constructor(props: Props) {
 		super(props);
