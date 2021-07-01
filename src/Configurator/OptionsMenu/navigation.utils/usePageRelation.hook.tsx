@@ -8,15 +8,15 @@ export default function usePageRelation<T extends Object>(): [boolean, Function,
 	const contextualProps = React.useRef<T>();
 
 	const openPage = React.useCallback((pageProps: T) => {
-		setPageOpenness(true);
 		contextualProps.current = pageProps;
+		setPageOpenness(true);
 		addPage(pageID.current);
 		sendUpdates();
 	}, []);
 
 	const closePage = React.useCallback(() => {
-		setPageOpenness(false);
 		contextualProps.current = undefined;
+		setPageOpenness(false);
 		removePageChain(pageID.current);
 		sendUpdates();
 	}, []);
