@@ -1,0 +1,34 @@
+import { PKPass } from "passkit-generator";
+
+try {
+	const pass = await PKPass.from({
+		model: "path/to/exported/model/{{#if store.projectOptions.title}}{{ store.projectOptions.title }}{{else}}Untitled Project{{/if}}.pkpass",
+		certificates: {
+			wwdr: "{wwdr certificate content}",
+			signerCert: "{signerCert certificate content}",
+			signerKey: "{signerKey certificate content}",
+			signerKeyPassphrase: "123456",
+		}
+	});
+
+	{{#each store.translations}}
+	{{#unless (isDefaultLanguage @key)}}
+	pass.localize("{{@key}}"{{#if (hasContent this.translations) }}, {
+		/**
+		 * These translations will add-up to the ones inside {{@key}}.lproj/pass.strings.
+		 * These are actually here just as example, but they are the same inside pass.strings
+		 */
+		{{#each this.translations}}
+		{{! placeholder : value}}
+		{{this.[0]}}: "{{this.[1]}}",
+		{{/each}}
+	}{{~/if}});
+	{{/unless}}
+	{{/each}}
+
+	const stream: Stream = pass.getAsStream();
+
+	doSomethingWithTheStream(stream);
+} catch (err) {
+	doSomethingWithTheError(err);
+}

@@ -1,7 +1,12 @@
 [
 	{
-		"showName": "Passkit-generator (v2)",
+		"showName": "Passkit-generator (v2.0.8)",
 		"lang": "javascript",
-		"templateName": "passkitGenerator"
+		"templateName": "passkitGenerator2"
+	},
+	{
+		"showName": "Passkit-generator (v3.0.0)",
+		"lang": "javascript",
+		"templateName": "passkitGenerator3"
 	}
 ]

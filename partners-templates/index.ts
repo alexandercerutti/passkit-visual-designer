@@ -14,8 +14,11 @@
  */
 
 // @ts-ignore - handled by webpack
-import passkitGenerator from "./passkit-generator.hbs";
+import passkitGenerator2 from "./passkit-generator2.hbs";
+// @ts-ignore - handled by webpack
+import passkitGenerator3 from "./passkit-generator3.hbs";
 
 export {
-	passkitGenerator
+	passkitGenerator2,
+	passkitGenerator3
 };
