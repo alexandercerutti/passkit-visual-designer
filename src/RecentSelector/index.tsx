@@ -29,14 +29,12 @@ interface Props {
 interface State {
 	previewsURLList: { [projectID: string]: string };
 	editMode: boolean;
-	refreshing: boolean;
 	isProcessingZipFile: boolean;
 	showError: boolean;
 }
 
 export default class RecentSelector extends React.Component<Props, State> {
 	private refreshInterval: number;
-	private delayLoadingAnimationTimeout: number;
 	private errorMessage: string = "";
 
 	constructor(props: Props) {
@@ -45,14 +43,12 @@ export default class RecentSelector extends React.Component<Props, State> {
 		this.state = {
 			previewsURLList: {},
 			editMode: false,
-			refreshing: false,
 			showError: false,
 			isProcessingZipFile: false,
 		};
 
 		this.switchEditMode = this.switchEditMode.bind(this);
 		this.selectRecent = this.selectRecent.bind(this);
-		this.toggleRefreshing = this.toggleRefreshing.bind(this);
 		this.processUploadedFile = this.processUploadedFile.bind(this);
 		this.toggleErrorOverlay = this.toggleErrorOverlay.bind(this);
 	}
@@ -60,18 +56,9 @@ export default class RecentSelector extends React.Component<Props, State> {
 	async componentDidMount() {
 		this.refreshInterval = window.setInterval(async () => {
 			try {
-				this.toggleRefreshing();
-
-				await Promise.all([
-					this.props.requestForageDataRequest(),
-					new Promise(
-						(resolve) => (this.delayLoadingAnimationTimeout = window.setTimeout(resolve, 2000))
-					),
-				]);
-			} finally {
-				this.toggleRefreshing();
-			}
-		}, 7000);
+				await this.props.requestForageDataRequest();
+			} catch (err) {}
+		}, 1500);
 	}
 
 	static getDerivedStateFromProps(props: Props, state: State) {
@@ -112,14 +99,7 @@ export default class RecentSelector extends React.Component<Props, State> {
 
 	componentWillUnmount() {
 		clearInterval(this.refreshInterval);
-		clearTimeout(this.delayLoadingAnimationTimeout);
 		Object.values(this.state.previewsURLList).forEach(URL.revokeObjectURL);
-	}
-
-	toggleRefreshing() {
-		this.setState((previous) => ({
-			refreshing: !previous.refreshing,
-		}));
 	}
 
 	switchEditMode() {
@@ -218,14 +198,8 @@ export default class RecentSelector extends React.Component<Props, State> {
 							throw `Bad JSON. (${err})`;
 						}
 
-						const {
-							boardingPass,
-							coupon,
-							storeCard,
-							eventTicket,
-							generic,
-							...otherPassProps
-						} = passInfo;
+						const { boardingPass, coupon, storeCard, eventTicket, generic, ...otherPassProps } =
+							passInfo;
 						const { transitType } = boardingPass || {};
 
 						let kind: PassKind = null;
@@ -415,7 +389,7 @@ export default class RecentSelector extends React.Component<Props, State> {
 						</section>
 						<section>
 							<div className="recents-box">
-								<header className={this.state.refreshing ? "refreshing" : null}>
+								<header>
 									<h2>Recent Projects</h2>
 									<button
 										disabled={!savedProjects.length}
