@@ -366,7 +366,7 @@ function App(props: Props): JSX.Element {
 					<Route
 						path="/select"
 						element={
-							<PassSelector pushHistory={changePathWithLoading} />
+							<PassSelector />
 							/* 		{() => {
 							/**
 							 * This condition is for startup. The navigation from
