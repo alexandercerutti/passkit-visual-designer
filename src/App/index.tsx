@@ -1,11 +1,11 @@
 import * as React from "react";
 import {
 	BrowserRouter as Router,
-	Switch,
+	Routes,
 	Route,
-	Redirect,
-	useLocation,
-	useHistory,
+	/* 	Redirect,
+	 */ useLocation,
+	useNavigate,
 } from "react-router-dom";
 import thunk from "redux-thunk";
 import localForage from "localforage";
@@ -89,7 +89,7 @@ interface Props {
 function App(props: Props): JSX.Element {
 	const [forageData, setForageData] = React.useState<Store.Forage.ForageStructure>();
 
-	const history = useHistory();
+	const navigate = useNavigate();
 	const location = useLocation();
 
 	const wrapLoading = React.useCallback(
@@ -114,7 +114,7 @@ function App(props: Props): JSX.Element {
 		wrapLoading(
 			() => {
 				preloadCallback?.();
-				history.push(path);
+				navigate(path);
 			},
 			null,
 			LOADING_TIME_MS
@@ -288,13 +288,13 @@ function App(props: Props): JSX.Element {
 					});
 
 					initializeStore(snapshot);
-					history.push("/creator");
+					navigate("/creator");
 				},
 				LOADING_TIME_MS,
 				LOADING_TIME_MS
 			);
 		},
-		[initializeStore, history]
+		[initializeStore]
 	);
 
 	React.useEffect(() => {
@@ -309,11 +309,11 @@ function App(props: Props): JSX.Element {
 		wrapLoading(refreshForageCallback, null, LOADING_TIME_MS);
 	}, []);
 
-	React.useEffect(() => {
-		const unlisten = history.listen(async (nextLocation, action) => {
+	/* 	React.useEffect(() => {
+		const unlisten = navigate.listen(async (nextLocation, action) => {
 			if (action === "POP") {
 				if (location.pathname === "/creator" && nextLocation.pathname === "/select") {
-					history.replace("/");
+					navigate("/", { replace: true });
 				}
 
 				wrapLoading(
@@ -338,9 +338,9 @@ function App(props: Props): JSX.Element {
 			 * anyway several listeners and we still receive it.
 			 */
 
-			setTimeout(unlisten, 0);
+	/*			setTimeout(unlisten, 0);
 		};
-	}, [location]);
+	}, [location]); */
 
 	return (
 		<SwitchTransition>
@@ -350,36 +350,42 @@ function App(props: Props): JSX.Element {
 				timeout={LOADING_TIME_MS}
 				mountOnEnter
 			>
-				<Switch location={location}>
-					<Route path="/" exact>
-						<RecentSelector
-							recentProjects={forageData?.projects ?? {}}
-							requestForageDataRequest={refreshForageCallback}
-							initStore={initializeStoreByProjectID}
-							pushHistory={changePathWithLoading}
-							createProjectFromArchive={createProjectFromArchive}
-						/>
-					</Route>
-					<Route path="/select">
-						{() => {
+				<Routes location={location}>
+					<Route
+						path="*"
+						element={
+							<RecentSelector
+								recentProjects={forageData?.projects ?? {}}
+								requestForageDataRequest={refreshForageCallback}
+								initStore={initializeStoreByProjectID}
+								pushHistory={changePathWithLoading}
+								createProjectFromArchive={createProjectFromArchive}
+							/>
+						}
+					/>
+					<Route
+						path="/select"
+						element={
+							<PassSelector pushHistory={changePathWithLoading} />
+							/* 		{() => {
 							/**
 							 * This condition is for startup. The navigation from
 							 * /creation will be handled by history.listen above
 							 */
-							return !__DEV__ && history.action === "POP" ? (
+							/*	return !__DEV__ && history.action === "POP" ? (
 								<Redirect to="/" />
 							) : (
 								<PassSelector pushHistory={changePathWithLoading} />
 							);
-						}}
-					</Route>
-					<Route path="/creator">
-						{/** Let's play monopoly. You landed to /creator. Go to home without passing Go! */}
-						{() =>
-							!(__DEV__ || store.getState()?.pass?.kind) ? <Redirect to="/" /> : <Configurator />
+						}()} */
 						}
-					</Route>
-				</Switch>
+					/>
+					<Route path="/creator" element={<Configurator />} />
+					{/** Let's play monopoly. You landed to /creator. Go to home without passing Go! */}
+					{/*{() =>
+						!(__DEV__ || store.getState()?.pass?.kind) ? <Redirect to="/" /> : <Configurator />
+					} */}
+				</Routes>
 			</CSSTransition>
 		</SwitchTransition>
 	);
