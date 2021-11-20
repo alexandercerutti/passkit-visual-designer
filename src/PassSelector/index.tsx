@@ -5,8 +5,7 @@ import "./style.less";
 import { PassMixedProps } from "@pkvd/pass";
 import { PassKind } from "../model";
 import PassList from "./PassList";
-import SelectablePass from "./SelectablePass";
-import { getAlternativesByKind } from "./SelectablePass/useAlternativesRegistration";
+import SelectablePass, { getAlternativesByKind } from "./SelectablePass";
 import * as Store from "@pkvd/store";
 
 // Webpack declared

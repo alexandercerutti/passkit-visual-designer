@@ -3,6 +3,11 @@ import Pass, { Layouts, PassMixedProps } from "@pkvd/pass";
 import { PassKind } from "../../model";
 import * as SelectableLayouts from "./layouts";
 
+export {
+	default as useAlternativesRegistration,
+	getAlternativesByKind,
+} from "./useAlternativesRegistration";
+
 /**
  * This module defines an alternative sets of layouts, which
  * are the same layouts but with additional features just for
