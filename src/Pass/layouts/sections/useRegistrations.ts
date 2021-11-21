@@ -16,8 +16,6 @@ export interface SelectableComponent<P = any> {
 
 type RegistrationDescriptor = [kind: FieldKind, fieldName: string];
 
-const noop = () => {};
-
 /**
  * Registration principle regards having a way to click on
  * an element and trigger something in a parent, which uses
@@ -36,11 +34,7 @@ export function useRegistrations(
 ): FieldSelectHandler[] {
 	const registerField = React.useContext(InteractionContext);
 
-	return React.useMemo(() => {
-		if (!registerField) {
-			return components.map(() => noop);
-		}
-
-		return components.map(([kind, id]) => registerField(kind, id));
-	}, [registerField]);
+	return React.useMemo(() =>
+		components.map(([kind, id]) => registerField?.(kind, id))
+	, [registerField]);
 }
