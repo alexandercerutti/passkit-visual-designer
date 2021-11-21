@@ -3,9 +3,10 @@ import {
 	BrowserRouter as Router,
 	Routes,
 	Route,
-	/* 	Redirect,
-	 */ useLocation,
+	useLocation,
 	useNavigate,
+	useNavigationType,
+	Navigate,
 } from "react-router-dom";
 import thunk from "redux-thunk";
 import localForage from "localforage";
@@ -90,6 +91,7 @@ function App(props: Props): JSX.Element {
 	const [forageData, setForageData] = React.useState<Store.Forage.ForageStructure>();
 
 	const navigate = useNavigate();
+	const navigationType = useNavigationType();
 	const location = useLocation();
 
 	const wrapLoading = React.useCallback(
@@ -366,25 +368,16 @@ function App(props: Props): JSX.Element {
 					<Route
 						path="/select"
 						element={
-							<PassSelector />
-							/* 		{() => {
-							/**
-							 * This condition is for startup. The navigation from
-							 * /creation will be handled by history.listen above
-							 */
-							/*	return !__DEV__ && history.action === "POP" ? (
-								<Redirect to="/" />
-							) : (
-								<PassSelector pushHistory={changePathWithLoading} />
-							);
-						}()} */
+							/** Condition for startup */
+							!__DEV__ && navigationType === "POP" ? <Navigate to="/" /> : <PassSelector />
 						}
 					/>
-					<Route path="/creator" element={<Configurator />} />
-					{/** Let's play monopoly. You landed to /creator. Go to home without passing Go! */}
-					{/*{() =>
-						!(__DEV__ || store.getState()?.pass?.kind) ? <Redirect to="/" /> : <Configurator />
-					} */}
+					<Route
+						path="/creator"
+						element={
+							!(__DEV__ || store.getState()?.pass?.kind) ? <Navigate to="/" /> : <Configurator />
+						}
+					/>
 				</Routes>
 			</CSSTransition>
 		</SwitchTransition>
