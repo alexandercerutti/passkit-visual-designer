@@ -311,39 +311,6 @@ function App(props: Props): JSX.Element {
 		wrapLoading(refreshForageCallback, null, LOADING_TIME_MS);
 	}, []);
 
-	/* 	React.useEffect(() => {
-		const unlisten = navigate.listen(async (nextLocation, action) => {
-			if (action === "POP") {
-				if (location.pathname === "/creator" && nextLocation.pathname === "/select") {
-					navigate("/", { replace: true });
-				}
-
-				wrapLoading(
-					() => {
-						store.dispatch(Store.Forage.Reset());
-					},
-					LOADING_TIME_MS,
-					LOADING_TIME_MS
-				);
-			}
-		});
-
-		return () => {
-			/**
-			 * This is a side effect of using hooks.
-			 * What we need to achieve is to use location in the listener.
-			 * So to avoid retentions and get the latest location from its
-			 * hook we need to refresh the effect.
-			 * When hook is refreshed, listener get removed and we don't
-			 * receive the History POP notification because it is too late.
-			 * Therefore we delay the call to unlisten(), so we don't create
-			 * anyway several listeners and we still receive it.
-			 */
-
-	/*			setTimeout(unlisten, 0);
-		};
-	}, [location]); */
-
 	return (
 		<SwitchTransition>
 			<CSSTransition
