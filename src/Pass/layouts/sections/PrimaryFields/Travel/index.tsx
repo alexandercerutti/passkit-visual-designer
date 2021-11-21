@@ -5,7 +5,7 @@ import { getFilteredFieldData } from "../../../components/Field/getFilteredField
 import Field, { FieldLabel, FieldValue } from "../../../components/Field";
 import { PKTransitType } from "../../../../constants";
 import { PKTransitIcon } from "./icons";
-import { useRegistrations } from "../../useRegistrations";
+import { useFieldRegistration } from "../../useFieldRegistration";
 import { FieldKind } from "../../../../../model";
 
 interface PFTravelProps {
@@ -17,7 +17,7 @@ export default function PrimaryFields(props: PFTravelProps) {
 	const { fields, transitType } = props;
 	const parentId = "primaryFields";
 
-	const [primaryFieldsClickHandler] = useRegistrations([[FieldKind.FIELDS, parentId]]);
+	const primaryFieldsClickHandler = useFieldRegistration(FieldKind.FIELDS, parentId);
 
 	const [from, to] = getFilteredFieldData(fields, 2, 2).map((fieldData, index) => {
 		const id = `${parentId}.${index}`;

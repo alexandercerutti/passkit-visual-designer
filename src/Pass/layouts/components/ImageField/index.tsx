@@ -1,5 +1,5 @@
 import * as React from "react";
-import { SelectableComponent } from "../../sections/useRegistrations";
+import { SelectableComponent } from "../../sections/useFieldRegistration";
 import { createClassName } from "../../../../utils";
 import useFallbackField from "../useFallbackField";
 import useClickEvent from "../useClickEvent";

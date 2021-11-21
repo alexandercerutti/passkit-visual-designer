@@ -1,7 +1,7 @@
 import * as React from "react";
 import { PKDateStyle } from "../../../constants";
 import { getCSSFromFieldProps, FieldProperties, FieldTypes } from "./fieldCommons";
-import { SelectableComponent } from "../../sections/useRegistrations";
+import { SelectableComponent } from "../../sections/useFieldRegistration";
 import format from "date-fns/format";
 
 type ValueProps = Partial<SelectableComponent<never>> & {

@@ -1,6 +1,6 @@
 import * as React from "react";
 import { getCSSFromFieldProps, FieldProperties, FieldTypes } from "./fieldCommons";
-import { SelectableComponent } from "../../sections/useRegistrations";
+import { SelectableComponent } from "../../sections/useFieldRegistration";
 
 type LabelProps = Partial<SelectableComponent<never>> & {
 	fieldData: Partial<FieldProperties<FieldTypes.LABEL>>;

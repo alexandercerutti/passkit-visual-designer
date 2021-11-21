@@ -1,6 +1,6 @@
 import * as React from "react";
 import "./style.less";
-import { useRegistrations } from "../useRegistrations";
+import { useFieldRegistration } from "../useFieldRegistration";
 import { FieldKind } from "../../../../model";
 import ImageField, { ImageFieldProps } from "../../components/ImageField";
 import { AppIconEmpty } from "./icons";
@@ -12,17 +12,11 @@ interface FooterProps extends ImageFieldProps {
 
 export default function Footer(props: React.PropsWithChildren<FooterProps>) {
 	const { children = null } = props;
-	let footerImage: JSX.Element = null;
 
-	const registrationsDescriptors: Parameters<typeof useRegistrations>[0] = [
-		[FieldKind.IMAGE, "icon"],
-	];
-
-	if (props.allowFooterImage) {
-		registrationsDescriptors.push([FieldKind.IMAGE, "footerImage"]);
-	}
-
-	const [iconClickHandler, footerImageClickHandler] = useRegistrations(registrationsDescriptors);
+	const iconClickHandler = useFieldRegistration(FieldKind.IMAGE, "icon");
+	const footerImageClickHandler = props.allowFooterImage
+		? useFieldRegistration(FieldKind.IMAGE, "footerImage")
+		: undefined;
 
 	return (
 		<div className="footer">

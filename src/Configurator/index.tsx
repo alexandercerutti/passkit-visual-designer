@@ -11,7 +11,7 @@ import { FieldKind } from "../model";
 import * as Store from "@pkvd/store";
 import DefaultFields from "./staticFields";
 import { DataGroup } from "./OptionsMenu/pages/PanelsPage";
-import { FieldSelectHandler } from "../Pass/layouts/sections/useRegistrations";
+import { FieldSelectHandler } from "../Pass/layouts/sections/useFieldRegistration";
 import ExportModal from "./ExportModal";
 import { exportPass } from "./exportPass";
 import MediaModal from "./MediaModal";

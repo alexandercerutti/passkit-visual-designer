@@ -1,5 +1,5 @@
 import * as React from "react";
-import { FieldSelectHandler } from "../sections/useRegistrations";
+import { FieldSelectHandler } from "../sections/useFieldRegistration";
 
 export default function useClickEvent(
 	onClick: FieldSelectHandler,

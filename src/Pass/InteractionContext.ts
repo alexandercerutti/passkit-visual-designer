@@ -1,5 +1,5 @@
 import * as React from "react";
-import type { onRegister } from "./layouts/sections/useRegistrations";
+import type { onRegistration } from "./layouts/sections/useFieldRegistration";
 
 /**
  * InteractionContext is a way to directly pass the registration
@@ -10,4 +10,4 @@ import type { onRegister } from "./layouts/sections/useRegistrations";
  * `useRegistrations`.
  */
 
-export default React.createContext<onRegister>(undefined);
+export default React.createContext<onRegistration>(undefined);

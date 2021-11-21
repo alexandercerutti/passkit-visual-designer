@@ -1,7 +1,7 @@
 import * as React from "react";
 import "./style.less";
 import TextField from "../../components/TextField";
-import { useRegistrations } from "../useRegistrations";
+import { useFieldRegistration } from "../useFieldRegistration";
 import ImageField from "../../components/ImageField";
 import FieldsRow from "../FieldRow";
 import { FieldKind } from "../../../../model";
@@ -18,10 +18,8 @@ export function PassHeader(props: HeaderProps) {
 	 * The Field row will register itself
 	 * with the ID we pass to it.
 	 */
-	const [logoClickHandler, logoTextClickHandler] = useRegistrations([
-		[FieldKind.IMAGE, "logo"],
-		[FieldKind.TEXT, "logoText"],
-	]);
+	const logoClickHandler = useFieldRegistration(FieldKind.IMAGE, "logo");
+	const logoTextClickHandler = useFieldRegistration(FieldKind.TEXT, "logoText");
 
 	/**
 	 * This is to make fallback growing and be visible

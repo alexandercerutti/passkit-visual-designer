@@ -1,7 +1,7 @@
 import * as React from "react";
 import "./style.less";
 import Field, { FieldLabel, FieldValue } from "../../components/Field";
-import { useRegistrations } from "../useRegistrations";
+import { useFieldRegistration } from "../useFieldRegistration";
 import { FieldKind } from "../../../../model";
 import { PassField } from "../../../constants";
 import { createClassName } from "../../../../utils";
@@ -23,7 +23,7 @@ interface RowProps {
 export default function FieldsRow(props: RowProps) {
 	const { maximumElementsAmount = 0, id, elements = [], className: externalClassName } = props;
 
-	const [fieldsClickHandler] = useRegistrations([[FieldKind.FIELDS, id]]);
+	const fieldsClickHandler = useFieldRegistration(FieldKind.FIELDS, id);
 
 	/** Forcing one or we'd get too much fields as fallback */
 	const mappedElements = getFilteredFieldData(elements, 1, maximumElementsAmount).map(

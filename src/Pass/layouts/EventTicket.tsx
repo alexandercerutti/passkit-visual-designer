@@ -5,7 +5,7 @@ import { StripPrimaryFields, ThumbnailPrimaryFields } from "./sections/PrimaryFi
 import FieldsRow from "./sections/FieldRow";
 import Footer from "./sections/Footer";
 import Barcodes from "./components/Barcodes";
-import { useRegistrations } from "./sections/useRegistrations";
+import { useFieldRegistration } from "./sections/useFieldRegistration";
 import { FieldKind } from "../../model";
 
 type PrimaryFieldPropsKind = Parameters<
@@ -41,7 +41,7 @@ export default function EventTicket(props: PassMixedProps): JSX.Element {
 			</>
 		);
 	} else if (props.hasOwnProperty("backgroundImage")) {
-		useRegistrations([[FieldKind.IMAGE, "backgroundImage"]]);
+		useFieldRegistration(FieldKind.IMAGE, "backgroundImage");
 
 		fieldsFragment = (
 			<ThumbnailPrimaryFields thumbnailSrc={thumbnailImage} fields={primaryFields}>

@@ -4,7 +4,7 @@ import { Constants } from "@pkvd/pass";
 import { getFilteredFieldData } from "../../../components/Field/getFilteredFieldData";
 import Field, { FieldLabel, FieldValue } from "../../../components/Field";
 import ImageField from "../../../components/ImageField";
-import { useRegistrations } from "../../useRegistrations";
+import { useFieldRegistration } from "../../useFieldRegistration";
 import { FieldKind } from "../../../../../model";
 
 interface PFThumbnailProps {
@@ -16,10 +16,8 @@ export default function ThumbnailPrimaryField(props: React.PropsWithChildren<PFT
 	const { fields, thumbnailSrc, children } = props;
 	const parentId = "primaryFields";
 
-	const [primaryFieldsClickHandler, thumbnailClickHandler] = useRegistrations([
-		[FieldKind.FIELDS, parentId],
-		[FieldKind.IMAGE, "thumbnailImage"],
-	]);
+	const primaryFieldsClickHandler = useFieldRegistration(FieldKind.FIELDS, parentId);
+	const thumbnailClickHandler = useFieldRegistration(FieldKind.FIELDS, "thumbnailImage");
 
 	const data = getFilteredFieldData(fields, 1, 1).map((fieldData, index) => {
 		const key = `${parentId}.${index}`;

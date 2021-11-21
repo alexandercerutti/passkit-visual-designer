@@ -8,7 +8,7 @@ import { FieldKind } from "../../../model";
 export type FieldSelectHandler<P = any> = [P] extends [never]
 	? () => void
 	: (fieldIdentifier: string | null) => void;
-export type onRegister = (kind: FieldKind, id: keyof PassMixedProps | string) => FieldSelectHandler;
+export type onRegistration = (kind: FieldKind, id: keyof PassMixedProps | string) => FieldSelectHandler;
 
 export interface SelectableComponent<P = any> {
 	onClick: FieldSelectHandler<P>;
@@ -25,16 +25,14 @@ type RegistrationDescriptor = [kind: FieldKind, fieldName: string];
  * the registration function, once invoked, returns a
  * click handler.
  *
- * @param components
+ * @param kind field kind
+ * @param id id of the field
  * @returns
  */
 
-export function useRegistrations(
-	components: RegistrationDescriptor[]
-): FieldSelectHandler[] {
+export function useFieldRegistration(...component: RegistrationDescriptor) {
 	const registerField = React.useContext(InteractionContext);
+	const [kind, id] = component;
 
-	return React.useMemo(() =>
-		components.map(([kind, id]) => registerField?.(kind, id))
-	, [registerField]);
+	return React.useMemo(() => registerField?.(kind, id), [registerField]);
 }

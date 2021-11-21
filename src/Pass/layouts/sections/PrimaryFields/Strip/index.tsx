@@ -4,7 +4,7 @@ import { Constants } from "@pkvd/pass";
 import { getFilteredFieldData } from "../../../components/Field/getFilteredFieldData";
 import ImageField from "../../../components/ImageField";
 import Field, { FieldValue, FieldLabel } from "../../../components/Field";
-import { useRegistrations } from "../../useRegistrations";
+import { useFieldRegistration } from "../../useFieldRegistration";
 import { FieldKind } from "../../../../../model";
 
 interface PFStripProps {
@@ -16,10 +16,9 @@ export default function StripPrimaryFields(
 	props: React.PropsWithChildren<PFStripProps>
 ): JSX.Element {
 	const { fields, stripSrc } = props;
-	const [primaryFieldsClickHandler, stripImageClickHandler] = useRegistrations([
-		[FieldKind.FIELDS, "primaryFields"],
-		[FieldKind.IMAGE, "stripImage"],
-	]);
+
+	const primaryFieldsClickHandler = useFieldRegistration(FieldKind.FIELDS, "primaryFields");
+	const stripImageClickHandler = useFieldRegistration(FieldKind.IMAGE, "stripImage");
 
 	const data = getFilteredFieldData(fields, 1, 1).map((data) => {
 		return (
