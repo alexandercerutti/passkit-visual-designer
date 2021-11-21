@@ -13,9 +13,10 @@ export { default as FieldValue } from "./FieldValue";
 type Props = StylingProps &
 	Partial<SelectableComponent> & {
 		fieldData: PassField;
+		ghost?: boolean;
 	};
 
-export function Field(props: React.PropsWithChildren<Props>) {
+export default function Field(props: React.PropsWithChildren<Props>) {
 	/**
 	 * We don't want to pass the click event to children.
 	 * They will still accept it but only if used separately.
@@ -26,6 +27,7 @@ export function Field(props: React.PropsWithChildren<Props>) {
 		fieldData: { key, label, value },
 		style = {},
 		children,
+		ghost,
 	} = props;
 
 	return useClickEvent(
@@ -35,34 +37,15 @@ export function Field(props: React.PropsWithChildren<Props>) {
 				[`field-${key ?? ""}`]: key,
 			});
 
+			if (ghost) {
+				return <>{children}</>;
+			}
+
 			return (
 				<div style={style} className={className}>
 					{children}
 				</div>
 			);
-		}, [label, value, key])
-	);
-}
-
-/**
- * This components is needed to fallback in case of
- * self-handled FieldLabel and FieldValue.
- *
- * Used in Travel Primary Fields to make elements
- * fit in the grid.
- */
-
-export function GhostField(props: React.PropsWithChildren<Props>) {
-	const {
-		onClick,
-		fieldData: { key, label, value },
-		children,
-	} = props;
-
-	return useClickEvent(
-		onClick,
-		useFallbackField(() => {
-			return <>{children}</>;
 		}, [label, value, key])
 	);
 }

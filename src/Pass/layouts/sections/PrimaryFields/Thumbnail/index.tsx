@@ -2,7 +2,7 @@ import * as React from "react";
 import "./style.less";
 import { Constants } from "@pkvd/pass";
 import { getFilteredFieldData } from "../../../components/Field/getFilteredFieldData";
-import { Field, FieldLabel, FieldValue } from "../../../components/Field";
+import Field, { FieldLabel, FieldValue } from "../../../components/Field";
 import ImageField from "../../../components/ImageField";
 import { useRegistrations } from "../../useRegistrations";
 import { FieldKind } from "../../../../../model";

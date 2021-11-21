@@ -3,7 +3,7 @@ import "./style.less";
 import { Constants } from "@pkvd/pass";
 import { getFilteredFieldData } from "../../../components/Field/getFilteredFieldData";
 import ImageField from "../../../components/ImageField";
-import { FieldValue, FieldLabel, GhostField } from "../../../components/Field";
+import Field, { FieldValue, FieldLabel } from "../../../components/Field";
 import { useRegistrations } from "../../useRegistrations";
 import { FieldKind } from "../../../../../model";
 
@@ -23,10 +23,10 @@ export default function StripPrimaryFields(
 
 	const data = getFilteredFieldData(fields, 1, 1).map((data) => {
 		return (
-			<GhostField key="primaryField" onClick={primaryFieldsClickHandler} fieldData={data}>
+			<Field ghost key="primaryField" onClick={primaryFieldsClickHandler} fieldData={data}>
 				<FieldValue fieldData={data} />
 				<FieldLabel fieldData={data} />
-			</GhostField>
+			</Field>
 		);
 	});
 

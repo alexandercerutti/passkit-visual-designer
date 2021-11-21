@@ -2,7 +2,7 @@ import * as React from "react";
 import "./style.less";
 import { Constants } from "@pkvd/pass";
 import { getFilteredFieldData } from "../../../components/Field/getFilteredFieldData";
-import { GhostField, FieldLabel, FieldValue } from "../../../components/Field";
+import Field, { FieldLabel, FieldValue } from "../../../components/Field";
 import { PKTransitType } from "../../../../constants";
 import { PKTransitIcon } from "./icons";
 import { useRegistrations } from "../../useRegistrations";
@@ -23,14 +23,15 @@ export default function PrimaryFields(props: PFTravelProps) {
 		const id = `${parentId}.${index}`;
 
 		return (
-			<GhostField
+			<Field
+				ghost
 				key={id}
 				onClick={() => primaryFieldsClickHandler(fieldData?.key ?? null)}
 				fieldData={fieldData}
 			>
 				<FieldLabel fieldData={fieldData} />
 				<FieldValue fieldData={fieldData} />
-			</GhostField>
+			</Field>
 		);
 	});
 
