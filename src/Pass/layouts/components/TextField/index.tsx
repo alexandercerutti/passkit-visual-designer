@@ -2,7 +2,7 @@ import * as React from "react";
 import "./style.less";
 import { SelectableComponent } from "../../sections/useRegistrations";
 import { createClassName } from "../../../../utils";
-import useFallback from "../useFallback";
+import useFallbackField from "../useFallbackField";
 import useClickEvent from "../useClickEvent";
 
 export interface TextFieldProps extends Partial<SelectableComponent> {
@@ -15,7 +15,7 @@ export default function TextField(props: TextFieldProps) {
 
 	return useClickEvent(
 		onClick,
-		useFallback(() => {
+		useFallbackField(() => {
 			const className = createClassName(["text-field", sourceClassName]);
 
 			return (

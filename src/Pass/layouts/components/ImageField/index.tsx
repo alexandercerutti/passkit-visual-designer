@@ -1,7 +1,7 @@
 import * as React from "react";
 import { SelectableComponent } from "../../sections/useRegistrations";
 import { createClassName } from "../../../../utils";
-import useFallback from "../useFallback";
+import useFallbackField from "../useFallbackField";
 import useClickEvent from "../useClickEvent";
 
 export interface ImageFieldProps extends Partial<SelectableComponent> {
@@ -16,7 +16,7 @@ export default function ImageField(props: ImageFieldProps) {
 
 	return useClickEvent(
 		onClick,
-		useFallback(() => {
+		useFallbackField(() => {
 			const className = createClassName(["image-field", sourceClassName]);
 
 			return (

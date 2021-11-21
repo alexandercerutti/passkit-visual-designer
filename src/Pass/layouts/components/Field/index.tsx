@@ -2,7 +2,7 @@ import * as React from "react";
 import "./style.less";
 import { SelectableComponent } from "../../sections/useRegistrations";
 import { createClassName } from "../../../../utils";
-import useFallback from "../useFallback";
+import useFallbackField from "../useFallbackField";
 import useClickEvent from "../useClickEvent";
 import { StylingProps } from "../../../../model";
 import { PassField } from "../../../constants";
@@ -30,7 +30,7 @@ export function Field(props: React.PropsWithChildren<Props>) {
 
 	return useClickEvent(
 		onClick,
-		useFallback(() => {
+		useFallbackField(() => {
 			const className = createClassName(["field", sourceClassName], {
 				[`field-${key ?? ""}`]: key,
 			});
@@ -61,7 +61,7 @@ export function GhostField(props: React.PropsWithChildren<Props>) {
 
 	return useClickEvent(
 		onClick,
-		useFallback(() => {
+		useFallbackField(() => {
 			return <>{children}</>;
 		}, [label, value, key])
 	);

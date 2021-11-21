@@ -11,7 +11,7 @@ import EmptyField from "./EmptyField";
  * @returns
  */
 
-export default function useFallback<T>(create: () => T, deps: any[]) {
+export default function useFallbackField<T>(create: () => T, deps: any[]) {
 	if (deps.every((dep) => !Boolean(dep))) {
 		return <EmptyField />;
 	}
