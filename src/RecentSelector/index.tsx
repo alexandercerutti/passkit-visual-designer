@@ -274,14 +274,10 @@ export default class RecentSelector extends React.Component<Props, State> {
 				throw new Error("Missing pass.json");
 			}
 
-			this.setState({
-				isProcessingZipFile: false,
-			});
-
 			this.props.openProject(ProjectSource.UPLOAD, parsedPayload);
 		} catch (err) {
 			this.toggleErrorOverlay(`Unable to complete import. ${err.message}`);
-
+		} finally {
 			this.setState({
 				isProcessingZipFile: false,
 			});
