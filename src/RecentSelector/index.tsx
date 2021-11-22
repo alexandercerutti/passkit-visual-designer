@@ -5,7 +5,7 @@ import * as Store from "@pkvd/store";
 import { GithubLogoDarkMode, AddIcon } from "./icons";
 import localForage from "localforage";
 import { createClassName } from "../utils";
-import { StateLookalike } from "../App";
+import { ProjectSource, ProjectSourceData, StateLookalike } from "../App";
 import { PassKind } from "../model";
 import { CSSTransition } from "react-transition-group";
 
@@ -21,9 +21,7 @@ const ZIP_FILE_NAME_EXT_REGEX = /(?<fileName>.+)\.(?<ext>(png|jpg))/;
 interface Props {
 	recentProjects: Store.Forage.ForageStructure["projects"];
 	requestForageDataRequest(): Promise<void>;
-	initStore(projectID: string): Promise<void>;
-	pushHistory(path: string, init?: Function): void;
-	createProjectFromArchive(data: StateLookalike): void;
+	openProject<T extends ProjectSource>(source: T, data: ProjectSourceData<T>): void;
 }
 
 interface State {
@@ -120,7 +118,7 @@ export default class RecentSelector extends React.Component<Props, State> {
 	}
 
 	async selectRecent(id: string) {
-		this.props.pushHistory("/creator", () => this.props.initStore(id));
+		this.props.openProject(ProjectSource.RECENT, id);
 	}
 
 	async processUploadedFile(event: React.FormEvent<HTMLInputElement>) {
@@ -280,7 +278,7 @@ export default class RecentSelector extends React.Component<Props, State> {
 				isProcessingZipFile: false,
 			});
 
-			return this.props.createProjectFromArchive(parsedPayload);
+			this.props.openProject(ProjectSource.UPLOAD, parsedPayload);
 		} catch (err) {
 			this.toggleErrorOverlay(`Unable to complete import. ${err.message}`);
 
@@ -366,7 +364,8 @@ export default class RecentSelector extends React.Component<Props, State> {
 							<div id="choices-box" className={this.state.isProcessingZipFile ? "loading" : ""}>
 								<div
 									onClick={() =>
-										!this.state.isProcessingZipFile && this.props.pushHistory("/select")
+										!this.state.isProcessingZipFile &&
+										this.props.openProject(ProjectSource.NEW, undefined)
 									}
 								>
 									<AddIcon width="32px" height="32px" />

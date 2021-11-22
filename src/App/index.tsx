@@ -35,6 +35,19 @@ export interface StateLookalike {
 	};
 }
 
+export enum ProjectSource {
+	NEW = "new",
+	RECENT = "recent",
+	UPLOAD = "upload",
+}
+
+export type ProjectSourceData<T extends ProjectSource = ProjectSource> =
+	T extends ProjectSource.RECENT
+		? string
+		: T extends ProjectSource.UPLOAD
+		? StateLookalike
+		: undefined;
+
 // Webpack valorized
 declare const __DEV__: boolean;
 
@@ -111,17 +124,6 @@ function App(props: Props): JSX.Element {
 		},
 		[]
 	);
-
-	const changePathWithLoading = React.useCallback((path: string, preloadCallback?: Function) => {
-		wrapLoading(
-			() => {
-				preloadCallback?.();
-				navigate(path);
-			},
-			null,
-			LOADING_TIME_MS
-		);
-	}, []);
 
 	const refreshForageCallback = React.useCallback(async () => {
 		const slices: (keyof Store.Forage.ForageStructure)[] = ["projects"];
@@ -290,7 +292,6 @@ function App(props: Props): JSX.Element {
 					});
 
 					initializeStore(snapshot);
-					navigate("/creator");
 				},
 				LOADING_TIME_MS,
 				LOADING_TIME_MS
@@ -311,6 +312,26 @@ function App(props: Props): JSX.Element {
 		wrapLoading(refreshForageCallback, null, LOADING_TIME_MS);
 	}, []);
 
+	const openProject = React.useCallback(
+		function <T extends ProjectSource>(source: T, data: ProjectSourceData<T>) {
+			/**
+			 * Dear Typescript, why aren't you
+			 * recognizing automatically the type of data? :(
+			 */
+
+			if (source === ProjectSource.NEW) {
+				return navigate("/select");
+			} else if (source === ProjectSource.RECENT) {
+				initializeStoreByProjectID(data as string);
+				return navigate("/creator");
+			} else if (source === ProjectSource.UPLOAD) {
+				createProjectFromArchive(data as StateLookalike);
+				return navigate("/creator");
+			}
+		},
+		[initializeStoreByProjectID, createProjectFromArchive]
+	);
+
 	return (
 		<SwitchTransition>
 			<CSSTransition
@@ -326,9 +347,7 @@ function App(props: Props): JSX.Element {
 							<RecentSelector
 								recentProjects={forageData?.projects ?? {}}
 								requestForageDataRequest={refreshForageCallback}
-								initStore={initializeStoreByProjectID}
-								pushHistory={changePathWithLoading}
-								createProjectFromArchive={createProjectFromArchive}
+								openProject={openProject}
 							/>
 						}
 					/>
