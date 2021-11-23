@@ -8,7 +8,7 @@ const partners = require("./partners-templates/index.json");
 module.exports = {
 	mode: process.env.NODE_ENV === "dev" ? "development" : "production",
 	target: "web",
-	entry: "./src/public/index.tsx",
+	entry: "./public/index.tsx",
 	output: {
 		path: path.join(__dirname, "dist"),
 		filename: "[name].bundle.js",
@@ -110,7 +110,7 @@ module.exports = {
 	plugins: [
 		new HtmlWebpackPlugin({
 			title: "Passkit Visual Designer",
-			template: "./src/public/index.html",
+			template: "./public/index.html",
 			filename: "./index.html",
 			description: "A web tool to make it easier designing Apple Wallet Passes graphically",
 			chunks: "all",
