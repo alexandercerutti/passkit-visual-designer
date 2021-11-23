@@ -320,6 +320,7 @@ function App(props: Props): JSX.Element {
 			 */
 
 			if (source === ProjectSource.NEW) {
+				store.dispatch(Store.Forage.Reset());
 				return navigate("/select");
 			} else if (source === ProjectSource.RECENT) {
 				initializeStoreByProjectID(data as string);
