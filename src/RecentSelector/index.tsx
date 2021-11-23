@@ -104,7 +104,7 @@ export default function RecentSelector(props: Props) {
 		}
 	}, []);
 
-	const removeProject = React.useCallback(async (id: string) => {
+	const onProjectRemove = React.useCallback(async (id: string) => {
 		const projects = await localForage.getItem<Store.Forage.ForageStructure["projects"]>(
 			"projects"
 		);
@@ -129,7 +129,7 @@ export default function RecentSelector(props: Props) {
 					<span>{snapshot.projectOptions.title || "Untitled project"}</span>
 				</div>
 				<div className="right">
-					<span className={deleteButtonClassName} onClick={() => removeProject(id)}>
+					<span className={deleteButtonClassName} onClick={() => onProjectRemove(id)}>
 						Delete
 					</span>
 				</div>
