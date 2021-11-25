@@ -236,12 +236,12 @@ export namespace Pass {
 }
 
 export interface Pass {
-appLaunchURL?: string;
+	appLaunchURL?: string;
 	associacedStoreIdentifiers?: (number | string)[];
 	authenticationToken?: string;
 	backgroundColor?: string;
 	barcodes?: Pass.Barcodes[];
-	// beacons?: WalletPassFormat.Beacons[]
+	// beacons?: Pass.Beacons[]
 	boardingPass?: Pass.BoardingPass;
 	coupon?: Pass.Coupon;
 	description: string;
@@ -252,7 +252,7 @@ appLaunchURL?: string;
 	generic?: Pass.Generic;
 	groupingIdentifier?: string;
 	labelColor?: string;
-	// locations?: WalletPassFormat.Locations[];
+	// locations?: Pass.Locations[];
 	logoText?: string;
 	maxDistance?: number;
 	nfc?: Pass.NFC;
