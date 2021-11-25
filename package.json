@@ -12,6 +12,9 @@
 		"apple",
 		"passkit"
 	],
+	"workspaces": [
+		"packages/Pass"
+	],
 	"author": "Alexander P. Cerutti <cerutti.alexander@gmail.com>",
 	"license": "MIT",
 	"devDependencies": {
