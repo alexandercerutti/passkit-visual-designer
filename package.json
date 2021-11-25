@@ -13,7 +13,7 @@
 		"passkit"
 	],
 	"workspaces": [
-		"packages/Pass"
+		"packages/*"
 	],
 	"author": "Alexander P. Cerutti <cerutti.alexander@gmail.com>",
 	"license": "MIT",
