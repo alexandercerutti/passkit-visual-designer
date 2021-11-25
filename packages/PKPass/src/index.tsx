@@ -1,31 +1,19 @@
-import { PassFields, PKTransitType, WalletPassFormat } from "./constants";
+import { Pass } from "@pkvd/passkit-types";
 import { PassKind } from "./PassKind";
 
 export { default as PKPassView } from "./Pass";
 export { default as InteractionContext } from "./InteractionContext";
-export {
-	PKBarcodeFormat,
-	PKTransitType,
-	PKDataDetectorType,
-	PKDateStyle,
-	PKEventType,
-	PKNumberStyle,
-	PKTextAlignment,
-	PassField,
-	PassFields,
-	SemanticTags,
-	SemanticTagTypes,
-} from "./constants";
 
+// @TODO convert to Pass namespace
 export interface PassMixedProps extends PassMediaProps {
 	kind?: PassKind;
-	headerFields?: PassFields.HeaderFields[];
-	secondaryFields?: PassFields.SecondaryFields[];
-	primaryFields?: PassFields.PrimaryFields[];
-	auxiliaryFields?: PassFields.AuxiliaryFields[];
-	backFields?: PassFields.BackFields[];
-	barcode?: Partial<WalletPassFormat.Barcodes>; // @TODO check if an array should be used instead
-	transitType?: PKTransitType;
+	headerFields?: Pass.PassFields.HeaderFields[];
+	secondaryFields?: Pass.PassFields.SecondaryFields[];
+	primaryFields?: Pass.PassFields.PrimaryFields[];
+	auxiliaryFields?: Pass.PassFields.AuxiliaryFields[];
+	backFields?: Pass.PassFields.BackFields[];
+	barcode?: Partial<Pass.Barcodes>; // @TODO check if an array should be used instead
+	transitType?: Pass.PKTransitType;
 	logoText?: string;
 	backgroundColor?: string;
 	foregroundColor?: string;

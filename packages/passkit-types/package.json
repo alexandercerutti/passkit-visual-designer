@@ -1,0 +1,22 @@
+{
+  "name": "@pkvd/passkit-types",
+  "version": "1.0.0",
+  "description": "Declaration typings for passkit",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "npx tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alexandercerutti/passkit-visual-designer.git"
+  },
+  "author": "Alexander P. Cerutti <cerutti.alexander@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/alexandercerutti/passkit-visual-designer/issues"
+  },
+  "homepage": "https://github.com/alexandercerutti/passkit-visual-designer#readme",
+  "dependencies": {
+    "tslib": "^2.3.1"
+  }
+}

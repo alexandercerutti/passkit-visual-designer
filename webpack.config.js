@@ -98,6 +98,7 @@ module.exports = {
 	resolve: {
 		extensions: [".js", ".jsx", ".ts", ".tsx"],
 		alias: {
+			"@pkvd/passkit-types": path.resolve(__dirname, "./packages/passkit-types"),
 			"@pkvd/pass": path.resolve(__dirname, "./src/Pass/"),
 			"@pkvd/store": path.resolve(__dirname, "./src/store/")
 		}
