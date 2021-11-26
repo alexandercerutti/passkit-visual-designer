@@ -8,3 +8,4 @@ export { default as StoreCard } from "./StoreCard";
 
 export type LayoutSignature = React.FunctionComponent<PassMixedProps>;
 export type { FieldSelectHandler } from "./sections/useFieldRegistration";
+export { FieldKind } from "./components/Field";

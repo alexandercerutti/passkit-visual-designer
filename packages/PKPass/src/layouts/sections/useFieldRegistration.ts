@@ -1,6 +1,6 @@
 import * as React from "react";
 import { InteractionContext, PassMixedProps } from "../../..";
-import { FieldKind } from "../../../../../src/model";
+import { FieldKind } from "../components/Field";
 
 // I actually not really understood how does conditional distributed types work...
 // But what I wanted to achieve is to obtain a "forced" no-parameter function

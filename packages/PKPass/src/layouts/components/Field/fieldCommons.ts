@@ -1,5 +1,5 @@
 import { Pass } from "@pkvd/passkit-types";
-import { StylingProps } from "../../../../../../src/model";
+import { StylingProps } from "../../../../../app/src/model";
 
 export function getCSSFromFieldProps(
 	props: Partial<FieldProperties>,

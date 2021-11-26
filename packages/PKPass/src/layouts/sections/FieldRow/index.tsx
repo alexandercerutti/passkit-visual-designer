@@ -1,10 +1,9 @@
 import * as React from "react";
 import "./style.less";
 import { Pass } from "@pkvd/passkit-types";
-import Field, { FieldLabel, FieldValue } from "../../components/Field";
+import Field, { FieldKind, FieldLabel, FieldValue } from "../../components/Field";
 import { useFieldRegistration } from "../useFieldRegistration";
-import { FieldKind } from "../../../../../../src/model";
-import { createClassName } from "../../../../../../src/utils";
+import { createClassName } from "../../../utils";
 import { getFilteredFieldData } from "../../components/Field/getFilteredFieldData";
 
 interface RowProps {

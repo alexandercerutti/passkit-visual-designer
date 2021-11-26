@@ -1,9 +1,9 @@
 import * as React from "react";
 import "./style.less";
 import { useFieldRegistration } from "../useFieldRegistration";
-import { FieldKind } from "../../../../../../src/model";
 import ImageField, { ImageFieldProps } from "../../components/ImageField";
 import { AppIconEmpty } from "./icons";
+import { FieldKind } from "../../components/Field";
 
 interface FooterProps extends ImageFieldProps {
 	allowFooterImage?: boolean;

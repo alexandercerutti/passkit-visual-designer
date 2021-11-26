@@ -2,10 +2,9 @@ import * as React from "react";
 import "./style.less";
 import { Pass } from "@pkvd/passkit-types";
 import { getFilteredFieldData } from "../../../components/Field/getFilteredFieldData";
-import Field, { FieldLabel, FieldValue } from "../../../components/Field";
+import Field, { FieldKind, FieldLabel, FieldValue } from "../../../components/Field";
 import { PKTransitIcon } from "./icons";
 import { useFieldRegistration } from "../../useFieldRegistration";
-import { FieldKind } from "../../../../../../../src/model";
 
 interface PFTravelProps {
 	fields?: Pass.PassFieldContent[];

@@ -5,7 +5,7 @@ import TextField from "../../components/TextField";
 import { useFieldRegistration } from "../useFieldRegistration";
 import ImageField from "../../components/ImageField";
 import FieldsRow from "../FieldRow";
-import { FieldKind } from "../../../../../../src/model";
+import { FieldKind } from "../../components/Field";
 
 interface HeaderProps {
 	headerFields?: Pass.PassFieldContent[];

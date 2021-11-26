@@ -1,7 +1,7 @@
 import * as React from "react";
 import "./style.less";
+import { PKPassLayout } from "@pkvd/PKPass";
 import { SharedPanelProps } from "..";
-import { FieldKind } from "../../../../../../model";
 import useContentSavingHandler from "../useContentSavingHandler";
 import CapitalHeaderTitle from "../../../components/CapitalHeaderTitle";
 import CommittableTextInput from "../../../../../CommittableTextInput";
@@ -25,7 +25,7 @@ export default function TextPanel(props: TextPanelProps) {
 	}
 
 	return (
-		<div className={`panel ${FieldKind.TEXT}`} data-name={props.name}>
+		<div className={`panel ${PKPassLayout.FieldKind.TEXT}`} data-name={props.name}>
 			<label htmlFor={props.name}>
 				<CapitalHeaderTitle name={props.name} />
 				{required}

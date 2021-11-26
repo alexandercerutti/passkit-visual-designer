@@ -1,6 +1,5 @@
 import "./style.less";
-import { PassMixedProps } from "@pkvd/PKPass";
-import { FieldKind } from "../../../../../model";
+import { PassMixedProps, PKPassLayout } from "@pkvd/PKPass";
 import { DataGroup } from "..";
 
 export { default as TextPanel } from "./TextPanel";
@@ -17,7 +16,7 @@ export interface SharedPanelProps {
 
 export interface FieldDetails {
 	name: string | keyof PassMixedProps;
-	kind: FieldKind;
+	kind: PKPassLayout.FieldKind;
 	group: DataGroup;
 	mockable?: boolean;
 	tooltipText?: string;

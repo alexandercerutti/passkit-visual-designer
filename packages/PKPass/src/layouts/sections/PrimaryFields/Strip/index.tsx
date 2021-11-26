@@ -3,9 +3,8 @@ import "./style.less";
 import { Pass } from "@pkvd/passkit-types";
 import { getFilteredFieldData } from "../../../components/Field/getFilteredFieldData";
 import ImageField from "../../../components/ImageField";
-import Field, { FieldValue, FieldLabel } from "../../../components/Field";
+import Field, { FieldValue, FieldLabel, FieldKind } from "../../../components/Field";
 import { useFieldRegistration } from "../../useFieldRegistration";
-import { FieldKind } from "../../../../../../../src/model";
 
 interface PFStripProps {
 	fields?: Pass.PassFieldContent[];

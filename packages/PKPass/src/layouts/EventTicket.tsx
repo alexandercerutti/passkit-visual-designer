@@ -6,7 +6,7 @@ import FieldsRow from "./sections/FieldRow";
 import Footer from "./sections/Footer";
 import Barcodes from "./components/Barcodes";
 import { useFieldRegistration } from "./sections/useFieldRegistration";
-import { FieldKind } from "../../../../src/model";
+import { FieldKind } from "./components/Field";
 
 type PrimaryFieldPropsKind = Parameters<
 	typeof StripPrimaryFields | typeof ThumbnailPrimaryFields

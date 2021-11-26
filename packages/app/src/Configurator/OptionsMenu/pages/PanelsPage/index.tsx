@@ -2,13 +2,13 @@ import * as React from "react";
 import "./style.less";
 import { ColorPanel, FieldDetails, FieldsPanel, ImagePanel, TextPanel } from "./Panel";
 import type { PassMediaProps, PassMixedProps } from "@pkvd/PKPass";
+import { PKPassLayout } from "@pkvd/PKPass";
 import TabsList from "./TabsList";
 import RegistrationIndex from "../../../RegistrationIndex";
 import { PageContainer } from "../../PageContainer";
 import { createClassName } from "../../../../utils";
 import { ShareIcon } from "./icons";
 import { PageProps, usePageRelation } from "../../navigation.utils";
-import { FieldKind } from "../../../../model";
 import FieldsPreviewPage from "../FieldsPreviewPage";
 
 export enum DataGroup {
@@ -64,7 +64,7 @@ export default function PanelsPage(props: Props) {
 
 		setSelectedTabIndex(dgIndex);
 
-		if (props.selectedRegistrable.kind === FieldKind.FIELDS) {
+		if (props.selectedRegistrable.kind === PKPassLayout.FieldKind.FIELDS) {
 			setTimeout(() => {
 				openPage({ name: props.selectedRegistrable.name });
 			}, 500);
@@ -77,7 +77,7 @@ export default function PanelsPage(props: Props) {
 			const isSelected = props.selectedRegistrable?.name === name;
 
 			switch (kind) {
-				case FieldKind.TEXT: {
+				case PKPassLayout.FieldKind.TEXT: {
 					return (
 						<TextPanel
 							key={name}
@@ -90,7 +90,7 @@ export default function PanelsPage(props: Props) {
 					);
 				}
 
-				case FieldKind.IMAGE: {
+				case PKPassLayout.FieldKind.IMAGE: {
 					return (
 						<ImagePanel
 							key={name}
@@ -102,7 +102,7 @@ export default function PanelsPage(props: Props) {
 					);
 				}
 
-				case FieldKind.COLOR: {
+				case PKPassLayout.FieldKind.COLOR: {
 					return (
 						<ColorPanel
 							key={name}
@@ -115,7 +115,7 @@ export default function PanelsPage(props: Props) {
 					);
 				}
 
-				case FieldKind.FIELDS: {
+				case PKPassLayout.FieldKind.FIELDS: {
 					return (
 						<FieldsPanel
 							key={name}

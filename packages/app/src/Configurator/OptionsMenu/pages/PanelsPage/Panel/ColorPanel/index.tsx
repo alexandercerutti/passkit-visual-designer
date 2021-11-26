@@ -4,7 +4,7 @@ import { SharedPanelProps } from "..";
 import useContentSavingHandler from "../useContentSavingHandler";
 import CapitalHeaderTitle from "../../../components/CapitalHeaderTitle";
 import "./style.less";
-import { FieldKind } from "../../../../../../model";
+import { PKPassLayout } from "@pkvd/PKPass";
 
 interface ColorPanelProps extends SharedPanelProps {
 	value?: string;
@@ -46,7 +46,7 @@ export default function ColorPanel(props: ColorPanelProps) {
 	});
 
 	return (
-		<div className={`panel ${FieldKind.COLOR}`} data-name={props.name}>
+		<div className={`panel ${PKPassLayout.FieldKind.COLOR}`} data-name={props.name}>
 			<CapitalHeaderTitle name={props.name} />
 			<TwitterPicker
 				triangle="hide"

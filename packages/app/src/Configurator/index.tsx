@@ -7,7 +7,6 @@ import { v1 as uuid } from "uuid";
 import Viewer from "./Viewer";
 import OptionsBar from "./OptionsBar";
 import OptionsMenu from "./OptionsMenu";
-import { FieldKind } from "../model";
 import * as Store from "packages/app/src/store";
 import DefaultFields from "./staticFields";
 import { DataGroup } from "./OptionsMenu/pages/PanelsPage";
@@ -145,7 +144,10 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 	 * @param id
 	 */
 
-	registerField(kind: FieldKind, id: keyof PassMixedProps): PKPassLayout.FieldSelectHandler {
+	registerField(
+		kind: PKPassLayout.FieldKind,
+		id: keyof PassMixedProps
+	): PKPassLayout.FieldSelectHandler {
 		const dataGroup = convertFieldKindToDataGroup(kind);
 
 		if (this.registeredFields.findInDatagroup(dataGroup, id)) {
@@ -442,16 +444,16 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 	}
 }
 
-function convertFieldKindToDataGroup(kind: FieldKind): DataGroup {
-	if (kind === FieldKind.IMAGE) {
+function convertFieldKindToDataGroup(kind: PKPassLayout.FieldKind): DataGroup {
+	if (kind === PKPassLayout.FieldKind.IMAGE) {
 		return DataGroup.IMAGES;
 	}
 
-	if (kind === FieldKind.COLOR) {
+	if (kind === PKPassLayout.FieldKind.COLOR) {
 		return DataGroup.COLORS;
 	}
 
-	if (kind === FieldKind.FIELDS || kind === FieldKind.TEXT) {
+	if (kind === PKPassLayout.FieldKind.FIELDS || kind === PKPassLayout.FieldKind.TEXT) {
 		return DataGroup.DATA;
 	}
 

@@ -1,5 +1,5 @@
+import { PKPassLayout } from "@pkvd/PKPass";
 import { FieldDetails } from "./OptionsMenu/pages/PanelsPage/Panel";
-import { FieldKind } from "../model";
 import { DataGroup } from "./OptionsMenu/pages/PanelsPage";
 
 const StaticFields: Array<[DataGroup, FieldDetails[]]> = [
@@ -8,7 +8,7 @@ const StaticFields: Array<[DataGroup, FieldDetails[]]> = [
 		[
 			{
 				name: "description",
-				kind: FieldKind.TEXT,
+				kind: PKPassLayout.FieldKind.TEXT,
 				group: DataGroup.METADATA,
 				mockable: false,
 				tooltipText: "",
@@ -17,60 +17,60 @@ const StaticFields: Array<[DataGroup, FieldDetails[]]> = [
 			},
 			/* {
 		name: "formatVersion",
-		kind: FieldKind.SWITCH,
+		kind: PKPassLayout.FieldKind.SWITCH,
 		mockable: false,
 		tooltipText: "",
 		disabled: true,
 		required: true
 	},*/ {
 				name: "organizationName",
-				kind: FieldKind.TEXT,
+				kind: PKPassLayout.FieldKind.TEXT,
 				group: DataGroup.METADATA,
 				required: true,
 			},
 			{
 				name: "passTypeIdentifier",
-				kind: FieldKind.TEXT,
+				kind: PKPassLayout.FieldKind.TEXT,
 				group: DataGroup.METADATA,
 				required: true,
 			},
 			{
 				name: "teamIdentifier",
-				kind: FieldKind.TEXT,
+				kind: PKPassLayout.FieldKind.TEXT,
 				group: DataGroup.METADATA,
 				required: true,
 			},
 			{
 				name: "appLaunchURL",
-				kind: FieldKind.TEXT,
+				kind: PKPassLayout.FieldKind.TEXT,
 				group: DataGroup.METADATA,
 			},
 			{
 				name: "associatedStoreIdentifiers",
-				kind: FieldKind.TEXT,
+				kind: PKPassLayout.FieldKind.TEXT,
 				group: DataGroup.METADATA,
 			},
 			{
 				name: "authenticationToken",
-				kind: FieldKind.TEXT,
+				kind: PKPassLayout.FieldKind.TEXT,
 				group: DataGroup.METADATA,
 			},
 			{
 				name: "webServiceURL",
-				kind: FieldKind.TEXT,
+				kind: PKPassLayout.FieldKind.TEXT,
 				group: DataGroup.METADATA,
 			},
 			{
 				name: "groupingIdentifier",
-				kind: FieldKind.TEXT,
+				kind: PKPassLayout.FieldKind.TEXT,
 				group: DataGroup.METADATA,
 			} /*, {
 			name: "becons",
-			kind: FieldKind.JSON,
+			kind: PKPassLayout.FieldKind.JSON,
 			jsonKeys: ["major", "minor", "proximityUUID", "relevantText"]
 		}, {
 			name: "locations",
-			kind: FieldKind.JSON,
+			kind: PKPassLayout.FieldKind.JSON,
 			jsonKeys: ["altitude", "latitude", "longitude", "relevantText"]
 		}, */,
 		],
@@ -80,17 +80,17 @@ const StaticFields: Array<[DataGroup, FieldDetails[]]> = [
 		[
 			{
 				name: "backgroundColor",
-				kind: FieldKind.COLOR,
+				kind: PKPassLayout.FieldKind.COLOR,
 				group: DataGroup.COLORS,
 			},
 			{
 				name: "foregroundColor",
-				kind: FieldKind.COLOR,
+				kind: PKPassLayout.FieldKind.COLOR,
 				group: DataGroup.COLORS,
 			},
 			{
 				name: "labelColor",
-				kind: FieldKind.COLOR,
+				kind: PKPassLayout.FieldKind.COLOR,
 				group: DataGroup.COLORS,
 			},
 		],
