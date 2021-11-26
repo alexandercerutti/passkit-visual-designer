@@ -1,11 +1,10 @@
 import * as React from "react";
 import "./style.less";
-import Pass, { PassProps, Constants, PassMixedProps } from "@pkvd/pass";
+import { Pass } from "@pkvd/passkit-types";
+import { PKPassElement, PassProps, PassMixedProps } from "@pkvd/PKPass";
 import { createClassName } from "../../utils";
 import CommittableTextInput from "../CommittableTextInput";
 import type { TranslationsSet } from "@pkvd/store";
-
-type PassField = Constants.PassField;
 
 export interface ViewerProps extends Pick<PassProps, "showBack"> {
 	passProps: PassMixedProps;
@@ -47,13 +46,13 @@ export default function Viewer(props: ViewerProps) {
 					commit={changeProjectTitle}
 				/>
 			</div>
-			<Pass {...passUIProps} showBack={showBack} />
+			<PKPassElement {...passUIProps} showBack={showBack} />
 		</div>
 	);
 }
 
 function localizeFieldContent(
-	field: PassField[],
+	field: Pass.PassFieldContent[],
 	translations: Array<TranslationsSet["translations"][0]>
 ) {
 	if (!field) {

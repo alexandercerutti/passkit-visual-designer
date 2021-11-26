@@ -1,6 +1,6 @@
 import * as React from "react";
 import "./style.less";
-import { InteractionContext, PassMediaProps, PassMixedProps } from "@pkvd/pass";
+import { InteractionContext, PassMediaProps, PassMixedProps } from "@pkvd/PKPass";
 import { CSSTransition } from "react-transition-group";
 import { connect } from "react-redux";
 import { v1 as uuid } from "uuid";
@@ -11,7 +11,7 @@ import { FieldKind } from "../model";
 import * as Store from "@pkvd/store";
 import DefaultFields from "./staticFields";
 import { DataGroup } from "./OptionsMenu/pages/PanelsPage";
-import { FieldSelectHandler } from "../Pass/layouts/sections/useFieldRegistration";
+import { PKPassLayout } from "@pkvd/PKPass";
 import ExportModal from "./ExportModal";
 import { exportPass } from "./exportPass";
 import MediaModal from "./MediaModal";
@@ -145,7 +145,7 @@ class Configurator extends React.Component<ConfiguratorProps, ConfiguratorState>
 	 * @param id
 	 */
 
-	registerField(kind: FieldKind, id: keyof PassMixedProps): FieldSelectHandler {
+	registerField(kind: FieldKind, id: keyof PassMixedProps): PKPassLayout.FieldSelectHandler {
 		const dataGroup = convertFieldKindToDataGroup(kind);
 
 		if (this.registeredFields.findInDatagroup(dataGroup, id)) {

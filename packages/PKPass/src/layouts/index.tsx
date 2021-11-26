@@ -7,3 +7,4 @@ export { default as Generic } from "./Generic";
 export { default as StoreCard } from "./StoreCard";
 
 export type LayoutSignature = React.FunctionComponent<PassMixedProps>;
+export type { FieldSelectHandler } from "./sections/useFieldRegistration";

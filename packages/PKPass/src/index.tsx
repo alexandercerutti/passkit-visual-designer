@@ -1,7 +1,8 @@
 import { Pass } from "@pkvd/passkit-types";
 import { PassKind } from "./PassKind";
 
-export { default as PKPassView } from "./Pass";
+export { default as PKPassElement } from "./Pass";
+export * as PKPassLayout from "./layouts";
 export { default as InteractionContext } from "./InteractionContext";
 
 // @TODO convert to Pass namespace
