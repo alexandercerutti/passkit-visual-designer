@@ -4,8 +4,8 @@ import "./style.less";
 import { PassMixedProps } from "@pkvd/PKPass";
 import { createClassName } from "../../utils";
 import Modal, { ModalProps } from "../ModalBase";
-import * as Store from "@pkvd/store";
-import * as templates from "../../../partners-templates";
+import * as Store from "packages/app/src/store";
+import * as templates from "../../../../../partners-templates";
 
 /** Defined by Webpack */
 declare const partners: Partner[];

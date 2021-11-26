@@ -8,7 +8,7 @@ import Viewer from "./Viewer";
 import OptionsBar from "./OptionsBar";
 import OptionsMenu from "./OptionsMenu";
 import { FieldKind } from "../model";
-import * as Store from "@pkvd/store";
+import * as Store from "packages/app/src/store";
 import DefaultFields from "./staticFields";
 import { DataGroup } from "./OptionsMenu/pages/PanelsPage";
 import { PKPassLayout } from "@pkvd/PKPass";

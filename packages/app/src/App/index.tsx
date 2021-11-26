@@ -15,7 +15,7 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import PassSelector from "../PassSelector";
 import { createStore, applyMiddleware } from "redux";
 import Configurator from "../Configurator";
-import * as Store from "@pkvd/store";
+import * as Store from "packages/app/src/store";
 import RecentSelector from "../RecentSelector";
 import LoaderFace from "../Loader";
 import { CSSTransition, SwitchTransition } from "react-transition-group";

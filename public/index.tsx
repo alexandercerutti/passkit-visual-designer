@@ -1,7 +1,7 @@
 import * as ReactDOM from "react-dom";
 import * as React from "react";
 import "./styles.less";
-import App from "../src/App";
+import App from "../packages/app/src/App";
 import localForage from "localforage";
 
 localForage.config();

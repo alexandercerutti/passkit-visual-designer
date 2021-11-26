@@ -10,7 +10,7 @@ import PageHeader from "../components/Header";
 import DrawerJSONEditor from "./DrawerJSONEditor";
 import { PageContainer } from "../../PageContainer";
 import { connect } from "react-redux";
-import * as Store from "@pkvd/store";
+import * as Store from "packages/app/src/store";
 import FieldsPropertiesEditPage from "../FieldsPropertiesEditPage";
 import { navigable, NavigableProps, PageProps } from "../../navigation.utils";
 

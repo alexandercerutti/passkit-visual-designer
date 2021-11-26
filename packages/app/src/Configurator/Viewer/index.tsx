@@ -4,7 +4,7 @@ import { Pass } from "@pkvd/passkit-types";
 import { PKPassElement, PassProps, PassMixedProps } from "@pkvd/PKPass";
 import { createClassName } from "../../utils";
 import CommittableTextInput from "../CommittableTextInput";
-import type { TranslationsSet } from "@pkvd/store";
+import type { TranslationsSet } from "packages/app/src/store";
 
 export interface ViewerProps extends Pick<PassProps, "showBack"> {
 	passProps: PassMixedProps;

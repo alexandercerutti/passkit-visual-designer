@@ -22,7 +22,7 @@
 				"packages/passkit-types"
 			],
 			"@pkvd/store": [
-				"src/store"
+				"packages/app/src/store"
 			]
 		}
 	}
