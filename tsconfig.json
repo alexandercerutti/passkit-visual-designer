@@ -15,8 +15,11 @@
 		"importHelpers": true,
 		"baseUrl": ".",
 		"paths": {
-			"@pkvd/pass": [
-				"src/Pass"
+			"@pkvd/PKPass": [
+				"packages/PKPass"
+			],
+			"@pkvd/passkit-types": [
+				"packages/passkit-types"
 			],
 			"@pkvd/store": [
 				"src/store"
