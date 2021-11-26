@@ -1,18 +1,14 @@
 import { Pass } from "@pkvd/passkit-types";
 import { PassKind } from "./PassKind";
 
-export { default as PKPassElement } from "./Pass";
+export { default as PKPassElement, PassProps } from "./Pass";
+export { PassKind } from "./PassKind";
 export * as PKPassLayout from "./layouts";
 export { default as InteractionContext } from "./InteractionContext";
 
 // @TODO convert to Pass namespace
-export interface PassMixedProps extends PassMediaProps {
+export interface PassMixedProps extends PassMediaProps, Partial<Pass.PassFields> {
 	kind?: PassKind;
-	headerFields?: Pass.PassFields.HeaderFields[];
-	secondaryFields?: Pass.PassFields.SecondaryFields[];
-	primaryFields?: Pass.PassFields.PrimaryFields[];
-	auxiliaryFields?: Pass.PassFields.AuxiliaryFields[];
-	backFields?: Pass.PassFields.BackFields[];
 	barcode?: Partial<Pass.Barcodes>; // @TODO check if an array should be used instead
 	transitType?: Pass.PKTransitType;
 	logoText?: string;

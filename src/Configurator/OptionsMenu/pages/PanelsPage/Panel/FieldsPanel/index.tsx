@@ -1,17 +1,14 @@
 import * as React from "react";
 import "./style.less";
-import { Constants } from "@pkvd/pass";
+import { Pass } from "@pkvd/passkit-types";
 import { SharedPanelProps } from "..";
 import { FieldsArrowIcon } from "./icons";
 import CapitalHeaderTitle from "../../../components/CapitalHeaderTitle";
-import useContentSavingHandler from "../useContentSavingHandler";
 import { FieldKind } from "../../../../../../model";
-
-type PassField = Constants.PassField;
 
 interface Props extends SharedPanelProps {
 	onSelect(name: string): void;
-	value?: PassField[];
+	value?: Pass.PassFieldContent[];
 }
 
 export default function FieldPanel(props: Props) {

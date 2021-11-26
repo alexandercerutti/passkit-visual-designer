@@ -1,7 +1,6 @@
 import * as React from "react";
-import { Layouts, PassMixedProps } from "@pkvd/pass";
+import { PKPassLayout, PassKind, PassMixedProps } from "@pkvd/PKPass";
 import useAlternativesRegistration from "../useAlternativesRegistration";
-import { PassKind } from "../../../model";
 
 /**
  * Layout proxy with alternatives registration capability.
@@ -16,5 +15,5 @@ export default function Coupon(props: PassMixedProps) {
 		specificProps: {},
 	});
 
-	return <Layouts.Coupon {...props} />;
+	return <PKPassLayout.Coupon {...props} />;
 }

@@ -1,5 +1,5 @@
 import "./style.less";
-import { PassMixedProps } from "@pkvd/pass";
+import { PassMixedProps } from "@pkvd/PKPass";
 import { FieldKind } from "../../../../../model";
 import { DataGroup } from "..";
 

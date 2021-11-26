@@ -1,6 +1,6 @@
 import * as React from "react";
 import "./style.less";
-import { Constants } from "@pkvd/pass";
+import { Pass } from "@pkvd/passkit-types";
 import { getFilteredFieldData } from "../../../components/Field/getFilteredFieldData";
 import ImageField from "../../../components/ImageField";
 import Field, { FieldValue, FieldLabel } from "../../../components/Field";
@@ -8,7 +8,7 @@ import { useFieldRegistration } from "../../useFieldRegistration";
 import { FieldKind } from "../../../../../../../src/model";
 
 interface PFStripProps {
-	fields?: Constants.PassField[];
+	fields?: Pass.PassFieldContent[];
 	stripSrc?: string;
 }
 

@@ -1,14 +1,14 @@
 import * as React from "react";
 import "./style.less";
+import { Pass } from "@pkvd/passkit-types";
 import TextField from "../../components/TextField";
 import { useFieldRegistration } from "../useFieldRegistration";
 import ImageField from "../../components/ImageField";
 import FieldsRow from "../FieldRow";
 import { FieldKind } from "../../../../../../src/model";
-import { PassField } from "../../../constants";
 
 interface HeaderProps {
-	headerFields?: PassField[];
+	headerFields?: Pass.PassFieldContent[];
 	logoText?: string;
 	logo?: string;
 }

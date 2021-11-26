@@ -1,15 +1,13 @@
 import * as React from "react";
 import "./style.less";
-import { Constants } from "@pkvd/pass";
+import { Pass } from "@pkvd/passkit-types";
 import FieldOptionsBar from "./FieldOptionsBar";
 import FieldPreview from "../../components/FieldPreview";
-
-type PassField = Constants.PassField;
 
 interface DrawerElementProps {
 	onFieldDelete(key: string): void;
 	onFieldOrderChange(fieldUUID: string, of: number): void;
-	elementData: PassField;
+	elementData: Pass.PassFieldContent;
 	isUpperBoundary: boolean;
 	isLowerBoundary: boolean;
 	openDetailsPage(fieldUUID: string): void;

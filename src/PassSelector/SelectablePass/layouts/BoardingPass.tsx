@@ -1,9 +1,7 @@
 import * as React from "react";
-import { Layouts, PassMixedProps, Constants } from "@pkvd/pass";
+import { Pass } from "@pkvd/passkit-types";
+import { PKPassLayout, PassMixedProps, PassKind } from "@pkvd/PKPass";
 import useAlternativesRegistration from "../useAlternativesRegistration";
-import { PassKind } from "../../../model";
-
-const { PKTransitType } = Constants;
 
 /**
  * Layout proxy with alternatives registration capability.
@@ -18,34 +16,34 @@ export default function BoardingPass(props: PassMixedProps) {
 		{
 			name: "Generic Boarding Pass",
 			specificProps: {
-				transitType: PKTransitType.Generic,
+				transitType: Pass.PKTransitType.Generic,
 			},
 		},
 		{
 			name: "Air Boarding Pass",
 			specificProps: {
-				transitType: PKTransitType.Air,
+				transitType: Pass.PKTransitType.Air,
 			},
 		},
 		{
 			name: "Boat Boarding Pass",
 			specificProps: {
-				transitType: PKTransitType.Boat,
+				transitType: Pass.PKTransitType.Boat,
 			},
 		},
 		{
 			name: "Bus Boarding Pass",
 			specificProps: {
-				transitType: PKTransitType.Bus,
+				transitType: Pass.PKTransitType.Bus,
 			},
 		},
 		{
 			name: "Train Boarding Pass",
 			specificProps: {
-				transitType: PKTransitType.Train,
+				transitType: Pass.PKTransitType.Train,
 			},
 		}
 	);
 
-	return <Layouts.BoardingPass {...props} />;
+	return <PKPassLayout.BoardingPass {...props} />;
 }

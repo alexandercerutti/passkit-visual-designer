@@ -19,7 +19,7 @@ import * as Store from "@pkvd/store";
 import RecentSelector from "../RecentSelector";
 import LoaderFace from "../Loader";
 import { CSSTransition, SwitchTransition } from "react-transition-group";
-import { PassMediaProps, PassMixedProps } from "@pkvd/pass";
+import { PassMediaProps, PassMixedProps } from "@pkvd/PKPass";
 import { v1 as uuid } from "uuid";
 
 export interface StateLookalike {

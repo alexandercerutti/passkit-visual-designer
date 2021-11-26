@@ -1,7 +1,8 @@
 import * as React from "react";
 import { v1 as uuid } from "uuid";
 import "./style.less";
-import type { Constants, PassMixedProps } from "@pkvd/pass";
+import { Pass } from "@pkvd/passkit-types";
+import type { PassMixedProps } from "@pkvd/PKPass";
 import { FieldsAddIcon } from "./icons";
 import Drawer from "./Drawer";
 import DrawerPlaceholder from "./DrawerPlaceholder";
@@ -13,11 +14,8 @@ import * as Store from "@pkvd/store";
 import FieldsPropertiesEditPage from "../FieldsPropertiesEditPage";
 import { navigable, NavigableProps, PageProps } from "../../navigation.utils";
 
-type PassFields = Constants.PassFields;
-type PassField = Constants.PassField;
-
 interface Props extends PageProps, Partial<NavigableProps> {
-	value?: PassField[];
+	value?: Pass.PassFieldContent[];
 	changePassPropValue?: typeof Store.Pass.setProp;
 }
 
@@ -60,7 +58,7 @@ class FieldsPreviewPage extends React.Component<Props, State> {
 	onFieldAddHandler() {
 		this.props.changePassPropValue(this.props.name as keyof PassMixedProps, [
 			...(this.props.value || []),
-			{ fieldUUID: uuid() } as PassField,
+			{ fieldUUID: uuid() } as Pass.PassFieldContent,
 		]);
 	}
 
@@ -78,7 +76,7 @@ class FieldsPreviewPage extends React.Component<Props, State> {
 
 	onFieldsChangeFromJSON(jsonString: string) {
 		try {
-			const fields = JSON.parse(jsonString) as PassField[];
+			const fields = JSON.parse(jsonString) as Pass.PassFieldContent[];
 
 			this.props.changePassPropValue(this.props.name as keyof PassMixedProps, fields);
 		} catch (err) {
@@ -117,7 +115,7 @@ class FieldsPreviewPage extends React.Component<Props, State> {
 		if (isJSONMode) {
 			contentElement = (
 				<DrawerJSONEditor
-					fieldName={this.props.name as keyof PassFields}
+					fieldName={this.props.name as keyof Pass.PassFieldContent}
 					content={this.props.value ?? []}
 					onChange={this.onFieldsChangeFromJSON}
 				/>

@@ -1,11 +1,11 @@
-import { PKTextAlignment, PassField } from "../../../constants";
+import { Pass } from "@pkvd/passkit-types";
 import { StylingProps } from "../../../../../../src/model";
 
 export function getCSSFromFieldProps(
 	props: Partial<FieldProperties>,
 	origin: "label" | "value"
 ): React.CSSProperties {
-	const textAlignment = props.textAlignment || PKTextAlignment.Natural;
+	const textAlignment = props.textAlignment || Pass.PKTextAlignment.Natural;
 
 	return {
 		textAlign: transformPKTextAlignmentToCSS(textAlignment),
@@ -15,15 +15,15 @@ export function getCSSFromFieldProps(
 	};
 }
 
-function transformPKTextAlignmentToCSS(textAlignment: PKTextAlignment) {
+function transformPKTextAlignmentToCSS(textAlignment: Pass.PKTextAlignment) {
 	switch (textAlignment) {
-		case PKTextAlignment.Left:
+		case Pass.PKTextAlignment.Left:
 			return "left";
-		case PKTextAlignment.Center:
+		case Pass.PKTextAlignment.Center:
 			return "center";
-		case PKTextAlignment.Right:
+		case Pass.PKTextAlignment.Right:
 			return "right";
-		case PKTextAlignment.Natural:
+		case Pass.PKTextAlignment.Natural:
 			return "start";
 	}
 }
@@ -45,7 +45,7 @@ export const enum FieldTypes {
 }
 
 export type FieldProperties<T extends FieldTypes = FieldTypes.BOTH> = Omit<
-	PassField,
+	Pass.PassFieldContent,
 	"value" | "label"
 > &
 	StylingProps &

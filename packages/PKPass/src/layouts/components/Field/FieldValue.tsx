@@ -1,5 +1,5 @@
 import * as React from "react";
-import { PKDateStyle } from "../../../constants";
+import { Pass } from "@pkvd/passkit-types";
 import { getCSSFromFieldProps, FieldProperties, FieldTypes } from "./fieldCommons";
 import { SelectableComponent } from "../../sections/useFieldRegistration";
 import format from "date-fns/format";
@@ -30,8 +30,8 @@ function getValueFromProps(props: ValueProps) {
 	} = props;
 	const valueAsDate = new Date(value);
 
-	const shouldShowDate = dateStyle !== undefined && dateStyle !== PKDateStyle.None;
-	const shouldShowTime = timeStyle !== undefined && timeStyle !== PKDateStyle.None;
+	const shouldShowDate = dateStyle !== undefined && dateStyle !== Pass.PKDateStyle.None;
+	const shouldShowTime = timeStyle !== undefined && timeStyle !== Pass.PKDateStyle.None;
 
 	if (isNaN(valueAsDate.getTime()) || (!shouldShowTime && !shouldShowDate)) {
 		/**
@@ -56,31 +56,31 @@ function getValueFromProps(props: ValueProps) {
 	return timeValues.join(" ");
 }
 
-function getDateValueFromDateStyle(dateStyle: PKDateStyle, value: Date) {
+function getDateValueFromDateStyle(dateStyle: Pass.PKDateStyle, value: Date) {
 	switch (dateStyle) {
-		case PKDateStyle.Short:
+		case Pass.PKDateStyle.Short:
 			return format(value, "P");
-		case PKDateStyle.Medium:
+		case Pass.PKDateStyle.Medium:
 			return format(value, "MMM dd, yyyy");
-		case PKDateStyle.Long:
+		case Pass.PKDateStyle.Long:
 			return format(value, "MMMM dd, yyyy");
-		case PKDateStyle.Full:
+		case Pass.PKDateStyle.Full:
 			return format(value, "PPPP G");
 		default:
 			return value;
 	}
 }
 
-function getTimeValueFromTimeStyle(timeStyle: PKDateStyle, value: Date) {
+function getTimeValueFromTimeStyle(timeStyle: Pass.PKDateStyle, value: Date) {
 	switch (timeStyle) {
-		case PKDateStyle.Short:
+		case Pass.PKDateStyle.Short:
 			return format(value, "p");
-		case PKDateStyle.Medium:
+		case Pass.PKDateStyle.Medium:
 			return format(value, "pp");
-		case PKDateStyle.Long:
+		case Pass.PKDateStyle.Long:
 			// @TODO Timezone format (PST, GMT) should be added here
 			return format(value, "h:mm:ss a");
-		case PKDateStyle.Full:
+		case Pass.PKDateStyle.Full:
 			// @TODO Timezone format (PST, GMT) as extended string should be added here
 			return format(value, "h:mm:ss a OOOO");
 		default:

@@ -6,7 +6,7 @@ import { GithubLogoDarkMode, AddIcon } from "./icons";
 import localForage from "localforage";
 import { createClassName } from "../utils";
 import { ProjectSource, ProjectSourceData, StateLookalike } from "../App";
-import { PassKind } from "../model";
+import { PassKind } from "@pkvd/PKPass";
 import { CSSTransition } from "react-transition-group";
 
 // Defined by webpack

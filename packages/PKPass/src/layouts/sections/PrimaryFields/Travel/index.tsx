@@ -1,16 +1,15 @@
 import * as React from "react";
 import "./style.less";
-import { Constants } from "@pkvd/pass";
+import { Pass } from "@pkvd/passkit-types";
 import { getFilteredFieldData } from "../../../components/Field/getFilteredFieldData";
 import Field, { FieldLabel, FieldValue } from "../../../components/Field";
-import { PKTransitType } from "../../../../constants";
 import { PKTransitIcon } from "./icons";
 import { useFieldRegistration } from "../../useFieldRegistration";
 import { FieldKind } from "../../../../../../../src/model";
 
 interface PFTravelProps {
-	fields?: Constants.PassField[];
-	transitType: PKTransitType;
+	fields?: Pass.PassFieldContent[];
+	transitType: Pass.PKTransitType;
 }
 
 export default function PrimaryFields(props: PFTravelProps) {
@@ -39,7 +38,7 @@ export default function PrimaryFields(props: PFTravelProps) {
 		<div className="travel-primaryFields">
 			{from}
 			<PKTransitIcon
-				type={(transitType === undefined && PKTransitType.Generic) || transitType}
+				type={(transitType === undefined && Pass.PKTransitType.Generic) || transitType}
 				width={30}
 				height={30}
 			/>

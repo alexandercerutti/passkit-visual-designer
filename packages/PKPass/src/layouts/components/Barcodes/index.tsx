@@ -1,5 +1,5 @@
 import * as React from "react";
-import { PKBarcodeFormat, WalletPassFormat } from "../../../constants";
+import { Pass } from "@pkvd/passkit-types";
 import QRCode from "./qr-code";
 import Code128 from "./code128";
 import PDF417 from "./pdf417";
@@ -8,7 +8,7 @@ import { EmptyBarcode, EmptySquareCode } from "./empty";
 import "./style.less";
 import { createClassName } from "../../../../../../src/utils";
 
-interface BarcodeProps extends Partial<WalletPassFormat.Barcodes> {
+interface BarcodeProps extends Partial<Pass.Barcodes> {
 	fallbackShape: "square" | "rect";
 
 	// @TODO
@@ -16,7 +16,7 @@ interface BarcodeProps extends Partial<WalletPassFormat.Barcodes> {
 }
 
 export default function Barcodes(props: BarcodeProps) {
-	const barcodeFormat = props.format || PKBarcodeFormat.None;
+	const barcodeFormat = props.format || Pass.PKBarcodeFormat.None;
 	const BarcodeComponent = selectComponentFromFormat(barcodeFormat, props.fallbackShape);
 
 	if (!BarcodeComponent) {
@@ -24,7 +24,7 @@ export default function Barcodes(props: BarcodeProps) {
 	}
 
 	const className = createClassName(["barcode", barcodeFormat, props.fallbackShape], {
-		content: barcodeFormat !== PKBarcodeFormat.None && props.message,
+		content: barcodeFormat !== Pass.PKBarcodeFormat.None && props.message,
 	});
 
 	return (
@@ -37,29 +37,34 @@ export default function Barcodes(props: BarcodeProps) {
 	);
 }
 
-export function isSquareBarcode(kind: PKBarcodeFormat) {
+export function isSquareBarcode(kind: Pass.PKBarcodeFormat) {
 	return (
-		kind === PKBarcodeFormat.Square || kind === PKBarcodeFormat.QR || kind === PKBarcodeFormat.Aztec
+		kind === Pass.PKBarcodeFormat.Square ||
+		kind === Pass.PKBarcodeFormat.QR ||
+		kind === Pass.PKBarcodeFormat.Aztec
 	);
 }
 
-export function isRectangularBarcode(kind: PKBarcodeFormat) {
+export function isRectangularBarcode(kind: Pass.PKBarcodeFormat) {
 	return (
-		kind === PKBarcodeFormat.Rectangle ||
-		kind === PKBarcodeFormat.Code128 ||
-		kind === PKBarcodeFormat.PDF417
+		kind === Pass.PKBarcodeFormat.Rectangle ||
+		kind === Pass.PKBarcodeFormat.Code128 ||
+		kind === Pass.PKBarcodeFormat.PDF417
 	);
 }
 
-function selectComponentFromFormat(format: PKBarcodeFormat, fallbackFormat: "square" | "rect") {
+function selectComponentFromFormat(
+	format: Pass.PKBarcodeFormat,
+	fallbackFormat: "square" | "rect"
+) {
 	switch (format) {
-		case PKBarcodeFormat.Aztec:
+		case Pass.PKBarcodeFormat.Aztec:
 			return Aztec;
-		case PKBarcodeFormat.Code128:
+		case Pass.PKBarcodeFormat.Code128:
 			return Code128;
-		case PKBarcodeFormat.PDF417:
+		case Pass.PKBarcodeFormat.PDF417:
 			return PDF417;
-		case PKBarcodeFormat.QR:
+		case Pass.PKBarcodeFormat.QR:
 			return QRCode;
 		default:
 			if (fallbackFormat === "square") {

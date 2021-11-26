@@ -1,7 +1,7 @@
 import * as React from "react";
 import "./style.less";
 import { ColorPanel, FieldDetails, FieldsPanel, ImagePanel, TextPanel } from "./Panel";
-import type { PassMediaProps, PassMixedProps } from "@pkvd/pass";
+import type { PassMediaProps, PassMixedProps } from "@pkvd/PKPass";
 import TabsList from "./TabsList";
 import RegistrationIndex from "../../../RegistrationIndex";
 import { PageContainer } from "../../PageContainer";

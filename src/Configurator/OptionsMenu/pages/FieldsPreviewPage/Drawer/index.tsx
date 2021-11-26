@@ -1,13 +1,11 @@
 import * as React from "react";
 import "./style.less";
-import { Constants } from "@pkvd/pass";
+import { Pass } from "@pkvd/passkit-types";
 import { MoreFieldsBelowIcon } from "../icons";
 import DrawerElement from "../DrawerElement";
 
-type PassField = Constants.PassField;
-
 interface Props {
-	readonly fieldsData: PassField[];
+	readonly fieldsData: Pass.PassFieldContent[];
 	onFieldDelete(fieldUUID: string): void;
 	onFieldOrderChange(fieldUUID: string, of: number): void;
 	openDetailsPage(fieldUUID: string): void;

@@ -1,16 +1,13 @@
-import { Constants } from "@pkvd/pass";
-
-const { PKTextAlignment, PKDateStyle, PKDataDetectorType } = Constants;
-type PassField = Constants.PassField;
+import { Pass } from "@pkvd/passkit-types";
 
 type FieldPropertyDetail = {
-	name: keyof PassField;
+	name: keyof Pass.PassFieldContent;
 	type:
 		| typeof String
 		| typeof Boolean
-		| typeof PKTextAlignment
-		| typeof PKDateStyle
-		| typeof PKDataDetectorType;
+		| typeof Pass.PKTextAlignment
+		| typeof Pass.PKDateStyle
+		| typeof Pass.PKDataDetectorType;
 	placeholder?: string;
 	optional?: boolean;
 	defaultValue?: string;
@@ -41,27 +38,27 @@ export const FieldPropertiesDetails: FieldPropertyDetail[] = [
 	},
 	{
 		name: "dataDetectorTypes",
-		type: PKDataDetectorType,
+		type: Pass.PKDataDetectorType,
 		optional: true,
 		defaultValue: "None",
 	},
 	{
 		name: "textAlignment",
-		type: PKTextAlignment,
+		type: Pass.PKTextAlignment,
 		optional: true,
-		defaultValue: PKTextAlignment.Natural,
+		defaultValue: Pass.PKTextAlignment.Natural,
 	},
 	{
 		name: "dateStyle",
-		type: PKDateStyle,
+		type: Pass.PKDateStyle,
 		optional: true,
-		defaultValue: PKDateStyle.None,
+		defaultValue: Pass.PKDateStyle.None,
 	},
 	{
 		name: "timeStyle",
-		type: PKDateStyle,
+		type: Pass.PKDateStyle,
 		optional: true,
-		defaultValue: PKDateStyle.None,
+		defaultValue: Pass.PKDateStyle.None,
 	},
 	{
 		name: "ignoresTimeZone",

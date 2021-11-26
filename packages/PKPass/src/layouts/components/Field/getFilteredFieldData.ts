@@ -1,4 +1,4 @@
-import { PassField } from "../../../constants";
+import { Pass } from "@pkvd/passkit-types";
 
 /**
  * Tries to get data from the specified source
@@ -11,7 +11,7 @@ import { PassField } from "../../../constants";
  */
 
 export function getFilteredFieldData(
-	data: PassField[] = [],
+	data: Pass.PassFieldContent[] = [],
 	minAmount: number = 0,
 	maxAmount: number = 0
 ) {
@@ -37,5 +37,5 @@ export function getFilteredFieldData(
 }
 
 function createFilledPassFieldArray(slots: number) {
-	return new Array<PassField>(slots).fill({} as PassField);
+	return new Array<Pass.PassFieldContent>(slots).fill({} as Pass.PassFieldContent);
 }

@@ -1,6 +1,6 @@
 import * as React from "react";
 import "./style.less";
-import Pass, { PassMediaProps } from "@pkvd/pass";
+import { PKPassElement, PassMediaProps } from "@pkvd/PKPass";
 import Modal, { ModalProps } from "../ModalBase";
 import CollectionsList from "./CollectionsList";
 import CollectionEditor from "./CollectionEditor";
@@ -169,7 +169,7 @@ export default class MediaModal extends React.Component<Props, State> {
 		return (
 			<Modal closeModal={this.props.closeModal} contentUniqueID="media-collection">
 				<div id="pass-preview">
-					<Pass {...passProps} />
+					<PKPassElement {...passProps} />
 				</div>
 				<div id="media-collector">
 					<header>

@@ -1,15 +1,12 @@
 import * as React from "react";
 import Prism from "prismjs";
 import "./style.less";
-import { Constants } from "@pkvd/pass";
+import { Pass } from "@pkvd/passkit-types";
 import { createClassName } from "../../../../../utils";
 
-type PassField = Constants.PassField;
-type PassFields = Constants.PassFields;
-
 interface Props {
-	fieldName: keyof PassFields;
-	content: PassField[];
+	fieldName: keyof Pass.PassFieldContent;
+	content: Pass.PassFieldContent[];
 	onChange(jsonString: string): void;
 }
 

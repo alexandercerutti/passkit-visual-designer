@@ -1,5 +1,5 @@
 import { AnyAction, Dispatch, MiddlewareAPI } from "redux";
-import { PassMediaProps } from "@pkvd/pass";
+import { PassMediaProps } from "@pkvd/PKPass";
 import type { State } from "..";
 import * as Store from "..";
 import { CollectionSet, MediaCollection } from "../store";

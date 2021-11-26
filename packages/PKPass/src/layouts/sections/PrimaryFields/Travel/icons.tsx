@@ -1,5 +1,5 @@
 import * as React from "react";
-import { PKTransitType } from "../../../../constants";
+import { Pass } from "@pkvd/passkit-types";
 
 interface BoardingIconProps {
 	className?: string;
@@ -154,15 +154,18 @@ function GenericIcon(props: BoardingIconProps) {
 	);
 }
 
-const PKTransitIconsMap = new Map<PKTransitType, React.FunctionComponent<BoardingIconProps>>([
-	[PKTransitType.Generic, GenericIcon],
-	[PKTransitType.Bus, BusIcon],
-	[PKTransitType.Train, RailIcon],
-	[PKTransitType.Air, FlightIcon],
-	[PKTransitType.Boat, BoatIcon],
+const PKTransitIconsMap = new Map<Pass.PKTransitType, React.FunctionComponent<BoardingIconProps>>([
+	[Pass.PKTransitType.Generic, GenericIcon],
+	[Pass.PKTransitType.Bus, BusIcon],
+	[Pass.PKTransitType.Train, RailIcon],
+	[Pass.PKTransitType.Air, FlightIcon],
+	[Pass.PKTransitType.Boat, BoatIcon],
 ]);
 
-export function PKTransitIcon({ type, ...props }: BoardingIconProps & { type: PKTransitType }) {
+export function PKTransitIcon({
+	type,
+	...props
+}: BoardingIconProps & { type: Pass.PKTransitType }) {
 	const TransitIcon = PKTransitIconsMap.get(type);
 
 	return (

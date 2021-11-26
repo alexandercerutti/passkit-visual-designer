@@ -1,9 +1,7 @@
 import * as React from "react";
-import { Layouts, PassMixedProps, Constants } from "@pkvd/pass";
+import { Pass } from "@pkvd/passkit-types";
+import { PassKind, PKPassLayout, PassMixedProps } from "@pkvd/PKPass";
 import useAlternativesRegistration from "../useAlternativesRegistration";
-import { PassKind } from "../../../model";
-
-const { PKBarcodeFormat } = Constants;
 
 /**
  * Layout proxy with alternatives registration capability.
@@ -19,7 +17,7 @@ export default function Generic(props: PassMixedProps) {
 			name: "With rectangular barcode",
 			specificProps: {
 				barcode: {
-					format: PKBarcodeFormat.Rectangle,
+					format: Pass.PKBarcodeFormat.Rectangle,
 				},
 			},
 		},
@@ -27,11 +25,11 @@ export default function Generic(props: PassMixedProps) {
 			name: "With square barcode",
 			specificProps: {
 				barcode: {
-					format: PKBarcodeFormat.Square,
+					format: Pass.PKBarcodeFormat.Square,
 				},
 			},
 		}
 	);
 
-	return <Layouts.Generic {...props} />;
+	return <PKPassLayout.Generic {...props} />;
 }

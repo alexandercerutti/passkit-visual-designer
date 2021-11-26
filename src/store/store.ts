@@ -1,14 +1,12 @@
-import { PassKind } from "../model";
-import { Constants, PassMixedProps, PassMediaProps } from "@pkvd/pass";
-
-const { PKTextAlignment, PKTransitType } = Constants;
+import { PassMixedProps, PassMediaProps, PassKind } from "@pkvd/PKPass";
+import { Pass } from "@pkvd/passkit-types";
 
 /** Webpack defined */
 declare const __DEV__: boolean;
 
 const __DEV_DEFAULT_PASS_PROPS = __DEV__
 	? {
-			transitType: PKTransitType.Boat,
+			transitType: Pass.PKTransitType.Boat,
 			kind: PassKind.BOARDING_PASS,
 			/** FEW TESTING DATA **/
 			/**
@@ -21,13 +19,13 @@ const __DEV_DEFAULT_PASS_PROPS = __DEV__
 			key: "num",
 			label: "volo",
 			value: "EJU996",
-			textAlignment: PKTextAlignment.Center,
+			textAlignment: Pass.PKTextAlignment.Center,
 		},
 		{
 			key: "date",
 			label: "Data",
 			value: "21 set",
-			textAlignment: PKTextAlignment.Center,
+			textAlignment: Pass.PKTextAlignment.Center,
 		}
 	],
 	primaryFields: [
@@ -35,13 +33,13 @@ const __DEV_DEFAULT_PASS_PROPS = __DEV__
 			key: "from",
 			label: "Venezia Marco Polo",
 			value: "VCE",
-			textAlignment: PKTextAlignment.Left,
+			textAlignment: Pass.PKTextAlignment.Left,
 		},
 		{
 			key: "to",
 			label: "Napoli",
 			value: "NAP",
-			textAlignment: PKTextAlignment.Right,
+			textAlignment: Pass.PKTextAlignment.Right,
 		},
 	],
 	auxiliaryFields: [
@@ -49,12 +47,12 @@ const __DEV_DEFAULT_PASS_PROPS = __DEV__
 			key: "user",
 			label: "Passeggero",
 			value: "SIG. ALEXANDER PATRICK CERUTTI",
-			textAlignment: PKTextAlignment.Left,
+			textAlignment: Pass.PKTextAlignment.Left,
 		}, {
 			key: "seat",
 			label: "Posto",
 			value: "1C*",
-			textAlignment: PKTextAlignment.Center,
+			textAlignment: Pass.PKTextAlignment.Center,
 		}
 	],
 	secondaryFields: [
@@ -62,25 +60,25 @@ const __DEV_DEFAULT_PASS_PROPS = __DEV__
 			key: "Imbarco",
 			label: "Imbarco chiuso",
 			value: "18:40",
-			textAlignment: PKTextAlignment.Center,
+			textAlignment: Pass.PKTextAlignment.Center,
 		},
 		{
 			key: "takeoff",
 			label: "Partenza",
 			value: "19:10",
-			textAlignment: PKTextAlignment.Center,
+			textAlignment: Pass.PKTextAlignment.Center,
 		},
 		{
 			key: "SpeedyBoarding",
 			label: "SB",
 			value: "Si",
-			textAlignment: PKTextAlignment.Center,
+			textAlignment: Pass.PKTextAlignment.Center,
 		},
 		{
 			key: "boarding",
 			label: "Imbarco",
 			value: "Anteriore",
-			textAlignment: PKTextAlignment.Center,
+			textAlignment: Pass.PKTextAlignment.Center,
 		}
 	]
 	*/

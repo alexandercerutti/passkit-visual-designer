@@ -1,6 +1,7 @@
 import * as React from "react";
 import "./style.less";
-import { Constants, PassMixedProps } from "@pkvd/pass";
+import { Pass } from "@pkvd/passkit-types";
+import { PassMixedProps } from "@pkvd/PKPass";
 import * as Store from "@pkvd/store";
 import PageHeader from "../components/Header";
 import FieldPreview from "../components/FieldPreview";
@@ -9,10 +10,8 @@ import { PageContainer } from "../../PageContainer";
 import { PageProps } from "../../navigation.utils";
 import { connect } from "react-redux";
 
-type PassField = Constants.PassField;
-
 interface Props extends PageProps {
-	selectedField?: PassField[];
+	selectedField?: Pass.PassFieldContent[];
 	fieldUUID: string;
 	changePassPropValue?: typeof Store.Pass.setProp;
 }
@@ -32,7 +31,7 @@ class FieldsPropertiesEditPage extends React.Component<Props> {
 		this.updateKey = this.updateKey.bind(this);
 	}
 
-	updateValue(newData: PassField) {
+	updateValue(newData: Pass.PassFieldContent) {
 		const allFieldsCopy = [...this.props.selectedField];
 		allFieldsCopy.splice(this.dataIndex, 1, newData);
 
@@ -66,7 +65,7 @@ export default connect(
 	(store: Store.State, ownProps: Props) => {
 		const { pass } = store;
 
-		const selectedField = pass[ownProps.name as keyof Constants.PassFields];
+		const selectedField = pass[ownProps.name as keyof Pass.PassFieldContent];
 
 		return {
 			selectedField,

@@ -1,5 +1,3 @@
-import { PassMixedProps } from "@pkvd/pass";
-
 let pages: Page = null;
 const updateListeners: Function[] = [];
 

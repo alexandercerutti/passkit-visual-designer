@@ -1,7 +1,6 @@
 import * as React from "react";
 import "./style.less";
-import { PassKind } from "../model";
-import { PassMixedProps } from "@pkvd/pass";
+import { PassMixedProps, PassKind } from "@pkvd/PKPass";
 import { createClassName } from "../utils";
 import { SelectablePassProps } from "./SelectablePass";
 

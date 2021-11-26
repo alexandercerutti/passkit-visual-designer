@@ -1,17 +1,13 @@
 import * as React from "react";
 import "./style.less";
-import { Constants } from "@pkvd/pass";
+import { Pass } from "@pkvd/passkit-types";
 import { FieldPropertiesDetails } from "../../FieldsPreviewPage/DrawerElement/FieldPropertiesDetails";
 import FieldStringPropertyPanel from "./FieldPropertyPanels/String";
 import FieldCheckboxPropertyPanel from "./FieldPropertyPanels/Checkbox";
 import FieldEnumPropertyPanel from "./FieldPropertyPanels/Enum";
 
-const { PKTextAlignment, PKDateStyle, PKDataDetectorType } = Constants;
-
-type PassField = Constants.PassField;
-
 interface FieldPropertiesEditListProps {
-	data: PassField;
+	data: Pass.PassFieldContent;
 	onValueChange<T>(prop: string, value: T): void;
 }
 
@@ -60,7 +56,9 @@ export default function FieldPropertiesEditList(props: FieldPropertiesEditListPr
 }
 
 function isPanelTypeEnum(type: Object) {
-	return type === PKTextAlignment || type === PKDateStyle || type === PKDataDetectorType;
+	return (
+		type === Pass.PKTextAlignment || type === Pass.PKDateStyle || type === Pass.PKDataDetectorType
+	);
 }
 
 function isPanelTypeString(type: Object) {

@@ -1,6 +1,5 @@
 import * as React from "react";
-import Pass, { Layouts, PassMixedProps } from "@pkvd/pass";
-import { PassKind } from "../../model";
+import { PKPassElement, PKPassLayout, PassMixedProps, PassKind } from "@pkvd/PKPass";
 import * as SelectableLayouts from "./layouts";
 
 export {
@@ -22,7 +21,7 @@ export interface SelectablePassProps extends PassMixedProps {
 	name: string;
 }
 
-const LayoutsMap = new Map<PassKind, Layouts.LayoutSignature>([
+const LayoutsMap = new Map<PassKind, PKPassLayout.LayoutSignature>([
 	[PassKind.BOARDING_PASS, SelectableLayouts.BoardingPass],
 	[PassKind.COUPON, SelectableLayouts.Coupon],
 	[PassKind.EVENT, SelectableLayouts.EventTicket],
@@ -38,7 +37,7 @@ export default function SelectablePass(props: SelectablePassProps): JSX.Element 
 	return (
 		<>
 			<div className="darkness-realm">
-				<Pass layout={PassLayout} {...passProps} />
+				<PKPassElement layout={PassLayout} {...passProps} />
 			</div>
 			<div className="name">{name}</div>
 		</>

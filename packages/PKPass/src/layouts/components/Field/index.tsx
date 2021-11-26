@@ -1,18 +1,18 @@
 import * as React from "react";
 import "./style.less";
+import { Pass } from "@pkvd/passkit-types";
 import { SelectableComponent } from "../../sections/useFieldRegistration";
 import { createClassName } from "../../../../../../src/utils";
 import useFallbackField from "../useFallbackField";
 import useClickEvent from "../useClickEvent";
 import { StylingProps } from "../../../../../../src/model";
-import { PassField } from "../../../constants";
 
 export { default as FieldLabel } from "./FieldLabel";
 export { default as FieldValue } from "./FieldValue";
 
 type Props = StylingProps &
 	Partial<SelectableComponent> & {
-		fieldData: PassField;
+		fieldData: Pass.PassFieldContent;
 		ghost?: boolean;
 	};
 
