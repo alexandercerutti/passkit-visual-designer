@@ -1,9 +1,7 @@
 {
-	"name": "passkit-visual-designer",
-	"version": "1.0.0-beta.9",
+	"name": "@pkvd/root",
+	"version": "0.0.0",
 	"private": true,
-	"description": "A visual tool to design passes",
-	"main": "index.js",
 	"scripts": {
 		"build": "NODE_ENV=prod webpack --config webpack.config.js",
 		"start": "npx webpack serve --config webpack.config.js --node-env dev"
@@ -44,24 +42,5 @@
 		"webpack": "^5.64.1",
 		"webpack-cli": "^4.9.1",
 		"webpack-dev-server": "^4.5.0"
-	},
-	"dependencies": {
-		"date-fns": "^2.25.0",
-		"handlebars": "^4.7.7",
-		"html2canvas": "^1.3.2",
-		"jszip": "^3.7.1",
-		"localforage": "^1.10.0",
-		"prismjs": "^1.25.0",
-		"react": "^17.0.2",
-		"react-color": "^2.19.3",
-		"react-dom": "^17.0.2",
-		"react-redux": "^7.2.6",
-		"react-router-dom": "^6.0.2",
-		"react-transition-group": "^4.4.2",
-		"redux": "^4.1.2",
-		"redux-devtools-extension": "^2.13.9",
-		"redux-thunk": "^2.4.0",
-		"tslib": "^2.3.1",
-		"uuid": "^8.3.2"
 	}
 }
