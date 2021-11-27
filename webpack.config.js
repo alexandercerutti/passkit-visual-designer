@@ -16,21 +16,8 @@ module.exports = {
 	},
 	module: {
 		rules: [{
-			test: /\.jsx?$/,
-			use: [{
-				loader: "thread-loader",
-			}, {
-				loader: "babel-loader",
-				options: {
-					presets: ["@babel/preset-react"]
-				}
-			}],
-			exclude: /(node_modules)/,
-		}, {
 			test: /\.tsx?$/,
 			use: [{
-				loader: "thread-loader",
-			}, {
 				loader: "ts-loader",
 				options: {
 					happyPackMode: true
