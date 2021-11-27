@@ -1,8 +1,8 @@
 import * as React from "react";
 import "./style.less";
 import { Pass } from "@pkvd/passkit-types";
-import { PassMixedProps } from "@pkvd/PKPass";
-import * as Store from "packages/app/src/store";
+import { PassMixedProps } from "@pkvd/pkpass";
+import * as Store from "@pkvd/store";
 import PageHeader from "../components/Header";
 import FieldPreview from "../components/FieldPreview";
 import FieldPropertiesEditList from "./FieldPropertiesEditList";

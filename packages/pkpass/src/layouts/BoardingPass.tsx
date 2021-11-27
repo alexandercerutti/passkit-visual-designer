@@ -1,5 +1,5 @@
 import * as React from "react";
-import { PassMixedProps } from "../..";
+import { PassMixedProps } from "..";
 import { PassHeader } from "./sections/Header";
 import { TravelPrimaryFields } from "./sections/PrimaryFields";
 import FieldsRow from "./sections/FieldRow";

@@ -1,5 +1,5 @@
 import "./style.less";
-import { PassMixedProps, PKPassLayout } from "@pkvd/PKPass";
+import { PassMixedProps, PKPassLayout } from "@pkvd/pkpass";
 import { DataGroup } from "..";
 
 export { default as TextPanel } from "./TextPanel";

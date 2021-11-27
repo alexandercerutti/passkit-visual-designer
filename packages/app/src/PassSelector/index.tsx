@@ -2,10 +2,10 @@ import * as React from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import "./style.less";
-import { PassKind, PassMixedProps } from "@pkvd/PKPass";
+import { PassKind, PassMixedProps } from "@pkvd/pkpass";
 import PassList from "./PassList";
 import SelectablePass, { getAlternativesByKind } from "./SelectablePass";
-import * as Store from "packages/app/src/store";
+import * as Store from "@pkvd/store";
 
 // Webpack declared
 declare const __DEV__: boolean;

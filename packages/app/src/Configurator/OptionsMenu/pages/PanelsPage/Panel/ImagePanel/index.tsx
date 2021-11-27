@@ -1,6 +1,6 @@
 import * as React from "react";
 import "./style.less";
-import { PassMediaProps, PKPassLayout } from "@pkvd/PKPass";
+import { PassMediaProps, PKPassLayout } from "@pkvd/pkpass";
 import { SharedPanelProps } from "..";
 import CapitalHeaderTitle from "../../../components/CapitalHeaderTitle";
 import { ArrowIcon } from "./icons";

@@ -1,4 +1,4 @@
-import { PassMixedProps } from "@pkvd/PKPass";
+import { PassMixedProps } from "@pkvd/pkpass";
 
 export { default as navigable } from "./navigable.hoc";
 export { default as usePageRelation } from "./usePageRelation.hook";

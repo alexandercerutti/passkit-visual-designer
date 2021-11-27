@@ -4,7 +4,7 @@ import { SharedPanelProps } from "..";
 import useContentSavingHandler from "../useContentSavingHandler";
 import CapitalHeaderTitle from "../../../components/CapitalHeaderTitle";
 import "./style.less";
-import { PKPassLayout } from "@pkvd/PKPass";
+import { PKPassLayout } from "@pkvd/pkpass";
 
 interface ColorPanelProps extends SharedPanelProps {
 	value?: string;

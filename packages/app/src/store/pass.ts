@@ -1,6 +1,6 @@
 import { Action } from "redux";
 import { ThunkAction } from "redux-thunk";
-import { PassMixedProps, PassKind } from "@pkvd/PKPass";
+import { PassMixedProps, PassKind } from "@pkvd/pkpass";
 import { initialState, State } from ".";
 
 // ************************************************************************ //

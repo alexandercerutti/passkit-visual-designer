@@ -1,10 +1,10 @@
 import * as React from "react";
 import Prism from "prismjs";
 import "./style.less";
-import { PassMixedProps } from "@pkvd/PKPass";
+import { PassMixedProps } from "@pkvd/pkpass";
 import { createClassName } from "../../utils";
 import Modal, { ModalProps } from "../ModalBase";
-import * as Store from "packages/app/src/store";
+import * as Store from "@pkvd/store";
 import * as templates from "../../../../../partners-templates";
 
 /** Defined by Webpack */

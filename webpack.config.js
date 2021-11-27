@@ -98,9 +98,9 @@ module.exports = {
 	resolve: {
 		extensions: [".js", ".jsx", ".ts", ".tsx"],
 		alias: {
-			"@pkvd/passkit-types": path.resolve(__dirname, "./packages/passkit-types"),
-			"@pkvd/PKPass": path.resolve(__dirname, "./packages/PKPass/"),
-			"@pkvd/store": path.resolve(__dirname, "./src/store/")
+			"@pkvd/passkit-types": path.resolve(__dirname, "./packages/passkit-types/src"),
+			"@pkvd/pkpass": path.resolve(__dirname, "./packages/pkpass/src"),
+			"@pkvd/store": path.resolve(__dirname, "./packages/app/src/store")
 		}
 	},
 	devServer: {

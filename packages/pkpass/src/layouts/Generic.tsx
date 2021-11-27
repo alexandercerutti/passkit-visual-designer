@@ -1,5 +1,5 @@
 import * as React from "react";
-import { PassMixedProps } from "../..";
+import { PassMixedProps } from "..";
 import { PassHeader } from "./sections/Header";
 import { ThumbnailPrimaryFields } from "./sections/PrimaryFields";
 import Barcodes, { isSquareBarcode } from "./components/Barcodes";

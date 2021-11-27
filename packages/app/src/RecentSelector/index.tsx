@@ -1,12 +1,12 @@
 import * as React from "react";
 import JSZip from "jszip";
 import "./style.less";
-import * as Store from "packages/app/src/store";
+import * as Store from "@pkvd/store";
 import { GithubLogoDarkMode, AddIcon } from "./icons";
 import localForage from "localforage";
 import { createClassName } from "../utils";
 import { ProjectSource, ProjectSourceData, StateLookalike } from "../App";
-import { PassKind } from "@pkvd/PKPass";
+import { PassKind } from "@pkvd/pkpass";
 import { CSSTransition } from "react-transition-group";
 
 // Defined by webpack

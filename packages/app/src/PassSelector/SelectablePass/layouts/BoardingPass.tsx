@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Pass } from "@pkvd/passkit-types";
-import { PKPassLayout, PassMixedProps, PassKind } from "@pkvd/PKPass";
+import { PKPassLayout, PassMixedProps, PassKind } from "@pkvd/pkpass";
 import useAlternativesRegistration from "../useAlternativesRegistration";
 
 /**

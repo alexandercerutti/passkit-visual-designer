@@ -1,12 +1,12 @@
 import JSZip from "jszip";
-import { PassMixedProps } from "@pkvd/PKPass";
+import { PassMixedProps } from "@pkvd/pkpass";
 import type {
 	LocalizedMediaGroup,
 	LocalizedTranslationsGroup,
 	MediaCollection,
 	MediaSet,
 	TranslationsSet,
-} from "packages/app/src/store";
+} from "@pkvd/store";
 
 export async function exportPass(
 	props: PassMixedProps,

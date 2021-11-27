@@ -1,6 +1,6 @@
 import * as React from "react";
 import "./style.less";
-import { PassMediaProps, PassMixedProps } from "@pkvd/PKPass";
+import { PassMediaProps, PassMixedProps } from "@pkvd/pkpass";
 import PanelsPage from "./pages/PanelsPage";
 import { FieldDetails } from "./pages/PanelsPage/Panel";
 import type RegistrationIndex from "../RegistrationIndex";

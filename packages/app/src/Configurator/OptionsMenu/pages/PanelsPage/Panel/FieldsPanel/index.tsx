@@ -1,6 +1,6 @@
 import * as React from "react";
 import "./style.less";
-import { PKPassLayout } from "@pkvd/PKPass";
+import { PKPassLayout } from "@pkvd/pkpass";
 import { Pass } from "@pkvd/passkit-types";
 import { SharedPanelProps } from "..";
 import { FieldsArrowIcon } from "./icons";

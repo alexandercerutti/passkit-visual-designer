@@ -2,7 +2,7 @@ import * as React from "react";
 import { v1 as uuid } from "uuid";
 import "./style.less";
 import { Pass } from "@pkvd/passkit-types";
-import type { PassMixedProps } from "@pkvd/PKPass";
+import type { PassMixedProps } from "@pkvd/pkpass";
 import { FieldsAddIcon } from "./icons";
 import Drawer from "./Drawer";
 import DrawerPlaceholder from "./DrawerPlaceholder";
@@ -10,7 +10,7 @@ import PageHeader from "../components/Header";
 import DrawerJSONEditor from "./DrawerJSONEditor";
 import { PageContainer } from "../../PageContainer";
 import { connect } from "react-redux";
-import * as Store from "packages/app/src/store";
+import * as Store from "@pkvd/store";
 import FieldsPropertiesEditPage from "../FieldsPropertiesEditPage";
 import { navigable, NavigableProps, PageProps } from "../../navigation.utils";
 

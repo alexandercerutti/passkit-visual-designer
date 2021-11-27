@@ -1,4 +1,4 @@
-import { PKPassLayout } from "@pkvd/PKPass";
+import { PKPassLayout } from "@pkvd/pkpass";
 import { FieldDetails } from "./OptionsMenu/pages/PanelsPage/Panel";
 import { DataGroup } from "./OptionsMenu/pages/PanelsPage";
 

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { PKPassLayout, PassKind, PassMixedProps } from "@pkvd/PKPass";
+import { PKPassLayout, PassKind, PassMixedProps } from "@pkvd/pkpass";
 import useAlternativesRegistration from "../useAlternativesRegistration";
 
 /**

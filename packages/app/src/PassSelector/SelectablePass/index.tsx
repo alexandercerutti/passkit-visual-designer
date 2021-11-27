@@ -1,5 +1,5 @@
 import * as React from "react";
-import { PKPassElement, PKPassLayout, PassMixedProps, PassKind } from "@pkvd/PKPass";
+import { PKPassElement, PKPassLayout, PassMixedProps, PassKind } from "@pkvd/pkpass";
 import * as SelectableLayouts from "./layouts";
 
 export {

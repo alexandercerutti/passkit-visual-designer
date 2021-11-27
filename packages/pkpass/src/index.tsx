@@ -1,7 +1,8 @@
 import { Pass } from "@pkvd/passkit-types";
 import { PassKind } from "./PassKind";
 
-export { default as PKPassElement, PassProps } from "./Pass";
+export { default as PKPassElement } from "./Pass";
+export type { PassProps } from "./Pass";
 export { PassKind } from "./PassKind";
 export * as PKPassLayout from "./layouts";
 export { default as InteractionContext } from "./InteractionContext";

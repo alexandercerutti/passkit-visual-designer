@@ -1,11 +1,11 @@
 import * as React from "react";
 import "./style.less";
-import { PKPassElement, PassMediaProps } from "@pkvd/PKPass";
+import { PKPassElement, PassMediaProps } from "@pkvd/pkpass";
 import Modal, { ModalProps } from "../ModalBase";
 import CollectionsList from "./CollectionsList";
 import CollectionEditor from "./CollectionEditor";
 import { CSSTransition, SwitchTransition } from "react-transition-group";
-import type { CollectionSet, MediaCollection } from "packages/app/src/store";
+import type { CollectionSet, MediaCollection } from "@pkvd/store";
 import { v1 as uuid } from "uuid";
 import { ModalNavigation } from "./ModalNavigation";
 

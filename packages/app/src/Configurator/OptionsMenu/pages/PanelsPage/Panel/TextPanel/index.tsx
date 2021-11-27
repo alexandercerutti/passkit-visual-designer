@@ -1,6 +1,6 @@
 import * as React from "react";
 import "./style.less";
-import { PKPassLayout } from "@pkvd/PKPass";
+import { PKPassLayout } from "@pkvd/pkpass";
 import { SharedPanelProps } from "..";
 import useContentSavingHandler from "../useContentSavingHandler";
 import CapitalHeaderTitle from "../../../components/CapitalHeaderTitle";

@@ -15,11 +15,11 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import PassSelector from "../PassSelector";
 import { createStore, applyMiddleware } from "redux";
 import Configurator from "../Configurator";
-import * as Store from "packages/app/src/store";
+import * as Store from "@pkvd/store";
 import RecentSelector from "../RecentSelector";
 import LoaderFace from "../Loader";
 import { CSSTransition, SwitchTransition } from "react-transition-group";
-import { PassMediaProps, PassMixedProps } from "@pkvd/PKPass";
+import type { PassMediaProps, PassMixedProps } from "@pkvd/pkpass";
 import { v1 as uuid } from "uuid";
 
 export interface StateLookalike {

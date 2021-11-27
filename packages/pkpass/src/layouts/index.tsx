@@ -1,4 +1,4 @@
-import type { PassMixedProps } from "../..";
+import type { PassMixedProps } from "..";
 
 export { default as BoardingPass } from "./BoardingPass";
 export { default as Coupon } from "./Coupon";

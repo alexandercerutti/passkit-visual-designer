@@ -1,5 +1,5 @@
 import { Action } from "redux";
-import { PassMediaProps } from "@pkvd/PKPass";
+import { PassMediaProps } from "@pkvd/pkpass";
 import { CollectionSet, initialState, MediaCollection, State } from ".";
 
 // ************************************************************************ //

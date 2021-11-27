@@ -1,5 +1,5 @@
 import * as React from "react";
-import { InteractionContext, PassMixedProps } from "../../..";
+import { InteractionContext, PassMixedProps } from "../..";
 import { FieldKind } from "../components/Field";
 
 // I actually not really understood how does conditional distributed types work...

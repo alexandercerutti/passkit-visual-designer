@@ -1,4 +1,4 @@
-import { PassMixedProps, PassMediaProps, PassKind } from "@pkvd/PKPass";
+import { PassMixedProps, PassMediaProps, PassKind } from "@pkvd/pkpass";
 import { Pass } from "@pkvd/passkit-types";
 
 /** Webpack defined */
