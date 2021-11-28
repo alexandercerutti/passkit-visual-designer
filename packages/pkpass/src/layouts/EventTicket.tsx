@@ -12,13 +12,15 @@ type PrimaryFieldPropsKind = Parameters<
 	typeof StripPrimaryFields | typeof ThumbnailPrimaryFields
 >[0];
 
-export default function EventTicket(props: PassMixedProps): JSX.Element {
+export default function EventTicket(props: Partial<PassMixedProps>): JSX.Element {
 	const {
-		secondaryFields = [],
-		primaryFields = [],
-		headerFields = [],
-		auxiliaryFields = [],
-		barcode,
+		eventTicket: {
+			secondaryFields = [],
+			primaryFields = [],
+			headerFields = [],
+			auxiliaryFields = [],
+		} = {},
+		barcodes,
 		logoText,
 		logo,
 		icon,
@@ -56,7 +58,7 @@ export default function EventTicket(props: PassMixedProps): JSX.Element {
 			{fieldsFragment}
 			<FieldsRow id="auxiliaryFields" maximumElementsAmount={4} elements={auxiliaryFields} />
 			<Footer icon={icon}>
-				<Barcodes format={barcode?.format} fallbackShape="square" />
+				<Barcodes format={barcodes?.[0].format} fallbackShape="square" />
 			</Footer>
 		</>
 	);

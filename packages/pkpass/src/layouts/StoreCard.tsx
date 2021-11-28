@@ -6,13 +6,15 @@ import FieldsRow from "./sections/FieldRow";
 import Footer from "./sections/Footer";
 import Barcodes from "./components/Barcodes";
 
-export default function StoreCard(props: PassMixedProps): JSX.Element {
+export default function StoreCard(props: Partial<PassMixedProps>): JSX.Element {
 	const {
-		secondaryFields = [],
-		primaryFields = [],
-		headerFields = [],
-		auxiliaryFields = [],
-		barcode,
+		storeCard: {
+			secondaryFields = [],
+			primaryFields = [],
+			headerFields = [],
+			auxiliaryFields = [],
+		} = {},
+		barcodes,
 		logo,
 		logoText,
 		stripImage,
@@ -36,7 +38,7 @@ export default function StoreCard(props: PassMixedProps): JSX.Element {
 				maximumElementsAmount={-1}
 			/>
 			<Footer icon={icon}>
-				<Barcodes format={barcode?.format} fallbackShape="rect" />
+				<Barcodes format={barcodes?.[0].format} fallbackShape="rect" />
 			</Footer>
 		</>
 	);

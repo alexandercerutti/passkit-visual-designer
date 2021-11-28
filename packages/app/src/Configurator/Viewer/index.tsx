@@ -7,7 +7,7 @@ import CommittableTextInput from "../CommittableTextInput";
 import type { TranslationsSet } from "@pkvd/store";
 
 export interface ViewerProps extends Pick<PassProps, "showBack"> {
-	passProps: PassMixedProps;
+	passProps: Partial<PassMixedProps>;
 	translationSet: TranslationsSet;
 	showEmpty: boolean;
 	onVoidClick(e: React.MouseEvent): void;

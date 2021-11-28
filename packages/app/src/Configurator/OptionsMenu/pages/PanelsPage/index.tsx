@@ -23,7 +23,7 @@ const MenuVoices = [DataGroup.METADATA, DataGroup.IMAGES, DataGroup.COLORS, Data
 interface Props extends Partial<PageProps> {
 	selectedRegistrable: FieldDetails;
 	fields: RegistrationIndex;
-	data: PassMixedProps;
+	data: Partial<PassMixedProps>;
 	onValueChange<T>(name: string, data: T): void;
 	onMediaEditRequest(mediaName: keyof PassMediaProps): void;
 	requestExport?(): void;

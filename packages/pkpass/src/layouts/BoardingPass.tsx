@@ -6,14 +6,16 @@ import FieldsRow from "./sections/FieldRow";
 import Footer from "./sections/Footer";
 import Barcode from "./components/Barcodes";
 
-export default function BoardingPass(props: PassMixedProps) {
+export default function BoardingPass(props: Partial<PassMixedProps>) {
 	const {
-		secondaryFields = [],
-		primaryFields = [],
-		headerFields = [],
-		auxiliaryFields = [],
-		barcode,
-		transitType,
+		boardingPass: {
+			secondaryFields = [],
+			primaryFields = [],
+			headerFields = [],
+			auxiliaryFields = [],
+			transitType,
+		} = {},
+		barcodes,
 		logo,
 		logoText,
 		footerImage,
@@ -27,7 +29,7 @@ export default function BoardingPass(props: PassMixedProps) {
 			<FieldsRow maximumElementsAmount={5} elements={auxiliaryFields} id="auxiliaryFields" />
 			<FieldsRow maximumElementsAmount={4} elements={secondaryFields} id="secondaryFields" />
 			<Footer allowFooterImage icon={icon} src={footerImage}>
-				<Barcode format={barcode?.format} fallbackShape="rect" />
+				<Barcode format={barcodes?.[0].format} fallbackShape="rect" />
 			</Footer>
 		</>
 	);

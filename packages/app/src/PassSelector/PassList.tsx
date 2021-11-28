@@ -5,7 +5,7 @@ import { createClassName } from "../utils";
 import { SelectablePassProps } from "./SelectablePass";
 
 interface PassListProps {
-	onPassSelect(passProps: PassMixedProps): void;
+	onPassSelect(passProps: Partial<PassMixedProps>): void;
 	requiresAttention?: boolean;
 	selectedKind?: PassKind;
 }
@@ -16,7 +16,7 @@ export default function PassList(props: PassListPropsWithChildren): JSX.Element 
 	const selectionTray = React.useRef<HTMLDivElement>(null);
 
 	const onPassClickHandler = React.useCallback(
-		(event: React.MouseEvent, clickProps: PassMixedProps) => {
+		(event: React.MouseEvent, clickProps: Partial<PassMixedProps>) => {
 			event.stopPropagation();
 			props.onPassSelect({ ...clickProps });
 		},

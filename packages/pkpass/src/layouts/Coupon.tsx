@@ -6,13 +6,15 @@ import FieldsRow from "./sections/FieldRow";
 import Barcode from "./components/Barcodes";
 import Footer from "./sections/Footer";
 
-export default function Coupon(props: PassMixedProps): JSX.Element {
+export default function Coupon(props: Partial<PassMixedProps>): JSX.Element {
 	const {
-		secondaryFields = [],
-		primaryFields = [],
-		headerFields = [],
-		auxiliaryFields = [],
-		barcode,
+		coupon: {
+			secondaryFields = [],
+			primaryFields = [],
+			headerFields = [],
+			auxiliaryFields = [],
+		} = {},
+		barcodes,
 		stripImage,
 		logo,
 		logoText,
@@ -36,7 +38,7 @@ export default function Coupon(props: PassMixedProps): JSX.Element {
 				id="secondary-auxiliary"
 			/>
 			<Footer icon={icon}>
-				<Barcode format={barcode?.format} fallbackShape="square" />
+				<Barcode format={barcodes?.[0].format} fallbackShape="square" />
 			</Footer>
 		</>
 	);

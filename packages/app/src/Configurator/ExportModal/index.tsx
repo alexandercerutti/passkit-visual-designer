@@ -26,7 +26,7 @@ interface Partner {
 }
 
 interface Props extends Omit<ModalProps, "contentUniqueID"> {
-	passProps: PassMixedProps;
+	passProps: Partial<PassMixedProps>;
 	translations: Store.LocalizedTranslationsGroup;
 	projectOptions: Store.ProjectOptions;
 	media: Store.LocalizedMediaGroup;

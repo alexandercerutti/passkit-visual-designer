@@ -6,20 +6,22 @@ import Barcodes, { isSquareBarcode } from "./components/Barcodes";
 import FieldsRow from "./sections/FieldRow";
 import Footer from "./sections/Footer";
 
-export default function Generic(props: PassMixedProps): JSX.Element {
+export default function Generic(props: Partial<PassMixedProps>): JSX.Element {
 	const {
-		secondaryFields = [],
-		primaryFields = [],
-		headerFields = [],
-		auxiliaryFields = [],
-		barcode,
+		generic: {
+			secondaryFields = [],
+			primaryFields = [],
+			headerFields = [],
+			auxiliaryFields = [],
+		} = {},
+		barcodes,
 		logoText,
 		logo,
 		thumbnailImage,
 		icon,
 	} = props;
 
-	const isSquaredBarcode = isSquareBarcode(barcode?.format);
+	const isSquaredBarcode = isSquareBarcode(barcodes?.[0].format);
 
 	const middleFragment = (isSquaredBarcode && (
 		<FieldsRow
@@ -40,7 +42,10 @@ export default function Generic(props: PassMixedProps): JSX.Element {
 			<ThumbnailPrimaryFields fields={primaryFields} thumbnailSrc={thumbnailImage} />
 			{middleFragment}
 			<Footer icon={icon}>
-				<Barcodes fallbackShape={isSquaredBarcode ? "square" : "rect"} format={barcode?.format} />
+				<Barcodes
+					fallbackShape={isSquaredBarcode ? "square" : "rect"}
+					format={barcodes?.[0].format}
+				/>
 			</Footer>
 		</>
 	);

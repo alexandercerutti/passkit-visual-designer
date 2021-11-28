@@ -9,7 +9,7 @@ import { usePageRelation, usePagesAmount } from "./navigation.utils";
 interface Props {
 	selectedRegistrable?: FieldDetails;
 	fields: RegistrationIndex;
-	data: PassMixedProps;
+	data: Partial<PassMixedProps>;
 	cancelFieldSelection(): void;
 	onValueChange(key: string, value: any): Promise<boolean>;
 	requestExport(): void;

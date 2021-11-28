@@ -17,7 +17,7 @@ export {
  * under it as a description.
  */
 
-export interface SelectablePassProps extends PassMixedProps {
+export interface SelectablePassProps extends Partial<PassMixedProps> {
 	name: string;
 }
 

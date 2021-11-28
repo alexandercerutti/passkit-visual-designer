@@ -16,31 +16,66 @@ export default function BoardingPass(props: PassMixedProps) {
 		{
 			name: "Generic Boarding Pass",
 			specificProps: {
-				transitType: Pass.PKTransitType.Generic,
+				boardingPass: {
+					transitType: Pass.PKTransitType.Generic,
+					headerFields: [],
+					auxiliaryFields: [],
+					primaryFields: [],
+					secondaryFields: [],
+					backFields: [],
+				},
 			},
 		},
 		{
 			name: "Air Boarding Pass",
 			specificProps: {
-				transitType: Pass.PKTransitType.Air,
+				boardingPass: {
+					transitType: Pass.PKTransitType.Air,
+					headerFields: [],
+					auxiliaryFields: [],
+					primaryFields: [],
+					secondaryFields: [],
+					backFields: [],
+				},
 			},
 		},
 		{
 			name: "Boat Boarding Pass",
 			specificProps: {
-				transitType: Pass.PKTransitType.Boat,
+				boardingPass: {
+					transitType: Pass.PKTransitType.Boat,
+					headerFields: [],
+					auxiliaryFields: [],
+					primaryFields: [],
+					secondaryFields: [],
+					backFields: [],
+				},
 			},
 		},
 		{
 			name: "Bus Boarding Pass",
 			specificProps: {
-				transitType: Pass.PKTransitType.Bus,
+				boardingPass: {
+					transitType: Pass.PKTransitType.Bus,
+					headerFields: [],
+					auxiliaryFields: [],
+					primaryFields: [],
+					secondaryFields: [],
+					backFields: [],
+				},
 			},
 		},
 		{
 			name: "Train Boarding Pass",
 			specificProps: {
-				transitType: Pass.PKTransitType.Train,
+				boardingPass: {
+					transitType: Pass.PKTransitType.Train,
+					headerFields: [],
+					auxiliaryFields: [],
+					primaryFields: [],
+					secondaryFields: [],
+					backFields: [],
+				},
 			},
 		}
 	);

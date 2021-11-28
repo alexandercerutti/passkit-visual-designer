@@ -16,17 +16,25 @@ export default function Generic(props: PassMixedProps) {
 		{
 			name: "With rectangular barcode",
 			specificProps: {
-				barcode: {
-					format: Pass.PKBarcodeFormat.Rectangle,
-				},
+				barcodes: [
+					{
+						format: Pass.PKBarcodeFormat.Rectangle,
+						message: "",
+						messageEncoding: "",
+					},
+				],
 			},
 		},
 		{
 			name: "With square barcode",
 			specificProps: {
-				barcode: {
-					format: Pass.PKBarcodeFormat.Square,
-				},
+				barcodes: [
+					{
+						format: Pass.PKBarcodeFormat.Square,
+						message: "",
+						messageEncoding: "",
+					},
+				],
 			},
 		}
 	);

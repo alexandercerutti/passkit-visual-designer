@@ -11,8 +11,9 @@ import {
 import { PassMixedProps } from ".";
 import Backfields from "./layouts/sections/BackFields";
 import { PassKind } from "./PassKind";
+import { Pass } from "@pkvd/passkit-types";
 
-export interface PassProps extends PassMixedProps {
+export interface PassProps extends Partial<PassMixedProps> {
 	showBack?: boolean;
 	layout?: Layouts.LayoutSignature;
 }
@@ -26,7 +27,8 @@ const PassKindsLayoutsMap = new Map<PassKind, Layouts.LayoutSignature>([
 ]);
 
 export default function PKPass(props: PassProps) {
-	const { kind, backgroundColor, foregroundColor, backFields, labelColor, ...newProps } = props;
+	const { kind, backgroundColor, foregroundColor, labelColor, ...newProps } = props;
+	const { backFields } = resolvePassKindFromProps(props);
 	// We want to keep backgroundImage and others in passes layouts but
 	// also exclude the others above and use backgroundImage here to set
 	// the Background
@@ -72,4 +74,11 @@ export default function PKPass(props: PassProps) {
 			</div>
 		</div>
 	);
+}
+
+function resolvePassKindFromProps(
+	props: PassProps
+): Pass.BoardingPass | Pass.Coupon | Pass.StoreCard | Pass.EventTicket | Pass.Generic {
+	const { boardingPass, coupon, eventTicket, storeCard, generic } = props;
+	return boardingPass || coupon || eventTicket || storeCard || generic;
 }

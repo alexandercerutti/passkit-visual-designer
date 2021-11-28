@@ -1,4 +1,5 @@
 import JSZip from "jszip";
+import { Pass } from "@pkvd/passkit-types";
 import { PassMixedProps } from "@pkvd/pkpass";
 import type {
 	LocalizedMediaGroup,
@@ -9,7 +10,7 @@ import type {
 } from "@pkvd/store";
 
 export async function exportPass(
-	props: PassMixedProps,
+	props: Partial<PassMixedProps>,
 	media: LocalizedMediaGroup,
 	translations: LocalizedTranslationsGroup
 ) {
@@ -35,7 +36,7 @@ export async function exportPass(
 	return await zip.generateAsync({ type: "blob" });
 }
 
-function createPassJSON(passProps: PassMixedProps): [string, string] {
+function createPassJSON(passProps: Partial<PassMixedProps>): [string, string] {
 	/**
 	 * Adding properties to pass.json
 	 * But first... let me take a selfie! 🤳✌
@@ -45,12 +46,11 @@ function createPassJSON(passProps: PassMixedProps): [string, string] {
 	 */
 
 	const {
-		headerFields,
-		auxiliaryFields,
-		primaryFields,
-		secondaryFields,
-		backFields,
-		transitType,
+		boardingPass,
+		coupon,
+		storeCard,
+		eventTicket,
+		generic,
 		kind,
 		logo,
 		backgroundImage,
@@ -60,6 +60,19 @@ function createPassJSON(passProps: PassMixedProps): [string, string] {
 		footerImage,
 		...topLevelProps
 	} = passProps;
+
+	let headerFields: Pass.PassFields.HeaderFields[];
+	let auxiliaryFields: Pass.PassFields.AuxiliaryFields[];
+	let secondaryFields: Pass.PassFields.SecondaryFields[];
+	let backFields: Pass.PassFields.BackFields[];
+	let primaryFields: Pass.PassFields.PrimaryFields[];
+	let transitType: Pass.PKTransitType;
+
+	if (boardingPass) {
+		({ transitType } = boardingPass);
+	}
+
+	({ headerFields, auxiliaryFields, secondaryFields, backFields, primaryFields } = (boardingPass || coupon || storeCard || eventTicket || generic));
 
 	const passJSONObject = {
 		...topLevelProps,

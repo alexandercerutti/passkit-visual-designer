@@ -8,26 +8,9 @@ export * as PKPassLayout from "./layouts";
 export { default as InteractionContext } from "./InteractionContext";
 
 // @TODO convert to Pass namespace
-export interface PassMixedProps extends PassMediaProps, Partial<Pass.PassFields> {
+export interface PassMixedProps extends PassMediaProps, Pass {
 	kind?: PassKind;
-	barcode?: Partial<Pass.Barcodes>; // @TODO check if an array should be used instead
-	transitType?: Pass.PKTransitType;
-	logoText?: string;
-	backgroundColor?: string;
-	foregroundColor?: string;
-	labelColor?: string;
-	description?: string;
-	passTeamIdentifier?: string;
-	serialNumber?: string;
-	organizationName?: string;
-	passTypeIdentifier?: string;
-	teamIdentifier?: string;
-	formatVersion?: 1;
-	groupingIdentifier?: string;
-	webServiceURL?: string;
-	authenticationToken?: string;
-	associatedStoreIdentifiers?: string;
-	appLaunchURL?: string;
+	/* 	transitType?: Pass.PKTransitType;*/
 }
 
 /**
