@@ -44,7 +44,7 @@
 	},
 	"dependencies": {
 		"date-fns": "^2.19.0",
-		"handlebars": "^4.7.7",
+		"handlebars": "^4.7.9",
 		"html2canvas": "^1.0.0-rc.7",
 		"jszip": "^3.6.0",
 		"localforage": "^1.9.0",
